@@ -29,16 +29,20 @@ http://bookdash.org/
 
 1. MaterialHelpTutorial - https://github.com/spongebobrf/MaterialIntroTutorial
 2. FabButton - https://github.com/ckurtm/FabButton
-3. Parse
-4. Fabric
-5. Glide Image Loading
+3. Parse - https://parse.com
+4. Fabric - https://fabric.io/dashboard
+5. Glide Image Loading - https://github.com/bumptech/glide
 
 # Setup
 
 1. Clone or download this repo
-2. Setup a Parse Account.
-3. Setup a Fabric Account
-
+2. Setup a Parse Account. https://parse.com
+3. You will need to recreate the Parse Database. Click on "Core" and click "Import Data" you can find the example JSON here:
+/parse_data_example/
+4. Change the Parse API Key and Client Key in the file to your unique parse key: /appconfig-sample.properties .
+5. Setup a Fabric Account. https://fabric.io/dashboard
+6. Get your Fabric API Key and Client key, change it in the file: /app/fabric-sample.properties
+7. If you wish to build a release version you will need to create your own keystore file and edit the password values in the following file - (create a version of the file without the .sample extension): release-keystore.properties.sample
 
 # License
 Copyright 2015 Book Dash.
