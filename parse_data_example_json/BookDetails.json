@@ -1,0 +1,581 @@
+{ "results": [
+	{
+        "ACL": {
+            "*": {
+                "read": true
+            }
+        },
+        "book_cover_page_url": "http://riggaroo.co.za/bookdash/1-sloth/english/slothcover-english.jpg",
+        "book_download_file": {
+            "__type": "File",
+            "name": "tfss-dac5f422-6d9b-4ce5-b428-3acd175f8f6a-sloth-1-zulu.zip",
+            "url": "http://files.parsetfss.com/40582d43-aff8-4703-8789-32eb0568b7da/tfss-dac5f422-6d9b-4ce5-b428-3acd175f8f6a-sloth-1-zulu.zip"
+        },
+        "book_enabled": true,
+        "book_id": {
+            "__type": "Pointer",
+            "className": "Book",
+            "objectId": "ccYQeXAURk"
+        },
+        "book_language": {
+            "__type": "Pointer",
+            "className": "Language",
+            "objectId": "TGZVEJf8p1"
+        },
+        "book_title": "UMnumzane Sinamba owozelayo",
+        "createdAt": "2015-07-17T18:06:26.639Z",
+        "objectId": "1EL08zO20j",
+        "updatedAt": "2015-09-09T19:27:12.224Z"
+    },
+	{
+        "ACL": {
+            "*": {
+                "read": true
+            }
+        },
+        "aboutBook": "Basetsana Kumalo is a beauty queen, but she’s also so much more. She teaches us that true beauty is about having a heart filled with love and generosity. Her story shows us that if you have courage and determination, you can achieve your dreams – whatever they may be.",
+        "book_cover_page_url": "http://riggaroo.co.za/bookdash/10-queenofsoweto/cover.jpg",
+        "book_enabled": false,
+        "book_id": {
+            "__type": "Pointer",
+            "className": "Book",
+            "objectId": "FdskKvU4qH"
+        },
+        "book_language": {
+            "__type": "Pointer",
+            "className": "Language",
+            "objectId": "JRJMNzMfy7"
+        },
+        "book_title": "Queen of Soweto",
+        "createdAt": "2015-10-05T18:44:06.653Z",
+        "objectId": "3BqvAiLgd7",
+        "updatedAt": "2015-10-05T18:51:04.947Z"
+    },
+	{
+        "ACL": {
+            "*": {
+                "read": true
+            }
+        },
+        "aboutBook": "From the day she was born to the day she died, Albertina Sisulu lived a life of love and sacrifice. A brave girl who rode a horse, she was a blessing to her family, to her community and to South Africa. This story of a unique and powerful woman, who stood up for her beliefs no matter what, will inspire and enchant.",
+        "book_cover_page_url": "http://riggaroo.co.za/bookdash/7-togetherwerestrong/cover.jpg",
+        "book_download_file": {
+            "__type": "File",
+            "name": "tfss-9269e55d-7d7c-4ddd-9dc3-58e6da8e4256-togetherwerestrong-11.zip",
+            "url": "http://files.parsetfss.com/40582d43-aff8-4703-8789-32eb0568b7da/tfss-9269e55d-7d7c-4ddd-9dc3-58e6da8e4256-togetherwerestrong-11.zip"
+        },
+        "book_enabled": true,
+        "book_id": {
+            "__type": "Pointer",
+            "className": "Book",
+            "objectId": "J1uWEpQ8Cq"
+        },
+        "book_language": {
+            "__type": "Pointer",
+            "className": "Language",
+            "objectId": "JRJMNzMfy7"
+        },
+        "book_title": "Together We're Strong",
+        "createdAt": "2015-09-26T16:42:12.240Z",
+        "objectId": "6kjLNifatk",
+        "updatedAt": "2015-09-26T17:23:39.480Z"
+    },
+	{
+        "ACL": {
+            "*": {
+                "read": true
+            }
+        },
+        "book_cover_page_url": "http://riggaroo.co.za/bookdash/3-fishgift/zulu/cover-1.jpg",
+        "book_download_file": {
+            "__type": "File",
+            "name": "tfss-f8036550-5c93-4f6b-b6c5-5e3066e403a0-fishgift-5-zulu.zip",
+            "url": "http://files.parsetfss.com/40582d43-aff8-4703-8789-32eb0568b7da/tfss-f8036550-5c93-4f6b-b6c5-5e3066e403a0-fishgift-5-zulu.zip"
+        },
+        "book_enabled": true,
+        "book_id": {
+            "__type": "Pointer",
+            "className": "Book",
+            "objectId": "UzAbOaGY2Q"
+        },
+        "book_language": {
+            "__type": "Pointer",
+            "className": "Language",
+            "objectId": "TGZVEJf8p1"
+        },
+        "book_title": "Inhlanzi nesipho",
+        "createdAt": "2015-11-01T14:51:53.411Z",
+        "objectId": "DKklhyAxZ6",
+        "updatedAt": "2015-11-01T15:01:11.357Z"
+    },
+	{
+        "ACL": {
+            "*": {
+                "read": true
+            }
+        },
+        "aboutBook": "Mouse is looking for a new house. Friendly animals offer to share their homes with him. But nothing is right until he finds his own little spot, warm and cosy.",
+        "book_cover_page_url": "http://riggaroo.co.za/bookdash/5-housemouse/english/englishcover.jpg",
+        "book_download_file": {
+            "__type": "File",
+            "name": "tfss-fbc4737c-6964-4825-b05c-b09e05b24f33-house-mouse-10.zip",
+            "url": "http://files.parsetfss.com/40582d43-aff8-4703-8789-32eb0568b7da/tfss-fbc4737c-6964-4825-b05c-b09e05b24f33-house-mouse-10.zip"
+        },
+        "book_enabled": true,
+        "book_id": {
+            "__type": "Pointer",
+            "className": "Book",
+            "objectId": "JidD9qakD8"
+        },
+        "book_language": {
+            "__type": "Pointer",
+            "className": "Language",
+            "objectId": "JRJMNzMfy7"
+        },
+        "book_title": "A House for Mouse",
+        "createdAt": "2015-07-16T08:10:24.019Z",
+        "objectId": "F5Yox4uPM0",
+        "updatedAt": "2015-09-26T16:25:12.557Z"
+    },
+	{
+        "ACL": {
+            "*": {
+                "read": true
+            }
+        },
+        "book_cover_page_url": "http://riggaroo.co.za/bookdash/1-sloth/english/slothcover-english.jpg",
+        "book_download_file": {
+            "__type": "File",
+            "name": "tfss-bc90ce72-7534-4301-91b4-7640716441d8-sloth-1-afrikaans.zip",
+            "url": "http://files.parsetfss.com/40582d43-aff8-4703-8789-32eb0568b7da/tfss-bc90ce72-7534-4301-91b4-7640716441d8-sloth-1-afrikaans.zip"
+        },
+        "book_enabled": true,
+        "book_id": {
+            "__type": "Pointer",
+            "className": "Book",
+            "objectId": "ccYQeXAURk"
+        },
+        "book_language": {
+            "__type": "Pointer",
+            "className": "Language",
+            "objectId": "RSgGZ4nr05"
+        },
+        "book_title": "Lawwe Luidier",
+        "createdAt": "2015-09-09T18:35:34.383Z",
+        "objectId": "G8faMKgW0E",
+        "updatedAt": "2015-09-09T18:40:19.296Z"
+    },
+	{
+        "ACL": {
+            "*": {
+                "read": true
+            }
+        },
+        "book_cover_page_url": "http://riggaroo.co.za/bookdash/11-sing/english/1-cover.jpg",
+        "book_download_file": {
+            "__type": "File",
+            "name": "tfss-b295c1df-7e8b-4fc7-aef1-2c622bc18932-singingtruth-11-zulu.zip",
+            "url": "http://files.parsetfss.com/40582d43-aff8-4703-8789-32eb0568b7da/tfss-b295c1df-7e8b-4fc7-aef1-2c622bc18932-singingtruth-11-zulu.zip"
+        },
+        "book_enabled": true,
+        "book_id": {
+            "__type": "Pointer",
+            "className": "Book",
+            "objectId": "lcdz8FRoea"
+        },
+        "book_language": {
+            "__type": "Pointer",
+            "className": "Language",
+            "objectId": "TGZVEJf8p1"
+        },
+        "book_title": "Indaba ka-Miriam Makeba",
+        "createdAt": "2015-09-10T17:49:22.499Z",
+        "objectId": "HWf2EFSsaA",
+        "updatedAt": "2015-09-22T15:09:28.231Z"
+    },
+	{
+        "ACL": {
+            "*": {
+                "read": true
+            }
+        },
+        "book_cover_page_url": "http://riggaroo.co.za/bookdash/11-sing/xhosa/1-cover.jpg",
+        "book_download_file": {
+            "__type": "File",
+            "name": "tfss-02f7dbbf-1528-4a65-af19-aa51a749d2ee-singingtruth-11-xhosa.zip",
+            "url": "http://files.parsetfss.com/40582d43-aff8-4703-8789-32eb0568b7da/tfss-02f7dbbf-1528-4a65-af19-aa51a749d2ee-singingtruth-11-xhosa.zip"
+        },
+        "book_enabled": true,
+        "book_id": {
+            "__type": "Pointer",
+            "className": "Book",
+            "objectId": "lcdz8FRoea"
+        },
+        "book_language": {
+            "__type": "Pointer",
+            "className": "Language",
+            "objectId": "FJaOvrFUlB"
+        },
+        "book_title": "Imvumi Yenyaniso",
+        "createdAt": "2015-11-01T13:37:45.757Z",
+        "objectId": "L8knlonjen",
+        "updatedAt": "2015-11-01T13:42:16.981Z"
+    },
+	{
+        "ACL": {
+            "*": {
+                "read": true
+            }
+        },
+        "aboutBook": "Today Sizwe learns that a smile is something you can give away without losing it. ",
+        "book_cover_page_url": "http://riggaroo.co.za/bookdash/6-sizwe/english/sizwe-cover.jpg",
+        "book_download_file": {
+            "__type": "File",
+            "name": "tfss-978bad20-09ee-4e24-93ff-4ae48255c90d-sizwesmile-6.zip",
+            "url": "http://files.parsetfss.com/40582d43-aff8-4703-8789-32eb0568b7da/tfss-978bad20-09ee-4e24-93ff-4ae48255c90d-sizwesmile-6.zip"
+        },
+        "book_enabled": true,
+        "book_id": {
+            "__type": "Pointer",
+            "className": "Book",
+            "objectId": "eT8c87XdXX"
+        },
+        "book_language": {
+            "__type": "Pointer",
+            "className": "Language",
+            "objectId": "JRJMNzMfy7"
+        },
+        "book_title": "Sizwe's Smile",
+        "createdAt": "2015-07-16T08:13:29.059Z",
+        "objectId": "MbL8uRJQPd",
+        "updatedAt": "2015-09-22T15:50:34.896Z"
+    },
+	{
+        "ACL": {
+            "*": {
+                "read": true
+            }
+        },
+        "aboutBook": "It’s Maddy Moona’s birthday and she really wants a pet! But which silly animal will picky Maddy get?",
+        "book_cover_page_url": "http://riggaroo.co.za/bookdash/4-maddy/english/maddy-cover.jpg",
+        "book_enabled": false,
+        "book_id": {
+            "__type": "Pointer",
+            "className": "Book",
+            "objectId": "hpad3ZWv43"
+        },
+        "book_language": {
+            "__type": "Pointer",
+            "className": "Language",
+            "objectId": "JRJMNzMfy7"
+        },
+        "book_title": "Maddy Moona's Menagerie",
+        "createdAt": "2015-07-16T08:07:50.173Z",
+        "objectId": "Q6EWwvWeRy",
+        "updatedAt": "2015-09-22T15:50:20.167Z"
+    },
+	{
+        "ACL": {
+            "*": {
+                "read": true
+            }
+        },
+        "book_cover_page_url": "http://riggaroo.co.za/bookdash/1-sloth/english/slothcover-english.jpg",
+        "book_download_file": {
+            "__type": "File",
+            "name": "tfss-e31b5faf-6a7b-4bb1-a6e1-e88098b5c5a1-sloth-1-sepedi.zip",
+            "url": "http://files.parsetfss.com/40582d43-aff8-4703-8789-32eb0568b7da/tfss-e31b5faf-6a7b-4bb1-a6e1-e88098b5c5a1-sloth-1-sepedi.zip"
+        },
+        "book_enabled": true,
+        "book_id": {
+            "__type": "Pointer",
+            "className": "Book",
+            "objectId": "ccYQeXAURk"
+        },
+        "book_language": {
+            "__type": "Pointer",
+            "className": "Language",
+            "objectId": "swIsBvJVuo"
+        },
+        "book_title": "Morena Motlapa wa go swarwa ke boroko",
+        "createdAt": "2015-09-10T16:09:15.091Z",
+        "objectId": "Sth3Hle8Mz",
+        "updatedAt": "2015-09-10T17:24:30.839Z"
+    },
+	{
+        "ACL": {
+            "*": {
+                "read": true
+            }
+        },
+        "aboutBook": "Yusuf waits on the beach while Papa pushes out his boat. Surfers, turtles and sharks come from the sea. What will Papa bring back for Yusuf?",
+        "book_cover_page_url": "http://riggaroo.co.za/bookdash/3-fishgift/english/fishcover-english.jpg",
+        "book_download_file": {
+            "__type": "File",
+            "name": "tfss-c8dc5091-3ce0-439f-8983-c657b05b4505-fishgift-5.zip",
+            "url": "http://files.parsetfss.com/40582d43-aff8-4703-8789-32eb0568b7da/tfss-c8dc5091-3ce0-439f-8983-c657b05b4505-fishgift-5.zip"
+        },
+        "book_enabled": true,
+        "book_id": {
+            "__type": "Pointer",
+            "className": "Book",
+            "objectId": "UzAbOaGY2Q"
+        },
+        "book_language": {
+            "__type": "Pointer",
+            "className": "Language",
+            "objectId": "JRJMNzMfy7"
+        },
+        "book_title": "A Fish and a Gift",
+        "createdAt": "2015-07-16T08:06:24.572Z",
+        "objectId": "TdWiuIoZ84",
+        "updatedAt": "2015-09-22T15:50:04.875Z"
+    },
+	{
+        "ACL": {
+            "*": {
+                "read": true
+            }
+        },
+        "book_cover_page_url": "http://riggaroo.co.za/bookdash/3-fishgift/xhosa/1-cover.jpg",
+        "book_download_file": {
+            "__type": "File",
+            "name": "tfss-c6ce5b6d-177a-4d89-a042-e16e9cc2ff13-fishgift-5-xhosa.zip",
+            "url": "http://files.parsetfss.com/40582d43-aff8-4703-8789-32eb0568b7da/tfss-c6ce5b6d-177a-4d89-a042-e16e9cc2ff13-fishgift-5-xhosa.zip"
+        },
+        "book_enabled": true,
+        "book_id": {
+            "__type": "Pointer",
+            "className": "Book",
+            "objectId": "UzAbOaGY2Q"
+        },
+        "book_language": {
+            "__type": "Pointer",
+            "className": "Language",
+            "objectId": "FJaOvrFUlB"
+        },
+        "book_title": "Intlanzi kunye nesipho",
+        "createdAt": "2015-11-01T15:11:32.006Z",
+        "objectId": "UcZNgmJvwd",
+        "updatedAt": "2015-11-01T15:38:28.312Z"
+    },
+	{
+        "ACL": {
+            "*": {
+                "read": true
+            }
+        },
+        "book_cover_page_url": "http://riggaroo.co.za/bookdash/2-comebackcat/english/comebackcat.jpg",
+        "book_enabled": false,
+        "book_id": {
+            "__type": "Pointer",
+            "className": "Book",
+            "objectId": "35Vlo4XzXT"
+        },
+        "book_language": {
+            "__type": "Pointer",
+            "className": "Language",
+            "objectId": "JRJMNzMfy7"
+        },
+        "book_title": "Come back, Cat!",
+        "createdAt": "2015-07-16T07:58:01.609Z",
+        "objectId": "Vi3POqVwvn",
+        "updatedAt": "2015-09-22T15:08:16.857Z"
+    },
+	{
+        "ACL": {
+            "*": {
+                "read": true
+            }
+        },
+        "aboutBook": "In a village on the slopes of Mount Kenya, a little girl worked in the fields with her mother. She worried as she saw the big forests disappearing, but she knew the power of a tiny seed.",
+        "book_cover_page_url": "http://riggaroo.co.za/bookdash/12-tinyseed/cover.jpg",
+        "book_download_file": {
+            "__type": "File",
+            "name": "tfss-2ee29f78-f2e7-4f5a-9d58-6b8abb7e0feb-a-tiny-seed-14.zip",
+            "url": "http://files.parsetfss.com/40582d43-aff8-4703-8789-32eb0568b7da/tfss-2ee29f78-f2e7-4f5a-9d58-6b8abb7e0feb-a-tiny-seed-14.zip"
+        },
+        "book_enabled": true,
+        "book_id": {
+            "__type": "Pointer",
+            "className": "Book",
+            "objectId": "dGjz1Tc24y"
+        },
+        "book_language": {
+            "__type": "Pointer",
+            "className": "Language",
+            "objectId": "JRJMNzMfy7"
+        },
+        "book_title": "A Tiny Seed",
+        "createdAt": "2015-10-05T18:53:19.380Z",
+        "objectId": "j8RFQgA2BQ",
+        "updatedAt": "2015-10-08T19:28:23.366Z"
+    },
+	{
+        "ACL": {
+            "*": {
+                "read": true
+            }
+        },
+        "book_cover_page_url": "http://riggaroo.co.za/bookdash/2-comebackcat/afrikaans/comebackcat-afri.jpg",
+        "book_enabled": false,
+        "book_id": {
+            "__type": "Pointer",
+            "className": "Book",
+            "objectId": "35Vlo4XzXT"
+        },
+        "book_language": {
+            "__type": "Pointer",
+            "className": "Language",
+            "objectId": "RSgGZ4nr05"
+        },
+        "book_title": "Kom Terug, Kat!",
+        "createdAt": "2015-07-16T07:59:55.281Z",
+        "objectId": "jYySH6RjCt",
+        "updatedAt": "2015-09-22T15:08:14.907Z"
+    },
+	{
+        "ACL": {
+            "*": {
+                "read": true
+            }
+        },
+        "aboutBook": "Phyllis Spira was dancing by the age of four. That was just the beginning of her journey towards becoming one of South Africa’s Prima Ballerinas.",
+        "book_cover_page_url": "http://riggaroo.co.za/bookdash/9-adancerstale/cover.jpg",
+        "book_download_file": {
+            "__type": "File",
+            "name": "tfss-716faa12-be96-46ff-9f6a-9e1b5ba9683a-a-dancers-tale-13.zip",
+            "url": "http://files.parsetfss.com/40582d43-aff8-4703-8789-32eb0568b7da/tfss-716faa12-be96-46ff-9f6a-9e1b5ba9683a-a-dancers-tale-13.zip"
+        },
+        "book_enabled": true,
+        "book_id": {
+            "__type": "Pointer",
+            "className": "Book",
+            "objectId": "pAV6qeNCs3"
+        },
+        "book_language": {
+            "__type": "Pointer",
+            "className": "Language",
+            "objectId": "JRJMNzMfy7"
+        },
+        "book_title": "A Dancer's Tale",
+        "createdAt": "2015-10-05T18:29:08.279Z",
+        "objectId": "n8LtheKzUH",
+        "updatedAt": "2015-10-07T17:29:40.016Z"
+    },
+	{
+        "ACL": {
+            "*": {
+                "read": true
+            }
+        },
+        "aboutBook": "This is a story about a little ant with a big plan, and how his love for reading saved the day.",
+        "book_cover_page_url": "http://riggaroo.co.za/bookdash/8-little-ants-big-plan/cover-1.jpg",
+        "book_download_file": {
+            "__type": "File",
+            "name": "tfss-64cef0db-42e2-41ec-adb4-0b647f39997a-little-ant-big-plan-13.zip",
+            "url": "http://files.parsetfss.com/40582d43-aff8-4703-8789-32eb0568b7da/tfss-64cef0db-42e2-41ec-adb4-0b647f39997a-little-ant-big-plan-13.zip"
+        },
+        "book_enabled": true,
+        "book_id": {
+            "__type": "Pointer",
+            "className": "Book",
+            "objectId": "2F6UVdeGkc"
+        },
+        "book_language": {
+            "__type": "Pointer",
+            "className": "Language",
+            "objectId": "JRJMNzMfy7"
+        },
+        "book_title": "Little Ant's Big Plan",
+        "createdAt": "2015-09-27T10:06:43.486Z",
+        "objectId": "osHJOR2VsG",
+        "updatedAt": "2015-09-27T11:21:35.812Z"
+    },
+	{
+        "ACL": {
+            "*": {
+                "read": true
+            }
+        },
+        "book_cover_page_url": "http://riggaroo.co.za/bookdash/1-sloth/english/slothcover-english.jpg",
+        "book_download_file": {
+            "__type": "File",
+            "name": "tfss-2d5be98a-7b07-4f6e-a06c-0e5007ac48fa-sloth-1-xhosa.zip",
+            "url": "http://files.parsetfss.com/40582d43-aff8-4703-8789-32eb0568b7da/tfss-2d5be98a-7b07-4f6e-a06c-0e5007ac48fa-sloth-1-xhosa.zip"
+        },
+        "book_enabled": true,
+        "book_id": {
+            "__type": "Pointer",
+            "className": "Book",
+            "objectId": "ccYQeXAURk"
+        },
+        "book_language": {
+            "__type": "Pointer",
+            "className": "Language",
+            "objectId": "FJaOvrFUlB"
+        },
+        "book_title": "USloth Vilavoco",
+        "createdAt": "2015-09-09T19:03:36.902Z",
+        "objectId": "swMIqkda23",
+        "updatedAt": "2015-09-09T19:36:26.756Z"
+    },
+	{
+        "ACL": {
+            "*": {
+                "read": true
+            }
+        },
+        "aboutBook": "Learn about the amazing life of a little girl who grew up to use her gift of singing to help bring freedom to South Africa.",
+        "book_cover_page_url": "http://riggaroo.co.za/bookdash/11-sing/english/1-cover.jpg",
+        "book_download_file": {
+            "__type": "File",
+            "name": "tfss-c1eaf6a8-4aa3-4fcb-bbd3-8d12b6158311-singingtruth-11.zip",
+            "url": "http://files.parsetfss.com/40582d43-aff8-4703-8789-32eb0568b7da/tfss-c1eaf6a8-4aa3-4fcb-bbd3-8d12b6158311-singingtruth-11.zip"
+        },
+        "book_enabled": true,
+        "book_id": {
+            "__type": "Pointer",
+            "className": "Book",
+            "objectId": "lcdz8FRoea"
+        },
+        "book_language": {
+            "__type": "Pointer",
+            "className": "Language",
+            "objectId": "JRJMNzMfy7"
+        },
+        "book_title": "Singing the Truth",
+        "createdAt": "2015-08-02T18:37:37.787Z",
+        "objectId": "vIfoi7YInn",
+        "updatedAt": "2015-09-22T15:51:44.569Z"
+    },
+	{
+        "ACL": {
+            "*": {
+                "read": true
+            }
+        },
+        "aboutBook": "He’s quite good at climbing. He knows how to swing. But sleeping’s his favourite, favourite thing!",
+        "book_cover_page_url": "http://riggaroo.co.za/bookdash/1-sloth/english/slothcover-english.jpg",
+        "book_download_file": {
+            "__type": "File",
+            "name": "tfss-d616364b-d3f1-49cd-995a-39b415a5c4d9-sloth-1.zip",
+            "url": "http://files.parsetfss.com/40582d43-aff8-4703-8789-32eb0568b7da/tfss-d616364b-d3f1-49cd-995a-39b415a5c4d9-sloth-1.zip"
+        },
+        "book_enabled": true,
+        "book_id": {
+            "__type": "Pointer",
+            "className": "Book",
+            "objectId": "ccYQeXAURk"
+        },
+        "book_language": {
+            "__type": "Pointer",
+            "className": "Language",
+            "objectId": "JRJMNzMfy7"
+        },
+        "book_title": "Sleepy Mr Sloth",
+        "createdAt": "2015-07-16T07:14:20.841Z",
+        "objectId": "xVMAJTv2Bu",
+        "updatedAt": "2015-09-22T15:16:50.518Z"
+    }
+] }
