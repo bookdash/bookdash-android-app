@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorAccentPressed">#6a8BC34A</color>
+    <color name="colorAccentFocused">#968BC34A</color>
+    <color name="colorPrimary">#2196F3</color>
+
+    <!-- colorPrimaryDark is used for the status bar -->
+    <color name="colorPrimaryDark">#1976D2</color>
+
+    <!-- colorAccent is used as the default value for colorControlActivated,
+         which is used to tint widgets -->
+    <color name="progress_background">#ffe5e2e7</color>
+    <color name="colorAccent">#8BC34A</color>
+    <color name="blue_progress">#2196F3</color>
+    <color name="white">#ffffff</color>
+    <color name="light_gray_background">#eeeeee</color>
+    <color name="text_secondary_dark">#737373</color>
+    <color name="text_color_primary_dark">#212121</color>
+    <color name="background_light_grey">#E0E0E0</color>
+    <color name="divider_gray">#1f000000</color>
+    <color name="slide_1">#4f91ff</color>
+    <color name="slide_2">#fb9c25</color>
+    <color name="slide_3">#5ab55d</color>
+    <color name="slide_4">#ea2d6d</color>
+
+    <color name="background_light">#fafafa</color>
+</resources>

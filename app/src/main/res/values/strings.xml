@@ -1,0 +1,73 @@
+<resources>
+    <string name="app_name">Book Dash</string>
+
+    <string name="action_settings">Settings</string>
+    <string name="splash">Splash Screen</string>
+    <string name="action_language_choice">Language</string>
+    <string name="language_selection_heading">Select a language</string>
+    <string name="failed_to_download_book">Failed to download book. Check your connection.</string>
+    <string name="error_loading_languages">Error loading available languages</string>
+    <string name="book_not_available">Book not available</string>
+    <string name="title_activity_about">About Book Dash</string>
+    <string name="action_about">About</string>
+    <string name="why_bookdash"><![CDATA[
+        Children in South Africa need more books, but they cost too much purchased from publishers.
+        The cheapest books have no publisher – then the only cost is printing. So our participants do
+        the work of publishers in a single day. After that, anyone can get print runs sponsored and put finished books into the hands of children.
+              <br/><br/>
+        We believe every child should own a hundred books by the age of five. In South Africa, that means giving 600 million free books to children
+        who could never afford to buy them. Every day we lose, more children grow up unable to read and write well, and to enjoy the worlds that books
+        open up. ]]>
+    </string>
+    <string name="why_bookdash_heading">Why Book Dash?</string>
+    <string name="heading_about"><![CDATA[Book Dash gathers volunteer creative professionals to create new, African storybooks that anyone can freely translate and distribute.]]>
+    </string>
+    <string name="send_email_chooser">Send us a mail.</string>
+    <string name="no_mail_clients">There are no mail clients installed.</string>
+    <string name="button_retry_text">Retry</string>
+    <string name="error_loading_books">Error Loading Books</string>
+    <string name="failed_to_open_book">Failed to open the book. Please try again later.</string>
+    <string name="skip">SKIP</string>
+    <string name="tutorial_done">DONE</string>
+    <string name="tutorial_screen">Tutorial Screen</string>
+    <string name="screen_book_information">Book Information</string>
+    <string name="book_dash">Book Dash</string>
+    <string name="about_heading">About Book Dash</string>
+    <string name="about_book_info">About</string>
+    <string name="date_created">Date</string>
+    <string name="contributors">Contributors</string>
+    <string name="book_is_downloading">Book is currently downloading.</string>
+    <string name="learn_more">LEARN MORE</string>
+    <string name="rate_this_app">Rate This App</string>
+    <string name="settings_thank_yous">Contributors</string>
+    <string name="contributions_to_app">Contributors</string>
+    <string name="list_of_contributors"><![CDATA[Special thanks to the following people for contributing to making this app possible:  <br/><br/>
+
+    <b>Michael Cook</b> - <a href="http://cookicons.co/" title="Cookicons">Cookicons</a>  - For the Book Dash App icon   <br/><br/>
+    <b>Volunteers at Book Dash</b> - For the content <br/><br/>
+
+
+    Imagery for Help Tutorial <a href="http://www.freepik.com">Designed by Freepik</a><br/>
+    <div>Book Icon made by <a href="http://www.flaticon.com/authors/rami-mcmin" title="Rami McMin">Rami McMin</a> from <a href="http://www.flaticon.com" title="Flaticon">www.flaticon.com</a>  is licensed by <a href="http://creativecommons.org/licenses/by/3.0/" title="Creative Commons BY 3.0">CC BY 3.0</a></div>
+   <b> The following libraries have been used in the app: <br/></b>
+    <a href="https://github.com/JakeWharton/ViewPagerIndicator">ViewPagerIndicator</a> which is licensed under the Apache License, Version 2.0.<br/>
+    <a href="https://github.com/ckurtm/FabButton">FabButton</a> which is licensed under The MIT License (MIT).<br/>
+      <a href="https://github.com/bumptech/glide">Glide</a> which is licensed under BSD, part MIT and Apache 2.0
+]]></string>
+
+    <string name="book_download_button">DOWNLOAD</string>
+
+
+    <string name="slide_1_african_story_books">New African Story Books</string>
+    <string name="slide_2_volunteer_professionals">Created by Volunteer Professionals</string>
+    <string name="slide_3_download_and_go">Download and Read on the go</string>
+    <string name="slide_4_different_languages">Available in different languages</string>
+    <string name="slide_1_african_story_books_subtitle">That anyone can freely translate and distribute.</string>
+    <string name="slide_2_volunteer_professionals_subtitle">On a single day, designers, writers and illustrators meet to create cool books.</string>
+    <string name="slide_3_download_and_go_subtitle" >On the bus, in a train, wherever you are - the books are there too.</string>
+    <string name="slide_4_different_languages_subtitle">English, Zulu, Afrikaans, Xhosa and more!</string>
+
+    <string name="transition_book_background" translatable="false">book_background</string>
+    <string name="transition_book" translatable="false">book</string>
+
+</resources>

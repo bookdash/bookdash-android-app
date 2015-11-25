@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+    <!--<data>
+        <variable
+            name="contributor"
+            type="org.org.bookdash.android.org.bookdash.android.pojo.Contributor"/>
+    </data>-->
+    <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:orientation="vertical" android:layout_width="match_parent"
+        android:layout_height="72dp">
+
+        <ImageView
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:id="@+id/imageViewContributorAvatar"
+            android:layout_alignParentTop="false"
+            android:layout_alignParentLeft="false"
+            android:src="@drawable/placeholder_avatar"
+
+            android:layout_alignParentStart="true"
+            android:layout_marginLeft="16dp"
+            android:layout_centerVertical="true" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+
+            android:id="@+id/textViewContributorName"
+            android:fontFamily="sans-serif"
+            android:textColor="@color/text_color_primary_dark"
+            android:textSize="16sp"
+            android:textStyle="normal"
+            tools:text="Author Name"
+            android:paddingTop="16dp"
+            android:paddingRight="16dp"
+            android:layout_marginLeft="72dp" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+
+            android:id="@+id/textViewRole"
+            android:textSize="14sp"
+            android:textColor="@color/text_secondary_dark"
+            android:fontFamily="sans-serif"
+            tools:text="Editor"
+            android:layout_marginLeft="72dp"
+            android:paddingRight="16dp"
+            android:layout_below="@+id/textViewContributorName" />
+    </RelativeLayout>
+</layout>
