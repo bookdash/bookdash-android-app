@@ -1,13 +1,13 @@
 # Bookdash Android
 Book Dash is an Android App for the NPO where you can download books in different languages for free.
 
-(screenshots/demo.gif)
+![](screenshots/demo.gif)
 
-(screenshots/screen_listbooks_phone.jpg) (screenshots/screen_bookdetail_phone.jpg)
-(screenshots/screen_bookread_phone.jpg)
+![](screenshots/screen_listbooks_phone.jpg) ![](screenshots/screen_bookdetail_phone.jpg)
+![](screenshots/screen_bookread_phone.jpg)
 
-(screenshots/screen_listbooks_tablet.jpg) (screenshots/screen_bookdetail_tablet.jpg)
-(screenshots/screen_bookread_tablet.jpg)
+![](screenshots/screen_listbooks_tablet.jpg) ![](screenshots/screen_bookdetail_tablet.jpg)
+![](screenshots/screen_bookread_tablet.jpg)
 
 # What does this app do?
 It is an open source Android application that allows people to download children's story books. The books are available
