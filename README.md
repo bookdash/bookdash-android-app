@@ -39,6 +39,8 @@ http://bookdash.org/
 2. Setup a Parse Account. https://parse.com
 3. You will need to recreate the Parse Database. Click on "Core" and click "Import Data" you can find the example JSON here:
 /parse_data_example/
+ If you want to download the actual books, you need to individually download each book and import the files into the parse manually. See the information here: https://www.parse.com/questions/exporting-file-objects-and-importing-to-another-application
+
 4. Change the Parse API Key and Client Key in the file to your unique parse key: /appconfig-sample.properties .
 5. Setup a Fabric Account. https://fabric.io/dashboard
 6. Get your Fabric API Key and Client key, change it in the file: /app/fabric-sample.properties
