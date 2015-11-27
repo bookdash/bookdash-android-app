@@ -1,4 +1,7 @@
 # Bookdash Android
+
+Check out the blog post here: http://riggaroo.co.za/book-dash-android-app/
+
 Book Dash is an Android App for the NPO where you can download books in different languages for free.
 
 
