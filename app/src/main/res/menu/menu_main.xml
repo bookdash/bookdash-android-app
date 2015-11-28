@@ -7,7 +7,7 @@
         android:icon="@drawable/ic_action_language"
         android:orderInCategory="1"
         android:title="@string/action_language_choice"
-        app:showAsAction="never" />
+        app:showAsAction="ifRoom" />
     <item
         android:id="@+id/action_about"
         android:orderInCategory="2"
