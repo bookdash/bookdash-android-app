@@ -35,9 +35,7 @@
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_gravity="center"
-            android:layout_marginBottom="20dp"
             android:layout_weight="0.7"
-            android:padding="2dp"
             android:visibility="@{TextUtils.isEmpty(page.image) ? View.GONE : View.VISIBLE}"
             app:imageUrl="@{page.image}"/>
 
@@ -60,9 +58,6 @@
             android:breakStrategy="high_quality"
             android:hyphenationFrequency="full" />
     </LinearLayout>
-        <View android:layout_width="1dp"
-            android:layout_height="match_parent"
-            android:background="#DBDBDB"/>
     <LinearLayout
         android:layout_width="0dp"
         android:layout_height="match_parent"
@@ -79,9 +74,7 @@
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_gravity="center"
-            android:layout_marginBottom="20dp"
             android:layout_weight="0.7"
-            android:padding="2dp"
             android:visibility="@{TextUtils.isEmpty(page2.image) ? View.GONE : View.VISIBLE}"
             app:imageUrl="@{page2.image}"/>
 
