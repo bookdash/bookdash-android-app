@@ -1,101 +1,108 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:app="http://schemas.android.com/apk/res-auto">
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <data>
-        <import type="android.view.View"/>
-        <import type="android.text.TextUtils"/>
+
+        <import type="android.view.View" />
+        <import type="android.graphics.Color" />
+
+        <import type="android.text.TextUtils" />
 
         <variable
             name="page"
-            type="org.bookdash.android.domain.pojo.gson.Page"/>
+            type="org.bookdash.android.domain.pojo.gson.Page" />
+
         <variable
             name="page2"
-            type="org.bookdash.android.domain.pojo.gson.Page"/>
+            type="org.bookdash.android.domain.pojo.gson.Page" />
     </data>
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:weightSum="1"
-        android:orientation="horizontal"
-        android:layout_height="match_parent">
-
-    <LinearLayout
-        android:layout_width="0dp"
+    <android.support.percent.PercentRelativeLayout
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="wrap_content"
         android:layout_height="match_parent"
-        android:layout_weight="0.5"
-        android:visibility="@{page == null ? View.INVISIBLE : View.VISIBLE}"
-
-        android:background="#FFFFFF"
-        android:orientation="vertical">
+        tools:context=".presentation.bookinfo.BookInfoActivity">
 
 
-        <ImageView
-            android:id="@+id/image_view_page"
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_gravity="center"
-            android:layout_weight="0.7"
-            android:visibility="@{TextUtils.isEmpty(page.image) ? View.GONE : View.VISIBLE}"
-            app:imageUrl="@{page.image}"/>
+        <LinearLayout
+            android:orientation="vertical"
+            android:id="@+id/lin_layout_page1"
+            app:layout_aspectRatio="100%"
+
+            android:layout_centerVertical="true"
+            android:background="#ffffff"
+            android:visibility="@{page == null ? View.INVISIBLE : View.VISIBLE}"
+            app:layout_widthPercent="50%">
 
 
-        <org.bookdash.android.presentation.view.AutoResizeTextView
-            android:id="@+id/text_view_page"
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_below="@id/image_view_page"
-            android:layout_centerHorizontal="true"
-            android:layout_gravity="center"
-            android:layout_margin="8dp"
-            android:layout_weight="0.3"
-            android:gravity="center|center_vertical|center_horizontal"
-            android:text="@{page.htmlText}"
-            android:textSize="@dimen/text_size_page"
-            android:fontFamily="sans-serif"
-            android:visibility="@{TextUtils.isEmpty(page.text) ? View.GONE : View.VISIBLE}"
-            android:nestedScrollingEnabled="true"
-            android:breakStrategy="high_quality"
-            android:hyphenationFrequency="full" />
-    </LinearLayout>
-    <LinearLayout
-        android:layout_width="0dp"
-        android:layout_height="match_parent"
-        app:layout_widthPercent="50%"
-        android:background="#ffffff"
-        android:visibility="@{page2 == null ? View.INVISIBLE : View.VISIBLE}"
-
-        android:layout_weight="0.5"
-        android:orientation="vertical">
+            <ImageView
+                android:id="@+id/image_view_page"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_gravity="center"
+                android:layout_weight="0.7"
+                android:visibility="@{TextUtils.isEmpty(page.image) ? View.GONE : View.VISIBLE}"
+                app:imageUrl="@{page.image}" />
 
 
-        <ImageView
-            android:id="@+id/image_view_page2"
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_gravity="center"
-            android:layout_weight="0.7"
-            android:visibility="@{TextUtils.isEmpty(page2.image) ? View.GONE : View.VISIBLE}"
-            app:imageUrl="@{page2.image}"/>
+            <org.bookdash.android.presentation.view.AutoResizeTextView
+                android:id="@+id/text_view_page"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_below="@id/image_view_page"
+                android:layout_centerHorizontal="true"
+                android:layout_gravity="center"
+                android:layout_margin="8dp"
+                android:layout_weight="0.3"
+                android:breakStrategy="high_quality"
+                android:fontFamily="sans-serif"
+                android:gravity="center|center_vertical|center_horizontal"
+                android:hyphenationFrequency="full"
+                android:nestedScrollingEnabled="true"
+                android:text="@{page.htmlText}"
+                android:textSize="@dimen/text_size_page"
+                android:visibility="@{TextUtils.isEmpty(page.text) ? View.GONE : View.VISIBLE}" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_toRightOf="@id/lin_layout_page1"
+            android:layout_toEndOf="@id/lin_layout_page1"
+            android:orientation="vertical"
+            app:layout_aspectRatio="100%"
+            android:layout_centerVertical="true"
+            android:background="#ffffff"
+            android:visibility="@{page2 == null ? View.INVISIBLE : View.VISIBLE}"
+            app:layout_widthPercent="50%">
 
 
-        <org.bookdash.android.presentation.view.AutoResizeTextView
-            android:id="@+id/text_view_page2"
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_below="@id/image_view_page2"
-            android:layout_centerHorizontal="true"
-            android:layout_gravity="center"
-            android:layout_margin="8dp"
-            android:layout_weight="0.3"
-            android:gravity="center|center_vertical|center_horizontal"
-            android:text="@{page2.htmlText}"
-            android:textSize="@dimen/text_size_page"
-            android:fontFamily="sans-serif"
-            android:visibility="@{TextUtils.isEmpty(page2.text) ? View.GONE : View.VISIBLE}"
-            android:nestedScrollingEnabled="true"
-            android:hyphenationFrequency="full"
-            android:breakStrategy="high_quality" />
-    </LinearLayout>
-    </LinearLayout>
+            <ImageView
+                android:id="@+id/image_view_page2"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_gravity="center"
+                android:layout_weight="0.7"
+                android:visibility="@{TextUtils.isEmpty(page2.image) ? View.GONE : View.VISIBLE}"
+                app:imageUrl="@{page2.image}" />
+
+
+            <org.bookdash.android.presentation.view.AutoResizeTextView
+                android:id="@+id/text_view_page2"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_below="@id/image_view_page2"
+                android:layout_centerHorizontal="true"
+                android:layout_gravity="center"
+                android:layout_margin="8dp"
+                android:layout_weight="0.3"
+                android:breakStrategy="high_quality"
+                android:fontFamily="sans-serif"
+                android:gravity="center|center_vertical|center_horizontal"
+                android:hyphenationFrequency="full"
+                android:nestedScrollingEnabled="true"
+                android:text="@{page2.htmlText}"
+                android:textSize="@dimen/text_size_page"
+                android:visibility="@{TextUtils.isEmpty(page2.text) ? View.GONE : View.VISIBLE}" />
+        </LinearLayout>
+    </android.support.percent.PercentRelativeLayout>
 </layout>
