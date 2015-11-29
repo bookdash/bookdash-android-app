@@ -38,18 +38,21 @@ import bolts.Task;
  */
 public class BookDetailApiImpl implements BookDetailApi {
 
+    private static final String TAG = "BookDetailApiImpl";
+    private final Executor DISK_EXECUTOR = Executors.newCachedThreadPool();
+
     @Override
     public void getBooksForLanguages(String language, final BookServiceCallback<List<BookDetail>> bookServiceCallback) {
         ParseQuery<Language> queryLanguagesNew = ParseQuery.getQuery(Language.class);
-        queryLanguagesNew.whereEqualTo("language_name", language);
+        queryLanguagesNew.whereEqualTo(Language.LANG_NAME_COL, language);
 
         ParseQuery<BookDetail> queryBookDetail = ParseQuery.getQuery(BookDetail.class);
         queryBookDetail.setCachePolicy(ParseQuery.CachePolicy.NETWORK_ELSE_CACHE);
-        queryBookDetail.include("book_language");
-        queryBookDetail.include("book_id");
-        queryBookDetail.whereEqualTo("book_enabled", true);
-        queryBookDetail.addDescendingOrder("createdAt");
-        queryBookDetail.whereMatchesQuery("book_language", queryLanguagesNew);
+        queryBookDetail.include(BookDetail.BOOK_LANGUAGE_COL);
+        queryBookDetail.include(BookDetail.BOOK_ID_COL);
+        queryBookDetail.whereEqualTo(BookDetail.BOOK_ENABLED_COL, true);
+        queryBookDetail.addDescendingOrder(BookDetail.CREATED_AT_COL);
+        queryBookDetail.whereMatchesQuery(BookDetail.BOOK_LANGUAGE_COL, queryLanguagesNew);
         queryBookDetail.findInBackground(new FindCallback<BookDetail>() {
             @Override
             public void done(List<BookDetail> list, ParseException e) {
@@ -62,17 +65,14 @@ public class BookDetailApiImpl implements BookDetailApi {
         });
     }
 
-    private static final String TAG = "BookDetailApiImpl";
-    private final Executor DISK_EXECUTOR = Executors.newCachedThreadPool();
-
     @Override
     public void getBookDetail(String bookDetailId, final BookServiceCallback<BookDetail> bookServiceCallback) {
         ParseQuery<BookDetail> queryBookDetail = ParseQuery.getQuery(BookDetail.class);
-        queryBookDetail.whereEqualTo("objectId", bookDetailId);
+        queryBookDetail.whereEqualTo(BookDetail.OBJECT_ID, bookDetailId);
         queryBookDetail.setCachePolicy(ParseQuery.CachePolicy.CACHE_ELSE_NETWORK);
-        queryBookDetail.include("book_language");
-        queryBookDetail.include("book_id");
-        queryBookDetail.whereEqualTo("book_enabled", true);
+        queryBookDetail.include(BookDetail.BOOK_LANGUAGE_COL);
+        queryBookDetail.include(BookDetail.BOOK_ID_COL);
+        queryBookDetail.whereEqualTo(BookDetail.BOOK_ENABLED_COL, true);
         queryBookDetail.getFirstInBackground(new GetCallback<BookDetail>() {
             @Override
             public void done(BookDetail bookDetail, ParseException e) {
@@ -90,8 +90,8 @@ public class BookDetailApiImpl implements BookDetailApi {
 
         ParseQuery<BookContributor> query = ParseQuery.getQuery(BookContributor.class);
         query.setCachePolicy(ParseQuery.CachePolicy.CACHE_ELSE_NETWORK);
-        query.whereEqualTo("book", bookId);
-        query.include("contributor");
+        query.whereEqualTo(BookContributor.BOOK_BOOK_COL, bookId);
+        query.include(BookContributor.BOOK_CONTRIBUTOR_COL);
         query.findInBackground(new FindCallback<BookContributor>() {
             @Override
             public void done(List<BookContributor> list, ParseException e) {
@@ -111,7 +111,7 @@ public class BookDetailApiImpl implements BookDetailApi {
     public void getLanguages(final BookServiceCallback<List<Language>> languagesCallback) {
         ParseQuery<Language> queryLanguages = ParseQuery.getQuery(Language.class);
         queryLanguages.setCachePolicy(ParseQuery.CachePolicy.NETWORK_ELSE_CACHE);
-
+        queryLanguages.orderByAscending(Language.LANGUAGE_ID);
         queryLanguages.findInBackground(new FindCallback<Language>() {
             @Override
             public void done(List<Language> list, ParseException e) {

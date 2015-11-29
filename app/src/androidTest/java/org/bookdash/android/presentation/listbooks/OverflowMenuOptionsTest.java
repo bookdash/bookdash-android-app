@@ -27,10 +27,12 @@ import static android.support.test.espresso.assertion.ViewAssertions.matches;
 import static android.support.test.espresso.intent.matcher.IntentMatchers.hasAction;
 import static android.support.test.espresso.intent.matcher.IntentMatchers.hasData;
 import static android.support.test.espresso.matcher.RootMatchers.isDialog;
+import static android.support.test.espresso.matcher.RootMatchers.*;
 import static android.support.test.espresso.matcher.ViewMatchers.isDisplayed;
+import static android.support.test.espresso.matcher.ViewMatchers.withContentDescription;
 import static android.support.test.espresso.matcher.ViewMatchers.withId;
 import static android.support.test.espresso.matcher.ViewMatchers.withText;
-import static org.hamcrest.Matchers.allOf;
+import static org.hamcrest.Matchers.*;
 import static org.hamcrest.Matchers.contains;
 
 
@@ -74,18 +76,6 @@ public class OverflowMenuOptionsTest {
     }
 
 
-    @Test
-    public void languageItemClick_ShowLanguageChooser() {
-        //Given
-        openActionBarOverflowOrOptionsMenu(InstrumentationRegistry.getTargetContext());
-
-        //When
-        String title = InstrumentationRegistry.getTargetContext().getString(R.string.action_language_choice);
-        onView(withText(title)).perform(click());
-
-        //Then
-        onView(withText(R.string.language_selection_heading)).inRoot(isDialog()).check(matches(isDisplayed()));
-    }
 
     @Test
     public void rateThisAppClick_ShowPlayStoreDetail() {
