@@ -16,4 +16,10 @@
     <dimen name="fab_margin_top">112dp</dimen>
     <dimen name="fab_margin_right_landscape">32dp</dimen>
 
+    <dimen name="elevation_micro">2dp</dimen>
+    <dimen name="elevation_small">4dp</dimen>
+    <dimen name="elevation_medium">8dp</dimen>
+    <dimen name="elevation_large">16dp</dimen>
+
+
 </resources>
