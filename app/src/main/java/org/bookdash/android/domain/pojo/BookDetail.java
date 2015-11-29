@@ -25,6 +25,10 @@ public class BookDetail extends ParseObject {
     public static final String OBJECT_ID = "objectId";
     public static final String BOOK_ENABLED_COL = "book_enabled";
     public static final String CREATED_AT_COL = "createdAt";
+    public static final String BOOK_INFO_FILE_NAME = "bookdetails.json";
+
+
+    private boolean isDownloading = false;
 
     public BookDetail() {
     }
@@ -62,7 +66,7 @@ public class BookDetail extends ParseObject {
         return getString(ABOUT_BOOK_COL);
     }
 
-    public String getBookDetailId(){
+    public String getBookDetailId() {
         return getString(OBJECT_ID);
     }
 
@@ -82,6 +86,13 @@ public class BookDetail extends ParseObject {
         String targetLocation = BookDashApplication.FILES_DIR + File.separator + getObjectId();
         File f = new File("", targetLocation);
         return f.exists();
+    }
+    public boolean isDownloading() {
+        return isDownloading;
+    }
+
+    public void setIsDownloading(boolean isDownloading) {
+        this.isDownloading = isDownloading;
     }
 
     public BookDetailParcelable toBookParcelable() {
