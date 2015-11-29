@@ -8,6 +8,7 @@ import com.parse.ParseObject;
 public class BookContributor extends ParseObject {
     public static final String BOOK_CONTRIBUTOR_TABLE_NAME = "BookContributor";
     public static final String BOOK_CONTRIBUTOR_COL = "contributor";
+    public static final String BOOK_BOOK_COL = "book";
 
     public BookContributor() {
     }
