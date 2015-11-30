@@ -161,6 +161,7 @@ public class BookInfoActivity extends BaseAppCompatActivity implements BookInfoC
                     showSnackBarMessage(R.string.book_not_available);
                     return;
                 }
+                floatingActionButton.showProgress(true);
                 actionsListener.downloadBook(bookInfo);
             }
         });
@@ -300,9 +301,7 @@ public class BookInfoActivity extends BaseAppCompatActivity implements BookInfoC
 
     @Override
     public void showDownloadProgress(int downloadProgress) {
-        if (downloadProgress < 2){
-            floatingActionButton.showProgress(true);
-        }
+
         Log.d(TAG, "Download progress:" + downloadProgress);
         floatingActionButton.setProgress(downloadProgress, true);
 

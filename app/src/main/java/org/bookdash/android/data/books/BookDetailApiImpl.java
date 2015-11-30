@@ -42,7 +42,7 @@ public class BookDetailApiImpl implements BookDetailApi {
     private final Executor DISK_EXECUTOR = Executors.newCachedThreadPool();
 
     @Override
-    public void getBooksForLanguages(String language, final BookServiceCallback<List<BookDetail>> bookServiceCallback) {
+    public void getBooksForLanguages(@NonNull String language, @NonNull final BookServiceCallback<List<BookDetail>> bookServiceCallback) {
         ParseQuery<Language> queryLanguagesNew = ParseQuery.getQuery(Language.class);
         queryLanguagesNew.whereEqualTo(Language.LANG_NAME_COL, language);
 
