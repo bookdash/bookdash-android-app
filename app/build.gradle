@@ -29,8 +29,8 @@ android {
         applicationId "org.bookdash.android"
         minSdkVersion 16
         targetSdkVersion 23
-        versionCode 10
-        versionName "1.0.10"
+        versionCode 11
+        versionName "1.0.11"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
     }
     signingConfigs {
@@ -89,13 +89,12 @@ android {
             signingConfig signingConfigs.release
             buildConfigField "String", "PARSE_APPLICATION_ID", appConfig.PARSE_APPLICATION_ID
             buildConfigField "String", "PARSE_CLIENT_KEY", appConfig.PARSE_CLIENT_KEY
-
+            ext.enableCrashlytics = true
         }
         debug {
             buildConfigField "String", "PARSE_APPLICATION_ID", appConfig.PARSE_APPLICATION_ID
             buildConfigField "String", "PARSE_CLIENT_KEY", appConfig.PARSE_CLIENT_KEY
             ext.enableCrashlytics = false
-
             // Run code coverage reports by default on debug builds.
             testCoverageEnabled = true
         }
