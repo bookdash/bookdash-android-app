@@ -34,14 +34,14 @@ public class FakeBookDetailApiImpl implements BookDetailApi {
         languages.add(language1);
 
         BookDetail bookDetail = new BookDetail("Searching for Spring",
-                "http://org.bookdash.android.org/wp-content/uploads/2015/09/searching-for-the-spirit-of-spring_pdf-ebook-20150921_Page_01.jpg", "f4r2gho2h", language);
+                "http://bookdash.org/wp-content/uploads/2015/09/searching-for-the-spirit-of-spring_pdf-ebook-20150921_Page_01.jpg", "f4r2gho2h", language);
         BookDetail bookDetail2 = new BookDetail("Why is Nita Upside Down?",
-                "http://org.bookdash.android.org/wp-content/uploads/2015/09/why-is-nita-upside-down_pdf-ebook_20150920_Page_01.jpg", "12r2gho2h", language);
+                "http://bookdash.org/wp-content/uploads/2015/09/why-is-nita-upside-down_pdf-ebook_20150920_Page_01.jpg", "12r2gho2h", language);
 
         BookDetail bookDetailZu = new BookDetail("[ZULU]isipilingi",
-                "http://org.bookdash.android.org/wp-content/uploads/2015/09/searching-for-the-spirit-of-spring_pdf-ebook-20150921_Page_01.jpg", "f4r2gho2h", language1);
+                "http://bookdash.org/wp-content/uploads/2015/09/searching-for-the-spirit-of-spring_pdf-ebook-20150921_Page_01.jpg", "f4r2gho2h", language1);
         BookDetail bookDetailZu2 = new BookDetail("[ZULU]kubheke phansi",
-                "http://org.bookdash.android.org/wp-content/uploads/2015/09/why-is-nita-upside-down_pdf-ebook_20150920_Page_01.jpg", "12r2gho2h", language1);
+                "http://bookdash.org/wp-content/uploads/2015/09/why-is-nita-upside-down_pdf-ebook_20150920_Page_01.jpg", "12r2gho2h", language1);
 
         bookDetails.add(bookDetail);
         bookDetails.add(bookDetail2);
@@ -79,7 +79,7 @@ public class FakeBookDetailApiImpl implements BookDetailApi {
             bookServiceCallback.onError(new Exception("BOOK DETAIL ERROR"));
         } else {
             for (BookDetail b : bookDetails) {
-                if (b.getBookDetailId().equals(bookDetailId)) {
+                if (b.getObjectId().equals(bookDetailId)) {
                     bookServiceCallback.onLoaded(b);
                     return;
                 }

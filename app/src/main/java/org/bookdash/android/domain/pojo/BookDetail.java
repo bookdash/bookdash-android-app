@@ -38,7 +38,8 @@ public class BookDetail extends ParseObject {
         put(BOOK_TITLE_COL, title);
         put(BOOK_COVER_PAGE_URL_COL, bookCoverUrl);
         put(BOOK_LANGUAGE_COL, languageId);
-        put(OBJECT_ID, objectId);
+        setObjectId(objectId);
+      //  put(OBJECT_ID, objectId);
         //put();
     }
 
@@ -66,9 +67,6 @@ public class BookDetail extends ParseObject {
         return getString(ABOUT_BOOK_COL);
     }
 
-    public String getBookDetailId() {
-        return getString(OBJECT_ID);
-    }
 
     public String getFolderLocation(String filesDir) {
         return getFolderLocation(new File(filesDir, getObjectId() + File.separator));

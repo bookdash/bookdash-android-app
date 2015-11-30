@@ -205,7 +205,9 @@ public class ListBooksActivity extends BaseAppCompatActivity implements ListBook
 
             Intent intent = new Intent(ListBooksActivity.this, BookInfoActivity.class);
             intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-            intent.putExtra(BookInfoActivity.BOOK_PARCEL, ((BookViewHolder) v.getTag()).bookDetail.toBookParcelable());
+            BookViewHolder viewHolder = (BookViewHolder)v.getTag();
+            BookDetail bookDetailResult = viewHolder.bookDetail;
+            intent.putExtra(BookInfoActivity.BOOK_PARCEL, bookDetailResult.toBookParcelable());
             startActivity(intent);
 
        /* }*/

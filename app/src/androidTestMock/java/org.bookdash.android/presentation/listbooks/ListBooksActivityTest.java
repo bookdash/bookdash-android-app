@@ -13,6 +13,8 @@ import android.support.v7.widget.Toolbar;
 import android.test.suitebuilder.annotation.LargeTest;
 import android.view.MenuItem;
 
+import junit.framework.Assert;
+
 import org.bookdash.android.R;
 import org.bookdash.android.data.settings.FakeSettingsApiImpl;
 import org.bookdash.android.presentation.about.AboutActivity;
@@ -104,9 +106,7 @@ public class ListBooksActivityTest {
 
     @Test
     public void chooseDifferentLanguage_NewBooksLoaded(){
-        openActionBarOverflowOrOptionsMenu(InstrumentationRegistry.getTargetContext());
-        String title = InstrumentationRegistry.getTargetContext().getString(R.string.action_language_choice);
-        onView(withText(title)).perform(click());
+        onView(withId(R.id.action_language_choice)).perform(click());
 
         //When
         onView(withText("Zulu")).perform(click());
@@ -118,6 +118,10 @@ public class ListBooksActivityTest {
         onView(withText("Why is Nita Upside Down?")).check(doesNotExist());
     }
 
+    @Test
+    public void testGetScreenName_IsBookListing(){
+        Assert.assertEquals("BookListingScreen", activityTestRule.getActivity().getScreenName());
+    }
 
 
 
