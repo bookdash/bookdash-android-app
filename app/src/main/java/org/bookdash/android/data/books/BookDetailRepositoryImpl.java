@@ -24,7 +24,7 @@ public class BookDetailRepositoryImpl implements BookDetailRepository {
     }
 
     @Override
-    public void getBooksForLanguage(String language, @NonNull final GetBooksForLanguageCallback booksForLanguageCallback) {
+    public void getBooksForLanguage(@NonNull String language, @NonNull final GetBooksForLanguageCallback booksForLanguageCallback) {
         bookDetailApi.getBooksForLanguages(language, new BookDetailApi.BookServiceCallback<List<BookDetail>>() {
 
             @Override

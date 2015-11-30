@@ -42,7 +42,7 @@ public class BookDetailApiImpl implements BookDetailApi {
     private final Executor DISK_EXECUTOR = Executors.newCachedThreadPool();
 
     @Override
-    public void getBooksForLanguages(String language, final BookServiceCallback<List<BookDetail>> bookServiceCallback) {
+    public void getBooksForLanguages(@NonNull String language, @NonNull final BookServiceCallback<List<BookDetail>> bookServiceCallback) {
         ParseQuery<Language> queryLanguagesNew = ParseQuery.getQuery(Language.class);
         queryLanguagesNew.whereEqualTo(Language.LANG_NAME_COL, language);
 
@@ -127,7 +127,11 @@ public class BookDetailApiImpl implements BookDetailApi {
 
     @Override
     public void downloadBook(final BookDetail bookInfo, @NonNull final BookServiceCallback<BookPages> downloadBookCallback, @NonNull final BookServiceProgressCallback progressCallback) {
-
+        if (bookInfo.isDownloadedAlready()){
+            progressCallback.onProgressChanged(100);
+            downloadBookCallback.onLoaded(getBookPages(bookInfo.getFolderLocation(BookDashApplication.FILES_DIR) + File.separator + BookDetail.BOOK_INFO_FILE_NAME ));
+            return;
+        }
         bookInfo.getBookFile().getDataInBackground(new GetDataCallback() {
             @Override
             public void done(final byte[] bytes, ParseException e) {
@@ -185,7 +189,7 @@ public class BookDetailApiImpl implements BookDetailApi {
             FileManager.deleteFile(BookDashApplication.FILES_DIR, File.separator + bookDetail.getBookFile().getName());
         }
 
-        return getBookPages(bookDetail.getFolderLocation(BookDashApplication.FILES_DIR) + File.separator + "bookdetails.json");
+        return getBookPages(bookDetail.getFolderLocation(BookDashApplication.FILES_DIR) + File.separator + BookDetail.BOOK_INFO_FILE_NAME);
     }
 
 

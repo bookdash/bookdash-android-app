@@ -262,7 +262,7 @@
                 app:fbb_endBitmap="@drawable/ic_open_book"
                 app:fbb_hideProgressOnComplete="true"
                 app:fbb_progressColor="?attr/colorAccent"
-                app:fbb_progressWidthRatio="0.1"
+                app:fbb_progressWidthRatio="0.125"
                 app:fbb_showEndBitmap="true"
                 app:fbb_autoStart="true"
                 app:fbb_showShadow="true"

@@ -80,9 +80,13 @@ public class BookInfoPresenter implements BookInfoContract.UserActionsListener {
 
 
     @Override
-    public void downloadBook(final BookDetail bookInfo) {
-
-        if (bookInfo == null || bookInfo.getBookFile() == null || bookInfo.getBookFile().getUrl() == null) {
+    public void downloadBook(@NonNull final BookDetail bookInfo) {
+        if (bookInfo.isDownloading()){
+            booksView.showSnackBarMessage(R.string.book_is_downloading);
+            return;
+        }
+        bookInfo.setIsDownloading(true);
+        if (bookInfo.getBookFile() == null || bookInfo.getBookFile().getUrl() == null) {
             booksView.showSnackBarMessage(R.string.book_not_available);
             return;
         }
@@ -95,11 +99,13 @@ public class BookInfoPresenter implements BookInfoContract.UserActionsListener {
                     booksView.showSnackBarMessage(R.string.failed_to_open_book);
                     return;
                 }
+                bookInfo.setIsDownloading(false);
                 booksView.openBook(bookInfo, bookPages, bookInfo.getFolderLocation(BookDashApplication.FILES_DIR));
             }
 
             @Override
             public void onBookPagesLoadError(Exception e) {
+                bookInfo.setIsDownloading(false);
                 if (e != null) {
                     booksView.showSnackBarMessage(R.string.failed_to_download_book);
                 }
