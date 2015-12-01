@@ -3,8 +3,6 @@ package org.bookdash.android.presentation.activity;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 
-import com.google.android.gms.analytics.HitBuilders;
-import com.google.android.gms.analytics.Tracker;
 
 import org.bookdash.android.BookDashApplication;
 

@@ -20,8 +20,6 @@ import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.google.android.gms.analytics.HitBuilders;
-import com.google.android.gms.analytics.Tracker;
 
 import org.bookdash.android.BookDashApplication;
 import org.bookdash.android.BuildConfig;
