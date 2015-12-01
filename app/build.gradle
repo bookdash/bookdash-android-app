@@ -47,6 +47,8 @@ android {
                 keyPassword props.keyAliasPassword
             }
         }
+        buildTypes.release.signingConfig signingConfigs.release
+
     }
 
     packagingOptions {
@@ -90,7 +92,6 @@ android {
             shrinkResources false
             minifyEnabled true
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'),'proguard-rules.pro'
-            signingConfig signingConfigs.release
             ext.enableCrashlytics = true
         }
         debug {
