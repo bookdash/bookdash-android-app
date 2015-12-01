@@ -53,6 +53,7 @@ android {
 dependencies {
     compile 'com.android.support:design:23.1.1'
 }
+/*
 
 Properties properties = new Properties()
 properties.load(project.rootProject.file('local.properties').newDataInputStream())
@@ -120,6 +121,7 @@ task javadocJar(type: Jar, dependsOn: javadoc) {
     from javadoc.destinationDir
 }
 
+
 artifacts {
     archives javadocJar
     archives sourcesJar
@@ -132,3 +134,4 @@ task findConventions << {
 task wrapper(type: Wrapper) {
 }
 
+*/
