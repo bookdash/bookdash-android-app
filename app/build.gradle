@@ -32,19 +32,26 @@ android {
         versionCode 11
         versionName "1.0.11"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+        buildConfigField "String", "PARSE_APPLICATION_ID", appConfig.PARSE_APPLICATION_ID
+        buildConfigField "String", "PARSE_CLIENT_KEY", appConfig.PARSE_CLIENT_KEY
+
     }
-    signingConfigs {
-        release {
-            def props = new Properties()
+    File signFile = rootProject.file('release-keystore.properties')
+    if (signFile.exists()) {
+        signingConfigs {
+            release {
+                def props = new Properties()
 
-            props.load(new FileInputStream(rootProject.file("release-keystore.properties")))
+                props.load(new FileInputStream(signFile))
 
-            storeFile rootProject.file(props.keyStore)
-            storePassword props.keyStorePassword
-            keyAlias props.keyAlias
-            keyPassword props.keyAliasPassword
+                storeFile rootProject.file(props.keyStore)
+                storePassword props.keyStorePassword
+                keyAlias props.keyAlias
+                keyPassword props.keyAliasPassword
+            }
         }
     }
+
     packagingOptions {
         exclude 'META-INF/ASL2.0'
         exclude 'META-INF/LICENSE'
@@ -84,16 +91,12 @@ android {
     buildTypes {
         release {
             shrinkResources false
-            minifyEnabled false
-            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'),'proguard-project.txt'
+            minifyEnabled true
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'),'proguard-rules.pro'
             signingConfig signingConfigs.release
-            buildConfigField "String", "PARSE_APPLICATION_ID", appConfig.PARSE_APPLICATION_ID
-            buildConfigField "String", "PARSE_CLIENT_KEY", appConfig.PARSE_CLIENT_KEY
             ext.enableCrashlytics = true
         }
         debug {
-            buildConfigField "String", "PARSE_APPLICATION_ID", appConfig.PARSE_APPLICATION_ID
-            buildConfigField "String", "PARSE_CLIENT_KEY", appConfig.PARSE_CLIENT_KEY
             ext.enableCrashlytics = false
             // Run code coverage reports by default on debug builds.
             testCoverageEnabled = true

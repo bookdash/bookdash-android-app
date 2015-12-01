@@ -15,5 +15,41 @@
 #-keepclassmembers class fqcn.of.javascript.interface.for.webview {
 #   public *;
 #}
+-ignorewarnings
+
 -keep class me.zhanghai.android.materialprogressbar.** { *; }
 -keep class com.joanzapata.** { *; }
+-keep class com.parse.** { *; }
+
+
+
+
+-keep public class * implements com.bumptech.glide.module.GlideModule
+-keep public enum com.bumptech.glide.load.resource.bitmap.ImageHeaderParser$** {
+    **[] $VALUES;
+    public *;
+}
+
+-keep class com.crashlytics.** { *; }
+-keep class com.crashlytics.android.**
+-keepattributes SourceFile,LineNumberTable
+
+-keepattributes Signature
+-keepattributes InnerClass
+-keep class com.squareup.okhttp.** {*;}
+-keep class za.co.riggaroo.materialhelptutorial.view.** { *;}
+-keep class mbanje.kurt.fabbutton.** {*;}
+-keep class com.google.android.gms.** {*;}
+-keep class android.support.v7.** {*;}
+
+-keep class android.support.design.** {*;}
+-keep class android.support.v4.** {*;}
+# For using GSON @Expose annotation
+-keepattributes *Annotation*
+
+# Gson specific classes
+-keep class sun.misc.Unsafe { *; }
+#-keep class com.google.gson.stream.** { *; }
+
+# Application classes that will be serialized/deserialized over Gson
+-keep class org.bookdash.android.domain.pojo.gson.** { *; }
