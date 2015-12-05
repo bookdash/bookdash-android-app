@@ -47,6 +47,24 @@
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="org.bookdash.android.presentation.listbooks.ListBooksActivity" />
+            <intent-filter android:label="@string/filter_view_book">
+                <action android:name="android.intent.action.VIEW" />
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+                <!-- Accepts URIs that begin with "http://recipe-app.com/recipes" -->
+                <data android:scheme="bookdash"
+                    android:host="books"
+                    />
+            </intent-filter>
+            <intent-filter android:label="@string/filter_view_book">
+                <action android:name="android.intent.action.VIEW" />
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+                <!-- Accepts URIs that begin with "http://recipe-app.com/recipes" -->
+                <data android:scheme="http"
+                    android:host="bookdash.org"
+                    android:pathPrefix="/books" />
+            </intent-filter>
         </activity>
         <activity
             android:name="org.bookdash.android.presentation.splash.SplashActivity"
@@ -100,6 +118,11 @@
         </receiver>
         <!-- replace @drawable/push_icon with your push icon identifier -->
         <meta-data android:name="com.parse.push.notification_icon" android:resource="@drawable/ic_stat_book"/>
+        <!-- ATTENTION: This was auto-generated to add Google Play services to your project for
+             App Indexing.  See https://g.co/AppIndexing/AndroidStudio for more information. -->
+        <meta-data
+            android:name="com.google.android.gms.version"
+            android:value="@integer/google_play_services_version" />
     </application>
 
 </manifest>
