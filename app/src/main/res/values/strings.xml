@@ -72,5 +72,10 @@
     <string name="filter_view_book">View Books</string>
     <string name="book_share">Share</string>
     <string name="sharing_book_title">I have just read \"%s\". Download Book Dash now and read it for free! http://play.google.com/store/apps/details?id=org.bookdash.android</string>
+    <string name="invitation_title">Download Book Dash</string>
+    <string name="invitation_cta">Install</string>
+    <string name="invitation_message">You should install Book Dash for access to some great free books.</string>
+    <string name="sent_invitations_fmt">Sent invites to %d</string>
+    <string name="invite_friends">Invite Friends</string>
 
 </resources>

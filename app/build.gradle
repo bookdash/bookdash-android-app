@@ -9,6 +9,7 @@ buildscript {
 }
 apply plugin: 'com.android.application'
 apply plugin: 'com.android.databinding'
+apply plugin: 'com.google.gms.google-services'
 apply plugin: 'io.fabric'
 
 repositories {
@@ -161,6 +162,6 @@ dependencies {
         transitive = true;
     }
     compile 'za.co.riggaroo:materialhelptutorial:1.0.3'
-
-    compile 'com.google.android.gms:play-services-appindexing:8.3.0'
+    compile "com.google.android.gms:play-services-appinvite:$rootProject.ext.googlePlayServicesVersion"
+    compile "com.google.android.gms:play-services-appindexing:$rootProject.ext.googlePlayServicesVersion"
 }
