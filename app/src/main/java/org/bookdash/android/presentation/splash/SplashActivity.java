@@ -16,6 +16,7 @@ import za.co.riggaroo.materialhelptutorial.tutorial.MaterialTutorialActivity;
  * @since 2015/07/16 3:16 PM
  */
 public class SplashActivity extends AppCompatActivity implements SplashContract.View {
+    private static final int SPLASH_SCREEN_REQUEST_CODE = 1;
     private SplashContract.UserActionsListener splashPresenter;
 
     @Override
@@ -23,20 +24,23 @@ public class SplashActivity extends AppCompatActivity implements SplashContract.
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splash);
         splashPresenter = new SplashPresenter(this, Injection.provideSettingsRepo(this));
+        showSplashAfterDelay();
+    }
+
+    private void showSplashAfterDelay(){
         (new Handler()).postDelayed(new Runnable() {
             @Override
             public void run() {
                 splashPresenter.loadSplash();
             }
         }, 1000);
-    }
 
+    }
     @Override
     public void loadTutorial() {
         Intent mainAct = new Intent(SplashActivity.this, MaterialTutorialActivity.class);
         mainAct.putParcelableArrayListExtra(MaterialTutorialActivity.MATERIAL_TUTORIAL_ARG_TUTORIAL_ITEMS, splashPresenter.getTutorialItems(this));
-        startActivityForResult(mainAct, 4325);
-       // finish();
+        startActivityForResult(mainAct, SPLASH_SCREEN_REQUEST_CODE);
     }
 
 
@@ -51,7 +55,7 @@ public class SplashActivity extends AppCompatActivity implements SplashContract.
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
     //    super.onActivityResult(requestCode, resultCode, data);
-        if (resultCode == RESULT_OK && requestCode == 4325){
+        if (resultCode == RESULT_OK && requestCode == SPLASH_SCREEN_REQUEST_CODE){
             splashPresenter.finishedTutorial();
 
         }

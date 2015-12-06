@@ -178,7 +178,7 @@ public class BookInfoActivity extends BaseAppCompatActivity implements BookInfoC
         });
         final BookDetailParcelable bookDetailParcelable = getIntent().getParcelableExtra(BOOK_PARCEL);
 
-        if (bookDetailParcelable!=null) {
+        if (bookDetailParcelable != null) {
             String bookDetailId = bookDetailParcelable.getBookDetailObjectId();
             startLoadingBook(bookDetailId);
             actionsListener.loadImage(bookDetailParcelable.getBookImageUrl());
@@ -188,6 +188,7 @@ public class BookInfoActivity extends BaseAppCompatActivity implements BookInfoC
         client = new GoogleApiClient.Builder(this).addApi(AppIndex.API).build();
 
     }
+
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.menu_book_info, menu);
@@ -206,6 +207,7 @@ public class BookInfoActivity extends BaseAppCompatActivity implements BookInfoC
 
         return super.onOptionsItemSelected(item);
     }
+
     private void startLoadingBook(final String bookDetailId) {
         errorRetryButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -219,11 +221,16 @@ public class BookInfoActivity extends BaseAppCompatActivity implements BookInfoC
     }
 
     protected void onNewIntent(Intent intent) {
+        super.onNewIntent(intent);
         String action = intent.getAction();
         String data = intent.getDataString();
-        if (Intent.ACTION_VIEW.equals(action) && data != null) {
-            String bookId = data.substring(data.lastIndexOf("/") + 1);
+        Log.d(TAG, "onNewIntent() called: action" + action);
 
+        if (Intent.ACTION_VIEW.equals(action) && data != null) {
+            Uri uri =  Uri.parse(data);
+            String bookId = uri.getLastPathSegment();
+            String invitationId = uri.getQueryParameter("invitation_id");
+            Log.d(TAG, "Action View: book id:" + bookId + ". Full URL:" + uri.toString() + ". InvitationId:" + invitationId);
             startLoadingBook(bookId);
         }
     }
@@ -330,7 +337,7 @@ public class BookInfoActivity extends BaseAppCompatActivity implements BookInfoC
                 bookInfo.getWebUrl() == null ? null : Uri.parse(bookInfo.getWebUrl()),
                 Uri.parse("android-app://org.bookdash.android/http/bookdash.org/books/" + bookInfo.getObjectId())
         );
-        if (viewAction!=null) {
+        if (viewAction != null) {
             AppIndex.AppIndexApi.start(client, viewAction);
         }
     }
@@ -412,7 +419,7 @@ public class BookInfoActivity extends BaseAppCompatActivity implements BookInfoC
     public void sendShareEvent(String bookTitle) {
         Intent sendIntent = new Intent();
         sendIntent.setAction(Intent.ACTION_SEND);
-        sendIntent.putExtra(Intent.EXTRA_TEXT, getString(R.string.sharing_book_title,bookTitle));
+        sendIntent.putExtra(Intent.EXTRA_TEXT, getString(R.string.sharing_book_title, bookTitle));
         sendIntent.setType("text/plain");
         startActivity(sendIntent);
     }
@@ -455,7 +462,7 @@ public class BookInfoActivity extends BaseAppCompatActivity implements BookInfoC
     public void onStop() {
         super.onStop();
 
-        if (viewAction!=null){
+        if (viewAction != null) {
             AppIndex.AppIndexApi.end(client, viewAction);
 
         }

@@ -21,9 +21,13 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 
+import com.google.android.gms.appinvite.AppInvite;
 import com.google.android.gms.appinvite.AppInviteInvitation;
+import com.google.android.gms.appinvite.AppInviteInvitationResult;
+import com.google.android.gms.common.ConnectionResult;
+import com.google.android.gms.common.api.GoogleApiClient;
+import com.google.android.gms.common.api.ResultCallback;
 
-import org.bookdash.android.BookDashApplication;
 import org.bookdash.android.BuildConfig;
 import org.bookdash.android.Injection;
 import org.bookdash.android.R;
@@ -42,6 +46,7 @@ public class ListBooksActivity extends BaseAppCompatActivity implements ListBook
 
     private static final int INVITE_REQUEST_CODE = 1;
     private ListBooksContract.UserActionsListener actionsListener;
+    private GoogleApiClient googleApiClient;
 
 
     @Override
@@ -79,8 +84,36 @@ public class ListBooksActivity extends BaseAppCompatActivity implements ListBook
 
         actionsListener.loadLanguages();
         actionsListener.loadBooksForLanguagePreference();
+        checkIfComingFromInvite();
+    }
 
+    private void checkIfComingFromInvite(){
+        googleApiClient = new GoogleApiClient.Builder(this)
+                .addApi(AppInvite.API)
+                .enableAutoManage(this, new GoogleApiClient.OnConnectionFailedListener() {
+                    @Override
+                    public void onConnectionFailed(ConnectionResult connectionResult) {
+                        Log.d(TAG, "onConnectionFailed: onResult:" + connectionResult.toString());
 
+                    }
+                })
+                .build();
+
+        // Check for App Invite invitations and launch deep-link activity if possible.
+        // Requires that an Activity is registered in AndroidManifest.xml to handle
+        // deep-link URLs.
+        boolean autoLaunchDeepLink = true;
+        AppInvite.AppInviteApi.getInvitation(googleApiClient, this, autoLaunchDeepLink)
+                .setResultCallback(
+                        new ResultCallback<AppInviteInvitationResult>() {
+                            @Override
+                            public void onResult(AppInviteInvitationResult result) {
+                                Log.d(TAG, "getInvitation:onResult:" + result.getStatus());
+                                // Because autoLaunchDeepLink = true we don't have to do anything
+                                // here, but we could set that to false and manually choose
+                                // an Activity to launch to handle the deep link here.
+                            }
+                        });
     }
 
     private static final String TAG = ListBooksActivity.class.getCanonicalName();
@@ -145,6 +178,7 @@ public class ListBooksActivity extends BaseAppCompatActivity implements ListBook
             Intent intent = new AppInviteInvitation.IntentBuilder(getString(R.string.invitation_title))
                     .setMessage(getString(R.string.invitation_message))
                     .setCallToActionText(getString(R.string.invitation_cta))
+                   // .setDeepLink(Uri.parse("http://bookdash.org/books/dK5BJWxPIf"))
                     .build();
             startActivityForResult(intent, INVITE_REQUEST_CODE);
         } catch (ActivityNotFoundException ac) {
