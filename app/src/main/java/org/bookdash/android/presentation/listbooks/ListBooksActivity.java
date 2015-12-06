@@ -21,7 +21,13 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 
-import org.bookdash.android.BookDashApplication;
+import com.google.android.gms.appinvite.AppInvite;
+import com.google.android.gms.appinvite.AppInviteInvitation;
+import com.google.android.gms.appinvite.AppInviteInvitationResult;
+import com.google.android.gms.common.ConnectionResult;
+import com.google.android.gms.common.api.GoogleApiClient;
+import com.google.android.gms.common.api.ResultCallback;
+
 import org.bookdash.android.BuildConfig;
 import org.bookdash.android.Injection;
 import org.bookdash.android.R;
@@ -38,7 +44,9 @@ import fr.castorflex.android.circularprogressbar.CircularProgressBar;
 
 public class ListBooksActivity extends BaseAppCompatActivity implements ListBooksContract.View {
 
+    private static final int INVITE_REQUEST_CODE = 1;
     private ListBooksContract.UserActionsListener actionsListener;
+    private GoogleApiClient googleApiClient;
 
 
     @Override
@@ -76,8 +84,36 @@ public class ListBooksActivity extends BaseAppCompatActivity implements ListBook
 
         actionsListener.loadLanguages();
         actionsListener.loadBooksForLanguagePreference();
+        checkIfComingFromInvite();
+    }
 
+    private void checkIfComingFromInvite(){
+        googleApiClient = new GoogleApiClient.Builder(this)
+                .addApi(AppInvite.API)
+                .enableAutoManage(this, new GoogleApiClient.OnConnectionFailedListener() {
+                    @Override
+                    public void onConnectionFailed(ConnectionResult connectionResult) {
+                        Log.d(TAG, "onConnectionFailed: onResult:" + connectionResult.toString());
 
+                    }
+                })
+                .build();
+
+        // Check for App Invite invitations and launch deep-link activity if possible.
+        // Requires that an Activity is registered in AndroidManifest.xml to handle
+        // deep-link URLs.
+        boolean autoLaunchDeepLink = true;
+        AppInvite.AppInviteApi.getInvitation(googleApiClient, this, autoLaunchDeepLink)
+                .setResultCallback(
+                        new ResultCallback<AppInviteInvitationResult>() {
+                            @Override
+                            public void onResult(AppInviteInvitationResult result) {
+                                Log.d(TAG, "getInvitation:onResult:" + result.getStatus());
+                                // Because autoLaunchDeepLink = true we don't have to do anything
+                                // here, but we could set that to false and manually choose
+                                // an Activity to launch to handle the deep link here.
+                            }
+                        });
     }
 
     private static final String TAG = ListBooksActivity.class.getCanonicalName();
@@ -86,8 +122,6 @@ public class ListBooksActivity extends BaseAppCompatActivity implements ListBook
     private CircularProgressBar circularProgressBar;
     private LinearLayout linearLayoutErrorScreen;
     private TextView textViewErrorMessage;
-
-
 
 
     private View.OnClickListener bookClickListener = new View.OnClickListener() {
@@ -132,9 +166,45 @@ public class ListBooksActivity extends BaseAppCompatActivity implements ListBook
             showThanksPopover();
             return true;
         }
+        if (id == R.id.action_invite_friends) {
+            openInvitePage();
+            return true;
+        }
         return super.onOptionsItemSelected(item);
     }
 
+    private void openInvitePage() {
+        try {
+            Intent intent = new AppInviteInvitation.IntentBuilder(getString(R.string.invitation_title))
+                    .setMessage(getString(R.string.invitation_message))
+                    .setCallToActionText(getString(R.string.invitation_cta))
+                   // .setDeepLink(Uri.parse("http://bookdash.org/books/dK5BJWxPIf"))
+                    .build();
+            startActivityForResult(intent, INVITE_REQUEST_CODE);
+        } catch (ActivityNotFoundException ac) {
+            Snackbar.make(mRecyclerView, R.string.common_google_play_services_api_unavailable_text, Snackbar.LENGTH_LONG).show();
+        }
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        Log.d(TAG, "onActivityResult: requestCode=" + requestCode + ", resultCode=" + resultCode);
+
+        if (requestCode == INVITE_REQUEST_CODE) {
+            if (resultCode == RESULT_OK) {
+                // Check how many invitations were sent and log a message
+                // The ids array contains the unique invitation ids for each invitation sent
+                // (one for each contact select by the user). You can use these for analytics
+                // as the ID will be consistent on the sending and receiving devices.
+                String[] ids = AppInviteInvitation.getInvitationIds(resultCode, data);
+                Log.d(TAG, getString(R.string.sent_invitations_fmt, ids.length));
+            } else {
+                // Sending failed or it was canceled, show failure message to the user
+                Log.d(TAG, "invite send failed:" + requestCode + ",resultCode:" + resultCode);
+            }
+        }
+    }
 
     private DialogInterface.OnClickListener languageClickListener = new DialogInterface.OnClickListener() {
         @Override
@@ -201,12 +271,12 @@ public class ListBooksActivity extends BaseAppCompatActivity implements ListBook
 
         } else {*/
 
-            Intent intent = new Intent(ListBooksActivity.this, BookInfoActivity.class);
-            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-            BookViewHolder viewHolder = (BookViewHolder)v.getTag();
-            BookDetail bookDetailResult = viewHolder.bookDetail;
-            intent.putExtra(BookInfoActivity.BOOK_PARCEL, bookDetailResult.toBookParcelable());
-            startActivity(intent);
+        Intent intent = new Intent(ListBooksActivity.this, BookInfoActivity.class);
+        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        BookViewHolder viewHolder = (BookViewHolder) v.getTag();
+        BookDetail bookDetailResult = viewHolder.bookDetail;
+        intent.putExtra(BookInfoActivity.BOOK_PARCEL, bookDetailResult.toBookParcelable());
+        startActivity(intent);
 
        /* }*/
     }

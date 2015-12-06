@@ -25,5 +25,10 @@
         android:orderInCategory="4"
         android:title="@string/rate_this_app"
         app:showAsAction="never" />
+    <item
+        android:id="@+id/action_invite_friends"
+        android:orderInCategory="5"
+        android:title="@string/invite_friends"
+        app:showAsAction="never"/>
 
 </menu>

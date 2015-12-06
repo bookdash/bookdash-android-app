@@ -26,6 +26,7 @@ public class BookDetail extends ParseObject {
     public static final String BOOK_ENABLED_COL = "book_enabled";
     public static final String CREATED_AT_COL = "createdAt";
     public static final String BOOK_INFO_FILE_NAME = "bookdetails.json";
+    private static final String WEB_URL_COL = "book_website_link";
 
 
     private boolean isDownloading = false;
@@ -98,6 +99,11 @@ public class BookDetail extends ParseObject {
         bookDetailParcelable.setBookTitle(getBookTitle());
         bookDetailParcelable.setBookImageUrl(getBookCoverUrl());
         bookDetailParcelable.setBookDetailObjectId(getObjectId());
+        bookDetailParcelable.setWebUrl(getWebUrl());
         return bookDetailParcelable;
+    }
+
+    public String getWebUrl() {
+        return getString(WEB_URL_COL);
     }
 }

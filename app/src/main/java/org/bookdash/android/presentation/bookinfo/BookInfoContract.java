@@ -43,6 +43,8 @@ public interface BookInfoContract {
         void setAccentColor(int accentColor);
 
         void setToolbarColor(int color);
+
+        void sendShareEvent(String bookTitle);
     }
 
     interface UserActionsListener {
@@ -53,5 +55,6 @@ public interface BookInfoContract {
 
         void loadImage(String url);
 
+        void shareBookClicked(BookDetail bookInfo);
     }
 }

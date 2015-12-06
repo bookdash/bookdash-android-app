@@ -33,6 +33,7 @@ public class BookDetailParcelable implements Parcelable {
     private String bookImageUrl;
     private String bookDownloadUrl;
     private String bookTitle;
+    private String webUrl;
 
     public String getBookDetailObjectId() {
         return bookDetailObjectId;
@@ -55,6 +56,7 @@ public class BookDetailParcelable implements Parcelable {
         dest.writeString(this.bookDownloadUrl);
         dest.writeString(this.bookTitle);
         dest.writeString(this.bookDetailObjectId);
+        dest.writeString(this.webUrl);
     }
 
     public BookDetailParcelable() {
@@ -65,6 +67,7 @@ public class BookDetailParcelable implements Parcelable {
         this.bookDownloadUrl = in.readString();
         this.bookTitle = in.readString();
         this.bookDetailObjectId = in.readString();
+        this.webUrl = in.readString();
     }
 
     public static final Parcelable.Creator<BookDetailParcelable> CREATOR = new Parcelable.Creator<BookDetailParcelable>() {
@@ -76,4 +79,12 @@ public class BookDetailParcelable implements Parcelable {
             return new BookDetailParcelable[size];
         }
     };
+
+    public String getWebUrl() {
+        return webUrl;
+    }
+
+    public void setWebUrl(String webUrl) {
+        this.webUrl = webUrl;
+    }
 }

@@ -8,6 +8,7 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.GradientDrawable;
+import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -15,12 +16,15 @@ import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.Snackbar;
+import android.support.v7.app.ActionBar;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.Toolbar;
 import android.transition.Transition;
 import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewTreeObserver;
 import android.view.Window;
@@ -33,6 +37,9 @@ import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
+import com.google.android.gms.appindexing.Action;
+import com.google.android.gms.appindexing.AppIndex;
+import com.google.android.gms.common.api.GoogleApiClient;
 import com.parse.GetDataCallback;
 import com.parse.ParseException;
 import com.parse.ParseFile;
@@ -78,27 +85,15 @@ public class BookInfoActivity extends BaseAppCompatActivity implements BookInfoC
     private ProgressBar loadingProgressBar;
     private CardView contributorCard, mainBookCard;
     private Toolbar toolbar;
-    private android.support.v7.app.ActionBar actionBar;
+    private ActionBar actionBar;
     private BookDetail bookInfo;
-
-  /*  private SharedElementCallback fabLoginSharedElementCallback = new SharedElementCallback() {
-        @Override
-        public Parcelable onCaptureSharedElementSnapshot(View sharedElement,
-                                                         Matrix viewToGlobalMatrix,
-                                                         RectF screenBounds) {
-            // store a snapshot of the fab to fade out when morphing to the login dialog
-            int bitmapWidth = Math.round(screenBounds.width());
-            int bitmapHeight = Math.round(screenBounds.height());
-            Bitmap bitmap = null;
-            if (bitmapWidth > 0 && bitmapHeight > 0) {
-                bitmap = Bitmap.createBitmap(bitmapWidth, bitmapHeight, Bitmap.Config.ARGB_8888);
-                sharedElement.draw(new Canvas(bitmap));
-            }
-            return bitmap;
-        }
-    };*/
-
-   
+    private Action viewAction;
+    /**
+     * ATTENTION: This was auto-generated to implement the App Indexing API.
+     * See https://g.co/AppIndexing/AndroidStudio for more information.
+     */
+    private GoogleApiClient client;
+    private Button errorRetryButton;
 
 
     @Override
@@ -140,32 +135,13 @@ public class BookInfoActivity extends BaseAppCompatActivity implements BookInfoC
         imageViewBook = (ImageView) findViewById(R.id.image_view_book_cover);
         appBarLayout = (AppBarLayout) findViewById(R.id.app_bar_layout);
         mainBookCard = (CardView) findViewById(R.id.card_view_main_book_info);
-        final BookDetailParcelable bookDetailParcelable = getIntent().getParcelableExtra(BOOK_PARCEL);
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         coordinatorLayout = (CoordinatorLayout) findViewById(R.id.coordinator_layout_content);
         errorLayout = findViewById(R.id.linear_layout_error);
         errorText = (TextView) findViewById(R.id.text_view_error_screen);
-        Button errorRetryButton = (Button) findViewById(R.id.button_retry);
+
+        errorRetryButton = (Button) findViewById(R.id.button_retry);
         loadingProgressBar = (ProgressBar) findViewById(R.id.activity_loading_book_info);
-        errorRetryButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                actionsListener.loadBookInformation(bookDetailParcelable.getBookDetailObjectId());
-            }
-        });
-
-        binding.setVariable(BR.download_click, new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (bookInfo == null){
-                    showSnackBarMessage(R.string.book_not_available);
-                    return;
-                }
-                floatingActionButton.showProgress(true);
-                actionsListener.downloadBook(bookInfo);
-            }
-        });
-
         setSupportActionBar(toolbar);
         actionBar = getSupportActionBar();
         if (actionBar != null) {
@@ -177,72 +153,94 @@ public class BookInfoActivity extends BaseAppCompatActivity implements BookInfoC
         floatingActionButton = (FabButton) findViewById(R.id.fab_download);
         floatingActionButton.setScaleX(0);
         floatingActionButton.setScaleY(0);
-        //  floatingActionButton.setPivotX(0.5f);
-        //floatingActionButton.setPivotY(0.5f);
-
+        binding.setVariable(BR.download_click, new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (bookInfo == null) {
+                    showSnackBarMessage(R.string.book_not_available);
+                    return;
+                }
+                floatingActionButton.showProgress(true);
+                actionsListener.downloadBook(bookInfo);
+            }
+        });
         actionsListener = new BookInfoPresenter(this.getApplicationContext(), this, Injection.provideBookRepo());
-        actionsListener.loadBookInformation(bookDetailParcelable.getBookDetailObjectId());
-
-        actionsListener.loadImage(bookDetailParcelable.getBookImageUrl());
         calculateLayoutHeight();
         imageViewBook.getViewTreeObserver().addOnPreDrawListener(new ViewTreeObserver
                 .OnPreDrawListener() {
             @Override
             public boolean onPreDraw() {
                 imageViewBook.getViewTreeObserver().removeOnPreDrawListener(this);
-              /*  if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-                    startPostponedEnterTransition();
-                }else {*/
-                enterAnimation();
-               /* }*/
 
+                enterAnimation();
                 return true;
             }
         });
-        //  showProgress(false);
-        showBookDetailView();
+        final BookDetailParcelable bookDetailParcelable = getIntent().getParcelableExtra(BOOK_PARCEL);
+
+        if (bookDetailParcelable != null) {
+            String bookDetailId = bookDetailParcelable.getBookDetailObjectId();
+            startLoadingBook(bookDetailId);
+            actionsListener.loadImage(bookDetailParcelable.getBookImageUrl());
+        } else {
+            onNewIntent(getIntent());
+        }
+        client = new GoogleApiClient.Builder(this).addApi(AppIndex.API).build();
 
     }
 
-    /**
-     * Animate in the title, description and author – can't do this in a content transition as they
-     * are within the ListView so do it manually.  Also handle the FAB tanslation here so that it
-     * plays nicely with #calculateFabPosition
-     */
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.menu_book_info, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+
+        int id = item.getItemId();
+
+        if (id == R.id.action_share_book) {
+            actionsListener.shareBookClicked(bookInfo);
+            return true;
+        }
+
+        return super.onOptionsItemSelected(item);
+    }
+
+    private void startLoadingBook(final String bookDetailId) {
+        errorRetryButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                actionsListener.loadBookInformation(bookDetailId);
+            }
+        });
+
+        actionsListener.loadBookInformation(bookDetailId);
+        showBookDetailView();
+    }
+
+    protected void onNewIntent(Intent intent) {
+        super.onNewIntent(intent);
+        String action = intent.getAction();
+        String data = intent.getDataString();
+        Log.d(TAG, "onNewIntent() called: action" + action);
+
+        if (Intent.ACTION_VIEW.equals(action) && data != null) {
+            Uri uri =  Uri.parse(data);
+            String bookId = uri.getLastPathSegment();
+            String invitationId = uri.getQueryParameter("invitation_id");
+            Log.d(TAG, "Action View: book id:" + bookId + ". Full URL:" + uri.toString() + ". InvitationId:" + invitationId);
+            startLoadingBook(bookId);
+        }
+    }
+
     private void enterAnimation() {
-      /*  if (gradientBackground != null) {
-            gradientBackground.setAlpha(0);
-            ObjectAnimator anim = ObjectAnimator.ofFloat(gradientBackground, "alpha", 0f, 1f);
-            anim.setDuration(500);
-            anim.setStartDelay(50);
-            anim.setInterpolator(new DecelerateInterpolator());
-            anim.start();
-        }*/
+
         floatingActionButton.setScaleX(0);
         floatingActionButton.setScaleY(0);
         floatingActionButton.animate().setStartDelay(500).scaleY(1).scaleX(1).setInterpolator(new OvershootInterpolator()).setDuration(getResources().getInteger(android.R.integer.config_mediumAnimTime)).start();
-        //mainBookCard.setTranslationY(mainBookCard.getHeight());
-        //mainBookCard.animate().translationY(0).setInterpolator(new DecelerateInterpolator()).start();
-     /*   scrollView.setAlpha(0);
-        ObjectAnimator anim2 = ObjectAnimator.ofFloat(scrollView, "alpha", 0f, 1f);
-        anim2.setDuration(500);
-        anim2.setStartDelay(50);
-        anim2.setInterpolator(new DecelerateInterpolator());
-        anim2.start();
-      //  contributorCard.setTranslationY(contributorCard.getHeight());
-       // contributorCard.animate().translationY(0).setInterpolator(new DecelerateInterpolator()).start();
-        contributorCard.setAlpha(0);
-        ObjectAnimator animContributor = ObjectAnimator.ofFloat(contributorCard, "alpha", 0f, 1f);
-        animContributor.setDuration(500);
-        animContributor.setStartDelay(50);
-        animContributor.setInterpolator(new DecelerateInterpolator());
-        animContributor.start();*/
 
-      /*  ObjectAnimator anim2 = ObjectAnimator.ofFloat(appBarLayout, "alpha", 0f, 1f);
-        anim2.setDuration(500);
-        anim2.setStartDelay(50);
-        anim2.setInterpolator(new DecelerateInterpolator());
-        anim2.start();*/
 
     }
 
@@ -317,7 +315,7 @@ public class BookInfoActivity extends BaseAppCompatActivity implements BookInfoC
     @Override
     public void setToolbarTitle(String title) {
         toolbar.setTitle(title);
-        android.support.v7.app.ActionBar actionBar = getSupportActionBar();
+        ActionBar actionBar = getSupportActionBar();
         if (actionBar != null) {
             actionBar.setTitle(title);
         }
@@ -328,8 +326,20 @@ public class BookInfoActivity extends BaseAppCompatActivity implements BookInfoC
 
     @Override
     public void setBookInfoBinding(BookDetail bookInfo) {
+        client.connect();
+
         this.bookInfo = bookInfo;
         binding.setVariable(BR.book_info, bookInfo);
+        actionsListener.loadImage(bookInfo.getBookCoverUrl());
+        viewAction = Action.newAction(
+                Action.TYPE_VIEW,
+                bookInfo.getBookTitle(),
+                bookInfo.getWebUrl() == null ? null : Uri.parse(bookInfo.getWebUrl()),
+                Uri.parse("android-app://org.bookdash.android/http/bookdash.org/books/" + bookInfo.getObjectId())
+        );
+        if (viewAction != null) {
+            AppIndex.AppIndexApi.start(client, viewAction);
+        }
     }
 
     @Override
@@ -405,6 +415,15 @@ public class BookInfoActivity extends BaseAppCompatActivity implements BookInfoC
         }
     }
 
+    @Override
+    public void sendShareEvent(String bookTitle) {
+        Intent sendIntent = new Intent();
+        sendIntent.setAction(Intent.ACTION_SEND);
+        sendIntent.putExtra(Intent.EXTRA_TEXT, getString(R.string.sharing_book_title, bookTitle));
+        sendIntent.setType("text/plain");
+        startActivity(sendIntent);
+    }
+
     private void setContributorInfo(@NonNull View v, @NonNull BookContributor bookContributor) {
         TextView textViewContributor = (TextView) v.findViewById(R.id.textViewContributorName);
         TextView textViewRole = (TextView) v.findViewById(R.id.textViewRole);
@@ -432,4 +451,21 @@ public class BookInfoActivity extends BaseAppCompatActivity implements BookInfoC
         });
     }
 
+    @Override
+    public void onStart() {
+        super.onStart();
+
+
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+
+        if (viewAction != null) {
+            AppIndex.AppIndexApi.end(client, viewAction);
+
+        }
+        client.disconnect();
+    }
 }
