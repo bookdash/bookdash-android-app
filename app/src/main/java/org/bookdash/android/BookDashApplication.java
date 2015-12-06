@@ -5,6 +5,8 @@ import android.util.Log;
 
 import com.crashlytics.android.Crashlytics;
 import com.crashlytics.android.core.CrashlyticsCore;
+import com.google.android.gms.analytics.GoogleAnalytics;
+import com.google.android.gms.analytics.Tracker;
 import com.parse.Parse;
 import com.parse.ParseException;
 import com.parse.ParseObject;
@@ -26,7 +28,7 @@ import io.fabric.sdk.android.Fabric;
 public class BookDashApplication extends Application {
     public static boolean isTablet = false;
     public static String FILES_DIR;
-   // private Tracker mTracker;
+    private Tracker mTracker;
 
     @Override
     public void onCreate() {
@@ -57,7 +59,7 @@ public class BookDashApplication extends Application {
         });
         isTablet = getResources().getBoolean(R.bool.is_tablet);
         FILES_DIR = getFilesDir().getPath();
-   //     getDefaultTracker().enableAutoActivityTracking(true);
+        getDefaultTracker().enableAutoActivityTracking(true);
 
     }
 
@@ -65,12 +67,12 @@ public class BookDashApplication extends Application {
      * Gets the default {@link Tracker} for this {@link Application}.
      * @return tracker
      */
-   /* synchronized public Tracker getDefaultTracker() {
+    synchronized public Tracker getDefaultTracker() {
         if (mTracker == null) {
             GoogleAnalytics analytics = GoogleAnalytics.getInstance(this);
             // To enable debug logging use: adb shell setprop log.tag.GAv4 DEBUG
             mTracker = analytics.newTracker(R.xml.global_tracker);
         }
         return mTracker;
-    }*/
+    }
 }

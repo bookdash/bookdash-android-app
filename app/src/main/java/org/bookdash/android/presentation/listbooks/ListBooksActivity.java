@@ -98,20 +98,12 @@ public class ListBooksActivity extends BaseAppCompatActivity implements ListBook
                     }
                 })
                 .build();
-
-        // Check for App Invite invitations and launch deep-link activity if possible.
-        // Requires that an Activity is registered in AndroidManifest.xml to handle
-        // deep-link URLs.
-        boolean autoLaunchDeepLink = true;
-        AppInvite.AppInviteApi.getInvitation(googleApiClient, this, autoLaunchDeepLink)
+        AppInvite.AppInviteApi.getInvitation(googleApiClient, this, true)
                 .setResultCallback(
                         new ResultCallback<AppInviteInvitationResult>() {
                             @Override
                             public void onResult(AppInviteInvitationResult result) {
                                 Log.d(TAG, "getInvitation:onResult:" + result.getStatus());
-                                // Because autoLaunchDeepLink = true we don't have to do anything
-                                // here, but we could set that to false and manually choose
-                                // an Activity to launch to handle the deep link here.
                             }
                         });
     }
