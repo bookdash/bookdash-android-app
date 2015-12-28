@@ -2,6 +2,7 @@ package org.bookdash.android.presentation.listbooks;
 
 import android.content.Intent;
 import android.net.Uri;
+import android.support.design.widget.NavigationView;
 import android.support.test.InstrumentationRegistry;
 import android.support.test.espresso.intent.Intents;
 import android.support.test.rule.ActivityTestRule;
@@ -28,6 +29,7 @@ import static android.support.test.espresso.intent.matcher.IntentMatchers.hasAct
 import static android.support.test.espresso.intent.matcher.IntentMatchers.hasData;
 import static android.support.test.espresso.matcher.RootMatchers.isDialog;
 import static android.support.test.espresso.matcher.RootMatchers.*;
+import static android.support.test.espresso.matcher.ViewMatchers.isClickable;
 import static android.support.test.espresso.matcher.ViewMatchers.isDisplayed;
 import static android.support.test.espresso.matcher.ViewMatchers.withContentDescription;
 import static android.support.test.espresso.matcher.ViewMatchers.withId;
@@ -63,37 +65,25 @@ public class OverflowMenuOptionsTest {
 
     @Test
     public void languageItemClick_ShowLanguageChooser() {
-         //When
         onView(withId(R.id.action_language_choice)).perform(click());
-
         //Then
         onView(withText(R.string.language_selection_heading)).inRoot(isDialog()).check(matches(isDisplayed()));
     }
 
     @Test
     public void aboutMenuClick_ShowAboutBookDashScreen() {
-        //Given
-        openActionBarOverflowOrOptionsMenu(InstrumentationRegistry.getTargetContext());
-
         //When
-        String title = InstrumentationRegistry.getTargetContext().getString(R.string.action_about);
-        onView(withText(title)).perform(click());
-
+        selectNavDrawItem(R.id.action_about);
         //Then
         intended(hasComponent(AboutActivity.class.getName()));
     }
 
 
-
     @Test
     public void rateThisAppClick_ShowPlayStoreDetail() {
         //Given
-        openActionBarOverflowOrOptionsMenu(InstrumentationRegistry.getTargetContext());
-
         //When
-        String title = InstrumentationRegistry.getTargetContext().getString(R.string.rate_this_app);
-        onView(withText(title)).perform(click());
-
+        selectNavDrawItem(R.id.action_rate_app);
         //Then
         intended(allOf(hasAction(Intent.ACTION_VIEW),
                         hasData(Uri.parse("market://details?id=" + org.bookdash.android.BuildConfig.APPLICATION_ID))
@@ -103,13 +93,9 @@ public class OverflowMenuOptionsTest {
 
     @Test
     public void contributorsClicked_ShowThanksPopover() {
-        //Given
-        openActionBarOverflowOrOptionsMenu(InstrumentationRegistry.getTargetContext());
 
         //When
-        String title = InstrumentationRegistry.getTargetContext().getString(R.string.settings_thank_yous);
-        onView(withText(title)).perform(click());
-
+        selectNavDrawItem(R.id.action_thanks);
         //Then
         onView(withText("Contributors")).inRoot(isDialog()).check(matches(isDisplayed()));
 
@@ -117,15 +103,25 @@ public class OverflowMenuOptionsTest {
 
     @Test
     public void contributorsOkClick_HideThanksPopover() {
-        //Given
-        openActionBarOverflowOrOptionsMenu(InstrumentationRegistry.getTargetContext());
-
         //When
-        String title = InstrumentationRegistry.getTargetContext().getString(R.string.settings_thank_yous);
-        onView(withText(title)).perform(click());
+        selectNavDrawItem(R.id.action_thanks);
 
         //Then
         onView(withText(android.R.string.ok)).perform(click());
 
+    }
+
+    // Due to the NavigationItem not being exposed, we have to do this work around to test NavigationView
+    // https://code.google.com/p/android/issues/detail?id=187701
+    public void selectNavDrawItem(final int navItemId){
+        onView(allOf(withContentDescription(containsString("Navigate up")), isClickable())).perform(click());
+        final NavigationView navigation =(NavigationView) mActivityTestRule.getActivity().findViewById(R.id.navigation_view);
+        mActivityTestRule.getActivity().runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                navigation.getMenu().performIdentifierAction(navItemId, 0);
+                navigation.setCheckedItem(navItemId);
+            }
+        });
     }
 }

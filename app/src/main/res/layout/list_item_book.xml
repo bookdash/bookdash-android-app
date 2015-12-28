@@ -25,9 +25,9 @@
                 android:id="@+id/imageViewBookCover"
                 android:layout_width="@dimen/book_column_width"
                 android:layout_height="@dimen/book_column_width"
+                android:layout_centerHorizontal="true"
                 android:layout_alignParentLeft="true"
                 android:layout_alignParentTop="true"
-                android:layout_centerVertical="true"
                 android:scaleType="fitStart"
                 android:layout_gravity="center_horizontal" />
 
@@ -66,6 +66,16 @@
                 android:visibility="gone"
                 tools:text="Rebecca Franks" />
 
+            <ImageView
+                android:layout_width="16dp"
+                android:layout_height="16dp"
+                android:src="@drawable/ic_cloud_download_black_24dp"
+                android:tint="@color/colorAccent"
+                android:id="@+id/imageViewBookDownloaded"
+                android:layout_alignParentBottom="true"
+                android:layout_alignParentRight="true"
+                android:layout_alignParentEnd="true"
+                android:layout_margin="4dp" />
 
 
         </RelativeLayout>

@@ -91,7 +91,7 @@ public class ProgressRingView extends View implements FabUtil.OnFabValueCallback
         progressPaint.setStyle(Paint.Style.STROKE);
         progressPaint.setStrokeCap(Paint.Cap.BUTT);
         if (autostartanim) {
-            startAnimation();
+           // startAnimation();
         }
     }
 
@@ -151,8 +151,10 @@ public class ProgressRingView extends View implements FabUtil.OnFabValueCallback
      * @param animate         if you want the progress to animate to the position.
      */
     public void setProgress(final float currentProgress, boolean animate) {
-        this.progress = currentProgress;
         // Reset the determinate animation to approach the new progress
+        if (progress == currentProgress){
+            return;
+        }
         if (!indeterminate) {
             if (progressAnimator != null && progressAnimator.isRunning()) {
                 progressAnimator.cancel();
@@ -166,6 +168,7 @@ public class ProgressRingView extends View implements FabUtil.OnFabValueCallback
             progressAnimator.start();
         }
         invalidate();
+        this.progress = currentProgress;
 
     }
 

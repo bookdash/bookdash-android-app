@@ -8,10 +8,12 @@ import org.bookdash.android.domain.pojo.BookDetail;
 import org.bookdash.android.domain.pojo.Language;
 import org.bookdash.android.domain.pojo.gson.BookPages;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
  * Can add caching here or fetching from db instead of from service
+ *
  * @author rebeccafranks
  * @since 15/11/03.
  */
@@ -19,17 +21,21 @@ public class BookDetailRepositoryImpl implements BookDetailRepository {
 
     private final BookDetailApi bookDetailApi;
 
-    public BookDetailRepositoryImpl(@NonNull BookDetailApi bookDetailApi){
+    public BookDetailRepositoryImpl(@NonNull BookDetailApi bookDetailApi) {
         this.bookDetailApi = bookDetailApi;
     }
 
     @Override
-    public void getBooksForLanguage(@NonNull String language, @NonNull final GetBooksForLanguageCallback booksForLanguageCallback) {
+    public void getBooksForLanguage(@NonNull String language, final boolean downloadedOnly, @NonNull final GetBooksForLanguageCallback booksForLanguageCallback) {
         bookDetailApi.getBooksForLanguages(language, new BookDetailApi.BookServiceCallback<List<BookDetail>>() {
 
             @Override
             public void onLoaded(List<BookDetail> result) {
-                booksForLanguageCallback.onBooksLoaded(result);
+                if (downloadedOnly) {
+                    booksForLanguageCallback.onBooksLoaded(filterOnlyDownloadedBooks(result));
+                } else {
+                    booksForLanguageCallback.onBooksLoaded(result);
+                }
             }
 
             @Override
@@ -39,6 +45,16 @@ public class BookDetailRepositoryImpl implements BookDetailRepository {
         });
     }
 
+    private List<BookDetail> filterOnlyDownloadedBooks(List<BookDetail> bookDetails){
+        List<BookDetail> bookDetailsDownloaded = new ArrayList<>();
+
+        for (BookDetail b: bookDetails){
+            if (b.isDownloadedAlready() || b.isDownloading()){
+                bookDetailsDownloaded.add(b);
+            }
+        }
+        return bookDetailsDownloaded;
+    }
     @Override
     public void getBookDetail(String bookDetailId, @NonNull final GetBookDetailCallback bookDetailCallback) {
         bookDetailApi.getBookDetail(bookDetailId, new BookDetailApi.BookServiceCallback<BookDetail>() {
@@ -68,7 +84,6 @@ public class BookDetailRepositoryImpl implements BookDetailRepository {
             }
         });
     }
-
 
 
     @Override

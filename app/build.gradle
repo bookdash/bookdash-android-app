@@ -67,7 +67,6 @@ android {
 
     productFlavors {
         mock {
-            applicationIdSuffix = ".mock"
         }
         prod {
 
@@ -164,6 +163,6 @@ dependencies {
     compile 'za.co.riggaroo:materialhelptutorial:1.0.3'
     compile "com.google.android.gms:play-services-appinvite:$rootProject.ext.googlePlayServicesVersion"
     compile "com.google.android.gms:play-services-appindexing:$rootProject.ext.googlePlayServicesVersion"
-
+    compile "com.android.support:design:$rootProject.ext.googlePlayServicesVersion"
     compile "com.google.android.gms:play-services-analytics:$rootProject.ext.googlePlayServicesVersion"
 }

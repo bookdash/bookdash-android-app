@@ -13,7 +13,7 @@ public abstract class BaseAppCompatActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        BookDashApplication application = (BookDashApplication) getApplication();
+//        BookDashApplication application = (BookDashApplication) getApplication();
     /*    tracker = application.getDefaultTracker();
         tracker.setScreenName(getScreenName());
         tracker.send(new HitBuilders.ScreenViewBuilder().build());*/

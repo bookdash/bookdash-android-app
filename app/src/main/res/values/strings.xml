@@ -77,5 +77,9 @@
     <string name="invitation_message">You should install Book Dash for access to some great free books.</string>
     <string name="sent_invitations_fmt">Sent invites to %d</string>
     <string name="invite_friends">Invite Friends</string>
+    <string name="action_all_books">All Books</string>
+    <string name="action_downloads">Downloaded Books</string>
+    <string name="no_books_downloaded">No books are downloaded. Head to the \"All Books\" section to download some!</string>
+    <string name="no_books_available">No books available at the moment. Check back soon!</string>
 
 </resources>

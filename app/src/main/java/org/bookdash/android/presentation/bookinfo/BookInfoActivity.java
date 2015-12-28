@@ -160,7 +160,11 @@ public class BookInfoActivity extends BaseAppCompatActivity implements BookInfoC
                     showSnackBarMessage(R.string.book_not_available);
                     return;
                 }
-                floatingActionButton.showProgress(true);
+                if (!bookInfo.isDownloadedAlready()){
+                    floatingActionButton.resetIcon();
+                    floatingActionButton.showProgress(true);
+                    floatingActionButton.setProgress(0, true);
+                }
                 actionsListener.downloadBook(bookInfo);
             }
         });
@@ -296,12 +300,21 @@ public class BookInfoActivity extends BaseAppCompatActivity implements BookInfoC
         Snackbar.make(scrollView, message, Snackbar.LENGTH_LONG).show();
 
     }
-
+    private int progress= 0;
     @Override
-    public void showDownloadProgress(int downloadProgress) {
-
+    public void showDownloadProgress(final int downloadProgress) {
+        if (progress == downloadProgress){
+            return;
+        }
+        progress = downloadProgress;
         Log.d(TAG, "Download progress:" + downloadProgress);
-        floatingActionButton.setProgress(downloadProgress, true);
+
+        runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                floatingActionButton.setProgress(downloadProgress, true);
+            }
+        });
 
     }
 
@@ -326,7 +339,9 @@ public class BookInfoActivity extends BaseAppCompatActivity implements BookInfoC
 
     @Override
     public void setBookInfoBinding(BookDetail bookInfo) {
-        client.connect();
+        if (client!=null) {
+            client.connect();
+        }
 
         this.bookInfo = bookInfo;
         binding.setVariable(BR.book_info, bookInfo);
@@ -337,7 +352,7 @@ public class BookInfoActivity extends BaseAppCompatActivity implements BookInfoC
                 bookInfo.getWebUrl() == null ? null : Uri.parse(bookInfo.getWebUrl()),
                 Uri.parse("android-app://org.bookdash.android/http/bookdash.org/books/" + bookInfo.getObjectId())
         );
-        if (viewAction != null) {
+        if (viewAction != null && client!=null) {
             AppIndex.AppIndexApi.start(client, viewAction);
         }
     }

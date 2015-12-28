@@ -42,6 +42,7 @@ public class BookAdapter extends RecyclerView.Adapter<BookViewHolder> {
         holder.mTextView.setText(bookDetail.getBookTitle());
         Glide.with(context).load(bookDetail.getBookCoverUrl()).into(holder.mImageView);
         holder.bookDetail = bookDetail;
+        holder.mImageViewDownloaded.setVisibility(bookDetail.isDownloadedAlready() ? View.VISIBLE : View.INVISIBLE);
         holder.mCardView.setTag(holder);
         holder.mCardView.setOnClickListener(onClickListener);
 

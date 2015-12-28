@@ -4,31 +4,11 @@
     tools:context=".MainActivity">
     <item
         android:id="@+id/action_language_choice"
-        android:icon="@drawable/ic_action_language"
+        android:icon="@drawable/ic_public_black_24dp"
         android:contentDescription="@string/action_language_choice"
         android:orderInCategory="1"
         android:title="@string/action_language_choice"
         app:showAsAction="ifRoom" />
-    <item
-        android:id="@+id/action_about"
-        android:orderInCategory="2"
-        android:title="@string/action_about"
-        app:showAsAction="never" />
 
-    <item
-        android:id="@+id/action_thanks"
-        android:orderInCategory="3"
-        android:title="@string/settings_thank_yous"
-        app:showAsAction="never" />
-    <item
-        android:id="@+id/action_rate_app"
-        android:orderInCategory="4"
-        android:title="@string/rate_this_app"
-        app:showAsAction="never" />
-    <item
-        android:id="@+id/action_invite_friends"
-        android:orderInCategory="5"
-        android:title="@string/invite_friends"
-        app:showAsAction="never"/>
 
 </menu>
