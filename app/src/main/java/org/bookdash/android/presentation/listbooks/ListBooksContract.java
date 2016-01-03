@@ -14,7 +14,7 @@ public interface ListBooksContract {
         void showThanksPopover();
         void showAboutPage();
         void showRatingPlayStore();
-        void showErrorScreen(boolean show, String errorMessage);
+        void showErrorScreen(boolean show, String errorMessage, boolean showRetryButton);
         void showLoading(boolean visible);
         void showBooks(List<BookDetail> bookDetailList);
         void showSnackBarError(int message);
@@ -23,8 +23,8 @@ public interface ListBooksContract {
 
     interface UserActionsListener {
         void loadLanguages();
-        void saveSelectedLanguage(int indexOfLanguage);
-        void loadBooksForLanguagePreference();
+        void saveSelectedLanguage(int indexOfLanguage, boolean downloadOnly);
+        void loadBooksForLanguagePreference(boolean downloadedOnly);
         void clickOpenLanguagePopover();
     }
 

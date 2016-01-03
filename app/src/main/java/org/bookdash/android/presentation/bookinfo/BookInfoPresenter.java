@@ -130,6 +130,12 @@ public class BookInfoPresenter implements BookInfoContract.UserActionsListener {
         });
     }
 
+    @Override
+    public void shareBookClicked(BookDetail bookInfo) {
+
+        booksView.sendShareEvent(bookInfo.getBookTitle());
+    }
+
     private void extractPaletteColors(Bitmap resource) {
         Palette.from(resource).generate(new Palette.PaletteAsyncListener() {
             @Override

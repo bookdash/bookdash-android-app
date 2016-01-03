@@ -1,5 +1,6 @@
 package org.bookdash.android.presentation.listbooks;
 
+import android.media.Image;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
@@ -19,11 +20,13 @@ public class BookViewHolder extends RecyclerView.ViewHolder {
     public ImageView mImageView;
     public CardView mCardView;
     public BookDetail bookDetail;
+    public ImageView mImageViewDownloaded;
     public BookViewHolder(View v) {
         super(v);
         mCardView = (CardView) v.findViewById(R.id.card_view);
         mTextView = (TextView) v.findViewById(R.id.textViewBookName);
         mImageView = (ImageView) v.findViewById(R.id.imageViewBookCover);
         mTextViewBookAuthor = (TextView) v.findViewById(R.id.textViewAuthor);
+        mImageViewDownloaded = (ImageView) v.findViewById(R.id.imageViewBookDownloaded);
     }
 }

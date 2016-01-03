@@ -3,6 +3,7 @@ package org.bookdash.android.presentation.listbooks;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Build;
+import android.support.design.widget.NavigationView;
 import android.support.test.InstrumentationRegistry;
 import android.support.test.espresso.ViewInteraction;
 import android.support.test.espresso.intent.Intents;
@@ -12,6 +13,8 @@ import android.support.test.runner.AndroidJUnit4;
 import android.support.v7.widget.Toolbar;
 import android.test.suitebuilder.annotation.LargeTest;
 import android.view.MenuItem;
+
+import junit.framework.Assert;
 
 import org.bookdash.android.R;
 import org.bookdash.android.data.settings.FakeSettingsApiImpl;
@@ -25,7 +28,7 @@ import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.bookdash.android.mock.test.BuildConfig;
+import org.bookdash.android.test.BuildConfig;
 
 
 import static android.support.test.espresso.assertion.ViewAssertions.doesNotExist;
@@ -38,7 +41,9 @@ import static android.support.test.espresso.intent.matcher.IntentMatchers.hasAct
 import static android.support.test.espresso.intent.matcher.IntentMatchers.hasComponent;
 import static android.support.test.espresso.intent.matcher.IntentMatchers.hasData;
 import static android.support.test.espresso.matcher.RootMatchers.isDialog;
+import static android.support.test.espresso.matcher.ViewMatchers.isClickable;
 import static android.support.test.espresso.matcher.ViewMatchers.isDisplayed;
+import static android.support.test.espresso.matcher.ViewMatchers.withContentDescription;
 import static android.support.test.espresso.matcher.ViewMatchers.withId;
 import static android.support.test.espresso.matcher.ViewMatchers.withText;
 import static android.support.test.espresso.action.ViewActions.click;
@@ -102,11 +107,11 @@ public class ListBooksActivityTest {
         matchToolbarTitle("Book Dash");
     }
 
+
     @Test
     public void chooseDifferentLanguage_NewBooksLoaded(){
-        openActionBarOverflowOrOptionsMenu(InstrumentationRegistry.getTargetContext());
-        String title = InstrumentationRegistry.getTargetContext().getString(R.string.action_language_choice);
-        onView(withText(title)).perform(click());
+       // selectNavDrawItem(R.id.action_language_choice);
+        onView(withId(R.id.action_language_choice)).perform(click());
 
         //When
         onView(withText("Zulu")).perform(click());
@@ -118,6 +123,10 @@ public class ListBooksActivityTest {
         onView(withText("Why is Nita Upside Down?")).check(doesNotExist());
     }
 
+    @Test
+    public void testGetScreenName_IsBookListing(){
+        Assert.assertEquals("BookListingScreen", activityTestRule.getActivity().getScreenName());
+    }
 
 
 

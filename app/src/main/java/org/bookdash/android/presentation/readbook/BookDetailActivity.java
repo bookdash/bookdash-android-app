@@ -5,8 +5,6 @@ import android.support.v4.view.ViewPager;
 import android.view.ViewTreeObserver;
 import android.view.WindowManager;
 
-import com.google.android.gms.analytics.HitBuilders;
-
 import org.bookdash.android.R;
 import org.bookdash.android.presentation.activity.BaseAppCompatActivity;
 import org.bookdash.android.domain.pojo.gson.BookPages;

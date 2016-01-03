@@ -26,25 +26,26 @@ public class ListBooksPresenter implements ListBooksContract.UserActionsListener
         this.settingsRepository = settingsRepository;
     }
     @Override
-    public void loadBooksForLanguagePreference() {
+    public void loadBooksForLanguagePreference(boolean downloadedOnly) {
         String languagePreference = settingsRepository.getLanguagePreference();
-        loadBooksForLanguage(languagePreference);
+        loadBooksForLanguage(languagePreference, downloadedOnly);
     }
 
-    private void loadBooksForLanguage(String language) {
+    private void loadBooksForLanguage(String language, boolean downloadedOnly) {
         listBooksView.showLoading(true);
-        bookDetailRepository.getBooksForLanguage(language, new BookDetailRepository.GetBooksForLanguageCallback() {
+        listBooksView.showErrorScreen(false, "", false);
+        bookDetailRepository.getBooksForLanguage(language,downloadedOnly, new BookDetailRepository.GetBooksForLanguageCallback() {
             @Override
             public void onBooksLoaded(List<BookDetail> books) {
                 listBooksView.showLoading(false);
-                listBooksView.showErrorScreen(false, "");
+                listBooksView.showErrorScreen(false, "", false);
                 listBooksView.showBooks(books);
             }
 
             @Override
             public void onBooksLoadError(Exception e) {
                 listBooksView.showLoading(false);
-                listBooksView.showErrorScreen(true, e.getMessage().toUpperCase());
+                listBooksView.showErrorScreen(true, e.getMessage().toUpperCase(), true);
             }
         });
 
@@ -68,10 +69,10 @@ public class ListBooksPresenter implements ListBooksContract.UserActionsListener
     }
 
     @Override
-    public void saveSelectedLanguage(int indexOfLanguage) {
+    public void saveSelectedLanguage(int indexOfLanguage, boolean downloadOnly) {
         settingsRepository.saveLanguagePreference(languages.get(indexOfLanguage).getLanguageName());
 
-        loadBooksForLanguage(languages.get(indexOfLanguage).getLanguageName());
+        loadBooksForLanguage(languages.get(indexOfLanguage).getLanguageName(), downloadOnly);
     }
 
     @Override

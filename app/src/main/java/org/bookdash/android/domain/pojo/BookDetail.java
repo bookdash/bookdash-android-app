@@ -26,6 +26,7 @@ public class BookDetail extends ParseObject {
     public static final String BOOK_ENABLED_COL = "book_enabled";
     public static final String CREATED_AT_COL = "createdAt";
     public static final String BOOK_INFO_FILE_NAME = "bookdetails.json";
+    private static final String WEB_URL_COL = "book_website_link";
 
 
     private boolean isDownloading = false;
@@ -38,7 +39,8 @@ public class BookDetail extends ParseObject {
         put(BOOK_TITLE_COL, title);
         put(BOOK_COVER_PAGE_URL_COL, bookCoverUrl);
         put(BOOK_LANGUAGE_COL, languageId);
-        put(OBJECT_ID, objectId);
+        setObjectId(objectId);
+      //  put(OBJECT_ID, objectId);
         //put();
     }
 
@@ -66,9 +68,6 @@ public class BookDetail extends ParseObject {
         return getString(ABOUT_BOOK_COL);
     }
 
-    public String getBookDetailId() {
-        return getString(OBJECT_ID);
-    }
 
     public String getFolderLocation(String filesDir) {
         return getFolderLocation(new File(filesDir, getObjectId() + File.separator));
@@ -100,6 +99,11 @@ public class BookDetail extends ParseObject {
         bookDetailParcelable.setBookTitle(getBookTitle());
         bookDetailParcelable.setBookImageUrl(getBookCoverUrl());
         bookDetailParcelable.setBookDetailObjectId(getObjectId());
+        bookDetailParcelable.setWebUrl(getWebUrl());
         return bookDetailParcelable;
+    }
+
+    public String getWebUrl() {
+        return getString(WEB_URL_COL);
     }
 }

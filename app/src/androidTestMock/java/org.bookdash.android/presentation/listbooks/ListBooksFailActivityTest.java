@@ -42,7 +42,7 @@ import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.bookdash.android.mock.test.BuildConfig;
+import org.bookdash.android.test.BuildConfig;
 
 
 import static android.support.test.espresso.matcher.ViewMatchers.isAssignableFrom;

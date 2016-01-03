@@ -48,10 +48,12 @@ http://bookdash.org/
 /parse_data_example/
  If you want to download the actual books, you need to individually download each book and import the files into the parse manually. See the information here: https://www.parse.com/questions/exporting-file-objects-and-importing-to-another-application
 
-4. Change the Parse API Key and Client Key in the file to your unique parse key: /appconfig-sample.properties .
+4. Change the Parse API Key and Client Key in the file to your unique parse key: /gradle.properties .
 5. Setup a Fabric Account. https://fabric.io/dashboard
-6. Get your Fabric API Key and Client key, change it in the file: /app/fabric-sample.properties
-7. If you wish to build a release version you will need to create your own keystore file and edit the password values in the following file - (create a version of the file without the .sample extension): release-keystore.properties.sample
+6. Get your Fabric API Key and Client key, change it in the file: /app/fabric-sample.properties and rename the file to fabric.properties
+7. Go generate a google-services.json file by following the instructions here: https://developers.google.com/mobile/add?platform=android
+You will need to select App Invites API and Google Analytics and enter your SHA-1 of your debug keystore.
+8. If you wish to build a release version you will need to create your own keystore file and edit the password values in the following file - (create a version of the file without the .sample extension): release-keystore.properties.sample
 
 # License
 Copyright 2015 Book Dash.

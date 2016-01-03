@@ -11,6 +11,8 @@ import android.test.suitebuilder.annotation.SmallTest;
 import android.text.Html;
 import android.view.View;
 
+import junit.framework.Assert;
+
 import org.bookdash.android.R;
 import org.junit.After;
 import org.junit.Before;
@@ -71,11 +73,15 @@ public class AboutActivityTest {
     @Test
     public void clickLearnMore_OpenBrowser() throws Throwable {
 
-        onView(withText("LEARN MORE")).perform(scrollTo(),click());
+        onView(withText(R.string.learn_more)).perform(scrollTo(), click());
 
         intended(allOf(hasAction(Intent.ACTION_VIEW),
                         hasData(Uri.parse("http://bookdash.org"))
                 )
         );
+    }
+    @Test
+    public void testGetScreenName(){
+        Assert.assertEquals("About Screen",testRule.getActivity().getScreenName());
     }
 }

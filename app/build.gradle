@@ -17,34 +17,40 @@ repositories {
 }
 
 
-def appConfig = new Properties()
-
-appConfig.load(new FileInputStream(rootProject.file("appconfig.properties")))
 
 android {
     compileSdkVersion 23
-    buildToolsVersion "23.0.1"
+    buildToolsVersion "23.0.2"
 
     defaultConfig {
         applicationId "org.bookdash.android"
         minSdkVersion 16
         targetSdkVersion 23
-        versionCode 11
-        versionName "1.0.11"
+        versionCode 12
+        versionName "1.0.12"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+        buildConfigField "String", "PARSE_APPLICATION_ID", "\"${BOOKDASH_PARSE_APP_ID}\""
+        buildConfigField "String", "PARSE_CLIENT_KEY", "\"${BOOKDASH_PARSE_CLIENT_ID}\""
+
     }
-    signingConfigs {
-        release {
-            def props = new Properties()
+    File signFile = rootProject.file('release-keystore.properties')
+    if (signFile.exists()) {
+        signingConfigs {
+            release {
+                def props = new Properties()
 
-            props.load(new FileInputStream(rootProject.file("release-keystore.properties")))
+                props.load(new FileInputStream(signFile))
 
-            storeFile rootProject.file(props.keyStore)
-            storePassword props.keyStorePassword
-            keyAlias props.keyAlias
-            keyPassword props.keyAliasPassword
+                storeFile rootProject.file(props.keyStore)
+                storePassword props.keyStorePassword
+                keyAlias props.keyAlias
+                keyPassword props.keyAliasPassword
+            }
         }
+        buildTypes.release.signingConfig signingConfigs.release
+
     }
+
     packagingOptions {
         exclude 'META-INF/ASL2.0'
         exclude 'META-INF/LICENSE'
@@ -61,7 +67,6 @@ android {
 
     productFlavors {
         mock {
-            applicationIdSuffix = ".mock"
         }
         prod {
 
@@ -84,16 +89,11 @@ android {
     buildTypes {
         release {
             shrinkResources false
-            minifyEnabled false
-            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'),'proguard-project.txt'
-            signingConfig signingConfigs.release
-            buildConfigField "String", "PARSE_APPLICATION_ID", appConfig.PARSE_APPLICATION_ID
-            buildConfigField "String", "PARSE_CLIENT_KEY", appConfig.PARSE_CLIENT_KEY
+            minifyEnabled true
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'),'proguard-rules.pro'
             ext.enableCrashlytics = true
         }
         debug {
-            buildConfigField "String", "PARSE_APPLICATION_ID", appConfig.PARSE_APPLICATION_ID
-            buildConfigField "String", "PARSE_CLIENT_KEY", appConfig.PARSE_CLIENT_KEY
             ext.enableCrashlytics = false
             // Run code coverage reports by default on debug builds.
             testCoverageEnabled = true
@@ -141,7 +141,6 @@ dependencies {
         exclude module: 'support-annotations'
         exclude module: 'support-v4'
     }
-    compile 'com.google.android.gms:play-services-analytics:8.3.0'
 
     compile fileTree(dir: 'libs', include: ['*.jar'])
     compile project(':fabbutton')
@@ -162,5 +161,8 @@ dependencies {
         transitive = true;
     }
     compile 'za.co.riggaroo:materialhelptutorial:1.0.3'
-    compile 'com.google.android.gms:play-services-appindexing:8.3.0'
+    compile "com.google.android.gms:play-services-appinvite:$rootProject.ext.googlePlayServicesVersion"
+    compile "com.google.android.gms:play-services-appindexing:$rootProject.ext.googlePlayServicesVersion"
+    compile "com.android.support:design:$rootProject.ext.googlePlayServicesVersion"
+    compile "com.google.android.gms:play-services-analytics:$rootProject.ext.googlePlayServicesVersion"
 }
