@@ -39,12 +39,12 @@ public class BookAdapter extends RecyclerView.Adapter<BookViewHolder> {
     @Override
     public void onBindViewHolder(BookViewHolder holder, int position) {
         BookDetail bookDetail = bookDetails.get(position);
-        holder.mTextView.setText(bookDetail.getBookTitle());
-        Glide.with(context).load(bookDetail.getBookCoverUrl()).into(holder.mImageView);
+        holder.bookTitle.setText(bookDetail.getBookTitle());
+        Glide.with(context).load(bookDetail.getBookCoverUrl()).into(holder.bookCover);
         holder.bookDetail = bookDetail;
-        holder.mImageViewDownloaded.setVisibility(bookDetail.isDownloadedAlready() ? View.VISIBLE : View.INVISIBLE);
-        holder.mCardView.setTag(holder);
-        holder.mCardView.setOnClickListener(onClickListener);
+        holder.downloadedIcon.setVisibility(bookDetail.isDownloadedAlready() ? View.VISIBLE : View.INVISIBLE);
+        holder.cardContainer.setTag(holder);
+        holder.cardContainer.setOnClickListener(onClickListener);
 
     }
 

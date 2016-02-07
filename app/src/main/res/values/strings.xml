@@ -81,5 +81,6 @@
     <string name="action_downloads">Downloaded Books</string>
     <string name="no_books_downloaded">No books are downloaded. Head to the \"All Books\" section to download some!</string>
     <string name="no_books_available">No books available at the moment. Check back soon!</string>
+    <string name="book_info_still_loading">Book information is still loading...</string>
 
 </resources>

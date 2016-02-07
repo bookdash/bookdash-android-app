@@ -362,7 +362,7 @@ public class ListBooksActivity extends BaseAppCompatActivity implements ListBook
     public void openBookDetails(View v) {
       /*  if (Build.VERSION.SDK_INT > Build.VERSION_CODES.LOLLIPOP) {
             ImageView imageView =
-                    ((BookViewHolder) v.getTag()).mImageView;
+                    ((BookViewHolder) v.getTag()).bookCover;
             imageView.setTransitionName(getString(R.string.transition_book));
             v.setBackgroundColor(
                     ContextCompat.getColor(ListBooksActivity.this, android.R.color.transparent));
