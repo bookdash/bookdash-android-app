@@ -13,15 +13,12 @@ import za.co.riggaroo.materialhelptutorial.TutorialItem;
 public interface SplashContract {
     interface View {
         void loadTutorial();
-
         void loadMainScreen();
     }
 
     interface UserActionsListener {
         void loadSplash();
-
         ArrayList<TutorialItem> getTutorialItems(Context context);
-
         void finishedTutorial();
     }
 }

@@ -31,6 +31,7 @@ public class BookInfoPresenter implements BookInfoContract.UserActionsListener {
     private final BookDetailRepository bookDetailRepository;
 
     private final Context context;
+
     public BookInfoPresenter(Context context, @NonNull BookInfoContract.View booksView, @NonNull BookDetailRepository bookDetailRepository) {
 
         this.booksView = booksView;
@@ -60,7 +61,7 @@ public class BookInfoPresenter implements BookInfoContract.UserActionsListener {
         booksView.setBookInfoBinding(bookDetail);
 
         booksView.setToolbarTitle(bookDetail.getBookTitle());
-        if (bookDetail.isDownloadedAlready()){
+        if (bookDetail.isDownloadedAlready()) {
             booksView.showDownloadFinished();
         }
         booksView.showBookDetailView();
@@ -81,7 +82,7 @@ public class BookInfoPresenter implements BookInfoContract.UserActionsListener {
 
     @Override
     public void downloadBook(@NonNull final BookDetail bookInfo) {
-        if (bookInfo.isDownloading()){
+        if (bookInfo.isDownloading()) {
             booksView.showSnackBarMessage(R.string.book_is_downloading);
             return;
         }
@@ -132,7 +133,10 @@ public class BookInfoPresenter implements BookInfoContract.UserActionsListener {
 
     @Override
     public void shareBookClicked(BookDetail bookInfo) {
-
+        if (bookInfo == null) {
+            booksView.showError(context.getString(R.string.book_info_still_loading));
+            return;
+        }
         booksView.sendShareEvent(bookInfo.getBookTitle());
     }
 
