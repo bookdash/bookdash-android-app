@@ -130,7 +130,6 @@
                 android:id="@+id/scrollViewBookInfo"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:background="@color/background_light_grey"
                 android:visibility="visible"
 
                 app:layout_behavior="@string/appbar_scrolling_view_behavior">

@@ -75,8 +75,7 @@
         android:layout_width="match_parent"
         android:visibility="gone"
         android:id="@+id/coordinator_layout_content"
-        android:layout_height="match_parent"
-        android:background="@color/background_light_grey">
+        android:layout_height="match_parent">
 
 
         <android.support.design.widget.AppBarLayout
