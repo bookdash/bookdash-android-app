@@ -26,8 +26,8 @@ android {
         applicationId "org.bookdash.android"
         minSdkVersion 16
         targetSdkVersion 23
-        versionCode 13
-        versionName "1.0.13"
+        versionCode 14
+        versionName "1.0.14"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
         buildConfigField "String", "PARSE_APPLICATION_ID", "\"${BOOKDASH_PARSE_APP_ID}\""
         buildConfigField "String", "PARSE_CLIENT_KEY", "\"${BOOKDASH_PARSE_CLIENT_ID}\""
