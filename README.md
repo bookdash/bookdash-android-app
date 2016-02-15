@@ -36,19 +36,16 @@ http://bookdash.org/
 
 1. MaterialHelpTutorial - https://github.com/spongebobrf/MaterialIntroTutorial
 2. FabButton - https://github.com/ckurtm/FabButton
-3. Parse - https://parse.com
+3. Parse - https://parse.com - Will be migrating this soon!
 4. Fabric - https://fabric.io/dashboard
 5. Glide Image Loading - https://github.com/bumptech/glide
 
 # Setup
 
 1. Clone or download this repo
-2. Setup a Parse Account. https://parse.com
-3. You will need to recreate the Parse Database. Click on "Core" and click "Import Data" you can find the example JSON here:
-/parse_data_example/
- If you want to download the actual books, you need to individually download each book and import the files into the parse manually. See the information here: https://www.parse.com/questions/exporting-file-objects-and-importing-to-another-application
-
-4. Change the Parse API Key and Client Key in the file to your unique parse key: /gradle.properties .
+2. This app is using Parse, the parse API key and client ID are included in this project as I will be migrating the app away from using Parse.
+ For now it is included for this project to build without you creating your own account. There are also sample JSON files in the parse_data_example_json/ folder. 
+ So if you want to start migrating to your own solution the files are there.
 5. Setup a Fabric Account. https://fabric.io/dashboard
 6. Get your Fabric API Key and Client key, change it in the file: /app/fabric-sample.properties and rename the file to fabric.properties
 7. Go generate a google-services.json file by following the instructions here: https://developers.google.com/mobile/add?platform=android
