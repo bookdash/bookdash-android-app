@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <dimen name="book_column_width">192dp</dimen>
+    <dimen name="book_column_height">250dp</dimen>
     <dimen name="book_column_width_padding">208dp</dimen>
     <dimen name="text_size_page">28sp</dimen>
     <dimen name="fab_button_size">62dp</dimen>
