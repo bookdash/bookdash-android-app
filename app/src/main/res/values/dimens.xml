@@ -4,6 +4,7 @@
     <dimen name="activity_horizontal_margin">16dp</dimen>
     <dimen name="activity_vertical_margin">16dp</dimen>
     <dimen name="book_column_width">144dp</dimen>
+    <dimen name="book_column_height">205dp</dimen>
     <dimen name="book_column_width_padding">160dp</dimen>
     <dimen name="book_list_padding">8dp</dimen>
     <dimen name="text_size_page">14sp</dimen>
