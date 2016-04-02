@@ -9,6 +9,8 @@ buildscript {
         classpath 'com.google.gms:google-services:1.5.0-beta2'
         classpath 'com.jfrog.bintray.gradle:gradle-bintray-plugin:1.1'
         classpath 'com.github.dcendents:android-maven-gradle-plugin:1.3'
+        classpath 'com.github.triplet.gradle:play-publisher:1.1.4'
+
     }
 }
 
@@ -22,7 +24,7 @@ ext {
     // Sdk and tools
 
     // App dependencies
-    supportLibraryVersion = '23.1.1'
+    supportLibraryVersion = '23.2.1'
     googlePlayServicesVersion = '8.3.0'
     guavaVersion = '18.0'
     glideVersion = '3.6.1'
