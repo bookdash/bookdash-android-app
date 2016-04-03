@@ -7,7 +7,3 @@ dependencies:
     - echo y | android update sdk --no-ui --all --filter "tools,platform-tools,android-23"
     - echo y | android update sdk --no-ui --all --filter "build-tools-23.0.2"
 
-
-test:
-  override:
-    - ./gradlew build checkk
