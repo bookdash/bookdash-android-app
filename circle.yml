@@ -3,8 +3,8 @@ machine:
      ANDROID_HOME: /usr/local/android-sdk-linux
 
 dependencies:
-	cache_directories:
-		- ~/.android
+  cache_directories:
+      - ~/.android
         - ~/android
   pre:
     - touch app/google-services.json
@@ -15,20 +15,18 @@ dependencies:
 
 test:
   pre:
-    	  - $ANDROID_HOME/tools/emulator -avd testAVD -no-skin -no-audio -no-window:
-    			background: true
-    		- (./gradlew assembleDebug):
-    			timeout: 1200
-    		- (./gradlew assembleDebugTest):
-    			timeout: 1200
-    		- (source scripts/environmentSetup.sh && waitForAVD)
+        - $ANDROID_HOME/tools/emulator -avd testAVD -no-skin -no-audio -no-window:
+          background: true
+        - (./gradlew assembleDebug):
+          timeout: 1200
+        - (./gradlew assembleDebugTest):
+          timeout: 1200
+        - (source scripts/environmentSetup.sh && waitForAVD)
 
   override:
     - (echo "Running JUnit tests!")
-    - (./gradlew connectedAndroidTest)
-    - ./gradlew assembleDebug
-    - cp -r app/build/outputs $CIRCLE_ARTIFACTS
-    - cp -r app/build/test-results/mockDebug $CIRCLE_ARTIFACTS
-    - cp -r app/build/test-results/prodDebug $CIRCLE_ARTIFACTS
-
-
+      - (./gradlew connectedAndroidTest)
+      - ./gradlew assembleDebug
+      - cp -r app/build/outputs $CIRCLE_ARTIFACTS
+      - cp -r app/build/test-results/mockDebug $CIRCLE_ARTIFACTS
+      - cp -r app/build/test-results/prodDebug $CIRCLE_ARTIFACTS
