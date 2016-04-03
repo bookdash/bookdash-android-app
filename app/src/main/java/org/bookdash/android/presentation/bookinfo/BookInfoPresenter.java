@@ -81,16 +81,17 @@ public class BookInfoPresenter implements BookInfoContract.UserActionsListener {
 
 
     @Override
-    public void downloadBook(@NonNull final BookDetail bookInfo) {
+    public void downloadBook(final BookDetail bookInfo) {
+        if (bookInfo == null || bookInfo.getBookFile() == null || bookInfo.getBookFile().getUrl() == null) {
+            booksView.showSnackBarMessage(R.string.book_not_available);
+            return;
+        }
         if (bookInfo.isDownloading()) {
             booksView.showSnackBarMessage(R.string.book_is_downloading);
             return;
         }
         bookInfo.setIsDownloading(true);
-        if (bookInfo.getBookFile() == null || bookInfo.getBookFile().getUrl() == null) {
-            booksView.showSnackBarMessage(R.string.book_not_available);
-            return;
-        }
+
 
 
         bookDetailRepository.downloadBook(bookInfo, new BookDetailRepository.GetBookPagesCallback() {
