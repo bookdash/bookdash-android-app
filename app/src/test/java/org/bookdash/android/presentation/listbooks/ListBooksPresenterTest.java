@@ -60,8 +60,8 @@ public class ListBooksPresenterTest {
     public void loadBooksSuccessfulLoadIntoView() {
         when(settingsRepository.getLanguagePreference()).thenReturn("EN");
 
-        listBooksPresenter.loadBooksForLanguagePreference();
-        verify(bookRepository).getBooksForLanguage(eq("EN"), booksForLanguageCallbackArgumentCaptor.capture());
+        listBooksPresenter.loadBooksForLanguagePreference(false);
+        verify(bookRepository).getBooksForLanguage(eq("EN"), eq(false), booksForLanguageCallbackArgumentCaptor.capture());
         booksForLanguageCallbackArgumentCaptor.getValue().onBooksLoaded(BOOKS);
 
         verify(listBookView).showBooks(BOOKS);
@@ -72,12 +72,12 @@ public class ListBooksPresenterTest {
     public void loadBooksLoadErrorShowErrorRetryScreen() {
         when(settingsRepository.getLanguagePreference()).thenReturn("EN");
 
-        listBooksPresenter.loadBooksForLanguagePreference();
+        listBooksPresenter.loadBooksForLanguagePreference(false);
 
-        verify(bookRepository).getBooksForLanguage(eq("EN"), booksForLanguageCallbackArgumentCaptor.capture());
+        verify(bookRepository).getBooksForLanguage(eq("EN"), eq(false), booksForLanguageCallbackArgumentCaptor.capture());
         booksForLanguageCallbackArgumentCaptor.getValue().onBooksLoadError(new Exception("WHOOPS"));
 
-        verify(listBookView).showErrorScreen(true, "WHOOPS");
+        verify(listBookView).showErrorScreen(true, "WHOOPS", true);
         verify(listBookView).showLoading(false);
 
     }

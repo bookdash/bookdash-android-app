@@ -1,5 +1,7 @@
 # Bookdash Android
 
+[![Circle CI](https://circleci.com/gh/bookdash/bookdash-android-app.svg?style=svg)](https://circleci.com/gh/bookdash/bookdash-android-app)
+
 Check out the blog post here: http://riggaroo.co.za/book-dash-android-app/
 
 Download the app: https://play.google.com/store/apps/details?id=org.bookdash.android

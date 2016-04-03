@@ -1,0 +1,15 @@
+machine:
+   environment:
+     ANDROID_HOME: /usr/local/android-sdk-linux
+
+dependencies:
+  pre:
+    - touch app/google-services.json
+    - echo $GOOGLE_SERVICES_JSON > app/google-services.json
+    - echo y | android update sdk --no-ui --all --filter "tools,platform-tools,android-23"
+    - echo y | android update sdk --no-ui --all --filter "build-tools-23.0.2"
+
+test:
+  override:
+    - ./gradlew assembleDebug
+    - cp -r app/build/outputs $CIRCLE_ARTIFACTS
