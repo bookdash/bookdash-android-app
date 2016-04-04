@@ -10,6 +10,13 @@ dependencies:
     - echo y | android update sdk --no-ui --all --filter "build-tools-23.0.2"
 
 test:
+  pre:
+    - emulator -avd circleci-android22 -no-audio -no-window:
+        background: true
+        parallel: true
+    - circle-android wait-for-boot
   override:
     - ./gradlew assembleDebug
     - cp -r app/build/outputs $CIRCLE_ARTIFACTS
+    - ./gradlew connectedCheck
+    - cp -r app/build/test-results/prodDebug $CIRCLE_TEST_REPORTS
