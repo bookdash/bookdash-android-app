@@ -18,5 +18,5 @@ test:
   override:
     - ./gradlew assembleDebug
     - cp -r app/build/outputs $CIRCLE_ARTIFACTS
-    - ./gradlew connectedCheck
+    - ./gradlew connectedMockDebugAndroidTest
     - cp -r app/build/test-results/prodDebug $CIRCLE_TEST_REPORTS
