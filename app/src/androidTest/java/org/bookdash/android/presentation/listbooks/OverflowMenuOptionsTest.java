@@ -80,18 +80,6 @@ public class OverflowMenuOptionsTest {
 
 
     @Test
-    public void rateThisAppClick_ShowPlayStoreDetail() {
-        //Given
-        //When
-        selectNavDrawItem(R.id.action_rate_app);
-        //Then
-        intended(allOf(hasAction(Intent.ACTION_VIEW),
-                        hasData(Uri.parse("market://details?id=" + org.bookdash.android.BuildConfig.APPLICATION_ID))
-                )
-        );
-    }
-
-    @Test
     public void contributorsClicked_ShowThanksPopover() {
 
         //When
