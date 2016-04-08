@@ -5,7 +5,6 @@ machine:
 dependencies:
   cache_directories:
     - ~/.android
-    - ~/android
   pre:
     - touch app/google-services.json
     - echo $GOOGLE_SERVICES_JSON > app/google-services.json
@@ -22,8 +21,10 @@ test:
     - ./gradlew assembleDebug
     - cp -r app/build/outputs $CIRCLE_ARTIFACTS
     - adb shell input keyevent 82
-    - ./gradlew connectedAndroidTest
+    - ./gradlew createMockDebugCoverageReport
+    - ./gradlew createProdDebugCoverageReport
     - cp -r app/build/outputs/androidTest-results/ $CIRCLE_TEST_REPORTS
+    - cp -r app/build/reports/coverage/ $CIRCLE_TEST_REPORTS
     - ./gradlew test
     - cp -r app/build/test-results/mockDebug/ $CIRCLE_TEST_REPORTS
     - cp -r app/build/test-results/prodDebug/ $CIRCLE_TEST_REPORTS
