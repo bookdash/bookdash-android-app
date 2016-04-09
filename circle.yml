@@ -14,8 +14,8 @@ dependencies:
 test:
   pre:
     - android list targets
-    - android create avd -n google-sysimg-22 -t 12
-    - emulator -avd google-sysimg-22 -no-audio -no-window :
+    - android create avd -n emulatorwithgoogleapi22 -t 12
+    - emulator -avd emulatorwithgoogleapi22 -no-audio -no-window :
         background: true
         parallel: true
     - circle-android wait-for-boot
