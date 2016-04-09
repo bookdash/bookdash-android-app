@@ -13,7 +13,7 @@ dependencies:
 
 test:
   pre:
-    - android create avd -n google-sysimg-22 -t sys-img-armeabi-v7a-addon-google_apis-google-22
+    - android create avd -n google-sysimg-22 -t "Google Inc.:Google APIs:22"
     - emulator -avd google-sysimg-22 -no-audio -no-window :
         background: true
         parallel: true
