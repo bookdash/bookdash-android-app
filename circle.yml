@@ -25,7 +25,6 @@ test:
 
   override:
     - ./gradlew createMockDebugCoverageReport
-    - ./gradlew createProdDebugCoverageReport
     - ./gradlew test
 
   post:
@@ -34,4 +33,3 @@ test:
     - cp -r app/build/reports/coverage/ $CIRCLE_TEST_REPORTS
     - cp -r app/build/test-results/mockDebug/ $CIRCLE_TEST_REPORTS
     - cp -r app/build/test-results/prodDebug/ $CIRCLE_TEST_REPORTS
-    - coveralls
