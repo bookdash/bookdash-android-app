@@ -10,7 +10,6 @@ dependencies:
     - echo $GOOGLE_SERVICES_JSON > app/google-services.json
     - echo y | android update sdk --no-ui --all --filter "tools,platform-tools,android-23"
     - echo y | android update sdk --no-ui --all --filter "build-tools-23.0.2"
-    - pip install codecov
 
 test:
   pre:
@@ -31,4 +30,4 @@ test:
     - cp -r app/build/reports/coverage/ $CIRCLE_TEST_REPORTS
     - cp -r app/build/test-results/mockDebug/ $CIRCLE_TEST_REPORTS
     - cp -r app/build/test-results/prodDebug/ $CIRCLE_TEST_REPORTS
-    - codecov --token=$CODE_COV_TOKEN
+    - coveralls
