@@ -14,8 +14,8 @@ dependencies:
 test:
   pre:
     - android list targets
-    - android create avd -n emulatorwithgoogleapi22 -t 12 --tag google_apis
-    - emulator -avd emulatorwithgoogleapi22 -no-audio -no-window :
+    - android create avd -n emulatorwithgoogleapi21 -t 11 --tag google_apis
+    - emulator -avd emulatorwithgoogleapi21 -no-audio -no-window :
         background: true
         parallel: true
     - circle-android wait-for-boot
