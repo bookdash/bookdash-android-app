@@ -3,8 +3,6 @@ machine:
      ANDROID_HOME: /usr/local/android-sdk-linux
 
 dependencies:
-  cache_directories:
-    - ~/.android
   pre:
     - touch app/google-services.json
     - echo $GOOGLE_SERVICES_JSON > app/google-services.json
