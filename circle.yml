@@ -13,10 +13,13 @@ dependencies:
 
 test:
   pre:
-    - emulator -avd circleci-android22 -no-audio -no-window:
+    - emulator -avd circleci-android22 -no-audio -no-window -no-boot-anim:
         background: true
         parallel: true
     - circle-android wait-for-boot
+    - adb shell settings put global window_animation_scale 0
+    - adb shell settings put global transition_animation_scale 0
+    - adb shell settings put global animator_duration_scale 0
 
   override:
     - adb shell input keyevent 82
