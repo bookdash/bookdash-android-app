@@ -13,6 +13,7 @@ dependencies:
 
 test:
   pre:
+    - android list targets
     - android create avd -n google-sysimg-22 -t "Google Inc.:Google APIs:22"
     - emulator -avd google-sysimg-22 -no-audio -no-window :
         background: true
