@@ -14,7 +14,7 @@ dependencies:
 test:
   pre:
     - android list targets
-    - android create avd -n emulatorwithgoogleapi22 -t 12
+    - android create avd -n emulatorwithgoogleapi22 -t 12 --tag google_apis/armeabi-v7a
     - emulator -avd emulatorwithgoogleapi22 -no-audio -no-window :
         background: true
         parallel: true
