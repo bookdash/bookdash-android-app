@@ -13,16 +13,18 @@ dependencies:
 
 test:
   pre:
-    - emulator -avd circleci-android22 -no-audio -no-window -no-boot-anim:
+    - android create avd -n google-sysimg-22 -t sys-img-armeabi-v7a-addon-google_apis-google-22
+    - emulator -avd google-sysimg-22 -no-audio -no-window :
         background: true
         parallel: true
     - circle-android wait-for-boot
+    - adb shell input keyevent 82
+    - adb shell svc power stayon true
     - adb shell settings put global window_animation_scale 0
     - adb shell settings put global transition_animation_scale 0
     - adb shell settings put global animator_duration_scale 0
 
   override:
-    - adb shell input keyevent 82
     - ./gradlew createMockDebugCoverageReport
     - ./gradlew createProdDebugCoverageReport
     - ./gradlew test
