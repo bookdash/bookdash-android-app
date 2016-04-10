@@ -24,9 +24,10 @@ import java.lang.reflect.Method;
  *
  * @see <a href="u2020 open source app by Jake Wharton">https://github.com/JakeWharton/u2020</a>
  * @see <a href="Daj gist">https://gist.github.com/daj/7b48f1b8a92abf960e7b</a>
- * @see <a href="Android-test-kit Disabling Animations">https://code.google.com/p/android-test-kit/wiki/DisablingAnimations</a>
  */
 public final class CustomTestRunner extends AndroidJUnitRunner {
+
+    private static final String TAG = "CustomTestRunner";
 
     @Override
     public void onStart() {
@@ -39,26 +40,31 @@ public final class CustomTestRunner extends AndroidJUnitRunner {
                 CustomTestRunner.this.disableAnimations(app);
 
                 String name = CustomTestRunner.class.getSimpleName();
-                // Unlock the device so that the tests can input keystrokes.
-                KeyguardManager keyguard = (KeyguardManager) app.getSystemService(Context.KEYGUARD_SERVICE);
-                keyguard.newKeyguardLock(name).disableKeyguard();
-                // Wake up the screen.
-                PowerManager power = (PowerManager) app.getSystemService(Context.POWER_SERVICE);
-                power.newWakeLock(PowerManager.FULL_WAKE_LOCK | PowerManager.ACQUIRE_CAUSES_WAKEUP | PowerManager.ON_AFTER_RELEASE, name)
-                        .acquire();
+                unlockScreen(app, name);
+                keepSceenAwake(app, name);
             }
         });
 
         super.onStart();
     }
 
+
     @Override
     public void finish(int resultCode, Bundle results) {
         super.finish(resultCode, results);
         enableAnimations(getContext());
     }
+    private void keepSceenAwake(Context app, String name) {
+        PowerManager power = (PowerManager) app.getSystemService(Context.POWER_SERVICE);
+        power.newWakeLock(PowerManager.FULL_WAKE_LOCK | PowerManager.ACQUIRE_CAUSES_WAKEUP | PowerManager.ON_AFTER_RELEASE, name)
+                .acquire();
+    }
 
-    //<editor-fold desc="Animations">
+    private void unlockScreen(Context app, String name) {
+        KeyguardManager keyguard = (KeyguardManager) app.getSystemService(Context.KEYGUARD_SERVICE);
+        keyguard.newKeyguardLock(name).disableKeyguard();
+    }
+
     void disableAnimations(Context context) {
         int permStatus = context.checkCallingOrSelfPermission(Manifest.permission.SET_ANIMATION_SCALE);
         if (permStatus == PackageManager.PERMISSION_GRANTED) {
@@ -90,10 +96,9 @@ public final class CustomTestRunner extends AndroidJUnitRunner {
                 currentScales[i] = animationScale;
             }
             setAnimationScales.invoke(windowManagerObj, new Object[]{currentScales});
-            Log.d("SystemAnimation", "changed permissions");
+            Log.d(TAG, "Changed permissions of animations");
         } catch (Exception e) {
-            Log.e("SystemAnimations", "Could not change animation scale to " + animationScale + " :'(");
+            Log.e(TAG, "Could not change animation scale to " + animationScale + " :'(");
         }
     }
-    //</editor-fold>
 }
