@@ -13,10 +13,10 @@ test:
   pre:
     - android list targets
     - android create avd -n emulatorwithgoogleapi21 -t 11 --tag google_apis
-    - echo 'vm.heapSize=128' >> ~/.android/avd/emulatorwithgoogleapi21.ini
+    - echo 'vm.heapSize=512' >> ~/.android/avd/emulatorwithgoogleapi21.ini
     - echo 'hw.ramSize=1024' >> ~/.android/avd/emulatorwithgoogleapi21.ini
     - cat ~/.android/avd/emulatorwithgoogleapi21.ini
-    - emulator -memory 1024 -avd emulatorwithgoogleapi21 -no-audio -no-window :
+    - emulator -avd emulatorwithgoogleapi21 -no-audio -no-window :
         background: true
         parallel: true
     - circle-android wait-for-boot
