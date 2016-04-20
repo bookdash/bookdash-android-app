@@ -1,38 +1,39 @@
 <?xml version="1.0" encoding="utf-8"?>
-<manifest package="org.bookdash.android"
-          xmlns:android="http://schemas.android.com/apk/res/android">
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+          package="org.bookdash.android">
 
     <uses-permission android:name="android.permission.INTERNET"/>
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
-    <uses-permission android:name="android.permission.WAKE_LOCK" />
-    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
-    <uses-permission android:name="android.permission.VIBRATE" />
+    <uses-permission android:name="android.permission.WAKE_LOCK"/>
+    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED"/>
+    <uses-permission android:name="android.permission.VIBRATE"/>
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
-    <uses-permission android:name="android.permission.GET_ACCOUNTS" />
-    <uses-permission android:name="com.google.android.c2dm.permission.RECEIVE" />
-    <permission android:protectionLevel="signature"
-                android:name="org.bookdash.android.permission.C2D_MESSAGE" />
-    <uses-permission android:name="org.bookdash.bookdash.permission.C2D_MESSAGE" />
+    <uses-permission android:name="android.permission.GET_ACCOUNTS"/>
+    <uses-permission android:name="com.google.android.c2dm.permission.RECEIVE"/>
+
+    <permission
+        android:name="org.bookdash.android.permission.C2D_MESSAGE"
+        android:protectionLevel="signature"/>
+    <uses-permission android:name="org.bookdash.bookdash.permission.C2D_MESSAGE"/>
     <application
         android:name="org.bookdash.android.BookDashApplication"
         android:allowBackup="true"
-        android:largeHeap="true"
         android:hardwareAccelerated="true"
-
         android:icon="@mipmap/ic_launcher"
-        android:label="@string/app_name"
-        android:theme="@style/AppTheme">
-        <meta-data android:name="org.bookdash.android.presentation.utils.GlideLoadingModule"
-                   android:value="GlideModule"/>
-        <activity
-            android:name="org.bookdash.android.presentation.listbooks.ListBooksActivity"
-            android:theme="@style/AppTheme"
-            android:label="@string/app_name">
-           <!-- <intent-filter>
-                <action android:name="android.intent.action.MAIN"/>
 
-                <category android:name="android.intent.category.LAUNCHER"/>
-            </intent-filter>-->
+        android:label="@string/app_name"
+        android:largeHeap="true"
+        android:theme="@style/AppTheme">
+        <meta-data
+            android:name="org.bookdash.android.presentation.utils.GlideLoadingModule"
+            android:value="GlideModule"/>
+
+
+        <activity
+            android:name=".presentation.main.MainActivity"
+            android:label="@string/app_name"
+            android:theme="@style/AppTheme">
+
         </activity>
         <activity
             android:name="org.bookdash.android.presentation.readbook.BookDetailActivity"
@@ -40,30 +41,36 @@
             android:screenOrientation="sensorLandscape"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar.FullScreen">
         </activity>
-        <activity android:name="org.bookdash.android.presentation.bookinfo.BookInfoActivity"
+        <activity
+            android:name="org.bookdash.android.presentation.bookinfo.BookInfoActivity"
             android:label=""
             android:theme="@style/AppTheme"
             >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="org.bookdash.android.presentation.listbooks.ListBooksActivity" />
+                android:value=".presentation.listbooks.ListBooksFragment"/>
+
             <intent-filter android:label="@string/filter_view_book">
-                <action android:name="android.intent.action.VIEW" />
-                <category android:name="android.intent.category.DEFAULT" />
-                <category android:name="android.intent.category.BROWSABLE" />
+                <action android:name="android.intent.action.VIEW"/>
+
+                <category android:name="android.intent.category.DEFAULT"/>
+                <category android:name="android.intent.category.BROWSABLE"/>
                 <!-- Accepts URIs that begin with "http://recipe-app.com/recipes" -->
-                <data android:scheme="bookdash"
+                <data
                     android:host="books"
+                    android:scheme="bookdash"
                     />
             </intent-filter>
             <intent-filter android:label="@string/filter_view_book">
-                <action android:name="android.intent.action.VIEW" />
-                <category android:name="android.intent.category.DEFAULT" />
-                <category android:name="android.intent.category.BROWSABLE" />
+                <action android:name="android.intent.action.VIEW"/>
+
+                <category android:name="android.intent.category.DEFAULT"/>
+                <category android:name="android.intent.category.BROWSABLE"/>
                 <!-- Accepts URIs that begin with "http://recipe-app.com/recipes" -->
-                <data android:scheme="http"
+                <data
                     android:host="bookdash.org"
-                    android:pathPrefix="/books" />
+                    android:pathPrefix="/books"
+                    android:scheme="http"/>
             </intent-filter>
         </activity>
         <activity
@@ -79,53 +86,61 @@
         <activity
             android:name="org.bookdash.android.presentation.about.AboutActivity"
             android:label="@string/title_activity_about"
-            android:parentActivityName="org.bookdash.android.presentation.listbooks.ListBooksActivity">
+            android:parentActivityName=".presentation.listbooks.ListBooksFragment">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="org.bookdash.android.presentation.listbooks.ListBooksActivity"/>
+                android:value=".presentation.listbooks.ListBooksFragment"/>
 
         </activity>
 
-        <activity android:name="za.co.riggaroo.materialhelptutorial.tutorial.MaterialTutorialActivity"
-            android:theme="@style/AppTheme"
-            android:label="@string/tutorial_screen">
-            </activity>
-        <service android:name="com.parse.PushService" />
+        <activity
+            android:name="za.co.riggaroo.materialhelptutorial.tutorial.MaterialTutorialActivity"
+            android:label="@string/tutorial_screen"
+            android:theme="@style/AppTheme">
+        </activity>
+
+        <service android:name="com.parse.PushService"/>
+
         <receiver android:name="com.parse.ParseBroadcastReceiver">
             <intent-filter>
-                <action android:name="android.intent.action.BOOT_COMPLETED" />
-                <action android:name="android.intent.action.USER_PRESENT" />
+                <action android:name="android.intent.action.BOOT_COMPLETED"/>
+                <action android:name="android.intent.action.USER_PRESENT"/>
             </intent-filter>
         </receiver>
-        <receiver android:name="com.parse.GcmBroadcastReceiver"
-                  android:permission="com.google.android.c2dm.permission.SEND">
+        <receiver
+            android:name="com.parse.GcmBroadcastReceiver"
+            android:permission="com.google.android.c2dm.permission.SEND">
             <intent-filter>
-                <action android:name="com.google.android.c2dm.intent.RECEIVE" />
-                <action android:name="com.google.android.c2dm.intent.REGISTRATION" />
+                <action android:name="com.google.android.c2dm.intent.RECEIVE"/>
+                <action android:name="com.google.android.c2dm.intent.REGISTRATION"/>
 
                 <!--
                   IMPORTANT: Change "com.parse.tutorials.pushnotifications" to match your app's package name.
                 -->
-                <category android:name="org.bookdash.bookdash" />
+                <category android:name="org.bookdash.bookdash"/>
             </intent-filter>
         </receiver>
-        <receiver android:name="com.parse.ParsePushBroadcastReceiver" android:exported="false">
+        <receiver
+            android:name="com.parse.ParsePushBroadcastReceiver"
+            android:exported="false">
             <intent-filter>
-                <action android:name="com.parse.push.intent.RECEIVE" />
-                <action android:name="com.parse.push.intent.DELETE" />
-                <action android:name="com.parse.push.intent.OPEN" />
+                <action android:name="com.parse.push.intent.RECEIVE"/>
+                <action android:name="com.parse.push.intent.DELETE"/>
+                <action android:name="com.parse.push.intent.OPEN"/>
             </intent-filter>
         </receiver>
         <!-- replace @drawable/push_icon with your push icon identifier -->
-        <meta-data android:name="com.parse.push.notification_icon" android:resource="@drawable/ic_stat_book"/>
+        <meta-data
+            android:name="com.parse.push.notification_icon"
+            android:resource="@drawable/ic_stat_book"/>
         <!-- ATTENTION: This was auto-generated to add Google Play services to your project for
              App Indexing.  See https://g.co/AppIndexing/AndroidStudio for more information. -->
         <meta-data
             android:name="com.google.android.gms.version"
-            android:value="@integer/google_play_services_version" />
+            android:value="@integer/google_play_services_version"/>
         <meta-data
             android:name="io.fabric.ApiKey"
-            android:value="b2579d751611dc3b58788bad80a51ad37e140ecb" />
+            android:value="b2579d751611dc3b58788bad80a51ad37e140ecb"/>
     </application>
 
 </manifest>

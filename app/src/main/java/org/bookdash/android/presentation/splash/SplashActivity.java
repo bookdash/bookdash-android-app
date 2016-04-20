@@ -7,7 +7,8 @@ import android.support.v7.app.AppCompatActivity;
 
 import org.bookdash.android.Injection;
 import org.bookdash.android.R;
-import org.bookdash.android.presentation.listbooks.ListBooksActivity;
+import org.bookdash.android.presentation.listbooks.ListBooksFragment;
+import org.bookdash.android.presentation.main.MainActivity;
 
 import za.co.riggaroo.materialhelptutorial.tutorial.MaterialTutorialActivity;
 
@@ -47,7 +48,7 @@ public class SplashActivity extends AppCompatActivity implements SplashContract.
 
     @Override
     public void loadMainScreen() {
-        Intent mainAct = new Intent(SplashActivity.this, ListBooksActivity.class);
+        Intent mainAct = new Intent(SplashActivity.this, MainActivity.class);
         startActivity(mainAct);
         finish();
     }

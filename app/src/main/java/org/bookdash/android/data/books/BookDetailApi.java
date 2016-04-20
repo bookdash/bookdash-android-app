@@ -16,6 +16,8 @@ public interface BookDetailApi {
 
     void getBooksForLanguages(String language, BookServiceCallback<List<BookDetail>> bookServiceCallback);
 
+    void getDownloadedBooks(BookServiceCallback<List<BookDetail>> bookServiceCallback);
+
     interface BookServiceCallback<T> {
         void onLoaded(T result);
 

@@ -16,7 +16,10 @@ import java.util.List;
  */
 public interface BookDetailRepository {
 
-    void getBooksForLanguage(String language, boolean downloadedOnly, @NonNull GetBooksForLanguageCallback booksForLanguageCallback);
+
+    void getBooksForLanguage(@NonNull String language, @NonNull GetBooksForLanguageCallback booksForLanguageCallback);
+
+    void getDownloadedBooks(GetBooksForLanguageCallback getBooksForLanguageCallback);
 
     interface GetBooksForLanguageCallback {
         void onBooksLoaded(List<BookDetail> books);

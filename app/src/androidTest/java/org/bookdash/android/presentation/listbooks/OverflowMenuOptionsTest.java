@@ -1,20 +1,13 @@
 package org.bookdash.android.presentation.listbooks;
 
-import android.content.Intent;
-import android.net.Uri;
 import android.support.design.widget.NavigationView;
-import android.support.test.InstrumentationRegistry;
 import android.support.test.espresso.intent.Intents;
 import android.support.test.rule.ActivityTestRule;
 import android.support.test.runner.AndroidJUnit4;
 import android.test.suitebuilder.annotation.LargeTest;
-import android.view.MenuItem;
 
-import org.bookdash.android.BuildConfig;
 import org.bookdash.android.R;
 import org.bookdash.android.presentation.about.AboutActivity;
-import org.hamcrest.BaseMatcher;
-import org.hamcrest.Description;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Rule;
@@ -22,13 +15,11 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 
 import static android.support.test.espresso.Espresso.onView;
-import static android.support.test.espresso.Espresso.openActionBarOverflowOrOptionsMenu;
 import static android.support.test.espresso.action.ViewActions.click;
 import static android.support.test.espresso.assertion.ViewAssertions.matches;
 import static android.support.test.espresso.intent.matcher.IntentMatchers.hasAction;
 import static android.support.test.espresso.intent.matcher.IntentMatchers.hasData;
 import static android.support.test.espresso.matcher.RootMatchers.isDialog;
-import static android.support.test.espresso.matcher.RootMatchers.*;
 import static android.support.test.espresso.matcher.ViewMatchers.isClickable;
 import static android.support.test.espresso.matcher.ViewMatchers.isDisplayed;
 import static android.support.test.espresso.matcher.ViewMatchers.withContentDescription;
@@ -49,8 +40,8 @@ import static android.support.test.espresso.intent.matcher.IntentMatchers.hasCom
 @LargeTest
 public class OverflowMenuOptionsTest {
     @Rule
-    public ActivityTestRule<ListBooksActivity> mActivityTestRule =
-            new ActivityTestRule<>(ListBooksActivity.class);
+    public ActivityTestRule<ListBooksFragment> mActivityTestRule =
+            new ActivityTestRule<>(ListBooksFragment.class);
 
 
     @Before
