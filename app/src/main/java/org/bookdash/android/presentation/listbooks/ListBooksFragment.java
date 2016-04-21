@@ -1,5 +1,6 @@
 package org.bookdash.android.presentation.listbooks;
 
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Rect;
@@ -14,6 +15,9 @@ import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
@@ -25,6 +29,7 @@ import org.bookdash.android.R;
 import org.bookdash.android.domain.pojo.BookDetail;
 import org.bookdash.android.presentation.bookinfo.BookInfoActivity;
 import org.bookdash.android.presentation.main.MainActivity;
+import org.bookdash.android.presentation.main.NavDrawerInterface;
 import org.bookdash.android.presentation.view.AutofitRecyclerView;
 
 import java.util.List;
@@ -42,7 +47,7 @@ public class ListBooksFragment extends Fragment implements ListBooksContract.Vie
     private LinearLayout linearLayoutErrorScreen;
     private TextView textViewErrorMessage;
     private Toolbar toolbar;
-
+    private NavDrawerInterface navDrawerInterface;
     public static Fragment newInstance() {
         return new ListBooksFragment();
     }
@@ -82,15 +87,20 @@ public class ListBooksFragment extends Fragment implements ListBooksContract.Vie
             }
         });
         toolbar = (Toolbar) view.findViewById(R.id.toolbar);
-        ((AppCompatActivity)getActivity()).setSupportActionBar(toolbar);
+        if (navDrawerInterface != null){
+            navDrawerInterface.setToolbar(toolbar);
+        }
         final ActionBar actionBar = ((AppCompatActivity)getActivity()).getSupportActionBar();
+
 
         if (actionBar != null) {
             actionBar.setHomeAsUpIndicator(R.drawable.ic_menu_black_24dp);
             actionBar.setDisplayHomeAsUpEnabled(true);
+            actionBar.setTitle(getString(R.string.book_dash));
         }
         actionsListener.loadLanguages();
         actionsListener.loadBooksForLanguagePreference();
+        setHasOptionsMenu(true);
     }
 
 
@@ -167,5 +177,34 @@ public class ListBooksFragment extends Fragment implements ListBooksContract.Vie
         alertDialogLanguages.show();
     }
 
+    @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+        if (context instanceof NavDrawerInterface) {
+            navDrawerInterface = (NavDrawerInterface) context;
 
+        }
+    }
+
+    @Override
+    public void onDetach() {
+        super.onDetach();
+        navDrawerInterface = null;
+    }
+
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        super.onCreateOptionsMenu(menu, inflater);
+        inflater.inflate(R.menu.menu_main, menu);
+    }
+
+   
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        if (item.getItemId() == R.id.action_language_choice) {
+            actionsListener.clickOpenLanguagePopover();
+            return true;
+        }
+        return super.onOptionsItemSelected(item);
+    }
 }

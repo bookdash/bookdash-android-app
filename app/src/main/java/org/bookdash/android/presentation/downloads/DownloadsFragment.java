@@ -1,10 +1,12 @@
 package org.bookdash.android.presentation.downloads;
 
+import android.content.Context;
 import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
+import android.support.v4.view.GravityCompat;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
@@ -12,6 +14,9 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
@@ -21,6 +26,7 @@ import android.widget.TextView;
 import org.bookdash.android.Injection;
 import org.bookdash.android.R;
 import org.bookdash.android.domain.pojo.BookDetail;
+import org.bookdash.android.presentation.main.NavDrawerInterface;
 
 import java.util.List;
 
@@ -36,6 +42,9 @@ public class DownloadsFragment extends Fragment implements DownloadsContract.Vie
     private Button buttonRetry;
     private TextView textViewErrorMessage;
     private CircularProgressBar circularProgressBar;
+    private NavDrawerInterface navDrawerInterface;
+    private Toolbar toolbar;
+
 
     public static DownloadsFragment newInstance() {
         return new DownloadsFragment();
@@ -68,8 +77,12 @@ public class DownloadsFragment extends Fragment implements DownloadsContract.Vie
         buttonRetry = (Button) view.findViewById(R.id.button_retry);
         textViewErrorMessage = (TextView) view.findViewById(R.id.text_view_error_screen);
         circularProgressBar = (CircularProgressBar) view.findViewById(R.id.fragment_loading_downloads);
-        Toolbar toolbar = (Toolbar) view.findViewById(R.id.toolbar);
-        ((AppCompatActivity) getActivity()).setSupportActionBar(toolbar);
+        toolbar = (Toolbar) view.findViewById(R.id.toolbar);
+        if (navDrawerInterface !=null){
+            navDrawerInterface.setToolbar(toolbar);
+
+        }
+
         final ActionBar actionBar = ((AppCompatActivity) getActivity()).getSupportActionBar();
 
         if (actionBar != null) {
@@ -79,7 +92,7 @@ public class DownloadsFragment extends Fragment implements DownloadsContract.Vie
         }
         downloadsPresenter.loadListDownloads();
 
-
+        setHasOptionsMenu(false);
     }
 
     private void showDeleteDialog(final BookDetail bookToDelete) {
@@ -117,6 +130,12 @@ public class DownloadsFragment extends Fragment implements DownloadsContract.Vie
     }
 
     @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        super.onCreateOptionsMenu(menu, inflater);
+
+    }
+
+    @Override
     public void showLoading(boolean visible) {
         circularProgressBar.setVisibility(visible ? View.VISIBLE : View.GONE);
         listDownloadsRecyclerView.setVisibility(visible ? View.GONE : View.VISIBLE);
@@ -133,5 +152,34 @@ public class DownloadsFragment extends Fragment implements DownloadsContract.Vie
         Snackbar.make(listDownloadsRecyclerView, message, Snackbar.LENGTH_LONG).show();
 
     }
+
+     @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+        if (context instanceof NavDrawerInterface) {
+            navDrawerInterface = (NavDrawerInterface) context;
+
+        }
+    }
+
+    @Override
+    public void onDetach() {
+        super.onDetach();
+        navDrawerInterface = null;
+    }
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+
+            case android.R.id.home:
+                if (navDrawerInterface !=null){
+                    navDrawerInterface.openNavDrawer();
+                }
+                return true;
+
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
 
 }

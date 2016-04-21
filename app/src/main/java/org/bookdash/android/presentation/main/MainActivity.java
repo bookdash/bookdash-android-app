@@ -37,12 +37,11 @@ import org.bookdash.android.presentation.downloads.DownloadsFragment;
 import org.bookdash.android.presentation.listbooks.ListBooksFragment;
 
 
-public class MainActivity extends BaseAppCompatActivity implements MainContract.MainView {
+public class MainActivity extends BaseAppCompatActivity implements MainContract.MainView, NavDrawerInterface {
 
     private static final int INVITE_REQUEST_CODE = 1;
     private static final String TAG = "MainActivity";
     private GoogleApiClient googleApiClient;
-    private Toolbar toolbar;
     private DrawerLayout drawerLayout;
     private NavigationView navigationView;
     private MainContract.MainUserActions actionsListener;
@@ -52,9 +51,9 @@ public class MainActivity extends BaseAppCompatActivity implements MainContract.
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         drawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
-        toolbar = (Toolbar) findViewById(R.id.toolbar);
+
         navigationView = (NavigationView) findViewById(R.id.navigation_view);
-        setSupportActionBar(toolbar);
+
         actionsListener = new MainPresenter(this);
         final ActionBar actionBar = getSupportActionBar();
 
@@ -69,16 +68,7 @@ public class MainActivity extends BaseAppCompatActivity implements MainContract.
     }
 
     private void setUpNavDrawer() {
-        if (toolbar != null) {
-            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-            toolbar.setNavigationOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    drawerLayout.openDrawer(GravityCompat.START);
-                }
-            });
-        }
         navigationView.setCheckedItem(R.id.action_all_books);
         navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
             @Override
@@ -185,11 +175,7 @@ public class MainActivity extends BaseAppCompatActivity implements MainContract.
         return "MainActivity";
     }
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.menu_main, menu);
-        return true;
-    }
+
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
@@ -300,4 +286,24 @@ public class MainActivity extends BaseAppCompatActivity implements MainContract.
     }
 
 
+    @Override
+    public void openNavDrawer() {
+        drawerLayout.openDrawer(navigationView);
+    }
+
+    @Override
+    public void closeNavDrawer() {
+        drawerLayout.closeDrawer(navigationView);
+    }
+
+    @Override
+    public void setToolbar(Toolbar toolbar) {
+        setSupportActionBar(toolbar);
+        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                drawerLayout.openDrawer(GravityCompat.START);
+            }
+        });
+    }
 }
