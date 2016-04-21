@@ -20,6 +20,7 @@ import org.bookdash.android.R;
 import org.bookdash.android.data.settings.FakeSettingsApiImpl;
 import org.bookdash.android.presentation.about.AboutActivity;
 import org.bookdash.android.presentation.bookinfo.BookInfoActivity;
+import org.bookdash.android.presentation.main.MainActivity;
 import org.hamcrest.BaseMatcher;
 import org.hamcrest.Description;
 import org.hamcrest.Matcher;
@@ -67,8 +68,8 @@ import static android.support.test.espresso.intent.matcher.IntentMatchers.hasCom
 public class ListBooksActivityTest {
 
     @Rule
-    public ActivityTestRule<ListBooksActivity> activityTestRule =
-            new ActivityTestRule<>(ListBooksActivity.class);
+    public ActivityTestRule<MainActivity> activityTestRule =
+            new ActivityTestRule<>(MainActivity.class);
 
     @Before
     public void setUp() {

@@ -74,6 +74,11 @@ public class FakeBookDetailApiImpl implements BookDetailApi {
     }
 
     @Override
+    public void getDownloadedBooks(BookServiceCallback<List<BookDetail>> bookServiceCallback) {
+        //TODO
+    }
+
+    @Override
     public void getBookDetail(String bookDetailId, BookServiceCallback<BookDetail> bookServiceCallback) {
         if (shouldFailService) {
             bookServiceCallback.onError(new Exception("BOOK DETAIL ERROR"));

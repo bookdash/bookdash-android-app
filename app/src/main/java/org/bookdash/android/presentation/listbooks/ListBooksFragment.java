@@ -7,8 +7,11 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.AlertDialog;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -21,6 +24,7 @@ import org.bookdash.android.Injection;
 import org.bookdash.android.R;
 import org.bookdash.android.domain.pojo.BookDetail;
 import org.bookdash.android.presentation.bookinfo.BookInfoActivity;
+import org.bookdash.android.presentation.main.MainActivity;
 import org.bookdash.android.presentation.view.AutofitRecyclerView;
 
 import java.util.List;
@@ -37,6 +41,7 @@ public class ListBooksFragment extends Fragment implements ListBooksContract.Vie
     private CircularProgressBar circularProgressBar;
     private LinearLayout linearLayoutErrorScreen;
     private TextView textViewErrorMessage;
+    private Toolbar toolbar;
 
     public static Fragment newInstance() {
         return new ListBooksFragment();
@@ -76,7 +81,14 @@ public class ListBooksFragment extends Fragment implements ListBooksContract.Vie
                 actionsListener.loadBooksForLanguagePreference();
             }
         });
+        toolbar = (Toolbar) view.findViewById(R.id.toolbar);
+        ((AppCompatActivity)getActivity()).setSupportActionBar(toolbar);
+        final ActionBar actionBar = ((AppCompatActivity)getActivity()).getSupportActionBar();
 
+        if (actionBar != null) {
+            actionBar.setHomeAsUpIndicator(R.drawable.ic_menu_black_24dp);
+            actionBar.setDisplayHomeAsUpEnabled(true);
+        }
         actionsListener.loadLanguages();
         actionsListener.loadBooksForLanguagePreference();
     }

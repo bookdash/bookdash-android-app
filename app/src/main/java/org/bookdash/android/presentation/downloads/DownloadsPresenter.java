@@ -32,7 +32,18 @@ public class DownloadsPresenter implements DownloadsContract.UserActions{
     }
 
     @Override
-    public void deleteDownload() {
+    public void deleteDownload(BookDetail bookDetail) {
+        bookRepository.deleteBook(bookDetail, new BookDetailRepository.DeleteBookCallBack(){
 
+            @Override
+            public void onBookDeleted(BookDetail bookDetail) {
+                loadListDownloads();
+            }
+
+            @Override
+            public void onBookDeleteFailed(Exception e) {
+                view.showSnackBarError(e.getMessage());
+            }
+        });
     }
 }

@@ -36,4 +36,5 @@ public interface BookDetailApi {
 
     void downloadBook(BookDetail bookDetail, BookServiceCallback<BookPages> downloadBookCallback, BookServiceProgressCallback bookServiceProgressCallback);
 
+    void deleteBook(BookDetail bookDetail, BookServiceCallback<Boolean> deleteBook);
 }

@@ -1,6 +1,7 @@
 package org.bookdash.android.data.books;
 
 import android.support.annotation.NonNull;
+import android.support.annotation.WorkerThread;
 import android.util.Log;
 
 import com.google.gson.Gson;
@@ -194,6 +195,28 @@ public class BookDetailApiImpl implements BookDetailApi {
         });
     }
 
+    @Override
+    public void deleteBook(final BookDetail bookDetail, final BookServiceCallback<Boolean> deleteBook) {
+        Task.call(new Callable<Void>() {
+            @Override
+            public Void call() throws Exception {
+                try {
+                    deleteLocalBook(bookDetail);
+                    deleteBook.onLoaded(true);
+                } catch (Exception e) {
+                    deleteBook.onError(e);
+                }
+                return null;
+
+            }
+        }, DISK_EXECUTOR);
+    }
+
+    @WorkerThread
+    private void deleteLocalBook(BookDetail bookDetail) {
+        FileManager.deleteFolder(bookDetail.getFolderLocation(BookDashApplication.FILES_DIR));
+    }
+
     private void getBookPages(final BookDetail bookInfo, final byte[] bytes, final BookServiceCallback<BookPages> bookServiceCallback) {
         Task.call(new Callable<BookPages>() {
             @Override
@@ -210,6 +233,7 @@ public class BookDetailApiImpl implements BookDetailApi {
     }
 
 
+    @WorkerThread
     private BookPages saveBook(byte[] bytes, BookDetail bookDetail) {
         String targetLocation = BookDashApplication.FILES_DIR + File.separator + bookDetail.getObjectId();
         String fileLocation = BookDashApplication.FILES_DIR + File.separator + bookDetail.getBookFile().getName();

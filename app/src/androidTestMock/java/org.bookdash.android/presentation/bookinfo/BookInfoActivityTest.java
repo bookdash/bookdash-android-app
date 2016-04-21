@@ -9,7 +9,6 @@ import android.test.suitebuilder.annotation.LargeTest;
 
 import org.bookdash.android.domain.pojo.BookDetailParcelable;
 import org.bookdash.android.presentation.listbooks.BookViewHolder;
-import org.bookdash.android.presentation.listbooks.ListBooksActivity;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Rule;

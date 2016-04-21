@@ -125,5 +125,20 @@ public class BookDetailRepositoryImpl implements BookDetailRepository {
         });
     }
 
+    @Override
+    public void deleteBook(final BookDetail bookDetail, @NonNull final DeleteBookCallBack deleteBookCallBack) {
+        bookDetailApi.deleteBook(bookDetail, new BookDetailApi.BookServiceCallback<Boolean>() {
+            @Override
+            public void onLoaded(Boolean result) {
+                deleteBookCallBack.onBookDeleted(bookDetail);
+            }
+
+            @Override
+            public void onError(Exception error) {
+                deleteBookCallBack.onBookDeleteFailed(error);
+            }
+        });
+    }
+
 
 }

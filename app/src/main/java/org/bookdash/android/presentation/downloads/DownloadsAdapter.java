@@ -15,12 +15,14 @@ import java.util.List;
 
 public class DownloadsAdapter extends RecyclerView.Adapter<DownloadsViewHolder> {
 
+    private final View.OnClickListener onClickListener;
     private List<BookDetail> bookList;
     private Context context;
 
-    public DownloadsAdapter(List<BookDetail> bookList, Context context) {
+    public DownloadsAdapter(List<BookDetail> bookList, Context context, View.OnClickListener onClickListener) {
         this.bookList = bookList;
         this.context = context;
+        this.onClickListener = onClickListener;
     }
 
     @Override
@@ -36,7 +38,10 @@ public class DownloadsAdapter extends RecyclerView.Adapter<DownloadsViewHolder> 
         BookDetail book = bookList.get(position);
         holder.downloadTitleTextView.setText(book.getBookTitle());
         Glide.with(context).load(book.getBookCoverUrl()).into(holder.downloadImageTextView);
-
+        holder.downloadProgressTextView.setText(book.getLanguage().getLanguageName());
+        holder.downloadActionButtonView.setOnClickListener(onClickListener);
+        holder.book = book;
+        holder.downloadActionButtonView.setTag(holder);
     }
 
     @Override

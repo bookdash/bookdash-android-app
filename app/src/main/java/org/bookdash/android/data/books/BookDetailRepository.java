@@ -40,7 +40,6 @@ public interface BookDetailRepository {
     }
 
 
-
     interface GetLanguagesCallback {
         void onLanguagesLoaded(List<Language> languages);
 
@@ -49,7 +48,9 @@ public interface BookDetailRepository {
 
     interface GetBookPagesCallback {
         void onBookPagesLoaded(BookPages bookPages);
+
         void onBookPagesLoadError(Exception e);
+
         void onBookPagesDownloadProgressUpdate(int progress);
     }
 
@@ -60,4 +61,12 @@ public interface BookDetailRepository {
     void getLanguages(@NonNull GetLanguagesCallback languagesCallback);
 
     void downloadBook(BookDetail bookDetail, @NonNull GetBookPagesCallback bookPagesCallback);
+
+    void deleteBook(BookDetail bookDetail, @NonNull DeleteBookCallBack deleteBookCallBack);
+    interface DeleteBookCallBack {
+        void onBookDeleted(BookDetail bookDetail);
+
+        void onBookDeleteFailed(Exception e);
+
+    }
 }

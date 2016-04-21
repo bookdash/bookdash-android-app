@@ -34,7 +34,7 @@ public class BookDetailRepositoryImplTest {
     private List<BookDetail> BOOKS;
     @Test
     public void getBooksForLanguageApiSuccess(){
-        bookDetailRepository.getBooksForLanguage("EN", false, booksForLanguageCallback);
+        bookDetailRepository.getBooksForLanguage("EN", booksForLanguageCallback);
 
     //    verify(bookDetailApi).getBooksForLanguages("EN", any(BookDetailApi.BookServiceCallback.class));
     }

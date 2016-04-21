@@ -17,12 +17,13 @@ public interface DownloadsContract {
 
         void showSnackBarError(int message);
 
+        void showSnackBarError(String message);
     }
 
     interface UserActions {
         void loadListDownloads();
 
-        void deleteDownload();
+        void deleteDownload(BookDetail bookDetail);
     }
 
 }

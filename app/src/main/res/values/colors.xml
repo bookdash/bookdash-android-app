@@ -24,4 +24,5 @@
     <color name="slide_4">#ea2d6d</color>
 
     <color name="background_light">#fafafa</color>
+    <color name="download_button_tint">#616161</color>
 </resources>

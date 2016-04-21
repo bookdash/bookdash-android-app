@@ -65,6 +65,7 @@ public class MainActivity extends BaseAppCompatActivity implements MainContract.
 
         setUpNavDrawer();
         checkIfComingFromInvite();
+        showAllBooks();
     }
 
     private void setUpNavDrawer() {
@@ -180,7 +181,7 @@ public class MainActivity extends BaseAppCompatActivity implements MainContract.
 
 
     @Override
-    protected String getScreenName() {
+    public String getScreenName() {
         return "MainActivity";
     }
 

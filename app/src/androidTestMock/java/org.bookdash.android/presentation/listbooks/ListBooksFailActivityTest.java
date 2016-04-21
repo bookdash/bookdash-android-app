@@ -10,6 +10,7 @@ import android.test.suitebuilder.annotation.LargeTest;
 import org.bookdash.android.R;
 import org.bookdash.android.data.books.FakeBookDetailApiImpl;
 import org.bookdash.android.data.settings.FakeSettingsApiImpl;
+import org.bookdash.android.presentation.main.MainActivity;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Rule;
@@ -77,7 +78,7 @@ import static android.support.test.espresso.intent.matcher.IntentMatchers.hasCom
 @LargeTest
 public class ListBooksFailActivityTest {
     @Rule
-    public ActivityTestRule<ListBooksActivity> activityActivityTestRule  = new ActivityTestRule<>(ListBooksActivity.class, true, false);
+    public ActivityTestRule<MainActivity> activityActivityTestRule  = new ActivityTestRule<>(MainActivity.class, true, false);
 
     @Before
     public void setUp(){

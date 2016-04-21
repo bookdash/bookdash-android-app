@@ -8,6 +8,7 @@ import android.test.suitebuilder.annotation.LargeTest;
 
 import org.bookdash.android.R;
 import org.bookdash.android.presentation.about.AboutActivity;
+import org.bookdash.android.presentation.main.MainActivity;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Rule;
@@ -40,8 +41,8 @@ import static android.support.test.espresso.intent.matcher.IntentMatchers.hasCom
 @LargeTest
 public class OverflowMenuOptionsTest {
     @Rule
-    public ActivityTestRule<ListBooksFragment> mActivityTestRule =
-            new ActivityTestRule<>(ListBooksFragment.class);
+    public ActivityTestRule<MainActivity> mActivityTestRule =
+            new ActivityTestRule<>(MainActivity.class);
 
 
     @Before

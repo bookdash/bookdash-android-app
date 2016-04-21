@@ -3,43 +3,20 @@
                 xmlns:app="http://schemas.android.com/apk/res-auto"
                 xmlns:tools="http://schemas.android.com/tools"
                 android:layout_width="match_parent"
-                android:layout_height="72dp"
+                android:layout_height="wrap_content"
+                android:background="@color/white"
+                android:foreground="@drawable/book_selector"
                 android:minHeight="72dp"
                 android:orientation="vertical">
 
     <ImageView
         android:id="@+id/image_view_download_book_cover"
-        android:layout_width="60dp"
-        android:layout_height="wrap_content"
+        android:layout_width="56dp"
+        android:layout_height="56dp"
+        android:layout_centerVertical="true"
+        android:layout_marginBottom="2dp"
         android:layout_marginLeft="16dp"
         android:layout_marginStart="16dp"/>
-
-    <TextView
-        android:id="@+id/text_view_book_title_download"
-        style="@style/TextAppearance.AppCompat.Subhead"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
-        android:layout_toLeftOf="@+id/image_button_delete_book"
-        android:layout_toRightOf="@id/image_view_download_book_cover"
-        android:layout_toStartOf="@+id/image_button_delete_book"
-        android:paddingTop="8dp"
-
-        tools:text="Sleepy Mr Sloth"
-        android:layout_alignParentLeft="true"/>
-
-    <TextView
-        android:id="@+id/download_progress"
-        style="@style/TextAppearance.AppCompat.Small"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/text_view_book_title_download"
-        android:layout_alignStart="@+id/text_view_book_title_download"
-        android:layout_below="@+id/text_view_book_title_download"
-        android:layout_toLeftOf="@+id/image_button_delete_book"
-        android:layout_toStartOf="@+id/image_button_delete_book"
-        android:paddingTop="4dp"
-        tools:text="Downloaded..."/>
 
     <ImageButton
         android:id="@+id/image_button_delete_book"
@@ -49,9 +26,49 @@
         android:layout_alignParentEnd="true"
         android:layout_alignParentRight="true"
         android:layout_alignParentTop="true"
+        android:layout_centerVertical="true"
         android:layout_marginEnd="16dp"
         android:layout_marginLeft="16dp"
         android:layout_marginRight="16dp"
         android:layout_marginStart="16dp"
+        android:tint="@color/download_button_tint"
         app:srcCompat="@drawable/ic_delete"/>
+
+    <TextView
+        android:id="@+id/text_view_book_title_download"
+        style="@style/TextAppearance.AppCompat.Subhead"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_marginLeft="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_toEndOf="@id/image_view_download_book_cover"
+        android:layout_toLeftOf="@id/image_button_delete_book"
+        android:layout_toRightOf="@id/image_view_download_book_cover"
+        android:layout_toStartOf="@id/image_button_delete_book"
+        android:paddingTop="8dp"
+        tools:text="Sleepy Mr Sloth"/>
+
+    <TextView
+        android:id="@+id/download_progress"
+        style="@style/TextAppearance.AppCompat.Small"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+
+        android:layout_alignLeft="@+id/text_view_book_title_download"
+        android:layout_alignStart="@+id/text_view_book_title_download"
+        android:layout_below="@+id/text_view_book_title_download"
+        android:layout_toEndOf="@id/image_view_download_book_cover"
+        android:layout_toLeftOf="@+id/image_button_delete_book"
+        android:layout_toRightOf="@id/image_view_download_book_cover"
+        android:layout_toStartOf="@+id/image_button_delete_book"
+        tools:text="Downloaded..."/>
+
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentEnd="true"
+        android:background="@color/divider_gray"/>
 </RelativeLayout>
