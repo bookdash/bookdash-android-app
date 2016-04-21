@@ -2,11 +2,11 @@ package org.bookdash.android.presentation.downloads;
 
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
-import android.support.v4.view.GravityCompat;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
@@ -26,6 +26,7 @@ import android.widget.TextView;
 import org.bookdash.android.Injection;
 import org.bookdash.android.R;
 import org.bookdash.android.domain.pojo.BookDetail;
+import org.bookdash.android.presentation.bookinfo.BookInfoActivity;
 import org.bookdash.android.presentation.main.NavDrawerInterface;
 
 import java.util.List;
@@ -65,9 +66,14 @@ public class DownloadsFragment extends Fragment implements DownloadsContract.Vie
             @Override
             public void onClick(View v) {
                 DownloadsViewHolder downloadsViewHolder = (DownloadsViewHolder) v.getTag();
-                if (downloadsViewHolder.book.isDownloadedAlready()) {
-                    showDeleteDialog(downloadsViewHolder.book);
-                }
+                showDeleteDialog(downloadsViewHolder.book);
+
+            }
+        }, new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                DownloadsViewHolder downloadsViewHolder = (DownloadsViewHolder) v.getTag();
+                showBookDetails(downloadsViewHolder.book);
             }
         });
         listDownloadsRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false));
@@ -78,7 +84,7 @@ public class DownloadsFragment extends Fragment implements DownloadsContract.Vie
         textViewErrorMessage = (TextView) view.findViewById(R.id.text_view_error_screen);
         circularProgressBar = (CircularProgressBar) view.findViewById(R.id.fragment_loading_downloads);
         toolbar = (Toolbar) view.findViewById(R.id.toolbar);
-        if (navDrawerInterface !=null){
+        if (navDrawerInterface != null) {
             navDrawerInterface.setToolbar(toolbar);
 
         }
@@ -93,6 +99,13 @@ public class DownloadsFragment extends Fragment implements DownloadsContract.Vie
         downloadsPresenter.loadListDownloads();
 
         setHasOptionsMenu(false);
+    }
+
+    private void showBookDetails(BookDetail bookDetail) {
+        Intent intent = new Intent(getActivity(), BookInfoActivity.class);
+        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        intent.putExtra(BookInfoActivity.BOOK_PARCEL, bookDetail.toBookParcelable());
+        startActivity(intent);
     }
 
     private void showDeleteDialog(final BookDetail bookToDelete) {
@@ -153,7 +166,7 @@ public class DownloadsFragment extends Fragment implements DownloadsContract.Vie
 
     }
 
-     @Override
+    @Override
     public void onAttach(Context context) {
         super.onAttach(context);
         if (context instanceof NavDrawerInterface) {
@@ -167,12 +180,13 @@ public class DownloadsFragment extends Fragment implements DownloadsContract.Vie
         super.onDetach();
         navDrawerInterface = null;
     }
+
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
 
             case android.R.id.home:
-                if (navDrawerInterface !=null){
+                if (navDrawerInterface != null) {
                     navDrawerInterface.openNavDrawer();
                 }
                 return true;
