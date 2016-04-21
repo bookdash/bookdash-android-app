@@ -32,7 +32,7 @@
         android:layout_centerVertical="true"
         android:layout_toLeftOf="@id/image_button_delete_book"
         android:layout_toStartOf="@id/image_button_delete_book"
-        android:background="@drawable/book_selector"
+        android:background="@drawable/download_selector"
         android:id='@+id/download_relative_layout'>
 
         <ImageView
