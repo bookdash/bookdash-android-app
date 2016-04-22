@@ -1,5 +1,6 @@
 package org.bookdash.android.presentation.downloads;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -149,20 +150,46 @@ public class DownloadsFragment extends Fragment implements DownloadsContract.Vie
     }
 
     @Override
-    public void showLoading(boolean visible) {
-        circularProgressBar.setVisibility(visible ? View.VISIBLE : View.GONE);
-        listDownloadsRecyclerView.setVisibility(visible ? View.GONE : View.VISIBLE);
+    public void showLoading(final boolean visible) {
+        runUiThread(new Runnable() {
+            @Override
+            public void run() {
 
+                circularProgressBar.setVisibility(visible ? View.VISIBLE : View.GONE);
+                listDownloadsRecyclerView.setVisibility(visible ? View.GONE : View.VISIBLE);
+
+            }
+        });
     }
 
     @Override
-    public void showSnackBarError(int message) {
-        Snackbar.make(listDownloadsRecyclerView, message, Snackbar.LENGTH_LONG).show();
+    public void showSnackBarError(final int message) {
+        runUiThread(new Runnable() {
+            @Override
+            public void run() {
+                Snackbar.make(listDownloadsRecyclerView, message, Snackbar.LENGTH_LONG).show();
+
+            }
+        });
+    }
+
+    private void runUiThread(Runnable runnable) {
+        Activity activity = getActivity();
+        if (activity == null) {
+            return;
+        }
+        activity.runOnUiThread(runnable);
     }
 
     @Override
-    public void showSnackBarError(String message) {
-        Snackbar.make(listDownloadsRecyclerView, message, Snackbar.LENGTH_LONG).show();
+    public void showSnackBarError(final String message) {
+        runUiThread(new Runnable() {
+            @Override
+            public void run() {
+                Snackbar.make(listDownloadsRecyclerView, message, Snackbar.LENGTH_LONG).show();
+
+            }
+        });
 
     }
 

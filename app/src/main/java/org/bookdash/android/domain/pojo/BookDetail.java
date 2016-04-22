@@ -76,6 +76,9 @@ public class BookDetail extends ParseObject {
     private String getFolderLocation(File file) {
         if (file.isDirectory() && (file.canRead())) {
             File[] files = file.listFiles();
+            if (files[0] == null){
+                return null;
+            }
             return files[0].getAbsoluteFile().toString();
         }
         return null;
@@ -83,7 +86,7 @@ public class BookDetail extends ParseObject {
 
     public boolean isDownloadedAlready() {
         String targetLocation = BookDashApplication.FILES_DIR + File.separator + getObjectId();
-        File f = new File("", targetLocation);
+        File f = new File(targetLocation, BookDetail.BOOK_INFO_FILE_NAME);
         return f.exists();
     }
     public boolean isDownloading() {

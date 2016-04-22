@@ -1,11 +1,14 @@
 package org.bookdash.android.presentation.downloads;
 
+import android.util.Log;
+
 import org.bookdash.android.data.books.BookDetailRepository;
 import org.bookdash.android.domain.pojo.BookDetail;
 
 import java.util.List;
 
 public class DownloadsPresenter implements DownloadsContract.UserActions{
+    private static final String TAG = "DownloadsPresenter";
     private final BookDetailRepository bookRepository;
     private final DownloadsContract.View view;
 
@@ -25,6 +28,7 @@ public class DownloadsPresenter implements DownloadsContract.UserActions{
 
             @Override
             public void onBooksLoadError(Exception e) {
+                Log.e(TAG, "onBooksLoadError: ",  e);
                 view.showErrorScreen(true, e.getMessage(), true);
                 view.showLoading(false);
             }
@@ -42,6 +46,7 @@ public class DownloadsPresenter implements DownloadsContract.UserActions{
 
             @Override
             public void onBookDeleteFailed(Exception e) {
+                Log.e(TAG, "onBookDeleteFailed: ",  e);
                 view.showSnackBarError(e.getMessage());
             }
         });
