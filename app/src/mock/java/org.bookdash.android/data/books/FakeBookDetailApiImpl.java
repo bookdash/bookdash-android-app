@@ -115,4 +115,9 @@ public class FakeBookDetailApiImpl implements BookDetailApi {
     public void downloadBook(BookDetail bookDetail, BookServiceCallback<BookPages> downloadBookCallback, BookServiceProgressCallback bookServiceProgressCallback) {
 
     }
+
+    @Override
+    public void deleteBook(BookDetail bookDetail, BookServiceCallback<Boolean> deleteBook) {
+
+    }
 }

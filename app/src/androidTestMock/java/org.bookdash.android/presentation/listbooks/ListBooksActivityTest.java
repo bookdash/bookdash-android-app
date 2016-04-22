@@ -126,7 +126,7 @@ public class ListBooksActivityTest {
 
     @Test
     public void testGetScreenName_IsBookListing(){
-        Assert.assertEquals("BookListingScreen", activityTestRule.getActivity().getScreenName());
+        Assert.assertEquals("MainActivity", activityTestRule.getActivity().getScreenName());
     }
 
 

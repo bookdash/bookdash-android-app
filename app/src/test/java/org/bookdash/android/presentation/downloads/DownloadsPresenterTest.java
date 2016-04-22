@@ -52,7 +52,7 @@ public class DownloadsPresenterTest {
 
         downloadsPresenter.loadListDownloads();
         verify(downloadsView).showLoading(true);
-        verify(bookRepository).getBooksForLanguage(anyString(), bookloadedCaptor.capture());
+        verify(bookRepository).getDownloadedBooks(bookloadedCaptor.capture());
         bookloadedCaptor.getValue().onBooksLoaded(BOOKS);
 
         verify(downloadsView).showLoading(false);
@@ -63,7 +63,7 @@ public class DownloadsPresenterTest {
     public void testGetListDownloads_Error_ReturnsErrorMessage(){
         downloadsPresenter.loadListDownloads();
         verify(downloadsView).showLoading(true);
-        verify(bookRepository).getBooksForLanguage(anyString(), bookloadedCaptor.capture());
+        verify(bookRepository).getDownloadedBooks( bookloadedCaptor.capture());
         bookloadedCaptor.getValue().onBooksLoadError(new Exception("Blah books didn't load") );
 
         verify(downloadsView).showLoading(false);

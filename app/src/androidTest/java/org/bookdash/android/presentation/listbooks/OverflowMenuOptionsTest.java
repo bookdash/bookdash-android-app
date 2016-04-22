@@ -67,7 +67,7 @@ public class OverflowMenuOptionsTest {
         //When
         selectNavDrawItem(R.id.action_about);
         //Then
-        intended(hasComponent(AboutActivity.class.getName()));
+        intended(hasComponent(AboutActivity.class.getCanonicalName()));
     }
 
 
