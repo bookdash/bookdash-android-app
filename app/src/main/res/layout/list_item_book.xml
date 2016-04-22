@@ -55,8 +55,9 @@
                 android:layout_alignParentEnd="true"
                 android:layout_alignParentRight="true"
                 android:layout_margin="4dp"
-                android:src="@drawable/ic_cloud_download_black_24dp"
-                android:tint="@color/colorAccent"/>
+                app:srcCompat="@drawable/ic_cloud_download_black_24dp"
+                android:tint="@color/colorAccent"
+                android:foregroundGravity="bottom|right"/>
 
 
         </RelativeLayout>

@@ -266,7 +266,7 @@
                 app:fbb_showEndBitmap="true"
                 app:fbb_showShadow="true"
                 app:layout_anchor="@id/app_bar_layout"
-                app:layout_anchorGravity="bottom|right|end"/>-->
+                app:layout_anchorGravity="bottom|right|end"/>
 
         </android.support.design.widget.CoordinatorLayout>
 
