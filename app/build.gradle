@@ -32,6 +32,7 @@ android {
         testInstrumentationRunner "org.bookdash.android.presentation.CustomTestRunner"
         buildConfigField "String", "PARSE_APPLICATION_ID", "\"${BOOKDASH_PARSE_APP_ID}\""
         buildConfigField "String", "PARSE_CLIENT_KEY", "\"${BOOKDASH_PARSE_CLIENT_ID}\""
+        vectorDrawables.useSupportLibrary = true
 
     }
 
