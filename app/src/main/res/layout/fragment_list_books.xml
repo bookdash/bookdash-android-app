@@ -15,16 +15,12 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
-            <org.bookdash.android.presentation.view.AutofitRecyclerView
+            <android.support.v7.widget.RecyclerView
                 android:id="@+id/recycler_view_books"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_gravity="center_horizontal"
-
                 android:clipToPadding="false"
-                android:columnWidth="@dimen/book_column_width_padding"
                 android:gravity="center_horizontal"
-                android:layoutAnimation="@anim/grid_layout_animation"
                 android:paddingLeft="@dimen/book_list_padding"
                 android:paddingRight="@dimen/book_list_padding"
                 android:scrollbars="vertical"

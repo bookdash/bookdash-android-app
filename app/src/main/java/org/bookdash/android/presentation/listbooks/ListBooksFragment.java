@@ -11,6 +11,7 @@ import android.support.v4.app.Fragment;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
@@ -28,9 +29,7 @@ import org.bookdash.android.Injection;
 import org.bookdash.android.R;
 import org.bookdash.android.domain.pojo.BookDetail;
 import org.bookdash.android.presentation.bookinfo.BookInfoActivity;
-import org.bookdash.android.presentation.main.MainActivity;
 import org.bookdash.android.presentation.main.NavDrawerInterface;
-import org.bookdash.android.presentation.view.AutofitRecyclerView;
 
 import java.util.List;
 
@@ -42,12 +41,13 @@ public class ListBooksFragment extends Fragment implements ListBooksContract.Vie
     private static final String TAG = ListBooksFragment.class.getCanonicalName();
     private ListBooksContract.UserActionsListener actionsListener;
     private Button buttonRetry;
-    private AutofitRecyclerView mRecyclerView;
+    private RecyclerView mRecyclerView;
     private CircularProgressBar circularProgressBar;
     private LinearLayout linearLayoutErrorScreen;
     private TextView textViewErrorMessage;
     private Toolbar toolbar;
     private NavDrawerInterface navDrawerInterface;
+
     public static Fragment newInstance() {
         return new ListBooksFragment();
     }
@@ -67,8 +67,8 @@ public class ListBooksFragment extends Fragment implements ListBooksContract.Vie
         linearLayoutErrorScreen = (LinearLayout) view.findViewById(R.id.linear_layout_error);
         buttonRetry = (Button) view.findViewById(R.id.button_retry);
         textViewErrorMessage = (TextView) view.findViewById(R.id.text_view_error_screen);
-        mRecyclerView = (AutofitRecyclerView) view.findViewById(R.id.recycler_view_books);
-
+        mRecyclerView = (RecyclerView) view.findViewById(R.id.recycler_view_books);
+        mRecyclerView.setLayoutManager(new GridLayoutManager(getActivity(), getContext().getResources().getInteger(R.integer.book_span)));
         mRecyclerView.setHasFixedSize(true);
         mRecyclerView.addItemDecoration(new RecyclerView.ItemDecoration() {
             @Override
@@ -87,10 +87,10 @@ public class ListBooksFragment extends Fragment implements ListBooksContract.Vie
             }
         });
         toolbar = (Toolbar) view.findViewById(R.id.toolbar);
-        if (navDrawerInterface != null){
+        if (navDrawerInterface != null) {
             navDrawerInterface.setToolbar(toolbar);
         }
-        final ActionBar actionBar = ((AppCompatActivity)getActivity()).getSupportActionBar();
+        final ActionBar actionBar = ((AppCompatActivity) getActivity()).getSupportActionBar();
 
 
         if (actionBar != null) {
@@ -149,7 +149,7 @@ public class ListBooksFragment extends Fragment implements ListBooksContract.Vie
         }
         RecyclerView.Adapter mAdapter = new BookAdapter(bookDetailList, ListBooksFragment.this.getActivity(), bookClickListener);
         mRecyclerView.setAdapter(mAdapter);
-        mRecyclerView.scheduleLayoutAnimation();
+
     }
 
     @Override

@@ -24,7 +24,7 @@ ext {
     // Sdk and tools
 
     // App dependencies
-    supportLibraryVersion = '23.2.1'
+    supportLibraryVersion = '23.3.0'
     googlePlayServicesVersion = '8.3.0'
     guavaVersion = '18.0'
     glideVersion = '3.6.1'

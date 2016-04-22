@@ -1,84 +1,67 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:card_view="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:layout_margin="4dp"
-    android:gravity="center">
+              xmlns:app="http://schemas.android.com/apk/res-auto"
+              xmlns:tools="http://schemas.android.com/tools"
+              android:layout_width="wrap_content"
+              android:layout_height="wrap_content"
+              android:layout_margin="4dp"
+    >
 
     <!-- A CardView that contains a TextView -->
     <android.support.v7.widget.CardView
         android:id="@+id/card_view"
-        android:layout_width="@dimen/book_column_width"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_gravity="center"
         android:layout_margin="4dp"
 
         android:foreground="@drawable/book_selector"
-        card_view:cardCornerRadius="2dp">
+        app:cardCornerRadius="2dp">
 
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent">
+        <android.support.percent.PercentRelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
 
             <ImageView
                 android:id="@+id/imageViewBookCover"
-                android:layout_width="@dimen/book_column_width"
-                android:layout_height="@dimen/book_column_width"
-                android:layout_centerHorizontal="true"
-                android:layout_alignParentLeft="true"
+                android:layout_width="wrap_content"
+                android:layout_height="0dp"
                 android:layout_alignParentTop="true"
-                android:scaleType="fitStart"
-                android:layout_gravity="center_horizontal" />
-
-
+                app:layout_aspectRatio="100%"
+                android:src="@drawable/bookdash_outline"/>
 
             <TextView
                 android:id="@+id/textViewBookName"
-                android:textSize="16sp"
-                android:fontFamily="sans-serif"
-                android:textColor="#212121"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentLeft="true"
                 android:layout_alignParentStart="true"
-                android:maxLines="2"
-                android:lines="2"
                 android:layout_below="@+id/imageViewBookCover"
                 android:layout_gravity="center_horizontal"
                 android:layout_marginBottom="8dp"
                 android:layout_marginTop="8dp"
+                android:ellipsize="end"
+                android:fontFamily="sans-serif"
+                android:lines="2"
+                android:maxLines="2"
                 android:paddingLeft="8dp"
                 android:paddingRight="8dp"
-                tools:text="Giraff really long named giraffee"
-                android:ellipsize="end" />
+                android:textColor="#212121"
+                android:textSize="16sp"
+                tools:text="Giraff really long named giraffee"/>
 
-            <TextView
-                android:id="@+id/textViewAuthor"
-                style="@style/TextAppearance.AppCompat.Small"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentRight="true"
-                android:layout_below="@id/textViewBookName"
-                android:layout_marginBottom="2dp"
-                android:layout_marginLeft="2dp"
-                android:layout_marginRight="2dp"
-                android:visibility="gone"
-                tools:text="Rebecca Franks" />
 
             <ImageView
+                android:id="@+id/imageViewBookDownloaded"
                 android:layout_width="16dp"
                 android:layout_height="16dp"
-                android:src="@drawable/ic_cloud_download_black_24dp"
-                android:tint="@color/colorAccent"
-                android:id="@+id/imageViewBookDownloaded"
-                android:layout_alignParentBottom="true"
-                android:layout_alignParentRight="true"
+                android:layout_alignParentBottom="false"
                 android:layout_alignParentEnd="true"
-                android:layout_margin="4dp" />
+                android:layout_alignParentRight="true"
+                android:layout_margin="4dp"
+                android:src="@drawable/ic_cloud_download_black_24dp"
+                android:tint="@color/colorAccent"/>
 
 
-        </RelativeLayout>
+        </android.support.percent.PercentRelativeLayout>
 
     </android.support.v7.widget.CardView>
 </LinearLayout>
