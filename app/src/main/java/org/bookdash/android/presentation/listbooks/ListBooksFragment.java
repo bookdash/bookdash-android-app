@@ -30,6 +30,7 @@ import org.bookdash.android.R;
 import org.bookdash.android.domain.pojo.BookDetail;
 import org.bookdash.android.presentation.bookinfo.BookInfoActivity;
 import org.bookdash.android.presentation.main.NavDrawerInterface;
+import org.bookdash.android.presentation.widget.SpacesItemDecoration;
 
 import java.util.List;
 
@@ -70,15 +71,7 @@ public class ListBooksFragment extends Fragment implements ListBooksContract.Vie
         mRecyclerView = (RecyclerView) view.findViewById(R.id.recycler_view_books);
         mRecyclerView.setLayoutManager(new GridLayoutManager(getActivity(), getContext().getResources().getInteger(R.integer.book_span)));
         mRecyclerView.setHasFixedSize(true);
-        mRecyclerView.addItemDecoration(new RecyclerView.ItemDecoration() {
-            @Override
-            public void getItemOffsets(Rect outRect, View view, RecyclerView parent, RecyclerView.State state) {
-                outRect.bottom = 8;
-                outRect.right = 8;
-                outRect.left = 8;
-                outRect.top = 8;
-            }
-        });
+        mRecyclerView.addItemDecoration(new SpacesItemDecoration(getResources().getInteger(R.integer.list_books_space)));
         buttonRetry.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

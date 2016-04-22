@@ -47,9 +47,9 @@ public class BookAdapter extends RecyclerView.Adapter<BookViewHolder> {
         holder.downloadedIcon.setVisibility(bookDetail.isDownloadedAlready() ? View.VISIBLE : View.INVISIBLE);
         holder.cardContainer.setTag(holder);
         holder.cardContainer.setOnClickListener(onClickListener);
-        int width = holder.cardContainer.getMeasuredWidth();
-        holder.bookCover.setLayoutParams(new RelativeLayout.LayoutParams(width, width));
-        holder.bookCover.invalidate();
+      //  int width = holder.cardContainer.getMeasuredWidth();
+    /*    holder.bookCover.setLayoutParams(new RelativeLayout.LayoutParams(width, width));
+        holder.bookCover.invalidate();*/
     }
 
     @Override
