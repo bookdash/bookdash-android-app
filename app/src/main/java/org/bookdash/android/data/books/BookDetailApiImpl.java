@@ -215,6 +215,7 @@ public class BookDetailApiImpl implements BookDetailApi {
     @WorkerThread
     private void deleteLocalBook(BookDetail bookDetail) {
         FileManager.deleteFolder(bookDetail.getFolderLocation());
+        FileManager.deleteFolder(BookDashApplication.FILES_DIR + "/" +  bookDetail.getObjectId());
     }
 
     private void getBookPages(final BookDetail bookInfo, final byte[] bytes, final BookServiceCallback<BookPages> bookServiceCallback) {
@@ -239,10 +240,11 @@ public class BookDetailApiImpl implements BookDetailApi {
         String fileLocation = BookDashApplication.FILES_DIR + File.separator + bookDetail.getBookFile().getName();
 
         File f = new File("", targetLocation);
-        if (!f.exists()) {
+        if (!f.exists() || f.list().length == 0) {
             FileManager.saveFile(BookDashApplication.FILES_DIR, bytes, File.separator + bookDetail.getBookFile().getName());
             ZipManager zipManager = new ZipManager();
             zipManager.unzip(fileLocation, targetLocation);
+            
             FileManager.deleteFile(BookDashApplication.FILES_DIR, File.separator + bookDetail.getBookFile().getName());
         }
 

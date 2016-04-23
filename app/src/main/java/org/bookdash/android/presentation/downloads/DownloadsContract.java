@@ -18,6 +18,8 @@ public interface DownloadsContract {
         void showSnackBarError(int message);
 
         void showSnackBarError(String message);
+
+        void showNoBooksDownloadedMessage();
     }
 
     interface UserActions {

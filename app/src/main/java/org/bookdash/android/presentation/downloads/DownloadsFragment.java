@@ -128,6 +128,7 @@ public class DownloadsFragment extends Fragment implements DownloadsContract.Vie
     public void showDownloadedBooks(List<BookDetail> books) {
         downloadsAdapter.setBooks(books);
         downloadsAdapter.notifyDataSetChanged();
+        listDownloadsRecyclerView.setVisibility(View.VISIBLE);
     }
 
 
@@ -191,6 +192,12 @@ public class DownloadsFragment extends Fragment implements DownloadsContract.Vie
             }
         });
 
+    }
+
+    @Override
+    public void showNoBooksDownloadedMessage() {
+        showErrorScreen(true, getString(R.string.no_books_downloaded), false);
+        listDownloadsRecyclerView.setVisibility(View.GONE);
     }
 
     @Override

@@ -15,7 +15,6 @@
             android:id="@+id/recycler_view_list_downloads"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            android:background="@color/white"
             android:clipToPadding="false"
             android:paddingTop="8dp"
             app:layout_behavior="@string/appbar_scrolling_view_behavior"
@@ -67,7 +66,10 @@
         android:layout_height="wrap_content"
         android:layout_centerInParent="true"
         android:orientation="vertical"
-        android:visibility="gone">
+        tools:visibility="visible"
+        android:visibility="gone"
+        android:layout_marginLeft="16dp"
+        android:layout_marginTop="16dp">
 
         <ImageView
             android:id="@+id/image_view_sad_cloud"
