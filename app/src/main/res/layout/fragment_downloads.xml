@@ -71,12 +71,6 @@
         android:layout_marginLeft="16dp"
         android:layout_marginTop="16dp">
 
-        <ImageView
-            android:id="@+id/image_view_sad_cloud"
-            android:layout_width="150dp"
-            android:layout_height="150dp"
-            android:layout_gravity="center_horizontal"
-            android:src="@drawable/lb_ic_sad_cloud"/>
 
         <TextView
             android:id="@+id/text_view_error_screen"
