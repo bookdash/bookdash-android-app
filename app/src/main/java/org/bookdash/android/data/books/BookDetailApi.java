@@ -23,7 +23,8 @@ public interface BookDetailApi {
 
         void onError(Exception error);
     }
-    interface BookServiceProgressCallback{
+
+    interface BookServiceProgressCallback {
         void onProgressChanged(int progress);
     }
 

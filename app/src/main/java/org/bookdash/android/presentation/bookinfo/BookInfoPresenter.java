@@ -102,7 +102,7 @@ public class BookInfoPresenter implements BookInfoContract.UserActionsListener {
                     return;
                 }
                 bookInfo.setIsDownloading(false);
-                booksView.openBook(bookInfo, bookPages, bookInfo.getFolderLocation(BookDashApplication.FILES_DIR));
+                booksView.openBook(bookInfo, bookPages, bookInfo.getFolderLocation());
             }
 
             @Override

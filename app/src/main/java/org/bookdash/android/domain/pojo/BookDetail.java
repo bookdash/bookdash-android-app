@@ -40,7 +40,7 @@ public class BookDetail extends ParseObject {
         put(BOOK_COVER_PAGE_URL_COL, bookCoverUrl);
         put(BOOK_LANGUAGE_COL, languageId);
         setObjectId(objectId);
-      //  put(OBJECT_ID, objectId);
+        //  put(OBJECT_ID, objectId);
         //put();
     }
 
@@ -69,14 +69,14 @@ public class BookDetail extends ParseObject {
     }
 
 
-    public String getFolderLocation(String filesDir) {
-        return getFolderLocation(new File(filesDir, getObjectId() + File.separator));
+    public String getFolderLocation() {
+        return getFolderLocation(new File(BookDashApplication.FILES_DIR, getObjectId() + File.separator));
     }
 
     private String getFolderLocation(File file) {
-        if (file.isDirectory() && (file.canRead())) {
+        if (file != null && file.isDirectory() && (file.canRead())) {
             File[] files = file.listFiles();
-            if (files[0] == null){
+            if (files == null || files.length == 0 || files[0] == null) {
                 return null;
             }
             return files[0].getAbsoluteFile().toString();
@@ -85,10 +85,14 @@ public class BookDetail extends ParseObject {
     }
 
     public boolean isDownloadedAlready() {
-        String targetLocation = BookDashApplication.FILES_DIR + File.separator + getObjectId();
-        File f = new File(targetLocation, BookDetail.BOOK_INFO_FILE_NAME);
+        String folderLocation = getFolderLocation();
+        if (folderLocation == null || folderLocation.isEmpty()) {
+            return false;
+        }
+        File f = new File("", folderLocation);
         return f.exists();
     }
+
     public boolean isDownloading() {
         return isDownloading;
     }

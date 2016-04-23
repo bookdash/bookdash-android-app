@@ -163,7 +163,7 @@ public class BookDetailApiImpl implements BookDetailApi {
     public void downloadBook(final BookDetail bookInfo, @NonNull final BookServiceCallback<BookPages> downloadBookCallback, @NonNull final BookServiceProgressCallback progressCallback) {
         if (bookInfo.isDownloadedAlready()) {
             progressCallback.onProgressChanged(100);
-            downloadBookCallback.onLoaded(getBookPages(bookInfo.getFolderLocation(BookDashApplication.FILES_DIR) + File.separator + BookDetail.BOOK_INFO_FILE_NAME));
+            downloadBookCallback.onLoaded(getBookPages(bookInfo.getFolderLocation() + File.separator + BookDetail.BOOK_INFO_FILE_NAME));
             return;
         }
         bookInfo.getBookFile().getDataInBackground(new GetDataCallback() {
@@ -214,7 +214,7 @@ public class BookDetailApiImpl implements BookDetailApi {
 
     @WorkerThread
     private void deleteLocalBook(BookDetail bookDetail) {
-        FileManager.deleteFolder(bookDetail.getFolderLocation(BookDashApplication.FILES_DIR));
+        FileManager.deleteFolder(bookDetail.getFolderLocation());
     }
 
     private void getBookPages(final BookDetail bookInfo, final byte[] bytes, final BookServiceCallback<BookPages> bookServiceCallback) {
@@ -246,7 +246,7 @@ public class BookDetailApiImpl implements BookDetailApi {
             FileManager.deleteFile(BookDashApplication.FILES_DIR, File.separator + bookDetail.getBookFile().getName());
         }
 
-        return getBookPages(bookDetail.getFolderLocation(BookDashApplication.FILES_DIR) + File.separator + BookDetail.BOOK_INFO_FILE_NAME);
+        return getBookPages(bookDetail.getFolderLocation() + File.separator + BookDetail.BOOK_INFO_FILE_NAME);
     }
 
 

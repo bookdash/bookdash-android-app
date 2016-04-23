@@ -63,6 +63,7 @@ public interface BookDetailRepository {
     void downloadBook(BookDetail bookDetail, @NonNull GetBookPagesCallback bookPagesCallback);
 
     void deleteBook(BookDetail bookDetail, @NonNull DeleteBookCallBack deleteBookCallBack);
+
     interface DeleteBookCallBack {
         void onBookDeleted(BookDetail bookDetail);
 
