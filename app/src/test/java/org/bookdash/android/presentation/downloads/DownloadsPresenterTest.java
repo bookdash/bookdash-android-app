@@ -4,6 +4,7 @@ import android.test.suitebuilder.annotation.SmallTest;
 
 import org.bookdash.android.data.books.BookDetailRepository;
 import org.bookdash.android.domain.pojo.BookDetail;
+import org.bookdash.android.domain.pojo.Language;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -18,6 +19,7 @@ import java.util.List;
 import static org.junit.Assert.*;
 import static org.mockito.Matchers.any;
 import static org.mockito.Matchers.anyBoolean;
+import static org.mockito.Matchers.anyObject;
 import static org.mockito.Matchers.anyString;
 import static org.mockito.Mockito.verify;
 
@@ -32,6 +34,8 @@ public class DownloadsPresenterTest {
     private DownloadsContract.View downloadsView;
     @Captor
     private ArgumentCaptor<BookDetailRepository.GetBooksForLanguageCallback> bookloadedCaptor;
+    @Captor
+    private ArgumentCaptor<BookDetailRepository.DeleteBookCallBack> deleteBookCallBackArgumentCaptor;
 
     @Before
     public void setUp() throws Exception {
@@ -68,5 +72,19 @@ public class DownloadsPresenterTest {
 
         verify(downloadsView).showLoading(false);
         verify(downloadsView).showErrorScreen(true,"Blah books didn't load", true);
+    }
+
+    @Test
+    public void testDeleteDownload_RemovesDownload(){
+        BookDetail bookDetail = new BookDetail("Fake Book", "http://test.com", "123", new Language());
+        downloadsPresenter.deleteDownload(bookDetail);
+
+        verify(bookRepository).deleteBook(any(BookDetail.class), deleteBookCallBackArgumentCaptor.capture());
+        deleteBookCallBackArgumentCaptor.getValue().onBookDeleted(bookDetail);
+
+        verify(bookRepository).getDownloadedBooks(bookloadedCaptor.capture());
+        bookloadedCaptor.getValue().onBooksLoaded(BOOKS);
+
+        verify(downloadsView).showDownloadedBooks(BOOKS);
     }
 }

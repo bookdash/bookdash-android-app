@@ -28,7 +28,6 @@ public class DownloadsPresenter implements DownloadsContract.UserActions{
 
             @Override
             public void onBooksLoadError(Exception e) {
-                Log.e(TAG, "onBooksLoadError: ",  e);
                 view.showErrorScreen(true, e.getMessage(), true);
                 view.showLoading(false);
             }
@@ -46,7 +45,6 @@ public class DownloadsPresenter implements DownloadsContract.UserActions{
 
             @Override
             public void onBookDeleteFailed(Exception e) {
-                Log.e(TAG, "onBookDeleteFailed: ",  e);
                 view.showSnackBarError(e.getMessage());
             }
         });
