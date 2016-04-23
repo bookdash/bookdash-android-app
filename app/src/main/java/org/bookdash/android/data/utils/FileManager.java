@@ -51,11 +51,21 @@ public class FileManager {
     }
 
     private static void deleteRecursive(File fileOrDirectory) {
-        if (fileOrDirectory.isDirectory()){
-            for (File child : fileOrDirectory.listFiles()){
-                deleteRecursive(child);
+        if (fileOrDirectory.isDirectory()) {
+            File[] list = fileOrDirectory.listFiles();
+            if (list != null) {
+                for (int i = 0; i < list.length; i++) {
+                    File tmpF = list[i];
+                    if (tmpF.isDirectory()) {
+                        deleteRecursive(tmpF);
+                    }
+                    tmpF.delete();
+                }
+            }
+            if (!fileOrDirectory.delete()) {
+                Log.e(TAG, "can't delete folder : " + fileOrDirectory);
             }
         }
-        fileOrDirectory.delete();
     }
+
 }
