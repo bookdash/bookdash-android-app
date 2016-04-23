@@ -48,7 +48,7 @@
             >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value=".presentation.listbooks.ListBooksFragment"/>
+                android:value=".presentation.main.MainActivity"/>
 
             <intent-filter android:label="@string/filter_view_book">
                 <action android:name="android.intent.action.VIEW"/>
@@ -82,15 +82,6 @@
 
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
-        </activity>
-        <activity
-            android:name="org.bookdash.android.presentation.about.AboutActivity"
-            android:label="@string/title_activity_about"
-            android:parentActivityName=".presentation.listbooks.ListBooksFragment">
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value=".presentation.listbooks.ListBooksFragment"/>
-
         </activity>
 
         <activity

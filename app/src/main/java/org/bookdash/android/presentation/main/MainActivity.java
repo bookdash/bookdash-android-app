@@ -17,7 +17,6 @@ import android.support.v7.widget.Toolbar;
 import android.text.Html;
 import android.text.method.LinkMovementMethod;
 import android.util.Log;
-import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
@@ -31,7 +30,7 @@ import com.google.android.gms.common.api.ResultCallback;
 
 import org.bookdash.android.BuildConfig;
 import org.bookdash.android.R;
-import org.bookdash.android.presentation.about.AboutActivity;
+import org.bookdash.android.presentation.about.AboutFragment;
 import org.bookdash.android.presentation.activity.BaseAppCompatActivity;
 import org.bookdash.android.presentation.downloads.DownloadsFragment;
 import org.bookdash.android.presentation.listbooks.ListBooksFragment;
@@ -176,7 +175,6 @@ public class MainActivity extends BaseAppCompatActivity implements MainContract.
     }
 
 
-
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
 
@@ -248,9 +246,11 @@ public class MainActivity extends BaseAppCompatActivity implements MainContract.
 
     @Override
     public void showAboutPage() {
-        Intent intent = new Intent(MainActivity.this, AboutActivity.class);
-
-        startActivity(intent);
+        FragmentManager fragmentManager = getSupportFragmentManager();
+        FragmentTransaction ft = fragmentManager.beginTransaction();
+        Fragment f = AboutFragment.newInstance();
+        ft.replace(R.id.fragment_content, f, "ABOUT");
+        ft.commit();
     }
 
     @Override
