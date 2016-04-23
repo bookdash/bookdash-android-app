@@ -6,38 +6,30 @@ import android.support.test.InstrumentationRegistry;
 import android.support.test.espresso.intent.Intents;
 import android.support.test.rule.ActivityTestRule;
 import android.support.test.runner.AndroidJUnit4;
-import android.support.v4.widget.NestedScrollView;
 import android.test.suitebuilder.annotation.SmallTest;
 import android.text.Html;
-import android.view.View;
 
 import junit.framework.Assert;
 
 import org.bookdash.android.R;
+import org.bookdash.android.presentation.main.MainActivity;
+import org.bookdash.android.presentation.utils.NavigationUtils;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
-
 import static android.support.test.espresso.Espresso.onView;
-import static android.support.test.espresso.Espresso.openActionBarOverflowOrOptionsMenu;
 import static android.support.test.espresso.action.ViewActions.click;
 import static android.support.test.espresso.action.ViewActions.scrollTo;
 import static android.support.test.espresso.assertion.ViewAssertions.matches;
+import static android.support.test.espresso.intent.Intents.intended;
 import static android.support.test.espresso.intent.matcher.IntentMatchers.hasAction;
 import static android.support.test.espresso.intent.matcher.IntentMatchers.hasData;
-import static android.support.test.espresso.matcher.RootMatchers.isDialog;
 import static android.support.test.espresso.matcher.ViewMatchers.isDisplayed;
-import static android.support.test.espresso.matcher.ViewMatchers.withId;
 import static android.support.test.espresso.matcher.ViewMatchers.withText;
 import static org.hamcrest.Matchers.allOf;
-import static org.hamcrest.Matchers.contains;
-
-
-import static android.support.test.espresso.intent.Intents.intended;
-import static android.support.test.espresso.intent.matcher.IntentMatchers.hasComponent;
 
 /**
  * @author rebeccafranks
@@ -45,17 +37,19 @@ import static android.support.test.espresso.intent.matcher.IntentMatchers.hasCom
  */
 @RunWith(AndroidJUnit4.class)
 @SmallTest
-public class AboutActivityTest {
+public class AboutFragmentTest {
     @Rule
-    public ActivityTestRule<AboutActivity> testRule = new ActivityTestRule<>(AboutActivity.class);
+    public ActivityTestRule<MainActivity> testRule = new ActivityTestRule<>(MainActivity.class);
 
     @Before
-    public void setUp(){
+    public void setUp() {
         Intents.init();
+        NavigationUtils.selectNavDrawItem(testRule.getActivity(), R.id.action_about);
+
     }
 
     @After
-    public void tearDown(){
+    public void tearDown() {
         Intents.release();
     }
 
@@ -76,12 +70,13 @@ public class AboutActivityTest {
         onView(withText(R.string.learn_more)).perform(scrollTo(), click());
 
         intended(allOf(hasAction(Intent.ACTION_VIEW),
-                        hasData(Uri.parse("http://bookdash.org"))
+                hasData(Uri.parse("http://bookdash.org"))
                 )
         );
     }
+
     @Test
-    public void testGetScreenName(){
-        Assert.assertEquals("About Screen",testRule.getActivity().getScreenName());
+    public void testGetScreenName() {
+        Assert.assertEquals("MainActivity", testRule.getActivity().getScreenName());
     }
 }

@@ -11,6 +11,7 @@ apply plugin: 'com.android.application'
 apply plugin: 'com.google.gms.google-services'
 apply plugin: 'io.fabric'
 apply plugin: 'com.github.triplet.play'
+
 repositories {
     maven { url 'https://maven.fabric.io/public' }
 }
@@ -20,7 +21,7 @@ repositories {
 android {
     dataBinding { enabled = true }
     compileSdkVersion 23
-    buildToolsVersion "23.0.2"
+    buildToolsVersion "23.0.3"
 
     defaultConfig {
         applicationId "org.bookdash.android"
@@ -31,6 +32,7 @@ android {
         testInstrumentationRunner "org.bookdash.android.presentation.CustomTestRunner"
         buildConfigField "String", "PARSE_APPLICATION_ID", "\"${BOOKDASH_PARSE_APP_ID}\""
         buildConfigField "String", "PARSE_CLIENT_KEY", "\"${BOOKDASH_PARSE_CLIENT_ID}\""
+        vectorDrawables.useSupportLibrary = true
 
     }
 

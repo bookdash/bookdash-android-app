@@ -15,13 +15,7 @@
         <item name="android:windowBackground">@color/default_background_colour</item>
         <item name="android:colorBackground">@color/default_background_colour</item>
         <item name="android:windowActionBar">false</item>
-        <item name="android:windowContentTransitions">true</item>
 
-        <!-- enable overlapping of exiting and entering activities-->
-        <item name="android:windowAllowEnterTransitionOverlap">true</item>
-        <item name="android:windowAllowReturnTransitionOverlap">true</item>
-        <!-- You can also set colorControlNormal, colorControlActivated
-             colorControlHighlight, and colorSwitchThumbNormal. -->
     </style>
     <style name="Theme.AppCompat.Light.NoActionBar.FullScreen" parent="@style/Theme.AppCompat.Light">
         <item name="android:windowNoTitle">true</item>
@@ -32,4 +26,8 @@
     </style>
 
     <color name="default_background_colour">#eeeeee</color>
+
+    <style name="AppCompatAlertDialogStyle" parent="Theme.AppCompat.Light.Dialog.Alert">
+        <item name="colorAccent">@color/colorAccent</item>
+    </style>
 </resources>

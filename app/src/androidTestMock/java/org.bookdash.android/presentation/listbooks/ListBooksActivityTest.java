@@ -1,10 +1,5 @@
 package org.bookdash.android.presentation.listbooks;
 
-import android.content.Intent;
-import android.net.Uri;
-import android.os.Build;
-import android.support.design.widget.NavigationView;
-import android.support.test.InstrumentationRegistry;
 import android.support.test.espresso.ViewInteraction;
 import android.support.test.espresso.intent.Intents;
 import android.support.test.espresso.matcher.BoundedMatcher;
@@ -12,15 +7,13 @@ import android.support.test.rule.ActivityTestRule;
 import android.support.test.runner.AndroidJUnit4;
 import android.support.v7.widget.Toolbar;
 import android.test.suitebuilder.annotation.LargeTest;
-import android.view.MenuItem;
 
 import junit.framework.Assert;
 
 import org.bookdash.android.R;
 import org.bookdash.android.data.settings.FakeSettingsApiImpl;
-import org.bookdash.android.presentation.about.AboutActivity;
 import org.bookdash.android.presentation.bookinfo.BookInfoActivity;
-import org.hamcrest.BaseMatcher;
+import org.bookdash.android.presentation.main.MainActivity;
 import org.hamcrest.Description;
 import org.hamcrest.Matcher;
 import org.junit.After;
@@ -28,35 +21,18 @@ import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.bookdash.android.test.BuildConfig;
 
-
-import static android.support.test.espresso.assertion.ViewAssertions.doesNotExist;
-import static android.support.test.espresso.matcher.ViewMatchers.isAssignableFrom;
-import static android.support.test.espresso.Espresso.*;
+import static android.support.test.espresso.Espresso.onView;
 import static android.support.test.espresso.action.ViewActions.click;
+import static android.support.test.espresso.assertion.ViewAssertions.doesNotExist;
 import static android.support.test.espresso.assertion.ViewAssertions.matches;
 import static android.support.test.espresso.intent.Intents.intended;
-import static android.support.test.espresso.intent.matcher.IntentMatchers.hasAction;
 import static android.support.test.espresso.intent.matcher.IntentMatchers.hasComponent;
-import static android.support.test.espresso.intent.matcher.IntentMatchers.hasData;
-import static android.support.test.espresso.matcher.RootMatchers.isDialog;
-import static android.support.test.espresso.matcher.ViewMatchers.isClickable;
+import static android.support.test.espresso.matcher.ViewMatchers.isAssignableFrom;
 import static android.support.test.espresso.matcher.ViewMatchers.isDisplayed;
-import static android.support.test.espresso.matcher.ViewMatchers.withContentDescription;
 import static android.support.test.espresso.matcher.ViewMatchers.withId;
 import static android.support.test.espresso.matcher.ViewMatchers.withText;
-import static android.support.test.espresso.action.ViewActions.click;
-import static android.support.test.espresso.intent.matcher.IntentMatchers.hasAction;
-import static android.support.test.espresso.intent.matcher.IntentMatchers.hasData;
-import static android.support.test.espresso.matcher.ViewMatchers.withId;
-import static android.support.test.espresso.matcher.ViewMatchers.withText;
-import static org.hamcrest.Matchers.*;
-import static org.hamcrest.Matchers.contains;
-
-
-import static android.support.test.espresso.intent.Intents.intended;
-import static android.support.test.espresso.intent.matcher.IntentMatchers.hasComponent;
+import static org.hamcrest.Matchers.is;
 
 /**
  * @author rebeccafranks
@@ -67,8 +43,8 @@ import static android.support.test.espresso.intent.matcher.IntentMatchers.hasCom
 public class ListBooksActivityTest {
 
     @Rule
-    public ActivityTestRule<ListBooksActivity> activityTestRule =
-            new ActivityTestRule<>(ListBooksActivity.class);
+    public ActivityTestRule<MainActivity> activityTestRule =
+            new ActivityTestRule<>(MainActivity.class);
 
     @Before
     public void setUp() {
@@ -109,8 +85,8 @@ public class ListBooksActivityTest {
 
 
     @Test
-    public void chooseDifferentLanguage_NewBooksLoaded(){
-       // selectNavDrawItem(R.id.action_language_choice);
+    public void chooseDifferentLanguage_NewBooksLoaded() {
+        // selectNavDrawItem(R.id.action_language_choice);
         onView(withId(R.id.action_language_choice)).perform(click());
 
         //When
@@ -124,10 +100,9 @@ public class ListBooksActivityTest {
     }
 
     @Test
-    public void testGetScreenName_IsBookListing(){
-        Assert.assertEquals("BookListingScreen", activityTestRule.getActivity().getScreenName());
+    public void testGetScreenName_IsBookListing() {
+        Assert.assertEquals("MainActivity", activityTestRule.getActivity().getScreenName());
     }
-
 
 
     private static ViewInteraction matchToolbarTitle(

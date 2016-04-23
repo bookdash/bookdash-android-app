@@ -16,12 +16,15 @@ public interface BookDetailApi {
 
     void getBooksForLanguages(String language, BookServiceCallback<List<BookDetail>> bookServiceCallback);
 
+    void getDownloadedBooks(BookServiceCallback<List<BookDetail>> bookServiceCallback);
+
     interface BookServiceCallback<T> {
         void onLoaded(T result);
 
         void onError(Exception error);
     }
-    interface BookServiceProgressCallback{
+
+    interface BookServiceProgressCallback {
         void onProgressChanged(int progress);
     }
 
@@ -34,4 +37,5 @@ public interface BookDetailApi {
 
     void downloadBook(BookDetail bookDetail, BookServiceCallback<BookPages> downloadBookCallback, BookServiceProgressCallback bookServiceProgressCallback);
 
+    void deleteBook(BookDetail bookDetail, BookServiceCallback<Boolean> deleteBook);
 }

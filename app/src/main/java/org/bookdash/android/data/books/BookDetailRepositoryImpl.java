@@ -8,7 +8,6 @@ import org.bookdash.android.domain.pojo.BookDetail;
 import org.bookdash.android.domain.pojo.Language;
 import org.bookdash.android.domain.pojo.gson.BookPages;
 
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -26,16 +25,12 @@ public class BookDetailRepositoryImpl implements BookDetailRepository {
     }
 
     @Override
-    public void getBooksForLanguage(@NonNull String language, final boolean downloadedOnly, @NonNull final GetBooksForLanguageCallback booksForLanguageCallback) {
+    public void getBooksForLanguage(@NonNull String language, @NonNull final GetBooksForLanguageCallback booksForLanguageCallback) {
         bookDetailApi.getBooksForLanguages(language, new BookDetailApi.BookServiceCallback<List<BookDetail>>() {
 
             @Override
             public void onLoaded(List<BookDetail> result) {
-                if (downloadedOnly) {
-                    booksForLanguageCallback.onBooksLoaded(filterOnlyDownloadedBooks(result));
-                } else {
-                    booksForLanguageCallback.onBooksLoaded(result);
-                }
+                booksForLanguageCallback.onBooksLoaded(result);
             }
 
             @Override
@@ -45,16 +40,24 @@ public class BookDetailRepositoryImpl implements BookDetailRepository {
         });
     }
 
-    private List<BookDetail> filterOnlyDownloadedBooks(List<BookDetail> bookDetails){
-        List<BookDetail> bookDetailsDownloaded = new ArrayList<>();
+    @Override
+    public void getDownloadedBooks(final GetBooksForLanguageCallback getBooksForLanguageCallback) {
+        bookDetailApi.getDownloadedBooks(new BookDetailApi.BookServiceCallback<List<BookDetail>>() {
 
-        for (BookDetail b: bookDetails){
-            if (b.isDownloadedAlready() || b.isDownloading()){
-                bookDetailsDownloaded.add(b);
+            @Override
+            public void onLoaded(List<BookDetail> result) {
+                getBooksForLanguageCallback.onBooksLoaded(result);
             }
-        }
-        return bookDetailsDownloaded;
+
+            @Override
+            public void onError(Exception error) {
+                getBooksForLanguageCallback.onBooksLoadError(error);
+            }
+        });
+
     }
+
+
     @Override
     public void getBookDetail(String bookDetailId, @NonNull final GetBookDetailCallback bookDetailCallback) {
         bookDetailApi.getBookDetail(bookDetailId, new BookDetailApi.BookServiceCallback<BookDetail>() {
@@ -118,6 +121,21 @@ public class BookDetailRepositoryImpl implements BookDetailRepository {
             @Override
             public void onProgressChanged(int progress) {
                 bookPagesCallback.onBookPagesDownloadProgressUpdate(progress);
+            }
+        });
+    }
+
+    @Override
+    public void deleteBook(final BookDetail bookDetail, @NonNull final DeleteBookCallBack deleteBookCallBack) {
+        bookDetailApi.deleteBook(bookDetail, new BookDetailApi.BookServiceCallback<Boolean>() {
+            @Override
+            public void onLoaded(Boolean result) {
+                deleteBookCallBack.onBookDeleted(bookDetail);
+            }
+
+            @Override
+            public void onError(Exception error) {
+                deleteBookCallBack.onBookDeleteFailed(error);
             }
         });
     }

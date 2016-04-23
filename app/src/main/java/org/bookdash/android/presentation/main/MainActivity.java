@@ -1,29 +1,25 @@
-package org.bookdash.android.presentation.listbooks;
+package org.bookdash.android.presentation.main;
 
 import android.content.ActivityNotFoundException;
-import android.content.DialogInterface;
 import android.content.Intent;
-import android.graphics.Rect;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
 import android.support.design.widget.Snackbar;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AlertDialog;
-import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.text.Html;
 import android.text.method.LinkMovementMethod;
 import android.util.Log;
-import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.Button;
-import android.widget.LinearLayout;
 import android.widget.TextView;
-
 
 import com.google.android.gms.appinvite.AppInvite;
 import com.google.android.gms.appinvite.AppInviteInvitation;
@@ -33,38 +29,31 @@ import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.common.api.ResultCallback;
 
 import org.bookdash.android.BuildConfig;
-import org.bookdash.android.Injection;
 import org.bookdash.android.R;
-import org.bookdash.android.presentation.about.AboutActivity;
+import org.bookdash.android.presentation.about.AboutFragment;
 import org.bookdash.android.presentation.activity.BaseAppCompatActivity;
-import org.bookdash.android.presentation.bookinfo.BookInfoActivity;
-import org.bookdash.android.domain.pojo.BookDetail;
-import org.bookdash.android.presentation.view.AutofitRecyclerView;
-
-import java.util.List;
-
-import fr.castorflex.android.circularprogressbar.CircularProgressBar;
+import org.bookdash.android.presentation.downloads.DownloadsFragment;
+import org.bookdash.android.presentation.listbooks.ListBooksFragment;
 
 
-public class ListBooksActivity extends BaseAppCompatActivity implements ListBooksContract.View {
+public class MainActivity extends BaseAppCompatActivity implements MainContract.MainView, NavDrawerInterface {
 
     private static final int INVITE_REQUEST_CODE = 1;
-    private ListBooksContract.UserActionsListener actionsListener;
+    private static final String TAG = "MainActivity";
     private GoogleApiClient googleApiClient;
-    private Toolbar toolbar;
     private DrawerLayout drawerLayout;
     private NavigationView navigationView;
-    private Button buttonRetry;
+    private MainContract.MainUserActions actionsListener;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        actionsListener = new ListBooksPresenter(this, Injection.provideBookRepo(), Injection.provideSettingsRepo(this));
         drawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
-        toolbar = (Toolbar) findViewById(R.id.toolbar);
+
         navigationView = (NavigationView) findViewById(R.id.navigation_view);
-        setSupportActionBar(toolbar);
+
+        actionsListener = new MainPresenter(this);
         final ActionBar actionBar = getSupportActionBar();
 
         if (actionBar != null) {
@@ -73,46 +62,12 @@ public class ListBooksActivity extends BaseAppCompatActivity implements ListBook
         }
 
         setUpNavDrawer();
-        circularProgressBar = (CircularProgressBar) findViewById(R.id.activity_loading_books);
-        linearLayoutErrorScreen = (LinearLayout) findViewById(R.id.linear_layout_error);
-        buttonRetry = (Button) findViewById(R.id.button_retry);
-        textViewErrorMessage = (TextView) findViewById(R.id.text_view_error_screen);
-        mRecyclerView = (AutofitRecyclerView) findViewById(R.id.recycler_view_books);
-
-        mRecyclerView.setHasFixedSize(true);
-        mRecyclerView.addItemDecoration(new RecyclerView.ItemDecoration() {
-            @Override
-            public void getItemOffsets(Rect outRect, View view, RecyclerView parent, RecyclerView.State state) {
-                outRect.bottom = 8;
-                outRect.right = 8;
-                outRect.left = 8;
-                outRect.top = 8;
-            }
-        });
-        buttonRetry.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Log.d(TAG, "Retry button clicked");
-                actionsListener.loadBooksForLanguagePreference(false);
-            }
-        });
-
-        actionsListener.loadLanguages();
-        actionsListener.loadBooksForLanguagePreference(false);
         checkIfComingFromInvite();
+        showAllBooks();
     }
 
     private void setUpNavDrawer() {
-        if (toolbar != null) {
-            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-            toolbar.setNavigationOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    drawerLayout.openDrawer(GravityCompat.START);
-                }
-            });
-        }
         navigationView.setCheckedItem(R.id.action_all_books);
         navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
             @Override
@@ -158,14 +113,11 @@ public class ListBooksActivity extends BaseAppCompatActivity implements ListBook
     }
 
     private void showDownloadedBooks() {
-        downloadOnly = true;
-
-        actionsListener.loadBooksForLanguagePreference(downloadOnly);
+        actionsListener.clickViewDownloadBooks();
     }
 
     private void showAllBooks() {
-        downloadOnly = false;
-        actionsListener.loadBooksForLanguagePreference(downloadOnly);
+        actionsListener.clickViewAllBooks();
     }
 
     private void showSettingsScreen() {
@@ -182,13 +134,6 @@ public class ListBooksActivity extends BaseAppCompatActivity implements ListBook
 
                     }
                 })
-               /* .enableAutoManage(this, new GoogleApiClient.OnConnectionFailedListener() {
-                    @Override
-                    public void onConnectionFailed(ConnectionResult connectionResult) {
-                        Log.d(TAG, "onConnectionFailed: onResult:" + connectionResult.toString());
-
-                    }
-                })*/
                 .build();
         if (googleApiClient != null) {
             googleApiClient.connect();
@@ -204,12 +149,6 @@ public class ListBooksActivity extends BaseAppCompatActivity implements ListBook
         }
     }
 
-    private static final String TAG = ListBooksActivity.class.getCanonicalName();
-
-    private AutofitRecyclerView mRecyclerView;
-    private CircularProgressBar circularProgressBar;
-    private LinearLayout linearLayoutErrorScreen;
-    private TextView textViewErrorMessage;
 
     @Override
     protected void onStop() {
@@ -229,26 +168,12 @@ public class ListBooksActivity extends BaseAppCompatActivity implements ListBook
         }
     }
 
-    private View.OnClickListener bookClickListener = new View.OnClickListener() {
-        @Override
-        public void onClick(View v) {
-
-            //    final BookDetail bookDetail = (BookDetail) v.getTag();
-
-            openBookDetails(v);
-        }
-    };
 
     @Override
-    protected String getScreenName() {
-        return "BookListingScreen";
+    public String getScreenName() {
+        return "MainActivity";
     }
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.menu_main, menu);
-        return true;
-    }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
@@ -257,10 +182,6 @@ public class ListBooksActivity extends BaseAppCompatActivity implements ListBook
 
         if (id == R.id.action_about) {
             showAboutPage();
-            return true;
-        }
-        if (id == R.id.action_language_choice) {
-            actionsListener.clickOpenLanguagePopover();
             return true;
         }
         if (id == R.id.action_rate_app) {
@@ -287,7 +208,7 @@ public class ListBooksActivity extends BaseAppCompatActivity implements ListBook
                     .build();
             startActivityForResult(intent, INVITE_REQUEST_CODE);
         } catch (ActivityNotFoundException ac) {
-            Snackbar.make(mRecyclerView, R.string.common_google_play_services_api_unavailable_text, Snackbar.LENGTH_LONG).show();
+            Snackbar.make(navigationView, R.string.common_google_play_services_api_unavailable_text, Snackbar.LENGTH_LONG).show();
         }
     }
 
@@ -311,34 +232,6 @@ public class ListBooksActivity extends BaseAppCompatActivity implements ListBook
         }
     }
 
-    private boolean downloadOnly = false;
-    private DialogInterface.OnClickListener languageClickListener = new DialogInterface.OnClickListener() {
-        @Override
-        public void onClick(DialogInterface dialog, int which) {
-            if (dialog != null) {
-                dialog.dismiss();
-            }
-
-            actionsListener.saveSelectedLanguage(which, downloadOnly);
-
-          /*  tracker.send(new HitBuilders.EventBuilder()
-                    .setCategory("LanguageChange")
-                    .setAction(languages.get(which).getLanguageName())
-                    .build());*/
-
-
-        }
-    };
-
-    @Override
-    public void showLanguagePopover(String[] languages, int selected) {
-        AlertDialog alertDialogLanguages = new AlertDialog.Builder(this)
-                .setTitle(getString(R.string.language_selection_heading))
-                .setSingleChoiceItems(languages, selected, languageClickListener).create();
-        alertDialogLanguages.show();
-    }
-
-
     @Override
     public void showThanksPopover() {
         AlertDialog.Builder thanksDialog = new AlertDialog.Builder(this);
@@ -353,39 +246,11 @@ public class ListBooksActivity extends BaseAppCompatActivity implements ListBook
 
     @Override
     public void showAboutPage() {
-        Intent intent = new Intent(ListBooksActivity.this, AboutActivity.class);
-
-        startActivity(intent);
-    }
-
-
-    public void openBookDetails(View v) {
-      /*  if (Build.VERSION.SDK_INT > Build.VERSION_CODES.LOLLIPOP) {
-            ImageView imageView =
-                    ((BookViewHolder) v.getTag()).bookCover;
-            imageView.setTransitionName(getString(R.string.transition_book));
-            v.setBackgroundColor(
-                    ContextCompat.getColor(ListBooksActivity.this, android.R.color.transparent));
-            ActivityOptions options =
-                    ActivityOptions.makeSceneTransitionAnimation(ListBooksActivity.this,
-                            Pair.create((View) imageView, getString(R.string.transition_book)));
-
-
-            Intent intent = new Intent(ListBooksActivity.this, BookInfoActivity.class);
-            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-            intent.putExtra(BookInfoActivity.BOOK_PARCEL, ((BookViewHolder) v.getTag()).bookDetail.toBookParcelable());
-            startActivity(intent, options.toBundle());
-
-        } else {*/
-
-        Intent intent = new Intent(ListBooksActivity.this, BookInfoActivity.class);
-        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-        BookViewHolder viewHolder = (BookViewHolder) v.getTag();
-        BookDetail bookDetailResult = viewHolder.bookDetail;
-        intent.putExtra(BookInfoActivity.BOOK_PARCEL, bookDetailResult.toBookParcelable());
-        startActivity(intent);
-
-       /* }*/
+        FragmentManager fragmentManager = getSupportFragmentManager();
+        FragmentTransaction ft = fragmentManager.beginTransaction();
+        Fragment f = AboutFragment.newInstance();
+        ft.replace(R.id.fragment_content, f, "ABOUT");
+        ft.commit();
     }
 
     @Override
@@ -403,44 +268,42 @@ public class ListBooksActivity extends BaseAppCompatActivity implements ListBook
     }
 
     @Override
-    public void showErrorScreen(boolean show, String errorMessage, boolean showRetryButton) {
-        if (show) {
-            linearLayoutErrorScreen.setVisibility(View.VISIBLE);
-        } else {
-            linearLayoutErrorScreen.setVisibility(View.GONE);
-        }
-        buttonRetry.setVisibility(showRetryButton ? View.VISIBLE : View.GONE);
-        textViewErrorMessage.setText(errorMessage);
-
+    public void showAllBooksPage() {
+        FragmentManager fragmentManager = getSupportFragmentManager();
+        FragmentTransaction ft = fragmentManager.beginTransaction();
+        Fragment f = ListBooksFragment.newInstance();
+        ft.replace(R.id.fragment_content, f, "ALLBOOKS");
+        ft.commit();
     }
 
     @Override
-    public void showLoading(boolean visible) {
-        circularProgressBar.setVisibility(visible ? View.VISIBLE : View.GONE);
-        mRecyclerView.setVisibility(visible ? View.GONE : View.VISIBLE);
+    public void showDownloadedBooksPage() {
+        FragmentManager fragmentManager = getSupportFragmentManager();
+        FragmentTransaction ft = fragmentManager.beginTransaction();
+        Fragment f = DownloadsFragment.newInstance();
+        ft.replace(R.id.fragment_content, f, "DOWNLOADED_BOOKS");
+        ft.commit();
+    }
 
+
+    @Override
+    public void openNavDrawer() {
+        drawerLayout.openDrawer(navigationView);
     }
 
     @Override
-    public void showBooks(List<BookDetail> bookDetailList) {
-        if (bookDetailList.isEmpty()) {
-            if (downloadOnly) {
-                showErrorScreen(true, getString(R.string.no_books_downloaded), false);
+    public void closeNavDrawer() {
+        drawerLayout.closeDrawer(navigationView);
+    }
 
-            } else {
-                showErrorScreen(true, getString(R.string.no_books_available), true);
-
+    @Override
+    public void setToolbar(Toolbar toolbar) {
+        setSupportActionBar(toolbar);
+        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                drawerLayout.openDrawer(GravityCompat.START);
             }
-            // return;
-        }
-        RecyclerView.Adapter mAdapter = new BookAdapter(bookDetailList, ListBooksActivity.this, bookClickListener);
-        mRecyclerView.setAdapter(mAdapter);
-        mRecyclerView.scheduleLayoutAnimation();
+        });
     }
-
-    @Override
-    public void showSnackBarError(int message) {
-        Snackbar.make(mRecyclerView, message, Snackbar.LENGTH_LONG).show();
-    }
-
 }
