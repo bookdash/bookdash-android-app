@@ -2,7 +2,6 @@ package org.bookdash.android.presentation.bookinfo;
 
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
-import android.content.res.ColorStateList;
 import android.databinding.DataBindingUtil;
 import android.databinding.ViewDataBinding;
 import android.graphics.Bitmap;
@@ -16,10 +15,7 @@ import android.support.annotation.NonNull;
 import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.design.widget.CoordinatorLayout;
-import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
-import android.support.v4.content.ContextCompat;
-import android.support.v4.graphics.drawable.DrawableCompat;
 import android.support.v7.app.ActionBar;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.Toolbar;
@@ -48,6 +44,7 @@ import com.parse.GetDataCallback;
 import com.parse.ParseException;
 import com.parse.ParseFile;
 
+import org.bookdash.android.BR;
 import org.bookdash.android.Injection;
 import org.bookdash.android.R;
 import org.bookdash.android.domain.pojo.BookContributor;
@@ -56,7 +53,6 @@ import org.bookdash.android.domain.pojo.BookDetailParcelable;
 import org.bookdash.android.domain.pojo.gson.BookPages;
 import org.bookdash.android.presentation.activity.BaseAppCompatActivity;
 import org.bookdash.android.presentation.readbook.BookDetailActivity;
-import org.bookdash.android.BR;
 
 import java.util.List;
 
@@ -164,7 +160,7 @@ public class BookInfoActivity extends BaseAppCompatActivity implements BookInfoC
                     showSnackBarMessage(R.string.book_not_available);
                     return;
                 }
-                if (!bookInfo.isDownloadedAlready()){
+                if (!bookInfo.isDownloadedAlready()) {
                     floatingActionButton.resetIcon();
                     floatingActionButton.showProgress(true);
                     floatingActionButton.setProgress(0, true);
@@ -211,6 +207,9 @@ public class BookInfoActivity extends BaseAppCompatActivity implements BookInfoC
         if (id == R.id.action_share_book) {
             actionsListener.shareBookClicked(bookInfo);
             return true;
+        } else if (id == android.R.id.home) {
+            onBackPressed();
+            return true;
         }
 
         return super.onOptionsItemSelected(item);
@@ -235,7 +234,7 @@ public class BookInfoActivity extends BaseAppCompatActivity implements BookInfoC
         Log.d(TAG, "onNewIntent() called: action" + action);
 
         if (Intent.ACTION_VIEW.equals(action) && data != null) {
-            Uri uri =  Uri.parse(data);
+            Uri uri = Uri.parse(data);
             String bookId = uri.getLastPathSegment();
             String invitationId = uri.getQueryParameter("invitation_id");
             Log.d(TAG, "Action View: book id:" + bookId + ". Full URL:" + uri.toString() + ". InvitationId:" + invitationId);
@@ -304,10 +303,12 @@ public class BookInfoActivity extends BaseAppCompatActivity implements BookInfoC
         Snackbar.make(scrollView, message, Snackbar.LENGTH_LONG).show();
 
     }
-    private int progress= 0;
+
+    private int progress = 0;
+
     @Override
     public void showDownloadProgress(final int downloadProgress) {
-        if (progress == downloadProgress){
+        if (progress == downloadProgress) {
             return;
         }
         progress = downloadProgress;
@@ -343,7 +344,7 @@ public class BookInfoActivity extends BaseAppCompatActivity implements BookInfoC
 
     @Override
     public void setBookInfoBinding(BookDetail bookInfo) {
-        if (client!=null) {
+        if (client != null) {
             client.connect();
         }
 
@@ -356,7 +357,7 @@ public class BookInfoActivity extends BaseAppCompatActivity implements BookInfoC
                 bookInfo.getWebUrl() == null ? null : Uri.parse(bookInfo.getWebUrl()),
                 Uri.parse("android-app://org.bookdash.android/http/bookdash.org/books/" + bookInfo.getObjectId())
         );
-        if (viewAction != null && client!=null) {
+        if (viewAction != null && client != null) {
             AppIndex.AppIndexApi.start(client, viewAction);
         }
     }
@@ -405,7 +406,7 @@ public class BookInfoActivity extends BaseAppCompatActivity implements BookInfoC
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             Window window = getWindow();
             window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
-           // window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
+            // window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
             window.setStatusBarColor(color);
         }
     }
