@@ -1,5 +1,7 @@
 package org.bookdash.android.presentation.downloads;
 
+import com.parse.ParseObject;
+
 import org.bookdash.android.data.books.BookDetailRepository;
 import org.bookdash.android.domain.pojo.BookDetail;
 import org.bookdash.android.domain.pojo.Language;
@@ -30,12 +32,15 @@ public class DownloadsPresenterTest {
     private ArgumentCaptor<BookDetailRepository.GetBooksForLanguageCallback> bookloadedCaptor;
     @Captor
     private ArgumentCaptor<BookDetailRepository.DeleteBookCallBack> deleteBookCallBackArgumentCaptor;
+    private Language language;
 
     @Before
     public void setUp() throws Exception {
         MockitoAnnotations.initMocks(this);
-
+        ParseObject.registerSubclass(Language.class);
+        ParseObject.registerSubclass(BookDetail.class);
         downloadsPresenter = new DownloadsPresenter(bookRepository, downloadsView);
+        language = new Language("English", "EN", "1");
     }
 
     @After
@@ -51,7 +56,7 @@ public class DownloadsPresenterTest {
         downloadsPresenter.loadListDownloads();
         verify(downloadsView).showLoading(true);
         verify(bookRepository).getDownloadedBooks(bookloadedCaptor.capture());
-        BOOKS.add(new BookDetail("test title", "test", "2", new Language()));
+        BOOKS.add(new BookDetail("test title", "test", "2", language));
         bookloadedCaptor.getValue().onBooksLoaded(BOOKS);
 
         verify(downloadsView).showLoading(false);
@@ -71,7 +76,7 @@ public class DownloadsPresenterTest {
 
     @Test
     public void testDeleteDownload_RemovesDownload() {
-        BookDetail bookDetail = new BookDetail("Fake Book", "http://test.com", "123", new Language());
+        BookDetail bookDetail = new BookDetail("Fake Book", "http://test.com", "123", language);
         downloadsPresenter.deleteDownload(bookDetail);
 
         verify(bookRepository).deleteBook(any(BookDetail.class), deleteBookCallBackArgumentCaptor.capture());
@@ -85,7 +90,7 @@ public class DownloadsPresenterTest {
 
     @Test
     public void testDeleteDownload_RemovesDownloadKeepsOthers() {
-        BookDetail bookDetail = new BookDetail("Fake Book", "http://test.com", "123", new Language());
+        BookDetail bookDetail = new BookDetail("Fake Book", "http://test.com", "123", language);
         downloadsPresenter.deleteDownload(bookDetail);
 
         verify(bookRepository).deleteBook(any(BookDetail.class), deleteBookCallBackArgumentCaptor.capture());

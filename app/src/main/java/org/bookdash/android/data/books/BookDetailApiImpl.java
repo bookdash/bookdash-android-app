@@ -244,7 +244,7 @@ public class BookDetailApiImpl implements BookDetailApi {
             FileManager.saveFile(BookDashApplication.FILES_DIR, bytes, File.separator + bookDetail.getBookFile().getName());
             ZipManager zipManager = new ZipManager();
             zipManager.unzip(fileLocation, targetLocation);
-            
+
             FileManager.deleteFile(BookDashApplication.FILES_DIR, File.separator + bookDetail.getBookFile().getName());
         }
 
