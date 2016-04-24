@@ -1,9 +1,9 @@
 package org.bookdash.android.presentation.listbooks;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.graphics.Rect;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.Snackbar;
@@ -40,6 +40,7 @@ import fr.castorflex.android.circularprogressbar.CircularProgressBar;
 public class ListBooksFragment extends Fragment implements ListBooksContract.View {
 
     private static final String TAG = ListBooksFragment.class.getCanonicalName();
+    private static final int BOOK_DETAIL_REQUEST_CODE = 43;
     private ListBooksContract.UserActionsListener actionsListener;
     private Button buttonRetry;
     private RecyclerView mRecyclerView;
@@ -48,6 +49,7 @@ public class ListBooksFragment extends Fragment implements ListBooksContract.Vie
     private TextView textViewErrorMessage;
     private Toolbar toolbar;
     private NavDrawerInterface navDrawerInterface;
+    private BookAdapter bookAdapter;
 
     public static Fragment newInstance() {
         return new ListBooksFragment();
@@ -107,14 +109,23 @@ public class ListBooksFragment extends Fragment implements ListBooksContract.Vie
 
     public void openBookDetails(View v) {
         Intent intent = new Intent(getActivity(), BookInfoActivity.class);
-        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+       // intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         BookViewHolder viewHolder = (BookViewHolder) v.getTag();
         BookDetail bookDetailResult = viewHolder.bookDetail;
         intent.putExtra(BookInfoActivity.BOOK_PARCEL, bookDetailResult.toBookParcelable());
-        startActivity(intent);
+        startActivityForResult(intent, BOOK_DETAIL_REQUEST_CODE);
 
     }
 
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        Log.d(TAG, "onActivityResult() called with: " + "requestCode = [" + requestCode + "], resultCode = [" + resultCode + "], data = [" + data + "]");
+
+        if (requestCode == BOOK_DETAIL_REQUEST_CODE) {
+            bookAdapter.notifyDataSetChanged();
+        }
+    }
 
     @Override
     public void showErrorScreen(boolean show, String errorMessage, boolean showRetryButton) {
@@ -140,8 +151,8 @@ public class ListBooksFragment extends Fragment implements ListBooksContract.Vie
         if (bookDetailList.isEmpty()) {
             showErrorScreen(true, getString(R.string.no_books_available), true);
         }
-        RecyclerView.Adapter mAdapter = new BookAdapter(bookDetailList, ListBooksFragment.this.getActivity(), bookClickListener);
-        mRecyclerView.setAdapter(mAdapter);
+        bookAdapter = new BookAdapter(bookDetailList, ListBooksFragment.this.getActivity(), bookClickListener);
+        mRecyclerView.setAdapter(bookAdapter);
 
     }
 
