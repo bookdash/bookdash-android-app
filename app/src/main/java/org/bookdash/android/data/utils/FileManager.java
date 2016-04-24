@@ -20,7 +20,7 @@ public class FileManager {
         FileOutputStream outputStream = null;
 
         try {
-            if (file.exists()){
+            if (file.exists()) {
                 Log.d(TAG, "File exists-  not saving again");
                 return;
             }
@@ -40,8 +40,32 @@ public class FileManager {
         }
 
     }
-    public static boolean deleteFile(String filesDir, String fileName){
+
+    public static boolean deleteFile(String filesDir, String fileName) {
         File file = new File(filesDir, fileName);
         return file.delete();
     }
+
+    public static void deleteFolder(String folderLocation) {
+        deleteRecursive(new File(folderLocation));
+    }
+
+    private static void deleteRecursive(File fileOrDirectory) {
+        if (fileOrDirectory.isDirectory()) {
+            File[] list = fileOrDirectory.listFiles();
+            if (list != null) {
+                for (int i = 0; i < list.length; i++) {
+                    File tmpF = list[i];
+                    if (tmpF.isDirectory()) {
+                        deleteRecursive(tmpF);
+                    }
+                    tmpF.delete();
+                }
+            }
+            if (!fileOrDirectory.delete()) {
+                Log.e(TAG, "can't delete folder : " + fileOrDirectory);
+            }
+        }
+    }
+
 }

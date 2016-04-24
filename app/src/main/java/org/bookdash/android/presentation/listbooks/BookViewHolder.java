@@ -15,7 +15,6 @@ import org.bookdash.android.domain.pojo.*;
  */
 public class BookViewHolder extends RecyclerView.ViewHolder {
 
-    public TextView author;
     public TextView bookTitle;
     public ImageView bookCover;
     public CardView cardContainer;
@@ -27,7 +26,6 @@ public class BookViewHolder extends RecyclerView.ViewHolder {
         cardContainer = (CardView) v.findViewById(R.id.card_view);
         bookTitle = (TextView) v.findViewById(R.id.textViewBookName);
         bookCover = (ImageView) v.findViewById(R.id.imageViewBookCover);
-        author = (TextView) v.findViewById(R.id.textViewAuthor);
         downloadedIcon = (ImageView) v.findViewById(R.id.imageViewBookDownloaded);
     }
 }

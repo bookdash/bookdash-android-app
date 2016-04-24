@@ -74,6 +74,11 @@ public class FakeBookDetailApiImpl implements BookDetailApi {
     }
 
     @Override
+    public void getDownloadedBooks(BookServiceCallback<List<BookDetail>> bookServiceCallback) {
+        //TODO
+    }
+
+    @Override
     public void getBookDetail(String bookDetailId, BookServiceCallback<BookDetail> bookServiceCallback) {
         if (shouldFailService) {
             bookServiceCallback.onError(new Exception("BOOK DETAIL ERROR"));
@@ -108,6 +113,11 @@ public class FakeBookDetailApiImpl implements BookDetailApi {
 
     @Override
     public void downloadBook(BookDetail bookDetail, BookServiceCallback<BookPages> downloadBookCallback, BookServiceProgressCallback bookServiceProgressCallback) {
+
+    }
+
+    @Override
+    public void deleteBook(BookDetail bookDetail, BookServiceCallback<Boolean> deleteBook) {
 
     }
 }

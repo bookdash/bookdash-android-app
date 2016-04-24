@@ -11,9 +11,6 @@ import java.util.List;
 public interface ListBooksContract {
 
     interface View {
-        void showThanksPopover();
-        void showAboutPage();
-        void showRatingPlayStore();
         void showErrorScreen(boolean show, String errorMessage, boolean showRetryButton);
         void showLoading(boolean visible);
         void showBooks(List<BookDetail> bookDetailList);
@@ -23,8 +20,8 @@ public interface ListBooksContract {
 
     interface UserActionsListener {
         void loadLanguages();
-        void saveSelectedLanguage(int indexOfLanguage, boolean downloadOnly);
-        void loadBooksForLanguagePreference(boolean downloadedOnly);
+        void saveSelectedLanguage(int indexOfLanguage);
+        void loadBooksForLanguagePreference();
         void clickOpenLanguagePopover();
     }
 

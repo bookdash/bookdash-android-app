@@ -25,16 +25,17 @@ public class ListBooksPresenter implements ListBooksContract.UserActionsListener
         this.bookDetailRepository = bookDetailRepository;
         this.settingsRepository = settingsRepository;
     }
+
     @Override
-    public void loadBooksForLanguagePreference(boolean downloadedOnly) {
+    public void loadBooksForLanguagePreference() {
         String languagePreference = settingsRepository.getLanguagePreference();
-        loadBooksForLanguage(languagePreference, downloadedOnly);
+        loadBooksForLanguage(languagePreference);
     }
 
-    private void loadBooksForLanguage(String language, boolean downloadedOnly) {
+    private void loadBooksForLanguage(String language) {
         listBooksView.showLoading(true);
         listBooksView.showErrorScreen(false, "", false);
-        bookDetailRepository.getBooksForLanguage(language,downloadedOnly, new BookDetailRepository.GetBooksForLanguageCallback() {
+        bookDetailRepository.getBooksForLanguage(language,  new BookDetailRepository.GetBooksForLanguageCallback() {
             @Override
             public void onBooksLoaded(List<BookDetail> books) {
                 listBooksView.showLoading(false);
@@ -69,10 +70,10 @@ public class ListBooksPresenter implements ListBooksContract.UserActionsListener
     }
 
     @Override
-    public void saveSelectedLanguage(int indexOfLanguage, boolean downloadOnly) {
+    public void saveSelectedLanguage(int indexOfLanguage) {
         settingsRepository.saveLanguagePreference(languages.get(indexOfLanguage).getLanguageName());
 
-        loadBooksForLanguage(languages.get(indexOfLanguage).getLanguageName(), downloadOnly);
+        loadBooksForLanguage(languages.get(indexOfLanguage).getLanguageName());
     }
 
     @Override
@@ -93,7 +94,6 @@ public class ListBooksPresenter implements ListBooksContract.UserActionsListener
         }
         listBooksView.showLanguagePopover(langArray, languageToSelect);
     }
-
 
 
 }

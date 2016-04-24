@@ -101,10 +101,11 @@
                 <android.support.v7.widget.Toolbar
                     android:id="@+id/toolbar"
                     android:layout_width="match_parent"
-                    android:layout_height="?attr/actionBarSize"
+                    android:minHeight="?attr/actionBarSize"
+                    android:layout_height="wrap_content"
                     app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
-
                     app:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
+                    android:fitsSystemWindows="true"
                     app:title="@{book_info.bookTitle}" />
 <!--
             </android.support.design.widget.CollapsingToolbarLayout>-->

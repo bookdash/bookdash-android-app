@@ -10,7 +10,7 @@ import android.support.test.runner.AndroidJUnit4;
 import android.test.suitebuilder.annotation.LargeTest;
 
 import org.bookdash.android.data.settings.FakeSettingsApiImpl;
-import org.bookdash.android.presentation.listbooks.ListBooksActivity;
+import org.bookdash.android.presentation.main.MainActivity;
 import org.bookdash.android.presentation.splash.util.ElapsedTimeIdlingResource;
 import org.junit.After;
 import org.junit.Before;
@@ -72,7 +72,7 @@ public class SplashScreenTest {
         Espresso.registerIdlingResources(idlingResource);
 
 
-        intended(hasComponent(ListBooksActivity.class.getName()));
+        intended(hasComponent(MainActivity.class.getName()));
 
         Espresso.unregisterIdlingResources(idlingResource);
 
@@ -90,7 +90,7 @@ public class SplashScreenTest {
 
         intending(hasComponent(MaterialTutorialActivity.class.getName())).respondWith(result);
 
-        intended(hasComponent(ListBooksActivity.class.getName()));
+        intended(hasComponent(MainActivity.class.getName()));
 
         Espresso.unregisterIdlingResources(idlingResource);
     }
