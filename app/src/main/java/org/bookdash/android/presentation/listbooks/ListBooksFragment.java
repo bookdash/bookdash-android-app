@@ -1,6 +1,5 @@
 package org.bookdash.android.presentation.listbooks;
 
-import android.app.Activity;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -109,7 +108,7 @@ public class ListBooksFragment extends Fragment implements ListBooksContract.Vie
 
     public void openBookDetails(View v) {
         Intent intent = new Intent(getActivity(), BookInfoActivity.class);
-       // intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        // intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         BookViewHolder viewHolder = (BookViewHolder) v.getTag();
         BookDetail bookDetailResult = viewHolder.bookDetail;
         intent.putExtra(BookInfoActivity.BOOK_PARCEL, bookDetailResult.toBookParcelable());
@@ -123,7 +122,9 @@ public class ListBooksFragment extends Fragment implements ListBooksContract.Vie
         Log.d(TAG, "onActivityResult() called with: " + "requestCode = [" + requestCode + "], resultCode = [" + resultCode + "], data = [" + data + "]");
 
         if (requestCode == BOOK_DETAIL_REQUEST_CODE) {
-            bookAdapter.notifyDataSetChanged();
+            if (bookAdapter != null) {
+                bookAdapter.notifyDataSetChanged();
+            }
         }
     }
 
