@@ -1,4 +1,4 @@
-package org.bookdash.android.presentation.listbooks;
+package org.bookdash.android.presentation.view;
 
 import android.content.Context;
 import android.util.AttributeSet;

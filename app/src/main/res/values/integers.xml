@@ -2,5 +2,5 @@
 <resources>
     <integer name="book_span">2</integer>
 
-    <integer name="list_books_space">8</integer>
+    <integer name="list_books_space">1</integer>
 </resources>
