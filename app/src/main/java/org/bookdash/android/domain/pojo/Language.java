@@ -14,6 +14,7 @@ public class Language extends ParseObject {
     public static final String LANG_CODE_COL = "language_abbreviation";
     public static final String LANG_NAME_COL = "language_name";
     public static final String LANGUAGE_ID = "language_id";
+    public static final String LANGUAGE_ORDER = "language_order";
 
     public Language() {
     }
