@@ -28,7 +28,6 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewTreeObserver;
 import android.view.Window;
-import android.view.WindowManager;
 import android.view.animation.AccelerateInterpolator;
 import android.view.animation.OvershootInterpolator;
 import android.widget.Button;
@@ -163,7 +162,7 @@ public class BookInfoActivity extends BaseAppCompatActivity implements BookInfoC
                 if (!bookInfo.isDownloadedAlready()) {
                     floatingActionButton.resetIcon();
                     floatingActionButton.showProgress(true);
-                    floatingActionButton.setProgress(0, true);
+                    floatingActionButton.setProgress(0, false);
                 }
                 actionsListener.downloadBook(bookInfo);
             }
@@ -247,8 +246,6 @@ public class BookInfoActivity extends BaseAppCompatActivity implements BookInfoC
         floatingActionButton.setScaleX(0);
         floatingActionButton.setScaleY(0);
         floatingActionButton.animate().setStartDelay(500).scaleY(1).scaleX(1).setInterpolator(new OvershootInterpolator()).setDuration(getResources().getInteger(android.R.integer.config_mediumAnimTime)).start();
-
-
     }
 
 
@@ -317,7 +314,7 @@ public class BookInfoActivity extends BaseAppCompatActivity implements BookInfoC
         runOnUiThread(new Runnable() {
             @Override
             public void run() {
-                floatingActionButton.setProgress(downloadProgress, true);
+                floatingActionButton.setProgress(downloadProgress, false);
             }
         });
 
@@ -405,8 +402,6 @@ public class BookInfoActivity extends BaseAppCompatActivity implements BookInfoC
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             Window window = getWindow();
-            window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
-            // window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
             window.setStatusBarColor(color);
         }
     }

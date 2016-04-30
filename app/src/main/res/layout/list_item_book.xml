@@ -3,7 +3,7 @@
               xmlns:tools="http://schemas.android.com/tools"
               android:layout_width="wrap_content"
               android:layout_height="wrap_content"
-              android:layout_margin="4dp"
+
     >
 
     <!-- A CardView that contains a TextView -->
@@ -19,7 +19,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content">
 
-            <org.bookdash.android.presentation.listbooks.SquareImageView
+            <org.bookdash.android.presentation.view.SquareImageView
                 android:id="@+id/imageViewBookCover"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"

@@ -12,7 +12,6 @@ import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.animation.GlideAnimation;
 import com.bumptech.glide.request.target.SimpleTarget;
 
-import org.bookdash.android.BookDashApplication;
 import org.bookdash.android.R;
 import org.bookdash.android.data.books.BookDetailRepository;
 import org.bookdash.android.domain.pojo.BookContributor;
@@ -93,7 +92,6 @@ public class BookInfoPresenter implements BookInfoContract.UserActionsListener {
         bookInfo.setIsDownloading(true);
 
 
-
         bookDetailRepository.downloadBook(bookInfo, new BookDetailRepository.GetBookPagesCallback() {
             @Override
             public void onBookPagesLoaded(BookPages bookPages) {
@@ -161,6 +159,10 @@ public class BookInfoPresenter implements BookInfoContract.UserActionsListener {
                     float[] darkerShade = toolbarSwatch.getHsl();
                     darkerShade[2] = darkerShade[2] * 0.8f; //Make it a darker shade for the status bar
                     booksView.setStatusBarColor(ColorUtils.HSLToColor(darkerShade));
+
+                } else {
+
+                    booksView.setStatusBarColor(ContextCompat.getColor(context.getApplicationContext(), R.color.colorPrimaryDark));
 
                 }
             }
