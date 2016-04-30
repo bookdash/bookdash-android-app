@@ -1,16 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="150dp"
-    android:paddingTop="24dp"
-    android:orientation="vertical">
+                android:layout_width="match_parent"
+                android:layout_height="150dp"
+                xmlns:app="http://schemas.android.com/apk/res-auto"
+                android:orientation="vertical"
+                android:paddingTop="24dp">
+
     <ImageView
+        android:id="@+id/imageViewHeader"
         android:layout_width="match_parent"
         android:layout_height="150dp"
-        android:src="@drawable/bookdashlogo"
-        android:id="@+id/imageViewHeader"
         android:padding="8dp"
-        android:scaleType="centerInside" />
+        android:scaleType="centerInside"
+        app:srcCompat="@drawable/bookdash_logo"/>
+
     <View
         android:layout_width="match_parent"
         android:layout_height="1dp"

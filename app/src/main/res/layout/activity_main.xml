@@ -4,7 +4,9 @@
                                         android:id="@+id/drawer_layout"
                                         android:layout_width="match_parent"
                                         android:layout_height="match_parent"
-                                        android:fitsSystemWindows="true">
+                                        android:fitsSystemWindows="true"
+                                        tools:openDrawer="start"
+    >
 
     <RelativeLayout
         android:id="@+id/fragment_content"
@@ -19,6 +21,7 @@
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
         android:layout_gravity="start"
+        android:elevation="@dimen/z_drawer"
         android:fitsSystemWindows="true"
         app:headerLayout="@layout/drawer_header"
         app:menu="@menu/menu_drawer"/>

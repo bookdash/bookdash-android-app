@@ -102,9 +102,10 @@ android {
             testCoverageEnabled = true
         }
     }
+
     play {
         jsonFile = rootProject.file('google-play-keys.json')
-        track = 'alpha'
+        track = "${track}"
     }
 }
 

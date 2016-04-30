@@ -145,7 +145,7 @@ public class BookDetailApiImpl implements BookDetailApi {
     public void getLanguages(final BookServiceCallback<List<Language>> languagesCallback) {
         ParseQuery<Language> queryLanguages = ParseQuery.getQuery(Language.class);
         queryLanguages.setCachePolicy(ParseQuery.CachePolicy.NETWORK_ELSE_CACHE);
-        queryLanguages.orderByAscending(Language.LANGUAGE_ID);
+        queryLanguages.orderByAscending(Language.LANGUAGE_ORDER);
         queryLanguages.findInBackground(new FindCallback<Language>() {
             @Override
             public void done(List<Language> list, ParseException e) {
@@ -215,7 +215,7 @@ public class BookDetailApiImpl implements BookDetailApi {
     @WorkerThread
     private void deleteLocalBook(BookDetail bookDetail) {
         FileManager.deleteFolder(bookDetail.getFolderLocation());
-        FileManager.deleteFolder(BookDashApplication.FILES_DIR + "/" +  bookDetail.getObjectId());
+        FileManager.deleteFolder(BookDashApplication.FILES_DIR + "/" + bookDetail.getObjectId());
     }
 
     private void getBookPages(final BookDetail bookInfo, final byte[] bytes, final BookServiceCallback<BookPages> bookServiceCallback) {
