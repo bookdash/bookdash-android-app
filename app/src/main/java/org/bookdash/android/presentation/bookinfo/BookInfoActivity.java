@@ -162,7 +162,7 @@ public class BookInfoActivity extends BaseAppCompatActivity implements BookInfoC
                 if (!bookInfo.isDownloadedAlready()) {
                     floatingActionButton.resetIcon();
                     floatingActionButton.showProgress(true);
-                    floatingActionButton.setProgress(0, true);
+                    floatingActionButton.setProgress(0, false);
                 }
                 actionsListener.downloadBook(bookInfo);
             }
@@ -314,7 +314,7 @@ public class BookInfoActivity extends BaseAppCompatActivity implements BookInfoC
         runOnUiThread(new Runnable() {
             @Override
             public void run() {
-                floatingActionButton.setProgress(downloadProgress, true);
+                floatingActionButton.setProgress(downloadProgress, false);
             }
         });
 
