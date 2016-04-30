@@ -7,7 +7,6 @@ import android.support.v7.app.AppCompatActivity;
 
 import org.bookdash.android.Injection;
 import org.bookdash.android.R;
-import org.bookdash.android.presentation.listbooks.ListBooksFragment;
 import org.bookdash.android.presentation.main.MainActivity;
 
 import za.co.riggaroo.materialhelptutorial.tutorial.MaterialTutorialActivity;
@@ -28,7 +27,7 @@ public class SplashActivity extends AppCompatActivity implements SplashContract.
         showSplashAfterDelay();
     }
 
-    private void showSplashAfterDelay(){
+    private void showSplashAfterDelay() {
         (new Handler()).postDelayed(new Runnable() {
             @Override
             public void run() {
@@ -37,13 +36,13 @@ public class SplashActivity extends AppCompatActivity implements SplashContract.
         }, 1000);
 
     }
+
     @Override
     public void loadTutorial() {
         Intent mainAct = new Intent(SplashActivity.this, MaterialTutorialActivity.class);
         mainAct.putParcelableArrayListExtra(MaterialTutorialActivity.MATERIAL_TUTORIAL_ARG_TUTORIAL_ITEMS, splashPresenter.getTutorialItems(this));
         startActivityForResult(mainAct, SPLASH_SCREEN_REQUEST_CODE);
     }
-
 
 
     @Override
@@ -55,8 +54,8 @@ public class SplashActivity extends AppCompatActivity implements SplashContract.
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-    //    super.onActivityResult(requestCode, resultCode, data);
-        if (resultCode == RESULT_OK && requestCode == SPLASH_SCREEN_REQUEST_CODE){
+        //    super.onActivityResult(requestCode, resultCode, data);
+        if (resultCode == RESULT_OK && requestCode == SPLASH_SCREEN_REQUEST_CODE) {
             splashPresenter.finishedTutorial();
 
         }

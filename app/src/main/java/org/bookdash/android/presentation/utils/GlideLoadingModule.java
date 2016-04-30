@@ -19,7 +19,7 @@ public class GlideLoadingModule implements GlideModule {
 
     @Override
     public void registerComponents(Context context, Glide glide) {
-      //  glide.register(Model.class, Data.class, new MyModelLoader());
+        //  glide.register(Model.class, Data.class, new MyModelLoader());
     }
 
 

@@ -12,9 +12,7 @@ public class AboutPresenter implements AboutContract.UserActions {
 
     public AboutPresenter(AboutContract.View aboutView) {
         this.aboutView = aboutView;
-
     }
-
 
     @Override
     public void clickLearnMore() {

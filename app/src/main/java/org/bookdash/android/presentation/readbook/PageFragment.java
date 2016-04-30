@@ -57,7 +57,7 @@ public class PageFragment extends Fragment {
         bookLocation = getArguments().getString(ARG_BOOK_LOCATION);
     }
 
-    public static Fragment newInstance(Page page,Page page2, String rootFileLocation) {
+    public static Fragment newInstance(Page page, Page page2, String rootFileLocation) {
         Bundle b = new Bundle();
         b.putParcelable(PAGE_ARG, page);
         b.putParcelable(PAGE_2_ARG, page2);

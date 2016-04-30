@@ -1,5 +1,6 @@
 package org.bookdash.android.presentation.listbooks;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -112,6 +113,14 @@ public class ListBooksFragment extends Fragment implements ListBooksContract.Vie
 
     }
 
+    private void runUiThread(Runnable runnable) {
+        Activity activity = getActivity();
+        if (activity == null) {
+            return;
+        }
+        activity.runOnUiThread(runnable);
+    }
+
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
@@ -125,39 +134,61 @@ public class ListBooksFragment extends Fragment implements ListBooksContract.Vie
     }
 
     @Override
-    public void showErrorScreen(boolean show, String errorMessage, boolean showRetryButton) {
-        if (show) {
-            linearLayoutErrorScreen.setVisibility(View.VISIBLE);
-            recyclerViewBooks.setVisibility(View.GONE);
-        } else {
-            linearLayoutErrorScreen.setVisibility(View.GONE);
-            recyclerViewBooks.setVisibility(View.VISIBLE);
-        }
-        buttonRetry.setVisibility(showRetryButton ? View.VISIBLE : View.GONE);
-        textViewErrorMessage.setText(errorMessage);
+    public void showErrorScreen(final boolean show, final String errorMessage, final boolean showRetryButton) {
+        runUiThread(new Runnable() {
+            @Override
+            public void run() {
+                if (show) {
+                    linearLayoutErrorScreen.setVisibility(View.VISIBLE);
+                    recyclerViewBooks.setVisibility(View.GONE);
+                } else {
+                    linearLayoutErrorScreen.setVisibility(View.GONE);
+                    recyclerViewBooks.setVisibility(View.VISIBLE);
+                }
+                buttonRetry.setVisibility(showRetryButton ? View.VISIBLE : View.GONE);
+                textViewErrorMessage.setText(errorMessage);
+            }
+        });
+
 
     }
 
     @Override
-    public void showLoading(boolean visible) {
-        circularProgressBar.setVisibility(visible ? View.VISIBLE : View.GONE);
-        recyclerViewBooks.setVisibility(visible ? View.GONE : View.VISIBLE);
+    public void showLoading(final boolean visible) {
+        runUiThread(new Runnable() {
+            @Override
+            public void run() {
+                circularProgressBar.setVisibility(visible ? View.VISIBLE : View.GONE);
+                recyclerViewBooks.setVisibility(visible ? View.GONE : View.VISIBLE);
+            }
+        });
 
     }
 
     @Override
-    public void showBooks(List<BookDetail> bookDetailList) {
-        if (bookDetailList.isEmpty()) {
-            showErrorScreen(true, getString(R.string.no_books_available), true);
-        }
-        bookAdapter = new BookAdapter(bookDetailList, ListBooksFragment.this.getActivity(), bookClickListener);
-        recyclerViewBooks.setAdapter(bookAdapter);
+    public void showBooks(final List<BookDetail> bookDetailList) {
+        runUiThread(new Runnable() {
+            @Override
+            public void run() {
+                if (bookDetailList.isEmpty()) {
+                    showErrorScreen(true, getString(R.string.no_books_available), true);
+                }
+                bookAdapter = new BookAdapter(bookDetailList, ListBooksFragment.this.getActivity(), bookClickListener);
+                recyclerViewBooks.setAdapter(bookAdapter);
+            }
+        });
+
 
     }
 
     @Override
-    public void showSnackBarError(int message) {
-        Snackbar.make(recyclerViewBooks, message, Snackbar.LENGTH_LONG).show();
+    public void showSnackBarError(final int message) {
+        runUiThread(new Runnable() {
+            @Override
+            public void run() {
+                Snackbar.make(recyclerViewBooks, message, Snackbar.LENGTH_LONG).show();
+            }
+        });
     }
 
     private DialogInterface.OnClickListener languageClickListener = new DialogInterface.OnClickListener() {
@@ -173,11 +204,17 @@ public class ListBooksFragment extends Fragment implements ListBooksContract.Vie
     };
 
     @Override
-    public void showLanguagePopover(String[] languages, int selected) {
-        AlertDialog alertDialogLanguages = new AlertDialog.Builder(getActivity())
-                .setTitle(getString(R.string.language_selection_heading))
-                .setSingleChoiceItems(languages, selected, languageClickListener).create();
-        alertDialogLanguages.show();
+    public void showLanguagePopover(final String[] languages, final int selected) {
+        runUiThread(new Runnable() {
+            @Override
+            public void run() {
+                AlertDialog alertDialogLanguages = new AlertDialog.Builder(getActivity())
+                        .setTitle(getString(R.string.language_selection_heading))
+                        .setSingleChoiceItems(languages, selected, languageClickListener).create();
+                alertDialogLanguages.show();
+            }
+        });
+
     }
 
     @Override

@@ -4,11 +4,8 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 
 
-import org.bookdash.android.BookDashApplication;
-
-
 public abstract class BaseAppCompatActivity extends AppCompatActivity {
-   // protected Tracker tracker;
+    // protected Tracker tracker;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -18,5 +15,6 @@ public abstract class BaseAppCompatActivity extends AppCompatActivity {
         tracker.setScreenName(getScreenName());
         tracker.send(new HitBuilders.ScreenViewBuilder().build());*/
     }
+
     protected abstract String getScreenName();
 }

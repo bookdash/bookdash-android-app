@@ -24,6 +24,6 @@ public class DownloadsViewHolder extends RecyclerView.ViewHolder {
         downloadImageTextView = (ImageView) itemView.findViewById(R.id.image_view_download_book_cover);
         downloadProgressTextView = (TextView) itemView.findViewById(R.id.download_progress);
         downloadTitleTextView = (TextView) itemView.findViewById(R.id.text_view_book_title_download);
-        downloadRelativeLayout = (RelativeLayout)itemView.findViewById(R.id.download_relative_layout);
+        downloadRelativeLayout = (RelativeLayout) itemView.findViewById(R.id.download_relative_layout);
     }
 }
