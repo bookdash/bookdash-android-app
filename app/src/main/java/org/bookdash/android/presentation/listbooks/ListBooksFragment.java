@@ -41,11 +41,10 @@ public class ListBooksFragment extends Fragment implements ListBooksContract.Vie
     private static final int BOOK_DETAIL_REQUEST_CODE = 43;
     private ListBooksContract.UserActionsListener actionsListener;
     private Button buttonRetry;
-    private RecyclerView mRecyclerView;
+    private RecyclerView recyclerViewBooks;
     private CircularProgressBar circularProgressBar;
     private LinearLayout linearLayoutErrorScreen;
     private TextView textViewErrorMessage;
-    private Toolbar toolbar;
     private NavDrawerInterface navDrawerInterface;
     private BookAdapter bookAdapter;
 
@@ -68,8 +67,8 @@ public class ListBooksFragment extends Fragment implements ListBooksContract.Vie
         linearLayoutErrorScreen = (LinearLayout) view.findViewById(R.id.linear_layout_error);
         buttonRetry = (Button) view.findViewById(R.id.button_retry);
         textViewErrorMessage = (TextView) view.findViewById(R.id.text_view_error_screen);
-        mRecyclerView = (RecyclerView) view.findViewById(R.id.recycler_view_books);
-        mRecyclerView.setLayoutManager(new GridLayoutManager(getActivity(), getContext().getResources().getInteger(R.integer.book_span)));
+        recyclerViewBooks = (RecyclerView) view.findViewById(R.id.recycler_view_books);
+        recyclerViewBooks.setLayoutManager(new GridLayoutManager(getActivity(), getContext().getResources().getInteger(R.integer.book_span)));
         buttonRetry.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -77,7 +76,7 @@ public class ListBooksFragment extends Fragment implements ListBooksContract.Vie
                 actionsListener.loadBooksForLanguagePreference();
             }
         });
-        toolbar = (Toolbar) view.findViewById(R.id.toolbar);
+        Toolbar toolbar = (Toolbar) view.findViewById(R.id.toolbar);
         if (navDrawerInterface != null) {
             navDrawerInterface.setToolbar(toolbar);
         }
@@ -129,8 +128,10 @@ public class ListBooksFragment extends Fragment implements ListBooksContract.Vie
     public void showErrorScreen(boolean show, String errorMessage, boolean showRetryButton) {
         if (show) {
             linearLayoutErrorScreen.setVisibility(View.VISIBLE);
+            recyclerViewBooks.setVisibility(View.GONE);
         } else {
             linearLayoutErrorScreen.setVisibility(View.GONE);
+            recyclerViewBooks.setVisibility(View.VISIBLE);
         }
         buttonRetry.setVisibility(showRetryButton ? View.VISIBLE : View.GONE);
         textViewErrorMessage.setText(errorMessage);
@@ -140,7 +141,7 @@ public class ListBooksFragment extends Fragment implements ListBooksContract.Vie
     @Override
     public void showLoading(boolean visible) {
         circularProgressBar.setVisibility(visible ? View.VISIBLE : View.GONE);
-        mRecyclerView.setVisibility(visible ? View.GONE : View.VISIBLE);
+        recyclerViewBooks.setVisibility(visible ? View.GONE : View.VISIBLE);
 
     }
 
@@ -150,13 +151,13 @@ public class ListBooksFragment extends Fragment implements ListBooksContract.Vie
             showErrorScreen(true, getString(R.string.no_books_available), true);
         }
         bookAdapter = new BookAdapter(bookDetailList, ListBooksFragment.this.getActivity(), bookClickListener);
-        mRecyclerView.setAdapter(bookAdapter);
+        recyclerViewBooks.setAdapter(bookAdapter);
 
     }
 
     @Override
     public void showSnackBarError(int message) {
-        Snackbar.make(mRecyclerView, message, Snackbar.LENGTH_LONG).show();
+        Snackbar.make(recyclerViewBooks, message, Snackbar.LENGTH_LONG).show();
     }
 
     private DialogInterface.OnClickListener languageClickListener = new DialogInterface.OnClickListener() {
