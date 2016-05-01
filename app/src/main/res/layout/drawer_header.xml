@@ -1,18 +1,44 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-                android:layout_width="match_parent"
-                android:layout_height="150dp"
                 xmlns:app="http://schemas.android.com/apk/res-auto"
+                xmlns:tools="http://schemas.android.com/tools"
+                android:layout_width="match_parent"
+                android:layout_height="160dp"
                 android:orientation="vertical"
-                android:paddingTop="24dp">
+
+    >
+
 
     <ImageView
         android:id="@+id/imageViewHeader"
         android:layout_width="match_parent"
-        android:layout_height="150dp"
-        android:padding="8dp"
-        android:scaleType="centerInside"
-        app:srcCompat="@drawable/bookdash_logo"/>
+        android:layout_height="160dp"
+        android:scaleType="centerCrop"
+        android:src="@drawable/headerimage"
+        />
+
+    <ImageView
+        android:id="@+id/imageViewBookdashIcon"
+        android:layout_width="68dp"
+        android:layout_height="68dp"
+        android:layout_marginBottom="@dimen/activity_vertical_margin"
+        android:layout_marginLeft="16dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="@dimen/nav_header_vertical_spacing"
+        android:elevation="16dp"
+        android:fitsSystemWindows="true"
+        app:srcCompat="@drawable/bookdash_b_vector"
+        />
+
+  <!--  <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/imageViewBookdashIcon"
+        android:layout_marginLeft="16dp"
+        android:layout_marginStart="16dp"
+        android:text="@string/book_dash_nav_header"
+        android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+        tools:text="Book Dash"/>-->
 
     <View
         android:layout_width="match_parent"

@@ -158,8 +158,18 @@ public class ListBooksFragment extends Fragment implements ListBooksContract.Vie
         runUiThread(new Runnable() {
             @Override
             public void run() {
-                circularProgressBar.setVisibility(visible ? View.VISIBLE : View.GONE);
-                recyclerViewBooks.setVisibility(visible ? View.GONE : View.VISIBLE);
+                if (visible) {
+                    linearLayoutErrorScreen.setVisibility(View.GONE);
+                    buttonRetry.setVisibility(View.GONE);
+                    recyclerViewBooks.setVisibility(View.GONE);
+                    circularProgressBar.setVisibility(View.VISIBLE);
+                } else {
+                    linearLayoutErrorScreen.setVisibility(View.GONE);
+                    buttonRetry.setVisibility(View.GONE);
+                    circularProgressBar.setVisibility(View.GONE);
+                    recyclerViewBooks.setVisibility(View.GONE);
+                }
+
             }
         });
 

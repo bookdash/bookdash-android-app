@@ -22,5 +22,8 @@
     <dimen name="elevation_large">16dp</dimen>
     <dimen name="z_drawer">16dp</dimen>
 
+    <dimen name="nav_header_vertical_spacing">32dp</dimen>
+    <dimen name="nav_header_height">160dp</dimen>
+
 
 </resources>

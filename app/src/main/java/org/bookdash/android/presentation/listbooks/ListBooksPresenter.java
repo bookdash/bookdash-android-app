@@ -34,7 +34,6 @@ public class ListBooksPresenter implements ListBooksContract.UserActionsListener
 
     private void loadBooksForLanguage(String language) {
         listBooksView.showLoading(true);
-        listBooksView.showErrorScreen(false, "", false);
         bookDetailRepository.getBooksForLanguage(language, new BookDetailRepository.GetBooksForLanguageCallback() {
             @Override
             public void onBooksLoaded(List<BookDetail> books) {
