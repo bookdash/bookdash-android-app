@@ -1,17 +1,13 @@
 package org.bookdash.android;
 
 import android.app.Application;
-import android.util.Log;
 
 import com.crashlytics.android.Crashlytics;
 import com.crashlytics.android.core.CrashlyticsCore;
 import com.google.android.gms.analytics.GoogleAnalytics;
 import com.google.android.gms.analytics.Tracker;
 import com.parse.Parse;
-import com.parse.ParseException;
 import com.parse.ParseObject;
-import com.parse.ParsePush;
-import com.parse.SaveCallback;
 
 import org.bookdash.android.domain.pojo.Book;
 import org.bookdash.android.domain.pojo.BookContributor;
@@ -56,6 +52,7 @@ public class BookDashApplication extends Application {
 
     /**
      * Gets the default {@link Tracker} for this {@link Application}.
+     *
      * @return tracker
      */
     synchronized public Tracker getDefaultTracker() {

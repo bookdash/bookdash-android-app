@@ -6,7 +6,6 @@ import org.bookdash.android.domain.pojo.BookDetail;
 import java.util.List;
 
 public class DownloadsPresenter implements DownloadsContract.UserActions {
-    private static final String TAG = "DownloadsPresenter";
     private final BookDetailRepository bookRepository;
     private final DownloadsContract.View view;
 

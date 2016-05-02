@@ -45,7 +45,6 @@ public class DownloadsFragment extends Fragment implements DownloadsContract.Vie
     private TextView textViewErrorMessage;
     private CircularProgressBar circularProgressBar;
     private NavDrawerInterface navDrawerInterface;
-    private Toolbar toolbar;
 
 
     public static DownloadsFragment newInstance() {
@@ -84,7 +83,7 @@ public class DownloadsFragment extends Fragment implements DownloadsContract.Vie
         buttonRetry = (Button) view.findViewById(R.id.button_retry);
         textViewErrorMessage = (TextView) view.findViewById(R.id.text_view_error_screen);
         circularProgressBar = (CircularProgressBar) view.findViewById(R.id.fragment_loading_downloads);
-        toolbar = (Toolbar) view.findViewById(R.id.toolbar);
+        Toolbar toolbar = (Toolbar) view.findViewById(R.id.toolbar);
         if (navDrawerInterface != null) {
             navDrawerInterface.setToolbar(toolbar);
 
@@ -196,8 +195,14 @@ public class DownloadsFragment extends Fragment implements DownloadsContract.Vie
 
     @Override
     public void showNoBooksDownloadedMessage() {
-        showErrorScreen(true, getString(R.string.no_books_downloaded), false);
-        listDownloadsRecyclerView.setVisibility(View.GONE);
+        runUiThread(new Runnable() {
+            @Override
+            public void run() {
+                showErrorScreen(true, getString(R.string.no_books_downloaded), false);
+                listDownloadsRecyclerView.setVisibility(View.GONE);
+            }
+        });
+
     }
 
     @Override

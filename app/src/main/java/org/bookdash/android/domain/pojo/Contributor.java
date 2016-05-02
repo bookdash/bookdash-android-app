@@ -20,14 +20,15 @@ public class Contributor extends ParseObject {
         put(COL_ROLE, role);
     }
 
-    public String getName(){
+    public String getName() {
         return getString(COL_NAME);
     }
-    public String getRole(){
+
+    public String getRole() {
         return getString(COL_ROLE);
     }
 
-    public ParseFile getAvatar(){
+    public ParseFile getAvatar() {
         return getParseFile("avatar");
     }
 

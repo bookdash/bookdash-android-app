@@ -354,7 +354,7 @@ public class BookInfoActivity extends BaseAppCompatActivity implements BookInfoC
                 bookInfo.getWebUrl() == null ? null : Uri.parse(bookInfo.getWebUrl()),
                 Uri.parse("android-app://org.bookdash.android/http/bookdash.org/books/" + bookInfo.getObjectId())
         );
-        if (viewAction != null && client != null) {
+        if (client != null) {
             AppIndex.AppIndexApi.start(client, viewAction);
         }
     }

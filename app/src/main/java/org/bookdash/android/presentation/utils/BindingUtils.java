@@ -13,7 +13,6 @@ import com.parse.ParseException;
 import com.parse.ParseFile;
 
 
-
 public class BindingUtils {
 
     @BindingAdapter({"bind:imageUrlWeb"})
@@ -33,7 +32,7 @@ public class BindingUtils {
 
     @BindingAdapter({"bind:parseImageFile"})
     public static void loadImageFromParse(final ImageView view, Object parseFile) {
-        if (parseFile == null){
+        if (parseFile == null) {
             return;
         }
         ParseFile parseFileCast = (ParseFile) parseFile;

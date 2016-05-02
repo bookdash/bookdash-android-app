@@ -6,8 +6,10 @@ package org.bookdash.android.data.settings;
  */
 public interface SettingsApi {
     boolean isFirstTime();
+
     void setIsFirstTime(boolean isFirstTime);
 
     String getLanguagePreference();
+
     void saveLanguagePreference(String languagePreference);
 }

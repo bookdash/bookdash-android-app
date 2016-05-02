@@ -87,5 +87,6 @@
     <string name="downloads_are_you_sure">Are you sure you want to delete \'%s\'? </string>
     <string name="delete_ok">Delete</string>
     <string name="delete_cancel">Cancel</string>
+    <string name="book_dash_nav_header">Book Dash</string>
 
 </resources>

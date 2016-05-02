@@ -115,7 +115,7 @@ public class Page implements Parcelable {
     };
 
     public Spanned getHtmlText() {
-        if (TextUtils.isEmpty(getText())){
+        if (TextUtils.isEmpty(getText())) {
             return SpannedString.valueOf("");
         }
         return Html.fromHtml(getText());

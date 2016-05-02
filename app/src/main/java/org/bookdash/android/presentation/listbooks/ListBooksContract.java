@@ -12,16 +12,23 @@ public interface ListBooksContract {
 
     interface View {
         void showErrorScreen(boolean show, String errorMessage, boolean showRetryButton);
+
         void showLoading(boolean visible);
+
         void showBooks(List<BookDetail> bookDetailList);
+
         void showSnackBarError(int message);
+
         void showLanguagePopover(String[] languages, int selected);
     }
 
     interface UserActionsListener {
         void loadLanguages();
+
         void saveSelectedLanguage(int indexOfLanguage);
+
         void loadBooksForLanguagePreference();
+
         void clickOpenLanguagePopover();
     }
 

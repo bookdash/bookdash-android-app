@@ -7,7 +7,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import org.bookdash.android.R;
-import org.bookdash.android.domain.pojo.*;
+import org.bookdash.android.domain.pojo.BookDetail;
 
 /**
  * @author rebeccafranks

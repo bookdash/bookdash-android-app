@@ -29,10 +29,10 @@ public class PageAdapter extends FixedFragmentStatePagerAdapter {
         int realPos = position * 2;
         Page page = pages.get(realPos);
         Page page2 = null;
-        if ( realPos + 1 < pages.size()){
+        if (realPos + 1 < pages.size()) {
             page2 = pages.get(realPos + 1);
         }
-        return PageFragment.newInstance(page, page2,rootFileLocation);
+        return PageFragment.newInstance(page, page2, rootFileLocation);
     }
 
 
