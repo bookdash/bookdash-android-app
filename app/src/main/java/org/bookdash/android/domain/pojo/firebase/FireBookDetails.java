@@ -6,6 +6,9 @@ import org.bookdash.android.domain.pojo.BookDetailParcelable;
 import java.io.File;
 
 public class FireBookDetails {
+    public static final String TABLE_NAME = "bd_books";
+    public static final String CREATED_AT_COL = "createdAt";
+    public static final String BOOK_TITLE = "bookTitle";
     public String bookTitle;
     public String bookUrl;
     public String bookCoverPageUrl;
@@ -29,23 +32,18 @@ public class FireBookDetails {
 
     }
 
-    public String getBookTitle() {
-        return bookTitle;
+    public boolean isDownloadedAlready() {
+        String folderLocation = getFolderLocation();
+        if (folderLocation == null || folderLocation.isEmpty()) {
+            return false;
+        }
+        File f = new File("", folderLocation);
+        return f.exists();
     }
 
-    public String getBookCoverUrl() {
-        return bookCoverPageUrl;
+    public String getFolderLocation() {
+        return getFolderLocation(new File(BookDashApplication.FILES_DIR, getId() + File.separator));
     }
-
-
-    public String getId() {
-        return bookId;
-    }
-
-    public String getWebUrl() {
-        return null;//todo
-    }
-
 
     private String getFolderLocation(File file) {
         if (file != null && file.isDirectory() && (file.canRead())) {
@@ -58,17 +56,8 @@ public class FireBookDetails {
         return null;
     }
 
-    public String getFolderLocation() {
-        return getFolderLocation(new File(BookDashApplication.FILES_DIR, getId() + File.separator));
-    }
-
-    public boolean isDownloadedAlready() {
-        String folderLocation = getFolderLocation();
-        if (folderLocation == null || folderLocation.isEmpty()) {
-            return false;
-        }
-        File f = new File("", folderLocation);
-        return f.exists();
+    public String getId() {
+        return bookId;
     }
 
     public boolean isDownloading() {
@@ -86,5 +75,17 @@ public class FireBookDetails {
         bookDetailParcelable.setBookDetailObjectId(getId());
         bookDetailParcelable.setWebUrl(getWebUrl());
         return bookDetailParcelable;
+    }
+
+    public String getBookTitle() {
+        return bookTitle;
+    }
+
+    public String getBookCoverUrl() {
+        return bookCoverPageUrl;
+    }
+
+    public String getWebUrl() {
+        return null;//todo
     }
 }

@@ -11,19 +11,16 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.google.gson.Gson;
 import com.parse.FindCallback;
-import com.parse.GetDataCallback;
 import com.parse.ParseException;
 import com.parse.ParseQuery;
-import com.parse.ProgressCallback;
 
 import org.bookdash.android.BookDashApplication;
-import org.bookdash.android.data.utils.FileManager;
-import org.bookdash.android.data.utils.ZipManager;
 import org.bookdash.android.domain.pojo.Book;
 import org.bookdash.android.domain.pojo.BookContributor;
 import org.bookdash.android.domain.pojo.firebase.FireBookDetails;
-import org.bookdash.android.domain.pojo.gson.BookPages;
 import org.bookdash.android.domain.pojo.firebase.FireLanguage;
+import org.bookdash.android.domain.pojo.gson.BookPages;
+
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -69,14 +66,15 @@ public class BookDetailApiImpl implements BookDetailApi {
             }
         });*/
         final FirebaseDatabase database = FirebaseDatabase.getInstance();
-        DatabaseReference languagesRef = database.getReference("bd_books");
-        languagesRef.addValueEventListener(new ValueEventListener() {
+        DatabaseReference languagesRef = database.getReference(FireBookDetails.TABLE_NAME);
+        //TODO change to order by created at time.
+        languagesRef.orderByChild(FireBookDetails.BOOK_TITLE).addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 List<FireBookDetails> fireBookDetails = new ArrayList<>();
-                for (DataSnapshot snap: dataSnapshot.getChildren()){
+                for (DataSnapshot snap : dataSnapshot.getChildren()) {
                     FireBookDetails bookDetails = snap.getValue(FireBookDetails.class);
-                    Log.d(TAG, "Book Details:" +  bookDetails.bookTitle + ". Book URL:" + bookDetails.bookCoverPageUrl);
+                    Log.d(TAG, "Book Details:" + bookDetails.bookTitle + ". Book URL:" + bookDetails.bookCoverPageUrl);
                     fireBookDetails.add(bookDetails);
                 }
                 bookServiceCallback.onLoaded(fireBookDetails);
@@ -168,14 +166,14 @@ public class BookDetailApiImpl implements BookDetailApi {
     @Override
     public void getLanguages(final BookServiceCallback<List<FireLanguage>> languagesCallback) {
         final FirebaseDatabase database = FirebaseDatabase.getInstance();
-        DatabaseReference languagesRef = database.getReference("bd_languages");
+        DatabaseReference languagesRef = database.getReference(FireLanguage.TABLE_NAME);
         languagesRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 List<FireLanguage> fireLanguages = new ArrayList<>();
-                for (DataSnapshot snap: dataSnapshot.getChildren()){
+                for (DataSnapshot snap : dataSnapshot.getChildren()) {
                     FireLanguage language = snap.getValue(FireLanguage.class);
-                    Log.d(TAG, "Language:" + language.languageAbbreviation + ". Language Name:" + language.languageName);
+                    Log.d(TAG, "Language:" + language.getLanguageAbbreviation() + ". Language Name:" + language.getLanguageName());
                     fireLanguages.add(language);
                 }
                 languagesCallback.onLoaded(fireLanguages);
@@ -245,8 +243,8 @@ public class BookDetailApiImpl implements BookDetailApi {
 
     @WorkerThread
     private void deleteLocalBook(FireBookDetails bookDetail) {
-     //   FileManager.deleteFolder(bookDetail.getFolderLocation());
-     //   FileManager.deleteFolder(BookDashApplication.FILES_DIR + "/" + bookDetail.getObjectId());
+        //   FileManager.deleteFolder(bookDetail.getFolderLocation());
+        //   FileManager.deleteFolder(BookDashApplication.FILES_DIR + "/" + bookDetail.getObjectId());
     }
 
     private void getBookPages(final FireBookDetails bookInfo, final byte[] bytes, final BookServiceCallback<BookPages> bookServiceCallback) {
@@ -268,7 +266,7 @@ public class BookDetailApiImpl implements BookDetailApi {
     @WorkerThread
     private BookPages saveBook(byte[] bytes, FireBookDetails bookDetail) {
         String targetLocation = BookDashApplication.FILES_DIR + File.separator + bookDetail.getId();
-    //    String fileLocation = BookDashApplication.FILES_DIR + File.separator + bookDetail.getBookFile().getName();
+        //    String fileLocation = BookDashApplication.FILES_DIR + File.separator + bookDetail.getBookFile().getName();
 
       /*  File f = new File("", targetLocation);
         if (!f.exists() || f.list().length == 0) {

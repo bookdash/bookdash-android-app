@@ -2,9 +2,10 @@ package org.bookdash.android.domain.pojo.firebase;
 
 
 public class FireLanguage {
-    public String languageName;
-    public String languageAbbreviation;
-    public boolean enabled;
+    public static final String TABLE_NAME = "bd_languages";
+    private String languageName;
+    private String languageAbbreviation;
+    private boolean enabled;
 
     public FireLanguage(String languageName, String languageAbbreviation, boolean enabled) {
         this.languageName = languageName;
@@ -15,12 +16,32 @@ public class FireLanguage {
     public FireLanguage() {
     }
 
+    public boolean isEnabled() {
+        return enabled;
+    }
+
+    public void setEnabled(boolean enabled) {
+        this.enabled = enabled;
+    }
+
     public String getLanguageName() {
         return languageName;
+    }
+
+    public void setLanguageName(String languageName) {
+        this.languageName = languageName;
     }
 
     @Override
     public String toString() {
         return languageName;
+    }
+
+    public String getLanguageAbbreviation() {
+        return languageAbbreviation;
+    }
+
+    public void setLanguageAbbreviation(String languageAbbreviation) {
+        this.languageAbbreviation = languageAbbreviation;
     }
 }
