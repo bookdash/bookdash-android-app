@@ -4,7 +4,6 @@ import com.parse.ParseObject;
 
 import org.bookdash.android.R;
 import org.bookdash.android.data.books.BookDetailRepository;
-import org.bookdash.android.domain.pojo.BookDetail;
 import org.bookdash.android.domain.pojo.Language;
 import org.junit.Before;
 import org.junit.Test;

@@ -1,7 +1,7 @@
 package org.bookdash.android.presentation.downloads;
 
 
-import org.bookdash.android.domain.pojo.BookDetail;
+import org.bookdash.android.domain.pojo.firebase.FireBookDetails;
 
 import java.util.List;
 
@@ -9,7 +9,7 @@ public interface DownloadsContract {
 
     interface View {
 
-        void showDownloadedBooks(List<BookDetail> books);
+        void showDownloadedBooks(List<FireBookDetails> books);
 
         void showLoading(boolean show);
 
@@ -25,7 +25,7 @@ public interface DownloadsContract {
     interface UserActions {
         void loadListDownloads();
 
-        void deleteDownload(BookDetail bookDetail);
+        void deleteDownload(FireBookDetails bookDetail);
     }
 
 }

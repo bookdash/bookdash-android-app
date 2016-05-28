@@ -2,8 +2,7 @@ package org.bookdash.android.data.books;
 
 import org.bookdash.android.domain.pojo.Book;
 import org.bookdash.android.domain.pojo.BookContributor;
-import org.bookdash.android.domain.pojo.BookDetail;
-import org.bookdash.android.domain.pojo.Language;
+import org.bookdash.android.domain.pojo.firebase.FireBookDetails;
 import org.bookdash.android.domain.pojo.firebase.FireLanguage;
 import org.bookdash.android.domain.pojo.gson.BookPages;
 
@@ -15,9 +14,9 @@ import java.util.List;
  */
 public interface BookDetailApi {
 
-    void getBooksForLanguages(String language, BookServiceCallback<List<BookDetail>> bookServiceCallback);
+    void getBooksForLanguages(String language, BookServiceCallback<List<FireBookDetails>> bookServiceCallback);
 
-    void getDownloadedBooks(BookServiceCallback<List<BookDetail>> bookServiceCallback);
+    void getDownloadedBooks(BookServiceCallback<List<FireBookDetails>> bookServiceCallback);
 
     interface BookServiceCallback<T> {
         void onLoaded(T result);
@@ -29,14 +28,14 @@ public interface BookDetailApi {
         void onProgressChanged(int progress);
     }
 
-    void getBookDetail(String bookDetailId, BookServiceCallback<BookDetail> bookServiceCallback);
+    void getBookDetail(String bookDetailId, BookServiceCallback<FireBookDetails> bookServiceCallback);
 
     void getContributorsForBook(Book bookId, BookServiceCallback<List<BookContributor>> contributorsCallback);
 
 
     void getLanguages(BookServiceCallback<List<FireLanguage>> languagesCallback);
 
-    void downloadBook(BookDetail bookDetail, BookServiceCallback<BookPages> downloadBookCallback, BookServiceProgressCallback bookServiceProgressCallback);
+    void downloadBook(FireBookDetails bookDetail, BookServiceCallback<BookPages> downloadBookCallback, BookServiceProgressCallback bookServiceProgressCallback);
 
-    void deleteBook(BookDetail bookDetail, BookServiceCallback<Boolean> deleteBook);
+    void deleteBook(FireBookDetails bookDetail, BookServiceCallback<Boolean> deleteBook);
 }

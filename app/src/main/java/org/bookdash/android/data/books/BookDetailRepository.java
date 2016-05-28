@@ -4,8 +4,7 @@ import android.support.annotation.NonNull;
 
 import org.bookdash.android.domain.pojo.Book;
 import org.bookdash.android.domain.pojo.BookContributor;
-import org.bookdash.android.domain.pojo.BookDetail;
-import org.bookdash.android.domain.pojo.Language;
+import org.bookdash.android.domain.pojo.firebase.FireBookDetails;
 import org.bookdash.android.domain.pojo.firebase.FireLanguage;
 import org.bookdash.android.domain.pojo.gson.BookPages;
 
@@ -23,13 +22,13 @@ public interface BookDetailRepository {
     void getDownloadedBooks(GetBooksForLanguageCallback getBooksForLanguageCallback);
 
     interface GetBooksForLanguageCallback {
-        void onBooksLoaded(List<BookDetail> books);
+        void onBooksLoaded(List<FireBookDetails> books);
 
         void onBooksLoadError(Exception e);
     }
 
     interface GetBookDetailCallback {
-        void onBookDetailLoaded(BookDetail bookDetail);
+        void onBookDetailLoaded(FireBookDetails bookDetail);
 
         void onBookDetailLoadError(Exception e);
     }
@@ -61,12 +60,12 @@ public interface BookDetailRepository {
 
     void getLanguages(@NonNull GetLanguagesCallback languagesCallback);
 
-    void downloadBook(BookDetail bookDetail, @NonNull GetBookPagesCallback bookPagesCallback);
+    void downloadBook(FireBookDetails bookDetail, @NonNull GetBookPagesCallback bookPagesCallback);
 
-    void deleteBook(BookDetail bookDetail, @NonNull DeleteBookCallBack deleteBookCallBack);
+    void deleteBook(FireBookDetails bookDetail, @NonNull DeleteBookCallBack deleteBookCallBack);
 
     interface DeleteBookCallBack {
-        void onBookDeleted(BookDetail bookDetail);
+        void onBookDeleted(FireBookDetails bookDetail);
 
         void onBookDeleteFailed(Exception e);
 

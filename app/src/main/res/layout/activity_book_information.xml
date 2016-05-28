@@ -5,19 +5,19 @@
         android:layout_height="match_parent"
     >
 
-    <data android:layout_width="match_parent">
+    <data>
 
         <import type="android.view.View"/>
 
         <import type="android.text.TextUtils"/>
 
         <variable
-            name="download_click"
+            name="downloadClick"
             type="View.OnClickListener"/>
 
         <variable
-            name="book_info"
-            type="org.bookdash.android.domain.pojo.BookDetail"/>
+            name="bookInfo"
+            type="org.bookdash.android.domain.pojo.firebase.FireBookDetails"/>
     </data>
 
     <FrameLayout>
@@ -84,9 +84,9 @@
 
             <android.support.design.widget.AppBarLayout
                 android:id="@+id/app_bar_layout"
-                android:fitsSystemWindows="true"
                 android:layout_width="match_parent"
                 android:layout_height="200dp"
+                android:fitsSystemWindows="true"
                 android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar">
 
                 <android.support.design.widget.CollapsingToolbarLayout
@@ -96,7 +96,7 @@
                     app:layout_scrollFlags="scroll|exitUntilCollapsed"
                     app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
                     app:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
-                    app:title="@{book_info.bookTitle}">
+                    app:title="@{bookInfo.bookTitle}">
 
                     <ImageView
                         android:id="@+id/image_view_book_cover"
@@ -148,7 +148,7 @@
                         android:layout_marginRight="@dimen/activity_horizontal_margin"
 
                         android:layout_marginTop="8dp"
-                        android:visibility="@{TextUtils.isEmpty(book_info.aboutBook) ? View.GONE : View.VISIBLE}">
+                        android:visibility="@{TextUtils.isEmpty(bookInfo.aboutBook) ? View.GONE : View.VISIBLE}">
 
                         <RelativeLayout
                             android:layout_width="match_parent"
@@ -167,7 +167,7 @@
                                 android:textColor="@color/text_secondary_dark"
                                 android:textSize="14sp"/>
 
-                            <TextView
+                        <!--   TODO <TextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="48dp"
                                 android:layout_alignParentEnd="false"
@@ -178,9 +178,9 @@
                                 android:layout_toRightOf="@id/textview_about_heading"
                                 android:fontFamily="sans-serif"
                                 android:gravity="center_vertical|right"
-                                android:text="@{book_info.book.dateBookCreated}"
+                                android:text="@{bookInfo.book.dateBookCreated}"
                                 android:textColor="@color/text_secondary_dark"
-                                android:textSize="14sp"/>
+                                android:textSize="14sp"/>-->
                             <!--     android:text="@{book_info.book.dateBookCreated}"-->
 
 
@@ -193,7 +193,7 @@
                                 android:layout_marginRight="16dp"
                                 android:layout_marginTop="2dp"
                                 android:fontFamily="sans-serif"
-                                android:text="@{book_info.aboutBook}"
+                                android:text="@{bookInfo.aboutBook}"
                                 android:textColor="@color/text_color_primary_dark"
                                 android:textSize="16sp"/>
 
@@ -254,7 +254,7 @@
                 android:color="?attr/colorPrimaryDark"
                 android:indeterminate="false"
                 android:max="100"
-                android:onClick="@{download_click}"
+                android:onClick="@{downloadClick}"
                 android:src="@drawable/ic_file_download"
                 android:visibility="visible"
                 app:fbb_autoStart="true"

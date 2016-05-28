@@ -26,7 +26,7 @@ import android.widget.TextView;
 
 import org.bookdash.android.Injection;
 import org.bookdash.android.R;
-import org.bookdash.android.domain.pojo.BookDetail;
+import org.bookdash.android.domain.pojo.firebase.FireBookDetails;
 import org.bookdash.android.presentation.bookinfo.BookInfoActivity;
 import org.bookdash.android.presentation.main.NavDrawerInterface;
 
@@ -101,14 +101,14 @@ public class DownloadsFragment extends Fragment implements DownloadsContract.Vie
         setHasOptionsMenu(false);
     }
 
-    private void showBookDetails(BookDetail bookDetail) {
+    private void showBookDetails(FireBookDetails bookDetail) {
         Intent intent = new Intent(getActivity(), BookInfoActivity.class);
         intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         intent.putExtra(BookInfoActivity.BOOK_PARCEL, bookDetail.toBookParcelable());
         startActivity(intent);
     }
 
-    private void showDeleteDialog(final BookDetail bookToDelete) {
+    private void showDeleteDialog(final FireBookDetails bookToDelete) {
         AlertDialog.Builder builder =
                 new AlertDialog.Builder(getActivity(), R.style.AppCompatAlertDialogStyle);
         builder.setTitle(getString(R.string.delete_book_confirmation));
@@ -124,7 +124,7 @@ public class DownloadsFragment extends Fragment implements DownloadsContract.Vie
     }
 
     @Override
-    public void showDownloadedBooks(List<BookDetail> books) {
+    public void showDownloadedBooks(List<FireBookDetails> books) {
         downloadsAdapter.setBooks(books);
         downloadsAdapter.notifyDataSetChanged();
         listDownloadsRecyclerView.setVisibility(View.VISIBLE);

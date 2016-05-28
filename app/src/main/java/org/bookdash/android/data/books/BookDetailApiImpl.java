@@ -10,9 +10,7 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.google.gson.Gson;
-import com.google.repacked.apache.commons.codec.language.bm.Lang;
 import com.parse.FindCallback;
-import com.parse.GetCallback;
 import com.parse.GetDataCallback;
 import com.parse.ParseException;
 import com.parse.ParseQuery;
@@ -23,8 +21,7 @@ import org.bookdash.android.data.utils.FileManager;
 import org.bookdash.android.data.utils.ZipManager;
 import org.bookdash.android.domain.pojo.Book;
 import org.bookdash.android.domain.pojo.BookContributor;
-import org.bookdash.android.domain.pojo.BookDetail;
-import org.bookdash.android.domain.pojo.Language;
+import org.bookdash.android.domain.pojo.firebase.FireBookDetails;
 import org.bookdash.android.domain.pojo.gson.BookPages;
 import org.bookdash.android.domain.pojo.firebase.FireLanguage;
 import java.io.BufferedReader;
@@ -50,8 +47,8 @@ public class BookDetailApiImpl implements BookDetailApi {
     private final Executor DISK_EXECUTOR = Executors.newCachedThreadPool();
 
     @Override
-    public void getBooksForLanguages(@NonNull String language, @NonNull final BookServiceCallback<List<BookDetail>> bookServiceCallback) {
-        ParseQuery<Language> queryLanguagesNew = ParseQuery.getQuery(Language.class);
+    public void getBooksForLanguages(@NonNull String language, @NonNull final BookServiceCallback<List<FireBookDetails>> bookServiceCallback) {
+       /* ParseQuery<Language> queryLanguagesNew = ParseQuery.getQuery(Language.class);
         queryLanguagesNew.whereEqualTo(Language.LANG_NAME_COL, language);
 
         ParseQuery<BookDetail> queryBookDetail = ParseQuery.getQuery(BookDetail.class);
@@ -70,10 +67,31 @@ public class BookDetailApiImpl implements BookDetailApi {
                 }
                 bookServiceCallback.onLoaded(list);
             }
+        });*/
+        final FirebaseDatabase database = FirebaseDatabase.getInstance();
+        DatabaseReference languagesRef = database.getReference("bd_books");
+        languagesRef.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                List<FireBookDetails> fireBookDetails = new ArrayList<>();
+                for (DataSnapshot snap: dataSnapshot.getChildren()){
+                    FireBookDetails bookDetails = snap.getValue(FireBookDetails.class);
+                    Log.d(TAG, "Book Details:" +  bookDetails.bookTitle + ". Book URL:" + bookDetails.bookCoverPageUrl);
+                    fireBookDetails.add(bookDetails);
+                }
+                bookServiceCallback.onLoaded(fireBookDetails);
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+                bookServiceCallback.onError(databaseError.toException());
+            }
         });
+
+
     }
 
-    private List<BookDetail> filterOnlyDownloadedBooks(List<BookDetail> bookDetails) {
+    /*private List<BookDetail> filterOnlyDownloadedBooks(List<BookDetail> bookDetails) {
         List<BookDetail> bookDetailsDownloaded = new ArrayList<>();
 
         for (BookDetail b : bookDetails) {
@@ -82,12 +100,12 @@ public class BookDetailApiImpl implements BookDetailApi {
             }
         }
         return bookDetailsDownloaded;
-    }
+    }*/
 
     @Override
-    public void getDownloadedBooks(final BookServiceCallback<List<BookDetail>> bookServiceCallback) {
+    public void getDownloadedBooks(final BookServiceCallback<List<FireBookDetails>> bookServiceCallback) {
 
-        ParseQuery<BookDetail> queryBookDetail = ParseQuery.getQuery(BookDetail.class);
+        /*ParseQuery<BookDetail> queryBookDetail = ParseQuery.getQuery(BookDetail.class);
         queryBookDetail.setCachePolicy(ParseQuery.CachePolicy.NETWORK_ELSE_CACHE);
         queryBookDetail.include(BookDetail.BOOK_LANGUAGE_COL);
         queryBookDetail.include(BookDetail.BOOK_ID_COL);
@@ -100,14 +118,14 @@ public class BookDetailApiImpl implements BookDetailApi {
                     bookServiceCallback.onError(e);
                     return;
                 }
-                bookServiceCallback.onLoaded(filterOnlyDownloadedBooks(list));
+               // bookServiceCallback.onLoaded(filterOnlyDownloadedBooks(list));
             }
-        });
+        });*/
     }
 
     @Override
-    public void getBookDetail(String bookDetailId, final BookServiceCallback<BookDetail> bookServiceCallback) {
-        ParseQuery<BookDetail> queryBookDetail = ParseQuery.getQuery(BookDetail.class);
+    public void getBookDetail(String bookDetailId, final BookServiceCallback<FireBookDetails> bookServiceCallback) {
+     /*   ParseQuery<BookDetail> queryBookDetail = ParseQuery.getQuery(BookDetail.class);
         queryBookDetail.whereEqualTo(BookDetail.OBJECT_ID, bookDetailId);
         queryBookDetail.setCachePolicy(ParseQuery.CachePolicy.CACHE_ELSE_NETWORK);
         queryBookDetail.include(BookDetail.BOOK_LANGUAGE_COL);
@@ -122,7 +140,7 @@ public class BookDetailApiImpl implements BookDetailApi {
                 }
                 bookServiceCallback.onLoaded(bookDetail);
             }
-        });
+        });*/
     }
 
     @Override
@@ -173,8 +191,8 @@ public class BookDetailApiImpl implements BookDetailApi {
 
 
     @Override
-    public void downloadBook(final BookDetail bookInfo, @NonNull final BookServiceCallback<BookPages> downloadBookCallback, @NonNull final BookServiceProgressCallback progressCallback) {
-        if (bookInfo.isDownloadedAlready()) {
+    public void downloadBook(final FireBookDetails bookInfo, @NonNull final BookServiceCallback<BookPages> downloadBookCallback, @NonNull final BookServiceProgressCallback progressCallback) {
+        /*if (bookInfo.isDownloadedAlready()) {
             progressCallback.onProgressChanged(100);
             downloadBookCallback.onLoaded(getBookPages(bookInfo.getFolderLocation() + File.separator + BookDetail.BOOK_INFO_FILE_NAME));
             return;
@@ -205,11 +223,11 @@ public class BookDetailApiImpl implements BookDetailApi {
             public void done(Integer progressInt) {
                 progressCallback.onProgressChanged(progressInt);
             }
-        });
+        });*/
     }
 
     @Override
-    public void deleteBook(final BookDetail bookDetail, final BookServiceCallback<Boolean> deleteBook) {
+    public void deleteBook(final FireBookDetails bookDetail, final BookServiceCallback<Boolean> deleteBook) {
         Task.call(new Callable<Void>() {
             @Override
             public Void call() throws Exception {
@@ -226,12 +244,12 @@ public class BookDetailApiImpl implements BookDetailApi {
     }
 
     @WorkerThread
-    private void deleteLocalBook(BookDetail bookDetail) {
-        FileManager.deleteFolder(bookDetail.getFolderLocation());
-        FileManager.deleteFolder(BookDashApplication.FILES_DIR + "/" + bookDetail.getObjectId());
+    private void deleteLocalBook(FireBookDetails bookDetail) {
+     //   FileManager.deleteFolder(bookDetail.getFolderLocation());
+     //   FileManager.deleteFolder(BookDashApplication.FILES_DIR + "/" + bookDetail.getObjectId());
     }
 
-    private void getBookPages(final BookDetail bookInfo, final byte[] bytes, final BookServiceCallback<BookPages> bookServiceCallback) {
+    private void getBookPages(final FireBookDetails bookInfo, final byte[] bytes, final BookServiceCallback<BookPages> bookServiceCallback) {
         Task.call(new Callable<BookPages>() {
             @Override
             public BookPages call() throws Exception {
@@ -248,11 +266,11 @@ public class BookDetailApiImpl implements BookDetailApi {
 
 
     @WorkerThread
-    private BookPages saveBook(byte[] bytes, BookDetail bookDetail) {
-        String targetLocation = BookDashApplication.FILES_DIR + File.separator + bookDetail.getObjectId();
-        String fileLocation = BookDashApplication.FILES_DIR + File.separator + bookDetail.getBookFile().getName();
+    private BookPages saveBook(byte[] bytes, FireBookDetails bookDetail) {
+        String targetLocation = BookDashApplication.FILES_DIR + File.separator + bookDetail.getId();
+    //    String fileLocation = BookDashApplication.FILES_DIR + File.separator + bookDetail.getBookFile().getName();
 
-        File f = new File("", targetLocation);
+      /*  File f = new File("", targetLocation);
         if (!f.exists() || f.list().length == 0) {
             FileManager.saveFile(BookDashApplication.FILES_DIR, bytes, File.separator + bookDetail.getBookFile().getName());
             ZipManager zipManager = new ZipManager();
@@ -260,8 +278,8 @@ public class BookDetailApiImpl implements BookDetailApi {
 
             FileManager.deleteFile(BookDashApplication.FILES_DIR, File.separator + bookDetail.getBookFile().getName());
         }
-
-        return getBookPages(bookDetail.getFolderLocation() + File.separator + BookDetail.BOOK_INFO_FILE_NAME);
+*/
+        return null;//getBookPages(bookDetail.getFolderLocation() + File.separator + BookDetail.BOOK_INFO_FILE_NAME);
     }
 
 

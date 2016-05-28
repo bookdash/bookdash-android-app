@@ -1,6 +1,6 @@
 package org.bookdash.android.presentation.listbooks;
 
-import org.bookdash.android.domain.pojo.BookDetail;
+import org.bookdash.android.domain.pojo.firebase.FireBookDetails;
 
 import java.util.List;
 
@@ -15,7 +15,7 @@ public interface ListBooksContract {
 
         void showLoading(boolean visible);
 
-        void showBooks(List<BookDetail> bookDetailList);
+        void showBooks(List<FireBookDetails> bookDetailList);
 
         void showSnackBarError(int message);
 

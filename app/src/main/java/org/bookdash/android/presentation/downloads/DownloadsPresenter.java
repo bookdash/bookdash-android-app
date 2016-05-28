@@ -1,7 +1,7 @@
 package org.bookdash.android.presentation.downloads;
 
 import org.bookdash.android.data.books.BookDetailRepository;
-import org.bookdash.android.domain.pojo.BookDetail;
+import org.bookdash.android.domain.pojo.firebase.FireBookDetails;
 
 import java.util.List;
 
@@ -18,7 +18,7 @@ public class DownloadsPresenter implements DownloadsContract.UserActions {
         view.showLoading(true);
         bookRepository.getDownloadedBooks(new BookDetailRepository.GetBooksForLanguageCallback() {
             @Override
-            public void onBooksLoaded(List<BookDetail> books) {
+            public void onBooksLoaded(List<FireBookDetails> books) {
                 view.showLoading(false);
                 if (books.isEmpty() || books.size() == 0) {
                     view.showNoBooksDownloadedMessage();
@@ -37,11 +37,11 @@ public class DownloadsPresenter implements DownloadsContract.UserActions {
     }
 
     @Override
-    public void deleteDownload(BookDetail bookDetail) {
+    public void deleteDownload(FireBookDetails bookDetail) {
         bookRepository.deleteBook(bookDetail, new BookDetailRepository.DeleteBookCallBack() {
 
             @Override
-            public void onBookDeleted(BookDetail bookDetail) {
+            public void onBookDeleted(FireBookDetails bookDetail) {
                 loadListDownloads();
             }
 

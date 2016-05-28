@@ -4,8 +4,7 @@ import android.support.annotation.NonNull;
 
 import org.bookdash.android.domain.pojo.Book;
 import org.bookdash.android.domain.pojo.BookContributor;
-import org.bookdash.android.domain.pojo.BookDetail;
-import org.bookdash.android.domain.pojo.Language;
+import org.bookdash.android.domain.pojo.firebase.FireBookDetails;
 import org.bookdash.android.domain.pojo.firebase.FireLanguage;
 import org.bookdash.android.domain.pojo.gson.BookPages;
 
@@ -27,10 +26,10 @@ public class BookDetailRepositoryImpl implements BookDetailRepository {
 
     @Override
     public void getBooksForLanguage(@NonNull String language, @NonNull final GetBooksForLanguageCallback booksForLanguageCallback) {
-        bookDetailApi.getBooksForLanguages(language, new BookDetailApi.BookServiceCallback<List<BookDetail>>() {
+        bookDetailApi.getBooksForLanguages(language, new BookDetailApi.BookServiceCallback<List<FireBookDetails>>() {
 
             @Override
-            public void onLoaded(List<BookDetail> result) {
+            public void onLoaded(List<FireBookDetails> result) {
                 booksForLanguageCallback.onBooksLoaded(result);
             }
 
@@ -43,10 +42,10 @@ public class BookDetailRepositoryImpl implements BookDetailRepository {
 
     @Override
     public void getDownloadedBooks(final GetBooksForLanguageCallback getBooksForLanguageCallback) {
-        bookDetailApi.getDownloadedBooks(new BookDetailApi.BookServiceCallback<List<BookDetail>>() {
+        bookDetailApi.getDownloadedBooks(new BookDetailApi.BookServiceCallback<List<FireBookDetails>>() {
 
             @Override
-            public void onLoaded(List<BookDetail> result) {
+            public void onLoaded(List<FireBookDetails> result) {
                 getBooksForLanguageCallback.onBooksLoaded(result);
             }
 
@@ -61,9 +60,9 @@ public class BookDetailRepositoryImpl implements BookDetailRepository {
 
     @Override
     public void getBookDetail(String bookDetailId, @NonNull final GetBookDetailCallback bookDetailCallback) {
-        bookDetailApi.getBookDetail(bookDetailId, new BookDetailApi.BookServiceCallback<BookDetail>() {
+        bookDetailApi.getBookDetail(bookDetailId, new BookDetailApi.BookServiceCallback<FireBookDetails>() {
             @Override
-            public void onLoaded(BookDetail result) {
+            public void onLoaded(FireBookDetails result) {
                 bookDetailCallback.onBookDetailLoaded(result);
             }
 
@@ -107,7 +106,7 @@ public class BookDetailRepositoryImpl implements BookDetailRepository {
     }
 
     @Override
-    public void downloadBook(BookDetail bookDetail, @NonNull final GetBookPagesCallback bookPagesCallback) {
+    public void downloadBook(FireBookDetails bookDetail, @NonNull final GetBookPagesCallback bookPagesCallback) {
         bookDetailApi.downloadBook(bookDetail, new BookDetailApi.BookServiceCallback<BookPages>() {
             @Override
             public void onLoaded(BookPages result) {
@@ -127,7 +126,7 @@ public class BookDetailRepositoryImpl implements BookDetailRepository {
     }
 
     @Override
-    public void deleteBook(final BookDetail bookDetail, @NonNull final DeleteBookCallBack deleteBookCallBack) {
+    public void deleteBook(final FireBookDetails bookDetail, @NonNull final DeleteBookCallBack deleteBookCallBack) {
         bookDetailApi.deleteBook(bookDetail, new BookDetailApi.BookServiceCallback<Boolean>() {
             @Override
             public void onLoaded(Boolean result) {

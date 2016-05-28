@@ -4,9 +4,9 @@ import android.support.annotation.VisibleForTesting;
 
 import org.bookdash.android.domain.pojo.Book;
 import org.bookdash.android.domain.pojo.BookContributor;
-import org.bookdash.android.domain.pojo.BookDetail;
 import org.bookdash.android.domain.pojo.Contributor;
-import org.bookdash.android.domain.pojo.Language;
+import org.bookdash.android.domain.pojo.firebase.FireBookDetails;
+import org.bookdash.android.domain.pojo.firebase.FireLanguage;
 import org.bookdash.android.domain.pojo.gson.BookPages;
 
 import java.util.ArrayList;
@@ -18,30 +18,30 @@ import java.util.List;
  */
 public class FakeBookDetailApiImpl implements BookDetailApi {
     private static boolean shouldFailService = false;
-    List<BookDetail> bookDetails = new ArrayList<>();
-    List<Language> languages = new ArrayList<>();
+    List<FireBookDetails> bookDetails = new ArrayList<>();
+    List<FireLanguage> languages = new ArrayList<>();
     List<BookContributor> contributors = new ArrayList<>();
 
     @VisibleForTesting
-    public static void setShouldFailService(boolean shouldFail){
+    public static void setShouldFailService(boolean shouldFail) {
         shouldFailService = shouldFail;
     }
 
     public FakeBookDetailApiImpl() {
-        Language language = new Language("English", "EN", "1en");
-        Language language1 = new Language("Zulu", "ZU", "2zu");
+        FireLanguage language = new FireLanguage("English", "EN", true);
+        FireLanguage language1 = new FireLanguage("Zulu", "ZU", true);
         languages.add(language);
         languages.add(language1);
 
-        BookDetail bookDetail = new BookDetail("Searching for Spring",
-                "http://bookdash.org/wp-content/uploads/2015/09/searching-for-the-spirit-of-spring_pdf-ebook-20150921_Page_01.jpg", "f4r2gho2h", language);
-        BookDetail bookDetail2 = new BookDetail("Why is Nita Upside Down?",
-                "http://bookdash.org/wp-content/uploads/2015/09/why-is-nita-upside-down_pdf-ebook_20150920_Page_01.jpg", "12r2gho2h", language);
+        FireBookDetails bookDetail = new FireBookDetails("Searching for Spring", "bookurl",
+                "http://bookdash.org/wp-content/uploads/2015/09/searching-for-the-spirit-of-spring_pdf-ebook-20150921_Page_01.jpg", true, "f4r2gho2h", "about a book");
+        FireBookDetails bookDetail2 = new FireBookDetails("Why is Nita Upside Down?", "bookurl",
+                "http://bookdash.org/wp-content/uploads/2015/09/why-is-nita-upside-down_pdf-ebook_20150920_Page_01.jpg", true, "12r2gho2h", "about");
 
-        BookDetail bookDetailZu = new BookDetail("[ZULU]isipilingi",
-                "http://bookdash.org/wp-content/uploads/2015/09/searching-for-the-spirit-of-spring_pdf-ebook-20150921_Page_01.jpg", "f4r2gho2h", language1);
-        BookDetail bookDetailZu2 = new BookDetail("[ZULU]kubheke phansi",
-                "http://bookdash.org/wp-content/uploads/2015/09/why-is-nita-upside-down_pdf-ebook_20150920_Page_01.jpg", "12r2gho2h", language1);
+        FireBookDetails bookDetailZu = new FireBookDetails("[ZULU]isipilingi", "url",
+                "http://bookdash.org/wp-content/uploads/2015/09/searching-for-the-spirit-of-spring_pdf-ebook-20150921_Page_01.jpg", true, "f4r2gho2h", "about");
+        FireBookDetails bookDetailZu2 = new FireBookDetails("[ZULU]kubheke phansi", "url",
+                "http://bookdash.org/wp-content/uploads/2015/09/why-is-nita-upside-down_pdf-ebook_20150920_Page_01.jpg", true, "12r2gho2h", "about");
 
         bookDetails.add(bookDetail);
         bookDetails.add(bookDetail2);
@@ -59,32 +59,32 @@ public class FakeBookDetailApiImpl implements BookDetailApi {
     }
 
     @Override
-    public void getBooksForLanguages(String language, BookServiceCallback<List<BookDetail>> bookServiceCallback) {
+    public void getBooksForLanguages(String language, BookServiceCallback<List<FireBookDetails>> bookServiceCallback) {
         if (shouldFailService) {
             bookServiceCallback.onError(new Exception("BOOKS LOAD ERROR"));
         } else {
-            List<BookDetail> bookDetailsNew = new ArrayList<>();
-            for (BookDetail b : bookDetails) {
-                if (b.getLanguage().getLanguageName().equals(language)) {
-                    bookDetailsNew.add(b);
-                }
+            List<FireBookDetails> bookDetailsNew = new ArrayList<>();
+            for (FireBookDetails b : bookDetails) {
+                //   if (b.getLanguage().getLanguageName().equals(language)) {
+                bookDetailsNew.add(b);
+                //   } //TODO
             }
             bookServiceCallback.onLoaded(bookDetailsNew);
         }
     }
 
     @Override
-    public void getDownloadedBooks(BookServiceCallback<List<BookDetail>> bookServiceCallback) {
+    public void getDownloadedBooks(BookServiceCallback<List<FireBookDetails>> bookServiceCallback) {
         //TODO
     }
 
     @Override
-    public void getBookDetail(String bookDetailId, BookServiceCallback<BookDetail> bookServiceCallback) {
+    public void getBookDetail(String bookDetailId, BookServiceCallback<FireBookDetails> bookServiceCallback) {
         if (shouldFailService) {
             bookServiceCallback.onError(new Exception("BOOK DETAIL ERROR"));
         } else {
-            for (BookDetail b : bookDetails) {
-                if (b.getObjectId().equals(bookDetailId)) {
+            for (FireBookDetails b : bookDetails) {
+                if (b.getId().equals(bookDetailId)) {
                     bookServiceCallback.onLoaded(b);
                     return;
                 }
@@ -103,7 +103,7 @@ public class FakeBookDetailApiImpl implements BookDetailApi {
     }
 
     @Override
-    public void getLanguages(BookServiceCallback<List<Language>> languagesCallback) {
+    public void getLanguages(BookServiceCallback<List<FireLanguage>> languagesCallback) {
         if (shouldFailService) {
             languagesCallback.onError(new Exception("LANGUAGES ERROR"));
         } else {

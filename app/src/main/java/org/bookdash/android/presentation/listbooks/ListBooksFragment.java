@@ -27,7 +27,7 @@ import android.widget.TextView;
 
 import org.bookdash.android.Injection;
 import org.bookdash.android.R;
-import org.bookdash.android.domain.pojo.BookDetail;
+import org.bookdash.android.domain.pojo.firebase.FireBookDetails;
 import org.bookdash.android.presentation.bookinfo.BookInfoActivity;
 import org.bookdash.android.presentation.main.NavDrawerInterface;
 
@@ -107,7 +107,7 @@ public class ListBooksFragment extends Fragment implements ListBooksContract.Vie
         Intent intent = new Intent(getActivity(), BookInfoActivity.class);
         // intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         BookViewHolder viewHolder = (BookViewHolder) v.getTag();
-        BookDetail bookDetailResult = viewHolder.bookDetail;
+        FireBookDetails bookDetailResult = viewHolder.bookDetail;
         intent.putExtra(BookInfoActivity.BOOK_PARCEL, bookDetailResult.toBookParcelable());
         startActivityForResult(intent, BOOK_DETAIL_REQUEST_CODE);
 
@@ -176,7 +176,7 @@ public class ListBooksFragment extends Fragment implements ListBooksContract.Vie
     }
 
     @Override
-    public void showBooks(final List<BookDetail> bookDetailList) {
+    public void showBooks(final List<FireBookDetails> bookDetailList) {
         runUiThread(new Runnable() {
             @Override
             public void run() {

@@ -3,7 +3,6 @@ package org.bookdash.android.presentation.bookinfo;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.databinding.DataBindingUtil;
-import android.databinding.ViewDataBinding;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.drawable.ColorDrawable;
@@ -43,12 +42,12 @@ import com.parse.GetDataCallback;
 import com.parse.ParseException;
 import com.parse.ParseFile;
 
-import org.bookdash.android.BR;
 import org.bookdash.android.Injection;
 import org.bookdash.android.R;
+import org.bookdash.android.databinding.ActivityBookInformationBinding;
 import org.bookdash.android.domain.pojo.BookContributor;
-import org.bookdash.android.domain.pojo.BookDetail;
 import org.bookdash.android.domain.pojo.BookDetailParcelable;
+import org.bookdash.android.domain.pojo.firebase.FireBookDetails;
 import org.bookdash.android.domain.pojo.gson.BookPages;
 import org.bookdash.android.presentation.activity.BaseAppCompatActivity;
 import org.bookdash.android.presentation.readbook.BookDetailActivity;
@@ -80,12 +79,12 @@ public class BookInfoActivity extends BaseAppCompatActivity implements BookInfoC
     private CoordinatorLayout coordinatorLayout;
     private View errorLayout;
     private TextView errorText;
-    private ViewDataBinding binding;
+    private ActivityBookInformationBinding binding;
     private ProgressBar loadingProgressBar;
     private CardView contributorCard, mainBookCard;
     private Toolbar toolbar;
     private ActionBar actionBar;
-    private BookDetail bookInfo;
+    private FireBookDetails bookInfo;
     private Action viewAction;
     /**
      * ATTENTION: This was auto-generated to implement the App Indexing API.
@@ -152,7 +151,7 @@ public class BookInfoActivity extends BaseAppCompatActivity implements BookInfoC
         floatingActionButton = (FabButton) findViewById(R.id.fab_download);
         floatingActionButton.setScaleX(0);
         floatingActionButton.setScaleY(0);
-        binding.setVariable(BR.download_click, new View.OnClickListener() {
+        binding.setDownloadClick(new View.OnClickListener(){
             @Override
             public void onClick(View v) {
                 if (bookInfo == null) {
@@ -167,6 +166,8 @@ public class BookInfoActivity extends BaseAppCompatActivity implements BookInfoC
                 actionsListener.downloadBook(bookInfo);
             }
         });
+
+
         actionsListener = new BookInfoPresenter(this.getApplicationContext(), this, Injection.provideBookRepo());
         calculateLayoutHeight();
         imageViewBook.getViewTreeObserver().addOnPreDrawListener(new ViewTreeObserver
@@ -340,19 +341,19 @@ public class BookInfoActivity extends BaseAppCompatActivity implements BookInfoC
     }
 
     @Override
-    public void setBookInfoBinding(BookDetail bookInfo) {
+    public void setBookInfoBinding(FireBookDetails bookInfo) {
         if (client != null) {
             client.connect();
         }
 
         this.bookInfo = bookInfo;
-        binding.setVariable(BR.book_info, bookInfo);
+        binding.setBookInfo(bookInfo);
         actionsListener.loadImage(bookInfo.getBookCoverUrl());
         viewAction = Action.newAction(
                 Action.TYPE_VIEW,
                 bookInfo.getBookTitle(),
                 bookInfo.getWebUrl() == null ? null : Uri.parse(bookInfo.getWebUrl()),
-                Uri.parse("android-app://org.bookdash.android/http/bookdash.org/books/" + bookInfo.getObjectId())
+                Uri.parse("android-app://org.bookdash.android/http/bookdash.org/books/" + bookInfo.getId())
         );
         if (client != null) {
             AppIndex.AppIndexApi.start(client, viewAction);
@@ -360,7 +361,7 @@ public class BookInfoActivity extends BaseAppCompatActivity implements BookInfoC
     }
 
     @Override
-    public void openBook(BookDetail bookDetail, BookPages bookPages, String location) {
+    public void openBook(FireBookDetails bookDetail, BookPages bookPages, String location) {
         if (isFinishing()) {
             return;
         }

@@ -3,8 +3,7 @@ package org.bookdash.android.presentation.listbooks;
 import org.bookdash.android.R;
 import org.bookdash.android.data.books.BookDetailRepository;
 import org.bookdash.android.data.settings.SettingsRepository;
-import org.bookdash.android.domain.pojo.BookDetail;
-import org.bookdash.android.domain.pojo.Language;
+import org.bookdash.android.domain.pojo.firebase.FireBookDetails;
 import org.bookdash.android.domain.pojo.firebase.FireLanguage;
 
 import java.util.List;
@@ -37,7 +36,7 @@ public class ListBooksPresenter implements ListBooksContract.UserActionsListener
         listBooksView.showLoading(true);
         bookDetailRepository.getBooksForLanguage(language, new BookDetailRepository.GetBooksForLanguageCallback() {
             @Override
-            public void onBooksLoaded(List<BookDetail> books) {
+            public void onBooksLoaded(List<FireBookDetails> books) {
                 listBooksView.showLoading(false);
                 listBooksView.showErrorScreen(false, "", false);
                 listBooksView.showBooks(books);

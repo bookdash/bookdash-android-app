@@ -12,7 +12,6 @@ import com.parse.ParseObject;
 
 import org.bookdash.android.domain.pojo.Book;
 import org.bookdash.android.domain.pojo.BookContributor;
-import org.bookdash.android.domain.pojo.BookDetail;
 import org.bookdash.android.domain.pojo.Contributor;
 import org.bookdash.android.domain.pojo.Language;
 
@@ -36,7 +35,6 @@ public class BookDashApplication extends Application {
                 .build();
         Fabric.with(this, crashlyticsKit);
         FirebaseDatabase.getInstance().setPersistenceEnabled(true);
-        ParseObject.registerSubclass(BookDetail.class);
         ParseObject.registerSubclass(Language.class);
         ParseObject.registerSubclass(Book.class);
         ParseObject.registerSubclass(Contributor.class);

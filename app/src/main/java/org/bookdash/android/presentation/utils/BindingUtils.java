@@ -15,7 +15,7 @@ import com.parse.ParseFile;
 
 public class BindingUtils {
 
-    @BindingAdapter({"bind:imageUrlWeb"})
+    /*@BindingAdapter({"bind:imageUrlWeb"})
     public static void loadImage(ImageView view, String url) {
         Glide.with(view.getContext()).load(url).into(view);
     }
@@ -30,26 +30,5 @@ public class BindingUtils {
         view.setTag(value);
     }
 
-    @BindingAdapter({"bind:parseImageFile"})
-    public static void loadImageFromParse(final ImageView view, Object parseFile) {
-        if (parseFile == null) {
-            return;
-        }
-        ParseFile parseFileCast = (ParseFile) parseFile;
-
-        parseFileCast.getDataInBackground(new GetDataCallback() {
-            @Override
-            public void done(byte[] bytes, ParseException e) {
-                if (e == null) {
-                    Log.d("BindingUtils", "We've got data in data.");
-
-                    Bitmap bmp = BitmapFactory.decodeByteArray(bytes, 0, bytes.length);
-                    view.setImageBitmap(bmp);
-
-                } else {
-                    Log.d("BindingUtils", "There was a problem downloading the data.");
-                }
-            }
-        });
-    }
+*/
 }

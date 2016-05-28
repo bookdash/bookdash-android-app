@@ -14,11 +14,7 @@ import com.bumptech.glide.request.target.SimpleTarget;
 
 import org.bookdash.android.R;
 import org.bookdash.android.data.books.BookDetailRepository;
-import org.bookdash.android.domain.pojo.BookContributor;
-import org.bookdash.android.domain.pojo.BookDetail;
-import org.bookdash.android.domain.pojo.gson.BookPages;
-
-import java.util.List;
+import org.bookdash.android.domain.pojo.firebase.FireBookDetails;
 
 /**
  * @author rebeccafranks
@@ -43,7 +39,7 @@ public class BookInfoPresenter implements BookInfoContract.UserActionsListener {
         booksView.showProgress(true);
         bookDetailRepository.getBookDetail(bookDetailId, new BookDetailRepository.GetBookDetailCallback() {
             @Override
-            public void onBookDetailLoaded(BookDetail bookDetail) {
+            public void onBookDetailLoaded(FireBookDetails bookDetail) {
                 showBookDetail(bookDetail);
             }
 
@@ -55,7 +51,7 @@ public class BookInfoPresenter implements BookInfoContract.UserActionsListener {
         });
     }
 
-    private void showBookDetail(BookDetail bookDetail) {
+    private void showBookDetail(FireBookDetails bookDetail) {
 
         booksView.setBookInfoBinding(bookDetail);
 
@@ -64,7 +60,7 @@ public class BookInfoPresenter implements BookInfoContract.UserActionsListener {
             booksView.showDownloadFinished();
         }
         booksView.showBookDetailView();
-        bookDetailRepository.getContributorsForBook(bookDetail.getBook(), new BookDetailRepository.GetContributorsCallback() {
+       /* bookDetailRepository.getContributorsForBook(bookDetail.getBook(), new BookDetailRepository.GetContributorsCallback() {
             @Override
             public void onContributorsLoaded(List<BookContributor> contributors) {
                 booksView.showContributors(contributors);
@@ -74,14 +70,14 @@ public class BookInfoPresenter implements BookInfoContract.UserActionsListener {
             public void onContributorsLoadError(Exception e) {
 
             }
-        });
+        });*/ //TODO
 
     }
 
 
     @Override
-    public void downloadBook(final BookDetail bookInfo) {
-        if (bookInfo == null || bookInfo.getBookFile() == null || bookInfo.getBookFile().getUrl() == null) {
+    public void downloadBook(final FireBookDetails bookInfo) {
+       /* if (bookInfo == null || bookInfo.getBookFile() == null || bookInfo.getBookFile().getUrl() == null) {
             booksView.showSnackBarMessage(R.string.book_not_available);
             return;
         }
@@ -115,7 +111,7 @@ public class BookInfoPresenter implements BookInfoContract.UserActionsListener {
             public void onBookPagesDownloadProgressUpdate(int progress) {
                 booksView.showDownloadProgress(progress);
             }
-        });
+        });*/
 
     }
 
@@ -131,7 +127,7 @@ public class BookInfoPresenter implements BookInfoContract.UserActionsListener {
     }
 
     @Override
-    public void shareBookClicked(BookDetail bookInfo) {
+    public void shareBookClicked(FireBookDetails bookInfo) {
         if (bookInfo == null) {
             booksView.showError(context.getString(R.string.book_info_still_loading));
             return;

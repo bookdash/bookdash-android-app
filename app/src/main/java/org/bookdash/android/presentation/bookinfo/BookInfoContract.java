@@ -3,7 +3,7 @@ package org.bookdash.android.presentation.bookinfo;
 import android.graphics.Bitmap;
 
 import org.bookdash.android.domain.pojo.BookContributor;
-import org.bookdash.android.domain.pojo.BookDetail;
+import org.bookdash.android.domain.pojo.firebase.FireBookDetails;
 import org.bookdash.android.domain.pojo.gson.BookPages;
 
 import java.util.List;
@@ -30,9 +30,9 @@ public interface BookInfoContract {
 
         void setToolbarTitle(String title);
 
-        void setBookInfoBinding(BookDetail bookInfo);
+        void setBookInfoBinding(FireBookDetails bookInfo);
 
-        void openBook(BookDetail bookDetail, BookPages bookPages, String location);
+        void openBook(FireBookDetails bookDetail, BookPages bookPages, String location);
 
         void showContributors(List<BookContributor> contributors);
 
@@ -51,10 +51,10 @@ public interface BookInfoContract {
 
         void loadBookInformation(String bookDetailId);
 
-        void downloadBook(BookDetail bookDetail);
+        void downloadBook(FireBookDetails bookDetail);
 
         void loadImage(String url);
 
-        void shareBookClicked(BookDetail bookInfo);
+        void shareBookClicked(FireBookDetails bookInfo);
     }
 }

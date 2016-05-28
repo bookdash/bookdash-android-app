@@ -3,13 +3,11 @@ package org.bookdash.android.presentation.listbooks;
 import org.bookdash.android.R;
 import org.bookdash.android.data.books.BookDetailRepository;
 import org.bookdash.android.data.settings.SettingsRepository;
-import org.bookdash.android.domain.pojo.BookDetail;
 import org.bookdash.android.domain.pojo.Language;
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.ArgumentCaptor;
 import org.mockito.Captor;
-import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
