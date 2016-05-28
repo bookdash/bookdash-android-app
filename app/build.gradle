@@ -173,6 +173,7 @@ dependencies {
     compile "com.android.support:design:$rootProject.ext.googlePlayServicesVersion"
     compile "com.google.android.gms:play-services-analytics:$rootProject.ext.googlePlayServicesVersion"
     compile 'com.google.firebase:firebase-database:9.0.0'
+    compile 'com.google.firebase:firebase-messaging:9.0.0'
 }
 
 // Grant animation permissions to avoid test failure because of ui sync.
