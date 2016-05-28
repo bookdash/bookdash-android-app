@@ -4,6 +4,7 @@ import org.bookdash.android.domain.pojo.Book;
 import org.bookdash.android.domain.pojo.BookContributor;
 import org.bookdash.android.domain.pojo.BookDetail;
 import org.bookdash.android.domain.pojo.Language;
+import org.bookdash.android.domain.pojo.firebase.FireLanguage;
 import org.bookdash.android.domain.pojo.gson.BookPages;
 
 import java.util.List;
@@ -33,7 +34,7 @@ public interface BookDetailApi {
     void getContributorsForBook(Book bookId, BookServiceCallback<List<BookContributor>> contributorsCallback);
 
 
-    void getLanguages(BookServiceCallback<List<Language>> languagesCallback);
+    void getLanguages(BookServiceCallback<List<FireLanguage>> languagesCallback);
 
     void downloadBook(BookDetail bookDetail, BookServiceCallback<BookPages> downloadBookCallback, BookServiceProgressCallback bookServiceProgressCallback);
 

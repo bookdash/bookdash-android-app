@@ -4,7 +4,13 @@ import android.support.annotation.NonNull;
 import android.support.annotation.WorkerThread;
 import android.util.Log;
 
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import com.google.gson.Gson;
+import com.google.repacked.apache.commons.codec.language.bm.Lang;
 import com.parse.FindCallback;
 import com.parse.GetCallback;
 import com.parse.GetDataCallback;
@@ -20,7 +26,7 @@ import org.bookdash.android.domain.pojo.BookContributor;
 import org.bookdash.android.domain.pojo.BookDetail;
 import org.bookdash.android.domain.pojo.Language;
 import org.bookdash.android.domain.pojo.gson.BookPages;
-
+import org.bookdash.android.domain.pojo.firebase.FireLanguage;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -142,20 +148,27 @@ public class BookDetailApiImpl implements BookDetailApi {
 
 
     @Override
-    public void getLanguages(final BookServiceCallback<List<Language>> languagesCallback) {
-        ParseQuery<Language> queryLanguages = ParseQuery.getQuery(Language.class);
-        queryLanguages.setCachePolicy(ParseQuery.CachePolicy.NETWORK_ELSE_CACHE);
-        queryLanguages.orderByAscending(Language.LANGUAGE_ORDER);
-        queryLanguages.findInBackground(new FindCallback<Language>() {
+    public void getLanguages(final BookServiceCallback<List<FireLanguage>> languagesCallback) {
+        final FirebaseDatabase database = FirebaseDatabase.getInstance();
+        DatabaseReference languagesRef = database.getReference("bd_languages");
+        languagesRef.addValueEventListener(new ValueEventListener() {
             @Override
-            public void done(List<Language> list, ParseException e) {
-                if (e != null) {
-                    languagesCallback.onError(e);
-                    return;
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                List<FireLanguage> fireLanguages = new ArrayList<>();
+                for (DataSnapshot snap: dataSnapshot.getChildren()){
+                    FireLanguage language = snap.getValue(FireLanguage.class);
+                    Log.d(TAG, "Language:" + language.languageAbbreviation + ". Language Name:" + language.languageName);
+                    fireLanguages.add(language);
                 }
-                languagesCallback.onLoaded(list);
+                languagesCallback.onLoaded(fireLanguages);
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+                languagesCallback.onError(databaseError.toException());
             }
         });
+
     }
 
 

@@ -6,6 +6,7 @@ import com.crashlytics.android.Crashlytics;
 import com.crashlytics.android.core.CrashlyticsCore;
 import com.google.android.gms.analytics.GoogleAnalytics;
 import com.google.android.gms.analytics.Tracker;
+import com.google.firebase.database.FirebaseDatabase;
 import com.parse.Parse;
 import com.parse.ParseObject;
 
@@ -34,7 +35,7 @@ public class BookDashApplication extends Application {
                 .core(new CrashlyticsCore.Builder().disabled(BuildConfig.DEBUG).build())
                 .build();
         Fabric.with(this, crashlyticsKit);
-
+        FirebaseDatabase.getInstance().setPersistenceEnabled(true);
         ParseObject.registerSubclass(BookDetail.class);
         ParseObject.registerSubclass(Language.class);
         ParseObject.registerSubclass(Book.class);

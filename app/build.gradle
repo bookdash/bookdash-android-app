@@ -8,7 +8,6 @@ buildscript {
     }
 }
 apply plugin: 'com.android.application'
-apply plugin: 'com.google.gms.google-services'
 apply plugin: 'io.fabric'
 apply plugin: 'com.github.triplet.play'
 
@@ -173,6 +172,7 @@ dependencies {
     compile "com.google.android.gms:play-services-appindexing:$rootProject.ext.googlePlayServicesVersion"
     compile "com.android.support:design:$rootProject.ext.googlePlayServicesVersion"
     compile "com.google.android.gms:play-services-analytics:$rootProject.ext.googlePlayServicesVersion"
+    compile 'com.google.firebase:firebase-database:9.0.0'
 }
 
 // Grant animation permissions to avoid test failure because of ui sync.
@@ -194,3 +194,5 @@ afterEvaluate {
         }
     }
 }
+
+apply plugin: 'com.google.gms.google-services'

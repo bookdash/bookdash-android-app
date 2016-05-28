@@ -5,6 +5,7 @@ import org.bookdash.android.data.books.BookDetailRepository;
 import org.bookdash.android.data.settings.SettingsRepository;
 import org.bookdash.android.domain.pojo.BookDetail;
 import org.bookdash.android.domain.pojo.Language;
+import org.bookdash.android.domain.pojo.firebase.FireLanguage;
 
 import java.util.List;
 
@@ -18,7 +19,7 @@ public class ListBooksPresenter implements ListBooksContract.UserActionsListener
     private BookDetailRepository bookDetailRepository;
     private SettingsRepository settingsRepository;
 
-    private List<Language> languages;
+    private List<FireLanguage> languages;
 
     public ListBooksPresenter(ListBooksContract.View listBooksView, BookDetailRepository bookDetailRepository, SettingsRepository settingsRepository) {
         this.listBooksView = listBooksView;
@@ -56,7 +57,7 @@ public class ListBooksPresenter implements ListBooksContract.UserActionsListener
         bookDetailRepository.getLanguages(new BookDetailRepository.GetLanguagesCallback() {
 
             @Override
-            public void onLanguagesLoaded(List<Language> languages) {
+            public void onLanguagesLoaded(List<FireLanguage> languages) {
                 ListBooksPresenter.this.languages = languages;
             }
 

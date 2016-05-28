@@ -103,7 +103,7 @@ public class ListBooksFragment extends Fragment implements ListBooksContract.Vie
     };
 
 
-    public void openBookDetails(View v) {
+    private void openBookDetails(View v) {
         Intent intent = new Intent(getActivity(), BookInfoActivity.class);
         // intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         BookViewHolder viewHolder = (BookViewHolder) v.getTag();

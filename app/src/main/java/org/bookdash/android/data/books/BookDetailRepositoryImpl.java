@@ -6,6 +6,7 @@ import org.bookdash.android.domain.pojo.Book;
 import org.bookdash.android.domain.pojo.BookContributor;
 import org.bookdash.android.domain.pojo.BookDetail;
 import org.bookdash.android.domain.pojo.Language;
+import org.bookdash.android.domain.pojo.firebase.FireLanguage;
 import org.bookdash.android.domain.pojo.gson.BookPages;
 
 import java.util.List;
@@ -91,10 +92,10 @@ public class BookDetailRepositoryImpl implements BookDetailRepository {
 
     @Override
     public void getLanguages(@NonNull final GetLanguagesCallback languagesCallback) {
-        bookDetailApi.getLanguages(new BookDetailApi.BookServiceCallback<List<Language>>() {
+        bookDetailApi.getLanguages(new BookDetailApi.BookServiceCallback<List<FireLanguage>>() {
 
             @Override
-            public void onLoaded(List<Language> result) {
+            public void onLoaded(List<FireLanguage> result) {
                 languagesCallback.onLanguagesLoaded(result);
             }
 
