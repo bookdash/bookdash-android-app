@@ -3,7 +3,8 @@ package org.bookdash.android.presentation.downloads;
 import com.parse.ParseObject;
 
 import org.bookdash.android.data.books.BookDetailRepository;
-import org.bookdash.android.domain.pojo.Language;
+import org.bookdash.android.domain.pojo.firebase.FireBookDetails;
+import org.bookdash.android.domain.pojo.firebase.FireLanguage;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -31,15 +32,13 @@ public class DownloadsPresenterTest {
     private ArgumentCaptor<BookDetailRepository.GetBooksForLanguageCallback> bookloadedCaptor;
     @Captor
     private ArgumentCaptor<BookDetailRepository.DeleteBookCallBack> deleteBookCallBackArgumentCaptor;
-    private Language language;
+    private FireLanguage language;
 
     @Before
     public void setUp() throws Exception {
         MockitoAnnotations.initMocks(this);
-        ParseObject.registerSubclass(Language.class);
-        ParseObject.registerSubclass(BookDetail.class);
         downloadsPresenter = new DownloadsPresenter(bookRepository, downloadsView);
-        language = new Language("English", "EN", "1");
+        language = new FireLanguage("English", "EN", true);
     }
 
     @After
@@ -47,7 +46,7 @@ public class DownloadsPresenterTest {
 
     }
 
-    private List<BookDetail> BOOKS = new ArrayList<>();
+    private List<FireBookDetails> BOOKS = new ArrayList<>();
 
     @Test
     public void testGetListDownloads_ReturnsDownloads() {
@@ -55,7 +54,7 @@ public class DownloadsPresenterTest {
         downloadsPresenter.loadListDownloads();
         verify(downloadsView).showLoading(true);
         verify(bookRepository).getDownloadedBooks(bookloadedCaptor.capture());
-        BOOKS.add(new BookDetail("test title", "test", "2", language));
+        BOOKS.add(new FireBookDetails("test title", "http://test.com","urlcover", true,  language.getId(), "description"));
         bookloadedCaptor.getValue().onBooksLoaded(BOOKS);
 
         verify(downloadsView).showLoading(false);
@@ -75,10 +74,10 @@ public class DownloadsPresenterTest {
 
     @Test
     public void testDeleteDownload_RemovesDownload() {
-        BookDetail bookDetail = new BookDetail("Fake Book", "http://test.com", "123", language);
+        FireBookDetails bookDetail = new FireBookDetails("FAKE BOOK test title", "http://test.com","urlcover", true,  language.getId(), "description");
         downloadsPresenter.deleteDownload(bookDetail);
 
-        verify(bookRepository).deleteBook(any(BookDetail.class), deleteBookCallBackArgumentCaptor.capture());
+        verify(bookRepository).deleteBook(any(FireBookDetails.class), deleteBookCallBackArgumentCaptor.capture());
         deleteBookCallBackArgumentCaptor.getValue().onBookDeleted(bookDetail);
 
         verify(bookRepository).getDownloadedBooks(bookloadedCaptor.capture());
@@ -89,12 +88,12 @@ public class DownloadsPresenterTest {
 
     @Test
     public void testDeleteDownload_RemovesDownloadKeepsOthers() {
-        BookDetail bookDetail = new BookDetail("Fake Book", "http://test.com", "123", language);
+        FireBookDetails bookDetail = new FireBookDetails("FAKE BOOK test title", "http://test.com","urlcover", true,  language.getId(), "description");
         downloadsPresenter.deleteDownload(bookDetail);
 
-        verify(bookRepository).deleteBook(any(BookDetail.class), deleteBookCallBackArgumentCaptor.capture());
+        verify(bookRepository).deleteBook(any(FireBookDetails.class), deleteBookCallBackArgumentCaptor.capture());
         deleteBookCallBackArgumentCaptor.getValue().onBookDeleted(bookDetail);
-        BOOKS.add(new BookDetail("test title", "book cover", "23", new Language()));
+        BOOKS.add(new FireBookDetails("FAKE BOOK 2 test title", "http://test.com","urlcover", true,  language.getId(), "description"));
         verify(bookRepository).getDownloadedBooks(bookloadedCaptor.capture());
         bookloadedCaptor.getValue().onBooksLoaded(BOOKS);
 

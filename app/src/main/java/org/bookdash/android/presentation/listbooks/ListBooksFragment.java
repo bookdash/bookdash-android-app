@@ -108,7 +108,7 @@ public class ListBooksFragment extends Fragment implements ListBooksContract.Vie
         // intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         BookViewHolder viewHolder = (BookViewHolder) v.getTag();
         FireBookDetails bookDetailResult = viewHolder.bookDetail;
-        intent.putExtra(BookInfoActivity.BOOK_PARCEL, bookDetailResult.toBookParcelable());
+        intent.putExtra(BookInfoActivity.BOOK_PARCEL, bookDetailResult);
         startActivityForResult(intent, BOOK_DETAIL_REQUEST_CODE);
 
     }

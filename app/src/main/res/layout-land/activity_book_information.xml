@@ -214,7 +214,7 @@
                                 android:layout_toEndOf="@+id/image_view_book_cover"
                                 android:layout_toRightOf="@+id/image_view_book_cover"
                                 android:fontFamily="sans-serif"
-                                android:text="@{bookInfo.aboutBook}"
+                                android:text="@{bookInfo.bookDescription}"
                                 android:textColor="@color/text_color_primary_dark"
                                 android:textSize="18sp"/>
 

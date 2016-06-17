@@ -148,7 +148,7 @@
                         android:layout_marginRight="@dimen/activity_horizontal_margin"
 
                         android:layout_marginTop="8dp"
-                        android:visibility="@{TextUtils.isEmpty(bookInfo.aboutBook) ? View.GONE : View.VISIBLE}">
+                        android:visibility="@{TextUtils.isEmpty(bookInfo.bookDescription) ? View.GONE : View.VISIBLE}">
 
                         <RelativeLayout
                             android:layout_width="match_parent"
@@ -193,7 +193,7 @@
                                 android:layout_marginRight="16dp"
                                 android:layout_marginTop="2dp"
                                 android:fontFamily="sans-serif"
-                                android:text="@{bookInfo.aboutBook}"
+                                android:text="@{bookInfo.bookDescription}"
                                 android:textColor="@color/text_color_primary_dark"
                                 android:textSize="16sp"/>
 

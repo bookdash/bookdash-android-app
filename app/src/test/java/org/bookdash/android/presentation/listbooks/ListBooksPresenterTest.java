@@ -3,7 +3,8 @@ package org.bookdash.android.presentation.listbooks;
 import org.bookdash.android.R;
 import org.bookdash.android.data.books.BookDetailRepository;
 import org.bookdash.android.data.settings.SettingsRepository;
-import org.bookdash.android.domain.pojo.Language;
+import org.bookdash.android.domain.pojo.firebase.FireBookDetails;
+import org.bookdash.android.domain.pojo.firebase.FireLanguage;
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.ArgumentCaptor;
@@ -80,8 +81,8 @@ public class ListBooksPresenterTest {
 
     }
 
-    private List<Language> LANGUAGES= new ArrayList<>();
-    private List<BookDetail> BOOKS = new ArrayList<>();
+    private List<FireLanguage> LANGUAGES= new ArrayList<>();
+    private List<FireBookDetails> BOOKS = new ArrayList<>();
 
     @Test
     public void loadLanguagesCorrectlyNotifyView() {

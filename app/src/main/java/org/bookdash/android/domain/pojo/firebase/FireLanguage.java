@@ -6,6 +6,7 @@ public class FireLanguage {
     private String languageName;
     private String languageAbbreviation;
     private boolean enabled;
+    private String id;
 
     public FireLanguage(String languageName, String languageAbbreviation, boolean enabled) {
         this.languageName = languageName;
@@ -43,5 +44,9 @@ public class FireLanguage {
 
     public void setLanguageAbbreviation(String languageAbbreviation) {
         this.languageAbbreviation = languageAbbreviation;
+    }
+
+    public String getId() {
+        return id;
     }
 }

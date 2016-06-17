@@ -4,7 +4,7 @@ import com.parse.ParseObject;
 
 import org.bookdash.android.R;
 import org.bookdash.android.data.books.BookDetailRepository;
-import org.bookdash.android.domain.pojo.Language;
+import org.bookdash.android.domain.pojo.firebase.FireBookDetails;
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.ArgumentCaptor;
@@ -40,15 +40,13 @@ public class BookInfoPresenterTest {
     @Before
     public void setupListBooksPresenter() {
         MockitoAnnotations.initMocks(this);
-        ParseObject.registerSubclass(BookDetail.class);
-        ParseObject.registerSubclass(Language.class);
         bookInfoPresenter = new BookInfoPresenter(null, bookInfoView, bookRepository);
-        BOOK_DETAIL = new BookDetail("Test book", "http://test.com/image.png", "1234", new Language("English", "EN", "123"));
+        BOOK_DETAIL = new FireBookDetails("test title", "http://test.com","urlcover", true,  "FAKEID", "description");
 
     }
 
     @Mock
-    private BookDetail BOOK_DETAIL;
+    private FireBookDetails BOOK_DETAIL;
 
     @Test
     public void loadBookDetails_BookLoads_SetBinding() {

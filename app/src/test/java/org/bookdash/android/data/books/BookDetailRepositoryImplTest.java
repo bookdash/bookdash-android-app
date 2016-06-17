@@ -27,7 +27,6 @@ public class BookDetailRepositoryImplTest {
         MockitoAnnotations.initMocks(this);
         bookDetailRepository = new BookDetailRepositoryImpl(bookDetailApi);
     }
-    private List<BookDetail> BOOKS;
     @Test
     public void getBooksForLanguageApiSuccess(){
         bookDetailRepository.getBooksForLanguage("EN", booksForLanguageCallback);

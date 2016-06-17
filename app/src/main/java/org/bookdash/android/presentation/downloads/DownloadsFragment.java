@@ -104,7 +104,7 @@ public class DownloadsFragment extends Fragment implements DownloadsContract.Vie
     private void showBookDetails(FireBookDetails bookDetail) {
         Intent intent = new Intent(getActivity(), BookInfoActivity.class);
         intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-        intent.putExtra(BookInfoActivity.BOOK_PARCEL, bookDetail.toBookParcelable());
+        intent.putExtra(BookInfoActivity.BOOK_PARCEL, bookDetail);
         startActivity(intent);
     }
 

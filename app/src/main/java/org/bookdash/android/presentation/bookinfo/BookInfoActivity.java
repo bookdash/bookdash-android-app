@@ -35,6 +35,7 @@ import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
 import com.google.android.gms.appindexing.Action;
 import com.google.android.gms.appindexing.AppIndex;
 import com.google.android.gms.common.api.GoogleApiClient;
@@ -46,7 +47,6 @@ import org.bookdash.android.Injection;
 import org.bookdash.android.R;
 import org.bookdash.android.databinding.ActivityBookInformationBinding;
 import org.bookdash.android.domain.pojo.BookContributor;
-import org.bookdash.android.domain.pojo.BookDetailParcelable;
 import org.bookdash.android.domain.pojo.firebase.FireBookDetails;
 import org.bookdash.android.domain.pojo.gson.BookPages;
 import org.bookdash.android.presentation.activity.BaseAppCompatActivity;
@@ -180,12 +180,13 @@ public class BookInfoActivity extends BaseAppCompatActivity implements BookInfoC
                 return true;
             }
         });
-        final BookDetailParcelable bookDetailParcelable = getIntent().getParcelableExtra(BOOK_PARCEL);
+        final FireBookDetails bookDetailParcelable = getIntent().getParcelableExtra(BOOK_PARCEL);
 
         if (bookDetailParcelable != null) {
-            String bookDetailId = bookDetailParcelable.getBookDetailObjectId();
-            startLoadingBook(bookDetailId);
-            actionsListener.loadImage(bookDetailParcelable.getBookImageUrl());
+            String bookDetailId = bookDetailParcelable.getId();
+            setBookInfoBinding(bookDetailParcelable);
+            showBookDetailView();
+            actionsListener.loadImage(bookDetailParcelable.getBookCoverUrl());
         } else {
             onNewIntent(getIntent());
         }
@@ -447,24 +448,7 @@ public class BookInfoActivity extends BaseAppCompatActivity implements BookInfoC
         textViewRole.setText(bookContributor.getContributor().getRole());
 
         final ImageView imageView = (ImageView) v.findViewById(R.id.imageViewContributorAvatar);
-        ParseFile pfAvatar = bookContributor.getContributor().getAvatar();
-        if (pfAvatar == null) {
-            return;
-        }
-        pfAvatar.getDataInBackground(new GetDataCallback() {
-            @Override
-            public void done(byte[] bytes, ParseException e) {
-                if (e == null) {
-                    Log.d(TAG, "We've got data in data.");
-
-                    Bitmap bmp = BitmapFactory.decodeByteArray(bytes, 0, bytes.length);
-                    imageView.setImageBitmap(bmp);
-
-                } else {
-                    Log.d(TAG, "There was a problem downloading the data.");
-                }
-            }
-        });
+      //  Glide.with(this).load(bookContributor)
     }
 
     @Override

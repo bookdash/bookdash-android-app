@@ -13,9 +13,9 @@ import com.parse.ParseObject;
 import org.bookdash.android.domain.pojo.Book;
 import org.bookdash.android.domain.pojo.BookContributor;
 import org.bookdash.android.domain.pojo.Contributor;
-import org.bookdash.android.domain.pojo.Language;
 
 import io.fabric.sdk.android.Fabric;
+import uk.co.chrisjenx.calligraphy.CalligraphyConfig;
 
 /**
  * @author Rebecca Franks
@@ -30,12 +30,9 @@ public class BookDashApplication extends Application {
     public void onCreate() {
         super.onCreate();
 
-        Crashlytics crashlyticsKit = new Crashlytics.Builder()
-                .core(new CrashlyticsCore.Builder().disabled(BuildConfig.DEBUG).build())
-                .build();
+        Crashlytics crashlyticsKit = new Crashlytics.Builder().core(new CrashlyticsCore.Builder().disabled(BuildConfig.DEBUG).build()).build();
         Fabric.with(this, crashlyticsKit);
         FirebaseDatabase.getInstance().setPersistenceEnabled(true);
-        ParseObject.registerSubclass(Language.class);
         ParseObject.registerSubclass(Book.class);
         ParseObject.registerSubclass(Contributor.class);
         ParseObject.registerSubclass(BookContributor.class);
@@ -47,6 +44,7 @@ public class BookDashApplication extends Application {
         FILES_DIR = getFilesDir().getPath();
         getDefaultTracker().enableAutoActivityTracking(true);
 
+        CalligraphyConfig.initDefault(new CalligraphyConfig.Builder().setDefaultFontPath("fonts/ComingSoon.ttf").setFontAttrId(R.attr.fontPath).build());
     }
 
     /**

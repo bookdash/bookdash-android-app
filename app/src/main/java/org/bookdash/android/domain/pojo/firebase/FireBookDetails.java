@@ -1,11 +1,13 @@
 package org.bookdash.android.domain.pojo.firebase;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import org.bookdash.android.BookDashApplication;
-import org.bookdash.android.domain.pojo.BookDetailParcelable;
 
 import java.io.File;
 
-public class FireBookDetails {
+public class FireBookDetails implements Parcelable {
     public static final String TABLE_NAME = "bd_books";
     public static final String CREATED_AT_COL = "createdAt";
     public static final String BOOK_TITLE = "bookTitle";
@@ -15,17 +17,17 @@ public class FireBookDetails {
     public boolean bookEnabled;
     public String bookLanguage;
     public String bookId;
-    public String aboutBook;
+    public String bookDescription;
 
     private boolean isDownloading;
 
-    public FireBookDetails(String bookTitle, String bookUrl, String bookCoverPageUrl, boolean bookEnabled, String bookLanguage, String aboutBook) {
+    public FireBookDetails(String bookTitle, String bookUrl, String bookCoverPageUrl, boolean bookEnabled, String bookLanguage, String bookDescription) {
         this.bookTitle = bookTitle;
         this.bookUrl = bookUrl;
         this.bookCoverPageUrl = bookCoverPageUrl;
         this.bookEnabled = bookEnabled;
         this.bookLanguage = bookLanguage;
-        this.aboutBook = aboutBook;
+        this.bookDescription = bookDescription;
     }
 
     public FireBookDetails() {
@@ -68,14 +70,6 @@ public class FireBookDetails {
         this.isDownloading = isDownloading;
     }
 
-    public BookDetailParcelable toBookParcelable() {
-        BookDetailParcelable bookDetailParcelable = new BookDetailParcelable();
-        bookDetailParcelable.setBookTitle(getBookTitle());
-        bookDetailParcelable.setBookImageUrl(getBookCoverUrl());
-        bookDetailParcelable.setBookDetailObjectId(getId());
-        bookDetailParcelable.setWebUrl(getWebUrl());
-        return bookDetailParcelable;
-    }
 
     public String getBookTitle() {
         return bookTitle;
@@ -88,4 +82,44 @@ public class FireBookDetails {
     public String getWebUrl() {
         return null;//todo
     }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(this.bookTitle);
+        dest.writeString(this.bookUrl);
+        dest.writeString(this.bookCoverPageUrl);
+        dest.writeByte(this.bookEnabled ? (byte) 1 : (byte) 0);
+        dest.writeString(this.bookLanguage);
+        dest.writeString(this.bookId);
+        dest.writeString(this.bookDescription);
+        dest.writeByte(this.isDownloading ? (byte) 1 : (byte) 0);
+    }
+
+    protected FireBookDetails(Parcel in) {
+        this.bookTitle = in.readString();
+        this.bookUrl = in.readString();
+        this.bookCoverPageUrl = in.readString();
+        this.bookEnabled = in.readByte() != 0;
+        this.bookLanguage = in.readString();
+        this.bookId = in.readString();
+        this.bookDescription = in.readString();
+        this.isDownloading = in.readByte() != 0;
+    }
+
+    public static final Creator<FireBookDetails> CREATOR = new Creator<FireBookDetails>() {
+        @Override
+        public FireBookDetails createFromParcel(Parcel source) {
+            return new FireBookDetails(source);
+        }
+
+        @Override
+        public FireBookDetails[] newArray(int size) {
+            return new FireBookDetails[size];
+        }
+    };
 }
