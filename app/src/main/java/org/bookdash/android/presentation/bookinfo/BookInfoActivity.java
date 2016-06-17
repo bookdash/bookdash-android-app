@@ -4,24 +4,23 @@ import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.databinding.DataBindingUtil;
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.GradientDrawable;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
 import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.ActionBar;
 import android.support.v7.widget.CardView;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.transition.Transition;
 import android.util.DisplayMetrics;
 import android.util.Log;
-import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -31,23 +30,18 @@ import android.view.animation.AccelerateInterpolator;
 import android.view.animation.OvershootInterpolator;
 import android.widget.Button;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
-import com.bumptech.glide.Glide;
 import com.google.android.gms.appindexing.Action;
 import com.google.android.gms.appindexing.AppIndex;
 import com.google.android.gms.common.api.GoogleApiClient;
-import com.parse.GetDataCallback;
-import com.parse.ParseException;
-import com.parse.ParseFile;
 
 import org.bookdash.android.Injection;
 import org.bookdash.android.R;
 import org.bookdash.android.databinding.ActivityBookInformationBinding;
-import org.bookdash.android.domain.pojo.BookContributor;
 import org.bookdash.android.domain.pojo.firebase.FireBookDetails;
+import org.bookdash.android.domain.pojo.firebase.FireContributor;
 import org.bookdash.android.domain.pojo.gson.BookPages;
 import org.bookdash.android.presentation.activity.BaseAppCompatActivity;
 import org.bookdash.android.presentation.readbook.BookDetailActivity;
@@ -72,7 +66,7 @@ public class BookInfoActivity extends BaseAppCompatActivity implements BookInfoC
     private CollapsingToolbarLayout collapsingToolbarLayout;
     private FabButton floatingActionButton;
     private View gradientBackground;
-    private LinearLayout contributorLinearLayout;
+    private RecyclerView contributorRecyclerView;
     private View scrollView;
     private ImageView imageViewBook;
     private AppBarLayout appBarLayout;
@@ -128,7 +122,7 @@ public class BookInfoActivity extends BaseAppCompatActivity implements BookInfoC
             });
             postponeEnterTransition();
         }
-        contributorLinearLayout = (LinearLayout) findViewById(R.id.linear_layout_contributors);
+        contributorRecyclerView = (RecyclerView) findViewById(R.id.recyclerview_contributors);
         contributorCard = (CardView) findViewById(R.id.contributor_card);
         imageViewBook = (ImageView) findViewById(R.id.image_view_book_cover);
         appBarLayout = (AppBarLayout) findViewById(R.id.app_bar_layout);
@@ -151,7 +145,7 @@ public class BookInfoActivity extends BaseAppCompatActivity implements BookInfoC
         floatingActionButton = (FabButton) findViewById(R.id.fab_download);
         floatingActionButton.setScaleX(0);
         floatingActionButton.setScaleY(0);
-        binding.setDownloadClick(new View.OnClickListener(){
+        binding.setDownloadClick(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if (bookInfo == null) {
@@ -220,11 +214,11 @@ public class BookInfoActivity extends BaseAppCompatActivity implements BookInfoC
         errorRetryButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                actionsListener.loadBookInformation(bookDetailId);
+                actionsListener.loadContributorInformation(bookDetailId);
             }
         });
 
-        actionsListener.loadBookInformation(bookDetailId);
+        actionsListener.loadContributorInformation(bookDetailId);
         showBookDetailView();
     }
 
@@ -271,13 +265,6 @@ public class BookInfoActivity extends BaseAppCompatActivity implements BookInfoC
     @Override
     protected String getScreenName() {
         return "BookInfoActivity";
-    }
-
-    @Override
-    public void showProgress(boolean visible) {
-        // errorLayout.setVisibility(View.GONE);
-        //  loadingProgressBar.setVisibility(visible ? View.VISIBLE : View.GONE);
-
     }
 
     @Override
@@ -375,19 +362,16 @@ public class BookInfoActivity extends BaseAppCompatActivity implements BookInfoC
     }
 
     @Override
-    public void showContributors(List<BookContributor> list) {
+    public void showContributors(List<FireContributor> list) {
         if (list == null || list.size() == 0) {
             contributorCard.setVisibility(View.GONE);
             return;
         }
         contributorCard.setVisibility(View.VISIBLE);
-        contributorLinearLayout.removeAllViews();
-        for (BookContributor b : list) {
-            Log.d(TAG, "Book contributor:" + b.getContributor().getName());
-            View v = LayoutInflater.from(BookInfoActivity.this).inflate(R.layout.list_item_contributor, contributorLinearLayout, false);
-            setContributorInfo(v, b);
-            contributorLinearLayout.addView(v);
-        }
+        ContributorAdapter contributorAdapter = new ContributorAdapter(list, this);
+        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
+        contributorRecyclerView.setLayoutManager(linearLayoutManager);
+        contributorRecyclerView.setAdapter(contributorAdapter);
     }
 
     @Override
@@ -441,15 +425,6 @@ public class BookInfoActivity extends BaseAppCompatActivity implements BookInfoC
         startActivity(sendIntent);
     }
 
-    private void setContributorInfo(@NonNull View v, @NonNull BookContributor bookContributor) {
-        TextView textViewContributor = (TextView) v.findViewById(R.id.textViewContributorName);
-        TextView textViewRole = (TextView) v.findViewById(R.id.textViewRole);
-        textViewContributor.setText(bookContributor.getContributor().getName());
-        textViewRole.setText(bookContributor.getContributor().getRole());
-
-        final ImageView imageView = (ImageView) v.findViewById(R.id.imageViewContributorAvatar);
-      //  Glide.with(this).load(bookContributor)
-    }
 
     @Override
     public void onStart() {

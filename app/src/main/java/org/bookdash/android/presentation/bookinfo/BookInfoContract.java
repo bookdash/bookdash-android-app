@@ -2,8 +2,8 @@ package org.bookdash.android.presentation.bookinfo;
 
 import android.graphics.Bitmap;
 
-import org.bookdash.android.domain.pojo.BookContributor;
 import org.bookdash.android.domain.pojo.firebase.FireBookDetails;
+import org.bookdash.android.domain.pojo.firebase.FireContributor;
 import org.bookdash.android.domain.pojo.gson.BookPages;
 
 import java.util.List;
@@ -15,8 +15,6 @@ import java.util.List;
 public interface BookInfoContract {
 
     interface View {
-
-        void showProgress(boolean visible);
 
         void showBookDetailView();
 
@@ -34,7 +32,7 @@ public interface BookInfoContract {
 
         void openBook(FireBookDetails bookDetail, BookPages bookPages, String location);
 
-        void showContributors(List<BookContributor> contributors);
+        void showContributors(List<FireContributor> contributors);
 
         void onImageLoaded(Bitmap bitmap);
 
@@ -49,7 +47,7 @@ public interface BookInfoContract {
 
     interface UserActionsListener {
 
-        void loadBookInformation(String bookDetailId);
+        void loadContributorInformation(String bookDetailId);
 
         void downloadBook(FireBookDetails bookDetail);
 

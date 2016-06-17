@@ -249,13 +249,14 @@
                                 android:textColor="@color/text_secondary_dark"
                                 android:textSize="14sp"/>
 
-                            <LinearLayout
-                                android:id="@+id/linear_layout_contributors"
+                            <android.support.v7.widget.RecyclerView
+                                android:id="@+id/recyclerview_contributors"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:orientation="vertical">
 
-                            </LinearLayout>
+                            </android.support.v7.widget.RecyclerView>
+
                         </LinearLayout>
                     </android.support.v7.widget.CardView>
                 </LinearLayout>
