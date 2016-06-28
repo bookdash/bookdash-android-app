@@ -43,7 +43,8 @@ public class ListBooksPresenter implements ListBooksContract.UserActionsListener
         compositeSubscription.add(bookService.getLanguages().subscribe(new Action1<List<FireLanguage>>() {
             @Override
             public void call(final List<FireLanguage> fireLanguages) {
-                ListBooksPresenter.this.languages = languages;
+                ListBooksPresenter.this.languages = fireLanguages;
+
             }
         }));
 
