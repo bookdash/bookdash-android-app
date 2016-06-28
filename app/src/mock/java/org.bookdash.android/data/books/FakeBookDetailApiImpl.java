@@ -2,12 +2,12 @@ package org.bookdash.android.data.books;
 
 import android.support.annotation.VisibleForTesting;
 
-import org.bookdash.android.domain.pojo.Book;
-import org.bookdash.android.domain.pojo.BookContributor;
-import org.bookdash.android.domain.pojo.Contributor;
-import org.bookdash.android.domain.pojo.firebase.FireBookDetails;
-import org.bookdash.android.domain.pojo.firebase.FireLanguage;
-import org.bookdash.android.domain.pojo.gson.BookPages;
+import org.bookdash.android.domain.model.Book;
+import org.bookdash.android.domain.model.BookContributor;
+import org.bookdash.android.domain.model.Contributor;
+import org.bookdash.android.domain.model.firebase.FireBookDetails;
+import org.bookdash.android.domain.model.firebase.FireLanguage;
+import org.bookdash.android.domain.model.gson.BookPages;
 
 import java.util.ArrayList;
 import java.util.List;

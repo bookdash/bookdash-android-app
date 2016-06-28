@@ -1,4 +1,4 @@
-package org.bookdash.android.domain.pojo.firebase;
+package org.bookdash.android.domain.model.firebase;
 
 
 public class FireLanguage {

@@ -8,7 +8,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import org.bookdash.android.R;
-import org.bookdash.android.domain.pojo.firebase.FireBookDetails;
+import org.bookdash.android.domain.model.firebase.FireBookDetails;
 
 public class DownloadsViewHolder extends RecyclerView.ViewHolder {
     TextView downloadTitleTextView;

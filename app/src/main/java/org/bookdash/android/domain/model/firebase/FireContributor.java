@@ -1,7 +1,8 @@
-package org.bookdash.android.domain.pojo.firebase;
+package org.bookdash.android.domain.model.firebase;
 
 
 public class FireContributor {
+    public static final String TABLE_NAME = "bd_contributors";
     private String name;
     private String profilePicUrl;
     private String role;

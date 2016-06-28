@@ -17,7 +17,7 @@
 
         <variable
             name="bookInfo"
-            type="org.bookdash.android.domain.pojo.firebase.FireBookDetails"/>
+            type="org.bookdash.android.domain.model.firebase.FireBookDetails"/>
     </data>
 
     <FrameLayout>

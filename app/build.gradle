@@ -98,7 +98,7 @@ android {
         debug {
             ext.enableCrashlytics = false
             // Run code coverage reports by default on debug builds.
-            testCoverageEnabled = true
+          //  testCoverageEnabled = true
         }
     }
 
@@ -170,12 +170,16 @@ dependencies {
     compile 'za.co.riggaroo:materialhelptutorial:1.0.3'
     compile "com.google.android.gms:play-services-appinvite:$rootProject.ext.googlePlayServicesVersion"
     compile "com.google.android.gms:play-services-appindexing:$rootProject.ext.googlePlayServicesVersion"
-    compile "com.android.support:design:$rootProject.ext.googlePlayServicesVersion"
     compile "com.google.android.gms:play-services-analytics:$rootProject.ext.googlePlayServicesVersion"
     compile 'com.google.firebase:firebase-database:9.0.2'
     compile 'com.google.firebase:firebase-messaging:9.0.2'
     compile 'com.google.firebase:firebase-storage:9.0.2'
     compile 'uk.co.chrisjenx:calligraphy:2.2.0'
+    compile 'io.reactivex:rxandroid:1.2.1'
+// Because RxAndroid releases are few and far between, it is recommended you also
+// explicitly depend on RxJava's latest version for bug fixes and new features.
+    compile 'io.reactivex:rxjava:1.1.6'
+
 }
 
 // Grant animation permissions to avoid test failure because of ui sync.

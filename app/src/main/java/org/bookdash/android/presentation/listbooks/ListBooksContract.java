@@ -1,6 +1,6 @@
 package org.bookdash.android.presentation.listbooks;
 
-import org.bookdash.android.domain.pojo.firebase.FireBookDetails;
+import org.bookdash.android.domain.model.firebase.FireBookDetails;
 
 import java.util.List;
 

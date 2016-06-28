@@ -1,10 +1,9 @@
 package org.bookdash.android.data.books;
 
-import org.bookdash.android.domain.pojo.Book;
-import org.bookdash.android.domain.pojo.BookContributor;
-import org.bookdash.android.domain.pojo.firebase.FireBookDetails;
-import org.bookdash.android.domain.pojo.firebase.FireLanguage;
-import org.bookdash.android.domain.pojo.gson.BookPages;
+import org.bookdash.android.domain.model.firebase.FireBookDetails;
+import org.bookdash.android.domain.model.firebase.FireContributor;
+import org.bookdash.android.domain.model.firebase.FireLanguage;
+import org.bookdash.android.domain.model.gson.BookPages;
 
 import java.util.List;
 
@@ -28,9 +27,9 @@ public interface BookDetailApi {
         void onProgressChanged(int progress);
     }
 
-    void getBookDetail(String bookDetailId, BookServiceCallback<FireBookDetails> bookServiceCallback);
+   // void getBookDetail(String bookDetailId, BookServiceCallback<FireBookDetails> bookServiceCallback);
 
-    void getContributorsForBook(Book bookId, BookServiceCallback<List<BookContributor>> contributorsCallback);
+    void getContributorsForBook(FireBookDetails bookId, BookServiceCallback<List<FireContributor>> contributorsCallback);
 
 
     void getLanguages(BookServiceCallback<List<FireLanguage>> languagesCallback);

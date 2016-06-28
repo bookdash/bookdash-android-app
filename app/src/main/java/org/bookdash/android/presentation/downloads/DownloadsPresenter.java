@@ -1,7 +1,7 @@
 package org.bookdash.android.presentation.downloads;
 
 import org.bookdash.android.data.books.BookDetailRepository;
-import org.bookdash.android.domain.pojo.firebase.FireBookDetails;
+import org.bookdash.android.domain.model.firebase.FireBookDetails;
 
 import java.util.List;
 

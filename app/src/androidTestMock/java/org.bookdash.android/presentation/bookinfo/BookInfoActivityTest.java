@@ -7,7 +7,7 @@ import android.support.test.rule.ActivityTestRule;
 import android.support.test.runner.AndroidJUnit4;
 import android.test.suitebuilder.annotation.LargeTest;
 
-import org.bookdash.android.domain.pojo.BookDetailParcelable;
+import org.bookdash.android.domain.model.BookDetailParcelable;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Rule;

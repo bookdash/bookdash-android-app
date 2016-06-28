@@ -1,12 +1,15 @@
 package org.bookdash.android.presentation.listbooks;
 
-import org.bookdash.android.R;
+import org.bookdash.android.data.book.BookService;
 import org.bookdash.android.data.books.BookDetailRepository;
 import org.bookdash.android.data.settings.SettingsRepository;
-import org.bookdash.android.domain.pojo.firebase.FireBookDetails;
-import org.bookdash.android.domain.pojo.firebase.FireLanguage;
+import org.bookdash.android.domain.model.firebase.FireBookDetails;
+import org.bookdash.android.domain.model.firebase.FireLanguage;
 
 import java.util.List;
+
+import rx.functions.Action1;
+import rx.subscriptions.CompositeSubscription;
 
 /**
  * @author rebeccafranks
@@ -15,15 +18,42 @@ import java.util.List;
 public class ListBooksPresenter implements ListBooksContract.UserActionsListener {
 
     private ListBooksContract.View listBooksView;
-    private BookDetailRepository bookDetailRepository;
     private SettingsRepository settingsRepository;
 
     private List<FireLanguage> languages;
+    private BookService bookService;
+    private CompositeSubscription compositeSubscription = new CompositeSubscription();
 
-    public ListBooksPresenter(ListBooksContract.View listBooksView, BookDetailRepository bookDetailRepository, SettingsRepository settingsRepository) {
+    public ListBooksPresenter(ListBooksContract.View listBooksView, SettingsRepository settingsRepository, BookService bookService) {
         this.listBooksView = listBooksView;
-        this.bookDetailRepository = bookDetailRepository;
         this.settingsRepository = settingsRepository;
+        this.bookService = bookService;
+    }
+
+    public void startPresenting() {
+
+    }
+
+    public void stopPresenting() {
+        compositeSubscription.unsubscribe();
+    }
+
+    @Override
+    public void loadLanguages() {
+        compositeSubscription.add(bookService.getLanguages().subscribe(new Action1<List<FireLanguage>>() {
+            @Override
+            public void call(final List<FireLanguage> fireLanguages) {
+                ListBooksPresenter.this.languages = languages;
+            }
+        }));
+
+    }
+
+    @Override
+    public void saveSelectedLanguage(int indexOfLanguage) {
+        settingsRepository.saveLanguagePreference(languages.get(indexOfLanguage).getLanguageName());
+
+        loadBooksForLanguage(languages.get(indexOfLanguage).getLanguageName());
     }
 
     @Override
@@ -34,45 +64,15 @@ public class ListBooksPresenter implements ListBooksContract.UserActionsListener
 
     private void loadBooksForLanguage(String language) {
         listBooksView.showLoading(true);
-        bookDetailRepository.getBooksForLanguage(language, new BookDetailRepository.GetBooksForLanguageCallback() {
+        compositeSubscription.add(bookService.getBooksForLanguage(null).subscribe(new Action1<List<FireBookDetails>>() {
             @Override
-            public void onBooksLoaded(List<FireBookDetails> books) {
+            public void call(final List<FireBookDetails> fireBookDetailses) {
                 listBooksView.showLoading(false);
                 listBooksView.showErrorScreen(false, "", false);
-                listBooksView.showBooks(books);
+                listBooksView.showBooks(fireBookDetailses);
             }
+        }));
 
-            @Override
-            public void onBooksLoadError(Exception e) {
-                listBooksView.showLoading(false);
-                listBooksView.showErrorScreen(true, e.getMessage().toUpperCase(), true);
-            }
-        });
-
-    }
-
-    @Override
-    public void loadLanguages() {
-        bookDetailRepository.getLanguages(new BookDetailRepository.GetLanguagesCallback() {
-
-            @Override
-            public void onLanguagesLoaded(List<FireLanguage> languages) {
-                ListBooksPresenter.this.languages = languages;
-            }
-
-            @Override
-            public void onLanguagesLoadError(Exception e) {
-                listBooksView.showSnackBarError(R.string.error_loading_languages);
-            }
-        });
-
-    }
-
-    @Override
-    public void saveSelectedLanguage(int indexOfLanguage) {
-        settingsRepository.saveLanguagePreference(languages.get(indexOfLanguage).getLanguageName());
-
-        loadBooksForLanguage(languages.get(indexOfLanguage).getLanguageName());
     }
 
     @Override

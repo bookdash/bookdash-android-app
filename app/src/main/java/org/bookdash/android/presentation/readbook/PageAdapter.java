@@ -4,7 +4,7 @@ import android.support.v4.app.FixedFragmentStatePagerAdapter;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 
-import org.bookdash.android.domain.pojo.gson.Page;
+import org.bookdash.android.domain.model.gson.Page;
 
 import java.util.List;
 

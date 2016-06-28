@@ -1,4 +1,4 @@
-package org.bookdash.android.domain.pojo;
+package org.bookdash.android.domain.model;
 
 import com.parse.ParseClassName;
 import com.parse.ParseObject;
@@ -11,6 +11,7 @@ import java.util.Date;
  * @since 2015/07/17 6:39 PM
  */
 @ParseClassName("Book")
+@Deprecated
 public class Book extends ParseObject {
 
     public String getDateBookCreated(){

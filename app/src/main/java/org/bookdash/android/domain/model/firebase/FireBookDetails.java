@@ -1,4 +1,4 @@
-package org.bookdash.android.domain.pojo.firebase;
+package org.bookdash.android.domain.model.firebase;
 
 import android.os.Parcel;
 import android.os.Parcelable;
@@ -11,6 +11,7 @@ public class FireBookDetails implements Parcelable {
     public static final String TABLE_NAME = "bd_books";
     public static final String CREATED_AT_COL = "createdAt";
     public static final String BOOK_TITLE = "bookTitle";
+    public static final String CONTRIBUTORS_NAME = "contributors";
     public String bookTitle;
     public String bookUrl;
     public String bookCoverPageUrl;

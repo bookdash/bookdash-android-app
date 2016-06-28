@@ -2,11 +2,10 @@ package org.bookdash.android.data.books;
 
 import android.support.annotation.NonNull;
 
-import org.bookdash.android.domain.pojo.Book;
-import org.bookdash.android.domain.pojo.BookContributor;
-import org.bookdash.android.domain.pojo.firebase.FireBookDetails;
-import org.bookdash.android.domain.pojo.firebase.FireLanguage;
-import org.bookdash.android.domain.pojo.gson.BookPages;
+import org.bookdash.android.domain.model.firebase.FireBookDetails;
+import org.bookdash.android.domain.model.firebase.FireContributor;
+import org.bookdash.android.domain.model.firebase.FireLanguage;
+import org.bookdash.android.domain.model.gson.BookPages;
 
 import java.util.List;
 
@@ -58,7 +57,7 @@ public class BookDetailRepositoryImpl implements BookDetailRepository {
     }
 
 
-    @Override
+   /* @Override
     public void getBookDetail(String bookDetailId, @NonNull final GetBookDetailCallback bookDetailCallback) {
         bookDetailApi.getBookDetail(bookDetailId, new BookDetailApi.BookServiceCallback<FireBookDetails>() {
             @Override
@@ -71,13 +70,13 @@ public class BookDetailRepositoryImpl implements BookDetailRepository {
                 bookDetailCallback.onBookDetailLoadError(error);
             }
         });
-    }
+    }*/
 
     @Override
-    public void getContributorsForBook(Book bookId, @NonNull final GetContributorsCallback contributorsCallback) {
-        bookDetailApi.getContributorsForBook(bookId, new BookDetailApi.BookServiceCallback<List<BookContributor>>() {
+    public void getContributorsForBook(FireBookDetails bookId, @NonNull final GetContributorsCallback contributorsCallback) {
+        bookDetailApi.getContributorsForBook(bookId, new BookDetailApi.BookServiceCallback<List<FireContributor>>() {
             @Override
-            public void onLoaded(List<BookContributor> result) {
+            public void onLoaded(List<FireContributor> result) {
                 contributorsCallback.onContributorsLoaded(result);
             }
 

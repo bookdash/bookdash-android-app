@@ -2,9 +2,9 @@ package org.bookdash.android.presentation.bookinfo;
 
 import android.graphics.Bitmap;
 
-import org.bookdash.android.domain.pojo.firebase.FireBookDetails;
-import org.bookdash.android.domain.pojo.firebase.FireContributor;
-import org.bookdash.android.domain.pojo.gson.BookPages;
+import org.bookdash.android.domain.model.firebase.FireBookDetails;
+import org.bookdash.android.domain.model.firebase.FireContributor;
+import org.bookdash.android.domain.model.gson.BookPages;
 
 import java.util.List;
 
@@ -47,7 +47,7 @@ public interface BookInfoContract {
 
     interface UserActionsListener {
 
-        void loadContributorInformation(String bookDetailId);
+        void loadContributorInformation(FireBookDetails bookDetailId);
 
         void downloadBook(FireBookDetails bookDetail);
 

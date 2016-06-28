@@ -1,10 +1,8 @@
 package org.bookdash.android.presentation.downloads;
 
-import com.parse.ParseObject;
-
 import org.bookdash.android.data.books.BookDetailRepository;
-import org.bookdash.android.domain.pojo.firebase.FireBookDetails;
-import org.bookdash.android.domain.pojo.firebase.FireLanguage;
+import org.bookdash.android.domain.model.firebase.FireBookDetails;
+import org.bookdash.android.domain.model.firebase.FireLanguage;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;

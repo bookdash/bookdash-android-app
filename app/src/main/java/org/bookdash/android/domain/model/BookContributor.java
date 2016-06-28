@@ -1,10 +1,11 @@
-package org.bookdash.android.domain.pojo;
+package org.bookdash.android.domain.model;
 
 import com.parse.ParseClassName;
 import com.parse.ParseObject;
 
 
 @ParseClassName(BookContributor.BOOK_CONTRIBUTOR_TABLE_NAME)
+@Deprecated
 public class BookContributor extends ParseObject {
     public static final String BOOK_CONTRIBUTOR_TABLE_NAME = "BookContributor";
     public static final String BOOK_CONTRIBUTOR_COL = "contributor";

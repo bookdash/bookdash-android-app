@@ -26,7 +26,7 @@ import android.widget.TextView;
 
 import org.bookdash.android.Injection;
 import org.bookdash.android.R;
-import org.bookdash.android.domain.pojo.firebase.FireBookDetails;
+import org.bookdash.android.domain.model.firebase.FireBookDetails;
 import org.bookdash.android.presentation.bookinfo.BookInfoActivity;
 import org.bookdash.android.presentation.main.NavDrawerInterface;
 

@@ -6,7 +6,7 @@ import android.view.ViewTreeObserver;
 import android.view.WindowManager;
 
 import org.bookdash.android.R;
-import org.bookdash.android.domain.pojo.gson.BookPages;
+import org.bookdash.android.domain.model.gson.BookPages;
 import org.bookdash.android.presentation.activity.BaseAppCompatActivity;
 
 /**

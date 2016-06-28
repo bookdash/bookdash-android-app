@@ -10,9 +10,9 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.parse.Parse;
 import com.parse.ParseObject;
 
-import org.bookdash.android.domain.pojo.Book;
-import org.bookdash.android.domain.pojo.BookContributor;
-import org.bookdash.android.domain.pojo.Contributor;
+import org.bookdash.android.domain.model.Book;
+import org.bookdash.android.domain.model.BookContributor;
+import org.bookdash.android.domain.model.Contributor;
 
 import io.fabric.sdk.android.Fabric;
 import uk.co.chrisjenx.calligraphy.CalligraphyConfig;
@@ -32,7 +32,7 @@ public class BookDashApplication extends Application {
 
         Crashlytics crashlyticsKit = new Crashlytics.Builder().core(new CrashlyticsCore.Builder().disabled(BuildConfig.DEBUG).build()).build();
         Fabric.with(this, crashlyticsKit);
-        FirebaseDatabase.getInstance().setPersistenceEnabled(true);
+        Injection.init(this);
         ParseObject.registerSubclass(Book.class);
         ParseObject.registerSubclass(Contributor.class);
         ParseObject.registerSubclass(BookContributor.class);

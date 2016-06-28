@@ -1,4 +1,4 @@
-package org.bookdash.android.domain.pojo.gson;
+package org.bookdash.android.domain.model.gson;
 
 /**
  * @author Rebecca Franks (rebecca.franks@dstvdm.com)

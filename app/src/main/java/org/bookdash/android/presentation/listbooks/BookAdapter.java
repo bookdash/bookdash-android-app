@@ -9,7 +9,7 @@ import android.view.ViewGroup;
 import com.bumptech.glide.Glide;
 
 import org.bookdash.android.R;
-import org.bookdash.android.domain.pojo.firebase.FireBookDetails;
+import org.bookdash.android.domain.model.firebase.FireBookDetails;
 
 import java.util.List;
 

@@ -40,9 +40,9 @@ import com.google.android.gms.common.api.GoogleApiClient;
 import org.bookdash.android.Injection;
 import org.bookdash.android.R;
 import org.bookdash.android.databinding.ActivityBookInformationBinding;
-import org.bookdash.android.domain.pojo.firebase.FireBookDetails;
-import org.bookdash.android.domain.pojo.firebase.FireContributor;
-import org.bookdash.android.domain.pojo.gson.BookPages;
+import org.bookdash.android.domain.model.firebase.FireBookDetails;
+import org.bookdash.android.domain.model.firebase.FireContributor;
+import org.bookdash.android.domain.model.gson.BookPages;
 import org.bookdash.android.presentation.activity.BaseAppCompatActivity;
 import org.bookdash.android.presentation.readbook.BookDetailActivity;
 
@@ -177,8 +177,8 @@ public class BookInfoActivity extends BaseAppCompatActivity implements BookInfoC
         final FireBookDetails bookDetailParcelable = getIntent().getParcelableExtra(BOOK_PARCEL);
 
         if (bookDetailParcelable != null) {
-            String bookDetailId = bookDetailParcelable.getId();
             setBookInfoBinding(bookDetailParcelable);
+            startLoadingBook(bookDetailParcelable);
             showBookDetailView();
             actionsListener.loadImage(bookDetailParcelable.getBookCoverUrl());
         } else {
@@ -210,7 +210,7 @@ public class BookInfoActivity extends BaseAppCompatActivity implements BookInfoC
         return super.onOptionsItemSelected(item);
     }
 
-    private void startLoadingBook(final String bookDetailId) {
+    private void startLoadingBook(final FireBookDetails bookDetailId) {
         errorRetryButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -233,7 +233,7 @@ public class BookInfoActivity extends BaseAppCompatActivity implements BookInfoC
             String bookId = uri.getLastPathSegment();
             String invitationId = uri.getQueryParameter("invitation_id");
             Log.d(TAG, "Action View: book id:" + bookId + ". Full URL:" + uri.toString() + ". InvitationId:" + invitationId);
-            startLoadingBook(bookId);
+          //  startLoadingBook(bookId);
         }
     }
 

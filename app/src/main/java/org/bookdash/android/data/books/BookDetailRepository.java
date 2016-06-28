@@ -2,11 +2,10 @@ package org.bookdash.android.data.books;
 
 import android.support.annotation.NonNull;
 
-import org.bookdash.android.domain.pojo.Book;
-import org.bookdash.android.domain.pojo.BookContributor;
-import org.bookdash.android.domain.pojo.firebase.FireBookDetails;
-import org.bookdash.android.domain.pojo.firebase.FireLanguage;
-import org.bookdash.android.domain.pojo.gson.BookPages;
+import org.bookdash.android.domain.model.firebase.FireBookDetails;
+import org.bookdash.android.domain.model.firebase.FireContributor;
+import org.bookdash.android.domain.model.firebase.FireLanguage;
+import org.bookdash.android.domain.model.gson.BookPages;
 
 import java.util.List;
 
@@ -34,7 +33,7 @@ public interface BookDetailRepository {
     }
 
     interface GetContributorsCallback {
-        void onContributorsLoaded(List<BookContributor> contributors);
+        void onContributorsLoaded(List<FireContributor> contributors);
 
         void onContributorsLoadError(Exception e);
     }
@@ -54,9 +53,9 @@ public interface BookDetailRepository {
         void onBookPagesDownloadProgressUpdate(int progress);
     }
 
-    void getBookDetail(String bookDetailId, @NonNull GetBookDetailCallback bookDetailCallback);
+    //void getBookDetail(String bookDetailId, @NonNull GetBookDetailCallback bookDetailCallback);
 
-    void getContributorsForBook(Book bookDetailId, @NonNull GetContributorsCallback contributorsCallback);
+    void getContributorsForBook(FireBookDetails bookDetailId, @NonNull GetContributorsCallback contributorsCallback);
 
     void getLanguages(@NonNull GetLanguagesCallback languagesCallback);
 

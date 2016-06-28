@@ -14,8 +14,8 @@ import com.bumptech.glide.request.target.SimpleTarget;
 
 import org.bookdash.android.R;
 import org.bookdash.android.data.books.BookDetailRepository;
-import org.bookdash.android.domain.pojo.BookContributor;
-import org.bookdash.android.domain.pojo.firebase.FireBookDetails;
+import org.bookdash.android.domain.model.firebase.FireBookDetails;
+import org.bookdash.android.domain.model.firebase.FireContributor;
 
 import java.util.List;
 
@@ -38,8 +38,18 @@ public class BookInfoPresenter implements BookInfoContract.UserActionsListener {
     }
 
     @Override
-    public void loadContributorInformation(String bookDetailId) {
+    public void loadContributorInformation(FireBookDetails bookDetailId) {
+        bookDetailRepository.getContributorsForBook(bookDetailId, new BookDetailRepository.GetContributorsCallback() {
+            @Override
+            public void onContributorsLoaded(List<FireContributor> contributors) {
 
+            }
+
+            @Override
+            public void onContributorsLoadError(Exception e) {
+
+            }
+        });
        /* bookDetailRepository.getContributorsForBook(bookDetailId, new BookDetailRepository.GetContributorsCallback() {
             @Override
             public void onContributorsLoaded(List<BookContributor> contributors) {

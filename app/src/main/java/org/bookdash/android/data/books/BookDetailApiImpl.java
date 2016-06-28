@@ -4,22 +4,19 @@ import android.support.annotation.NonNull;
 import android.support.annotation.WorkerThread;
 import android.util.Log;
 
+import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.google.gson.Gson;
-import com.parse.FindCallback;
-import com.parse.ParseException;
-import com.parse.ParseQuery;
 
 import org.bookdash.android.BookDashApplication;
-import org.bookdash.android.domain.pojo.Book;
-import org.bookdash.android.domain.pojo.BookContributor;
-import org.bookdash.android.domain.pojo.firebase.FireBookDetails;
-import org.bookdash.android.domain.pojo.firebase.FireLanguage;
-import org.bookdash.android.domain.pojo.gson.BookPages;
+import org.bookdash.android.domain.model.firebase.FireBookDetails;
+import org.bookdash.android.domain.model.firebase.FireContributor;
+import org.bookdash.android.domain.model.firebase.FireLanguage;
+import org.bookdash.android.domain.model.gson.BookPages;
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -45,26 +42,6 @@ public class BookDetailApiImpl implements BookDetailApi {
 
     @Override
     public void getBooksForLanguages(@NonNull String language, @NonNull final BookServiceCallback<List<FireBookDetails>> bookServiceCallback) {
-       /* ParseQuery<Language> queryLanguagesNew = ParseQuery.getQuery(Language.class);
-        queryLanguagesNew.whereEqualTo(Language.LANG_NAME_COL, language);
-
-        ParseQuery<BookDetail> queryBookDetail = ParseQuery.getQuery(BookDetail.class);
-        queryBookDetail.setCachePolicy(ParseQuery.CachePolicy.NETWORK_ELSE_CACHE);
-        queryBookDetail.include(BookDetail.BOOK_LANGUAGE_COL);
-        queryBookDetail.include(BookDetail.BOOK_ID_COL);
-        queryBookDetail.whereEqualTo(BookDetail.BOOK_ENABLED_COL, true);
-        queryBookDetail.addDescendingOrder(BookDetail.CREATED_AT_COL);
-        queryBookDetail.whereMatchesQuery(BookDetail.BOOK_LANGUAGE_COL, queryLanguagesNew);
-        queryBookDetail.findInBackground(new FindCallback<BookDetail>() {
-            @Override
-            public void done(List<BookDetail> list, ParseException e) {
-                if (e != null) {
-                    bookServiceCallback.onError(e);
-                    return;
-                }
-                bookServiceCallback.onLoaded(list);
-            }
-        });*/
         final FirebaseDatabase database = FirebaseDatabase.getInstance();
         DatabaseReference languagesRef = database.getReference(FireBookDetails.TABLE_NAME);
         //TODO change to order by created at time.
@@ -75,7 +52,9 @@ public class BookDetailApiImpl implements BookDetailApi {
                 for (DataSnapshot snap : dataSnapshot.getChildren()) {
                     FireBookDetails bookDetails = snap.getValue(FireBookDetails.class);
                     Log.d(TAG, "Book Details:" + bookDetails.bookTitle + ". Book URL:" + bookDetails.bookCoverPageUrl);
+                    bookDetails.bookId = snap.getKey();
                     fireBookDetails.add(bookDetails);
+
                 }
                 bookServiceCallback.onLoaded(fireBookDetails);
             }
@@ -121,44 +100,52 @@ public class BookDetailApiImpl implements BookDetailApi {
         });*/
     }
 
+
     @Override
-    public void getBookDetail(String bookDetailId, final BookServiceCallback<FireBookDetails> bookServiceCallback) {
-     /*   ParseQuery<BookDetail> queryBookDetail = ParseQuery.getQuery(BookDetail.class);
-        queryBookDetail.whereEqualTo(BookDetail.OBJECT_ID, bookDetailId);
-        queryBookDetail.setCachePolicy(ParseQuery.CachePolicy.CACHE_ELSE_NETWORK);
-        queryBookDetail.include(BookDetail.BOOK_LANGUAGE_COL);
-        queryBookDetail.include(BookDetail.BOOK_ID_COL);
-        queryBookDetail.whereEqualTo(BookDetail.BOOK_ENABLED_COL, true);
-        queryBookDetail.getFirstInBackground(new GetCallback<BookDetail>() {
+    public void getContributorsForBook(FireBookDetails book, final BookServiceCallback<List<FireContributor>> contributorsCallback) {
+        Log.d(TAG, "getContributorsForBook() called with: book = [" + book + "], contributorsCallback = [" + contributorsCallback + "]");
+        final FirebaseDatabase database = FirebaseDatabase.getInstance();
+        DatabaseReference contributors = database.getReference(FireBookDetails.TABLE_NAME + "/" + book.bookId + "/" + FireBookDetails.CONTRIBUTORS_NAME);
+        contributors.addChildEventListener(new ChildEventListener() {
             @Override
-            public void done(BookDetail bookDetail, ParseException e) {
-                if (e != null) {
-                    bookServiceCallback.onError(e);
-                    return;
-                }
-                bookServiceCallback.onLoaded(bookDetail);
+            public void onChildAdded(DataSnapshot dataSnapshot, String s) {
+                Log.d(TAG, "onChildAdded() called with: dataSnapshot = [" + dataSnapshot + "], s = [" + s + "]");
+                DatabaseReference db = database.getReference(FireContributor.TABLE_NAME + "/" + dataSnapshot.getKey());
+                db.addValueEventListener(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(DataSnapshot dataSnapshot) {
+                        Log.d(TAG, "onDataChange() called with: dataSnapshot = [" + dataSnapshot + "]");
+                        FireContributor fl = dataSnapshot.getValue(FireContributor.class);
+                        Log.d(TAG, "Author: " + fl.getName());
+                    }
+
+                    @Override
+                    public void onCancelled(DatabaseError databaseError) {
+
+                    }
+                });
             }
-        });*/
-    }
 
-    @Override
-    public void getContributorsForBook(Book bookId, final BookServiceCallback<List<BookContributor>> contributorsCallback) {
-
-        ParseQuery<BookContributor> query = ParseQuery.getQuery(BookContributor.class);
-        query.setCachePolicy(ParseQuery.CachePolicy.CACHE_ELSE_NETWORK);
-        query.whereEqualTo(BookContributor.BOOK_BOOK_COL, bookId);
-        query.include(BookContributor.BOOK_CONTRIBUTOR_COL);
-        query.findInBackground(new FindCallback<BookContributor>() {
             @Override
-            public void done(List<BookContributor> list, ParseException e) {
-                if (e != null) {
-                    contributorsCallback.onError(e);
-                    return;
-                }
-                contributorsCallback.onLoaded(list);
+            public void onChildChanged(DataSnapshot dataSnapshot, String s) {
+
+            }
+
+            @Override
+            public void onChildRemoved(DataSnapshot dataSnapshot) {
+
+            }
+
+            @Override
+            public void onChildMoved(DataSnapshot dataSnapshot, String s) {
+
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
             }
         });
-
 
     }
 

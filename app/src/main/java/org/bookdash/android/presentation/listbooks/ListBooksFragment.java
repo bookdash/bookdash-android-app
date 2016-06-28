@@ -27,7 +27,7 @@ import android.widget.TextView;
 
 import org.bookdash.android.Injection;
 import org.bookdash.android.R;
-import org.bookdash.android.domain.pojo.firebase.FireBookDetails;
+import org.bookdash.android.domain.model.firebase.FireBookDetails;
 import org.bookdash.android.presentation.bookinfo.BookInfoActivity;
 import org.bookdash.android.presentation.main.NavDrawerInterface;
 
@@ -62,7 +62,7 @@ public class ListBooksFragment extends Fragment implements ListBooksContract.Vie
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        actionsListener = new ListBooksPresenter(this, Injection.provideBookRepo(), Injection.provideSettingsRepo(getActivity()));
+        actionsListener = new ListBooksPresenter(this, Injection.provideSettingsRepo(getActivity()), Injection.provideBookService());
 
         circularProgressBar = (CircularProgressBar) view.findViewById(R.id.activity_loading_books);
         linearLayoutErrorScreen = (LinearLayout) view.findViewById(R.id.linear_layout_error);

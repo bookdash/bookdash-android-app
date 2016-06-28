@@ -14,7 +14,7 @@ import com.bumptech.glide.Glide;
 
 import org.bookdash.android.R;
 import org.bookdash.android.databinding.FragmentPageBinding;
-import org.bookdash.android.domain.pojo.gson.Page;
+import org.bookdash.android.domain.model.gson.Page;
 
 import java.io.File;
 
