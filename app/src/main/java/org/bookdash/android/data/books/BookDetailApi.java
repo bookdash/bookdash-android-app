@@ -13,7 +13,6 @@ import java.util.List;
  */
 public interface BookDetailApi {
 
-    void getBooksForLanguages(String language, BookServiceCallback<List<FireBookDetails>> bookServiceCallback);
 
     void getDownloadedBooks(BookServiceCallback<List<FireBookDetails>> bookServiceCallback);
 
@@ -27,12 +26,6 @@ public interface BookDetailApi {
         void onProgressChanged(int progress);
     }
 
-   // void getBookDetail(String bookDetailId, BookServiceCallback<FireBookDetails> bookServiceCallback);
-
-    void getContributorsForBook(FireBookDetails bookId, BookServiceCallback<List<FireContributor>> contributorsCallback);
-
-
-    void getLanguages(BookServiceCallback<List<FireLanguage>> languagesCallback);
 
     void downloadBook(FireBookDetails bookDetail, BookServiceCallback<BookPages> downloadBookCallback, BookServiceProgressCallback bookServiceProgressCallback);
 

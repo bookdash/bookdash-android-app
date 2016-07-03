@@ -118,12 +118,4 @@ public class FirebaseBookDatabase implements BookDatabase {
         };
     }
 
-    private <T> Func1<DataSnapshot, T> as(final Class<T> tClass) {
-        return new Func1<DataSnapshot, T>() {
-            @Override
-            public T call(DataSnapshot dataSnapshot) {
-                return dataSnapshot.getValue(tClass);
-            }
-        };
-    }
 }

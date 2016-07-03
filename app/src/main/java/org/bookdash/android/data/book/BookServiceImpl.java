@@ -14,7 +14,7 @@ public class BookServiceImpl implements BookService {
 
     private final BookDatabase bookDatabase;
 
-    public BookServiceImpl(BookDatabase bookDatabase){
+    public BookServiceImpl(BookDatabase bookDatabase) {
         this.bookDatabase = bookDatabase;
     }
 
@@ -28,7 +28,7 @@ public class BookServiceImpl implements BookService {
         return bookDatabase.getBooksForLanguage(fireLanguage);
     }
 
-    public Observable<List<FireContributor>> getContributorsForBook(final FireBookDetails bookDetails){
+    public Observable<List<FireContributor>> getContributorsForBook(final FireBookDetails bookDetails) {
         return bookDatabase.getContributorsForBook(bookDetails);
     }
 }

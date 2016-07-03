@@ -3,8 +3,6 @@ package org.bookdash.android.data.books;
 import android.support.annotation.NonNull;
 
 import org.bookdash.android.domain.model.firebase.FireBookDetails;
-import org.bookdash.android.domain.model.firebase.FireContributor;
-import org.bookdash.android.domain.model.firebase.FireLanguage;
 import org.bookdash.android.domain.model.gson.BookPages;
 
 import java.util.List;
@@ -23,21 +21,6 @@ public class BookDetailRepositoryImpl implements BookDetailRepository {
         this.bookDetailApi = bookDetailApi;
     }
 
-    @Override
-    public void getBooksForLanguage(@NonNull String language, @NonNull final GetBooksForLanguageCallback booksForLanguageCallback) {
-        bookDetailApi.getBooksForLanguages(language, new BookDetailApi.BookServiceCallback<List<FireBookDetails>>() {
-
-            @Override
-            public void onLoaded(List<FireBookDetails> result) {
-                booksForLanguageCallback.onBooksLoaded(result);
-            }
-
-            @Override
-            public void onError(Exception error) {
-                booksForLanguageCallback.onBooksLoadError(error);
-            }
-        });
-    }
 
     @Override
     public void getDownloadedBooks(final GetBooksForLanguageCallback getBooksForLanguageCallback) {
@@ -56,53 +39,6 @@ public class BookDetailRepositoryImpl implements BookDetailRepository {
 
     }
 
-
-   /* @Override
-    public void getBookDetail(String bookDetailId, @NonNull final GetBookDetailCallback bookDetailCallback) {
-        bookDetailApi.getBookDetail(bookDetailId, new BookDetailApi.BookServiceCallback<FireBookDetails>() {
-            @Override
-            public void onLoaded(FireBookDetails result) {
-                bookDetailCallback.onBookDetailLoaded(result);
-            }
-
-            @Override
-            public void onError(Exception error) {
-                bookDetailCallback.onBookDetailLoadError(error);
-            }
-        });
-    }*/
-
-    @Override
-    public void getContributorsForBook(FireBookDetails bookId, @NonNull final GetContributorsCallback contributorsCallback) {
-        bookDetailApi.getContributorsForBook(bookId, new BookDetailApi.BookServiceCallback<List<FireContributor>>() {
-            @Override
-            public void onLoaded(List<FireContributor> result) {
-                contributorsCallback.onContributorsLoaded(result);
-            }
-
-            @Override
-            public void onError(Exception error) {
-                contributorsCallback.onContributorsLoadError(error);
-            }
-        });
-    }
-
-
-    @Override
-    public void getLanguages(@NonNull final GetLanguagesCallback languagesCallback) {
-        bookDetailApi.getLanguages(new BookDetailApi.BookServiceCallback<List<FireLanguage>>() {
-
-            @Override
-            public void onLoaded(List<FireLanguage> result) {
-                languagesCallback.onLanguagesLoaded(result);
-            }
-
-            @Override
-            public void onError(Exception error) {
-                languagesCallback.onLanguagesLoadError(error);
-            }
-        });
-    }
 
     @Override
     public void downloadBook(FireBookDetails bookDetail, @NonNull final GetBookPagesCallback bookPagesCallback) {

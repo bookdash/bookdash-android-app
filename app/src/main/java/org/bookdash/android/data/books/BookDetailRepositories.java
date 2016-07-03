@@ -8,11 +8,11 @@ import android.support.annotation.NonNull;
  */
 public class BookDetailRepositories {
 
+    private static BookDetailRepository repository = null;
+
     private BookDetailRepositories() {
         // no instance
     }
-
-    private static BookDetailRepository repository = null;
 
     public synchronized static BookDetailRepository getInstance(@NonNull BookDetailApi bookDetailApi) {
         if (null == repository) {
