@@ -33,10 +33,6 @@ import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
-import com.google.android.gms.appindexing.Action;
-import com.google.android.gms.appindexing.AppIndex;
-import com.google.android.gms.common.api.GoogleApiClient;
-
 import org.bookdash.android.Injection;
 import org.bookdash.android.R;
 import org.bookdash.android.databinding.ActivityBookInformationBinding;
@@ -79,12 +75,6 @@ public class BookInfoActivity extends BaseAppCompatActivity implements BookInfoC
     private Toolbar toolbar;
     private ActionBar actionBar;
     private FireBookDetails bookInfo;
-    private Action viewAction;
-    /**
-     * ATTENTION: This was auto-generated to implement the App Indexing API.
-     * See https://g.co/AppIndexing/AndroidStudio for more information.
-     */
-    private GoogleApiClient client;
     private Button errorRetryButton;
 
 
@@ -184,7 +174,6 @@ public class BookInfoActivity extends BaseAppCompatActivity implements BookInfoC
         } else {
             onNewIntent(getIntent());
         }
-        client = new GoogleApiClient.Builder(this).addApi(AppIndex.API).build();
 
     }
 
@@ -330,22 +319,9 @@ public class BookInfoActivity extends BaseAppCompatActivity implements BookInfoC
 
     @Override
     public void setBookInfoBinding(FireBookDetails bookInfo) {
-        if (client != null) {
-            client.connect();
-        }
-
         this.bookInfo = bookInfo;
         binding.setBookInfo(bookInfo);
         actionsListener.loadImage(bookInfo.getBookCoverUrl());
-        viewAction = Action.newAction(
-                Action.TYPE_VIEW,
-                bookInfo.getBookTitle(),
-                bookInfo.getWebUrl() == null ? null : Uri.parse(bookInfo.getWebUrl()),
-                Uri.parse("android-app://org.bookdash.android/http/bookdash.org/books/" + bookInfo.getId())
-        );
-        if (client != null) {
-            AppIndex.AppIndexApi.start(client, viewAction);
-        }
     }
 
     @Override
@@ -437,10 +413,5 @@ public class BookInfoActivity extends BaseAppCompatActivity implements BookInfoC
     public void onStop() {
         super.onStop();
 
-        if (viewAction != null) {
-            AppIndex.AppIndexApi.end(client, viewAction);
-
-        }
-        client.disconnect();
     }
 }

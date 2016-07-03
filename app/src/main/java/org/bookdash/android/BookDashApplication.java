@@ -4,9 +4,7 @@ import android.app.Application;
 
 import com.crashlytics.android.Crashlytics;
 import com.crashlytics.android.core.CrashlyticsCore;
-import com.google.android.gms.analytics.GoogleAnalytics;
-import com.google.android.gms.analytics.Tracker;
-import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.analytics.FirebaseAnalytics;
 import com.parse.Parse;
 import com.parse.ParseObject;
 
@@ -24,7 +22,7 @@ import uk.co.chrisjenx.calligraphy.CalligraphyConfig;
 public class BookDashApplication extends Application {
     public static boolean isTablet = false;
     public static String FILES_DIR;
-    private Tracker mTracker;
+    private FirebaseAnalytics firebaseAnalytics;
 
     @Override
     public void onCreate() {
@@ -42,22 +40,17 @@ public class BookDashApplication extends Application {
 
         isTablet = getResources().getBoolean(R.bool.is_tablet);
         FILES_DIR = getFilesDir().getPath();
-        getDefaultTracker().enableAutoActivityTracking(true);
+        getDefaultTracker();
 
         CalligraphyConfig.initDefault(new CalligraphyConfig.Builder().setDefaultFontPath("fonts/ComingSoon.ttf").setFontAttrId(R.attr.fontPath).build());
     }
 
-    /**
-     * Gets the default {@link Tracker} for this {@link Application}.
-     *
-     * @return tracker
-     */
-    synchronized public Tracker getDefaultTracker() {
-        if (mTracker == null) {
-            GoogleAnalytics analytics = GoogleAnalytics.getInstance(this);
-            // To enable debug logging use: adb shell setprop log.tag.GAv4 DEBUG
-            mTracker = analytics.newTracker(R.xml.global_tracker);
+
+    synchronized public FirebaseAnalytics getDefaultTracker() {
+        if (firebaseAnalytics == null) {
+            firebaseAnalytics = FirebaseAnalytics.getInstance(this);
+
         }
-        return mTracker;
+        return firebaseAnalytics;
     }
 }
