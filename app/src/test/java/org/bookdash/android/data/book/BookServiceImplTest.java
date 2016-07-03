@@ -1,6 +1,6 @@
 package org.bookdash.android.data.book;
 
-import org.bookdash.android.data.database.BookDatabase;
+import org.bookdash.android.data.database.firebase.BookDatabase;
 import org.bookdash.android.domain.model.firebase.FireBookDetails;
 import org.bookdash.android.domain.model.firebase.FireLanguage;
 import org.junit.Before;

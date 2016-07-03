@@ -34,6 +34,8 @@ import org.bookdash.android.presentation.main.NavDrawerInterface;
 import java.util.List;
 
 import fr.castorflex.android.circularprogressbar.CircularProgressBar;
+import rx.android.schedulers.AndroidSchedulers;
+import rx.schedulers.Schedulers;
 
 
 public class ListBooksFragment extends Fragment implements ListBooksContract.View {
@@ -62,8 +64,8 @@ public class ListBooksFragment extends Fragment implements ListBooksContract.Vie
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        listBooksPresenter = new ListBooksPresenter(this, Injection.provideSettingsRepo(getActivity()), Injection.provideBookService());
-
+        listBooksPresenter = new ListBooksPresenter(this, Injection.provideSettingsRepo(getActivity()), Injection.provideBookService(), Schedulers.io(), AndroidSchedulers.mainThread());
+        listBooksPresenter.attachView(this);
         circularProgressBar = (CircularProgressBar) view.findViewById(R.id.activity_loading_books);
         linearLayoutErrorScreen = (LinearLayout) view.findViewById(R.id.linear_layout_error);
         buttonRetry = (Button) view.findViewById(R.id.button_retry);
@@ -97,7 +99,7 @@ public class ListBooksFragment extends Fragment implements ListBooksContract.Vie
     @Override
     public void onDestroyView() {
         super.onDestroyView();
-        listBooksPresenter.stopPresenting();
+        listBooksPresenter.detachView();
     }
 
     private View.OnClickListener bookClickListener = new View.OnClickListener() {

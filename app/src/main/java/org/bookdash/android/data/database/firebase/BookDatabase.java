@@ -1,4 +1,4 @@
-package org.bookdash.android.data.database;
+package org.bookdash.android.data.database.firebase;
 
 import org.bookdash.android.domain.model.firebase.FireBookDetails;
 import org.bookdash.android.domain.model.firebase.FireContributor;

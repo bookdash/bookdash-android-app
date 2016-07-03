@@ -11,7 +11,7 @@ import org.bookdash.android.data.book.BookServiceImpl;
 import org.bookdash.android.data.books.BookDetailApiImpl;
 import org.bookdash.android.data.books.BookDetailRepositories;
 import org.bookdash.android.data.books.BookDetailRepository;
-import org.bookdash.android.data.database.FirebaseBookDatabase;
+import org.bookdash.android.data.database.firebase.FirebaseBookDatabase;
 import org.bookdash.android.data.settings.SettingsApiImpl;
 import org.bookdash.android.data.settings.SettingsRepositories;
 import org.bookdash.android.data.settings.SettingsRepository;

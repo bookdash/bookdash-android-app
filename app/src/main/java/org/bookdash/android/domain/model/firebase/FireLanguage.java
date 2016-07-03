@@ -8,10 +8,11 @@ public class FireLanguage {
     private boolean enabled;
     private String id;
 
-    public FireLanguage(String languageName, String languageAbbreviation, boolean enabled) {
+    public FireLanguage(String languageName, String languageAbbreviation, boolean enabled, String id) {
         this.languageName = languageName;
         this.languageAbbreviation = languageAbbreviation;
         this.enabled = enabled;
+        this.id = id;
     }
 
     public FireLanguage() {
@@ -48,5 +49,9 @@ public class FireLanguage {
 
     public String getId() {
         return id;
+    }
+
+    public void setId(final String key) {
+        this.id = key;
     }
 }

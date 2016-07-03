@@ -1,5 +1,6 @@
-package org.bookdash.android.data.database;
+package org.bookdash.android.data.database.firebase;
 
+import android.support.annotation.NonNull;
 import android.util.Log;
 
 import com.google.firebase.database.DataSnapshot;
@@ -40,8 +41,27 @@ public class FirebaseBookDatabase implements BookDatabase {
 
     @Override
     public Observable<List<FireBookDetails>> getBooksForLanguage(final FireLanguage fireLanguage) {
-        return firebaseObservableListeners.listenToValueEvents(booksTable.orderByChild(FireBookDetails.BOOK_TITLE), asBooks());
+        return firebaseObservableListeners.listenToValueEvents(booksTable.orderByChild(FireBookDetails.BOOK_TITLE), asBooks()).flatMap(filterByLanguageSelected(fireLanguage));
     }
+
+
+    @NonNull
+    private Func1<List<FireBookDetails>, Observable<List<FireBookDetails>>> filterByLanguageSelected(final FireLanguage fireLanguage) {
+        return new Func1<List<FireBookDetails>, Observable<List<FireBookDetails>>>() {
+            @Override
+            public Observable<List<FireBookDetails>> call(final List<FireBookDetails> fireBookList) {
+                Log.d(TAG, "call() called with: " + "fireBookList = [" + fireBookList + "]");
+                return Observable.from(fireBookList).filter(new Func1<FireBookDetails, Boolean>() {
+                    @Override
+                    public Boolean call(final FireBookDetails fireBookDetails) {
+                        Log.d(TAG, "call() called with: " + "fireBookDetails = [" + fireBookDetails + "]");
+                        return fireBookDetails.bookLanguage.equalsIgnoreCase(fireLanguage.getId());
+                    }
+                }).toList();
+            }
+        };
+    }
+
 
     @Override
     public Observable<List<FireContributor>> getContributorsForBook(final FireBookDetails fireBookDetails) {
@@ -111,6 +131,7 @@ public class FirebaseBookDatabase implements BookDatabase {
                 List<FireLanguage> fireLanguages = new ArrayList<>();
                 for (DataSnapshot snap : dataSnapshot.getChildren()) {
                     FireLanguage language = snap.getValue(FireLanguage.class);
+                    language.setId(snap.getKey());
                     fireLanguages.add(language);
                 }
                 return fireLanguages;
