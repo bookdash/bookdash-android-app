@@ -1,26 +1,29 @@
 package org.bookdash.android.domain.model.firebase;
 
 
+import java.util.List;
+
 public class FireContributor {
     public static final String TABLE_NAME = "bd_contributors";
     private String name;
     private String avatar;
-    private String role;
+    private List<String> roles;
     private String id;
 
-    public FireContributor(String name, String profilePicUrl, String role) {
+    public FireContributor(String name, String profilePicUrl, List<String> role) {
         this.name = name;
         this.avatar = profilePicUrl;
-        this.role = role;
+        this.roles = role;
     }
 
-    public FireContributor(final String name, final String profilePicUrl, final String role, final String id) {
+    public FireContributor(final String name, final String profilePicUrl, final List<String> role, final String id) {
         this.name = name;
         this.avatar = profilePicUrl;
-        this.role = role;
+        this.roles = role;
         this.id = id;
     }
 
+    @SuppressWarnings("unused") // Used By Firebase
     public FireContributor() {
     }
 
@@ -40,12 +43,12 @@ public class FireContributor {
         this.avatar = avatar;
     }
 
-    public String getRole() {
-        return role;
+    public List<String> getRoles() {
+        return roles;
     }
 
-    public void setRole(String role) {
-        this.role = role;
+    public void setRoles(List<String> role) {
+        this.roles = role;
     }
 
     public void setId(final String id) {

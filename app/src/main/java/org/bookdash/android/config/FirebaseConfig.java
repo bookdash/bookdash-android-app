@@ -12,8 +12,6 @@ import org.bookdash.android.BuildConfig;
 import org.bookdash.android.R;
 
 public class FirebaseConfig implements RemoteConfigSettingsApi {
-
-    private static final String ORDER_CHANNELS_BY_NAME = "orderChannelsByName";
     private static final int CACHE_EXPIRATION_IN_SECONDS = 3600;
     private static final String DEFAULT_LANGUAGE_ID = "default_language_id";
     private static final String DEFAULT_LANGUAGE_NAME = "default_language_name";
@@ -44,7 +42,7 @@ public class FirebaseConfig implements RemoteConfigSettingsApi {
         }).addOnFailureListener(new OnFailureListener() {
             @Override
             public void onFailure(@NonNull Exception e) {
-                Log.d(TAG, "onFailure() called with: " + "e = [" + e + "]");
+                Log.d(TAG, "onFailure() called with: " + "e = [" + e + "]", e);
             }
         });
         return this;
