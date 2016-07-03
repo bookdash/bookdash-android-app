@@ -16,11 +16,9 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.List;
-import java.util.concurrent.Callable;
 import java.util.concurrent.Executor;
 import java.util.concurrent.Executors;
 
-import bolts.Task;
 
 /**
  * @author rebeccafranks
@@ -103,7 +101,7 @@ public class BookDetailApiImpl implements BookDetailApi {
 
     @Override
     public void deleteBook(final FireBookDetails bookDetail, final BookServiceCallback<Boolean> deleteBook) {
-        Task.call(new Callable<Void>() {
+   /*     Task.call(new Callable<Void>() {
             @Override
             public Void call() throws Exception {
                 try {
@@ -115,7 +113,7 @@ public class BookDetailApiImpl implements BookDetailApi {
                 return null;
 
             }
-        }, DISK_EXECUTOR);
+        }, DISK_EXECUTOR);*/
     }
 
     @WorkerThread
@@ -125,7 +123,7 @@ public class BookDetailApiImpl implements BookDetailApi {
     }
 
     private void getBookPages(final FireBookDetails bookInfo, final byte[] bytes, final BookServiceCallback<BookPages> bookServiceCallback) {
-        Task.call(new Callable<BookPages>() {
+        /*Task.call(new Callable<BookPages>() {
             @Override
             public BookPages call() throws Exception {
                 BookPages bookPages = saveBook(bytes, bookInfo);
@@ -136,7 +134,7 @@ public class BookDetailApiImpl implements BookDetailApi {
                 bookServiceCallback.onLoaded(bookPages);
                 return bookPages;
             }
-        }, DISK_EXECUTOR);
+        }, DISK_EXECUTOR);*/
     }
 
 
