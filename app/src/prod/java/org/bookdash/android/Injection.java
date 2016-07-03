@@ -5,7 +5,11 @@ import android.content.Context;
 import com.google.firebase.FirebaseApp;
 import com.google.firebase.FirebaseOptions;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.remoteconfig.FirebaseRemoteConfig;
+import com.google.firebase.remoteconfig.FirebaseRemoteConfigSettings;
 
+import org.bookdash.android.config.FirebaseConfig;
+import org.bookdash.android.config.RemoteConfigSettingsApi;
 import org.bookdash.android.data.book.BookService;
 import org.bookdash.android.data.book.BookServiceImpl;
 import org.bookdash.android.data.books.BookDetailApiImpl;
@@ -24,7 +28,7 @@ import org.bookdash.android.data.utils.firebase.FirebaseObservableListeners;
 public class Injection {
 
     private static BookService bookService = null;
-
+    private static RemoteConfigSettingsApi config;
     private Injection() {
 
     }
@@ -38,11 +42,14 @@ public class Injection {
             FirebaseObservableListeners firebaseObservableListeners = new FirebaseObservableListeners();
             FirebaseBookDatabase bookDatabase = new FirebaseBookDatabase(firebaseDatabase, firebaseObservableListeners);
             bookService = new BookServiceImpl(bookDatabase);
+
+            config = FirebaseConfig.newInstance().init();
+
         }
     }
 
     private static boolean isInitialized() {
-        return bookService != null;
+        return bookService != null && config != null;
     }
 
     public static BookDetailRepository provideBookRepo(){
@@ -50,10 +57,14 @@ public class Injection {
     }
 
     public static SettingsRepository provideSettingsRepo(Context context) {
-        return SettingsRepositories.getInstance(new SettingsApiImpl(context));
+        return SettingsRepositories.getInstance(new SettingsApiImpl(context, provideRemoteConfig()));
     }
 
     public static BookService provideBookService() {
         return bookService;
+    }
+
+    public static RemoteConfigSettingsApi provideRemoteConfig(){
+        return config;
     }
 }

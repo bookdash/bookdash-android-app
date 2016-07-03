@@ -6,6 +6,7 @@ import android.preference.PreferenceManager;
 
 import com.google.gson.Gson;
 
+import org.bookdash.android.config.RemoteConfigSettingsApi;
 import org.bookdash.android.domain.model.firebase.FireLanguage;
 
 import java.util.concurrent.Callable;
@@ -21,9 +22,11 @@ public class SettingsApiImpl implements SettingsApi {
     private static final String LANGUAGE_SETTING = "language_option";
     private static final String PREF_IS_FIRST_TIME = "is_first_time";
     private final Context context;
+    private final RemoteConfigSettingsApi remoteConfig;
 
-    public SettingsApiImpl(Context context) {
+    public SettingsApiImpl(Context context, RemoteConfigSettingsApi remoteConfigSettingsApi) {
         this.context = context;
+        this.remoteConfig = remoteConfigSettingsApi;
     }
 
     @Override
@@ -66,7 +69,7 @@ public class SettingsApiImpl implements SettingsApi {
                 SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context);
                 String json = sharedPreferences.getString(FIRE_LANGUAGE_PREF, "");
                 if (json.isEmpty()) {
-                    return Single.just(new FireLanguage("English", "EN", true, "-KFQlsLuj6nKinrrPdZy"));
+                    return Single.just(new FireLanguage(remoteConfig.getDefaultLanguageName(), remoteConfig.getDefaultLanguageAbbreviation(), true, remoteConfig.getDefaultLanguageId()));
                 }
                 return Single.just(gson.fromJson(json, FireLanguage.class));
             }

@@ -168,11 +168,14 @@ dependencies {
         transitive = true;
     }
     compile 'za.co.riggaroo:materialhelptutorial:1.0.3'
+
     compile 'com.google.firebase:firebase-invites:9.2.0'
     compile 'com.google.firebase:firebase-core:9.2.0'
     compile 'com.google.firebase:firebase-database:9.2.0'
     compile 'com.google.firebase:firebase-messaging:9.2.0'
     compile 'com.google.firebase:firebase-storage:9.2.0'
+    compile 'com.google.firebase:firebase-config:9.2.0'
+
     compile 'uk.co.chrisjenx:calligraphy:2.2.0'
     compile 'io.reactivex:rxandroid:1.2.1'
 // Because RxAndroid releases are few and far between, it is recommended you also
