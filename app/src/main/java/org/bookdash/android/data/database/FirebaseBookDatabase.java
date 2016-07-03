@@ -24,10 +24,12 @@ public class FirebaseBookDatabase implements BookDatabase {
     private final DatabaseReference booksTable;
     private final DatabaseReference languagesTable;
     private final FirebaseObservableListeners firebaseObservableListeners;
+    private final DatabaseReference contributorsTable;
 
     public FirebaseBookDatabase(FirebaseDatabase firebaseDatabase, FirebaseObservableListeners firebaseObservableListeners) {
         this.booksTable = firebaseDatabase.getReference(FireBookDetails.TABLE_NAME);
         this.languagesTable = firebaseDatabase.getReference(FireLanguage.TABLE_NAME);
+        this.contributorsTable = firebaseDatabase.getReference(FireContributor.TABLE_NAME);
         this.firebaseObservableListeners = firebaseObservableListeners;
     }
 
@@ -43,9 +45,38 @@ public class FirebaseBookDatabase implements BookDatabase {
 
     @Override
     public Observable<List<FireContributor>> getContributorsForBook(final FireBookDetails fireBookDetails) {
-        return null;
+        return Observable.just(fireBookDetails.getContributorsIndexList()).flatMap(getContributorsFromIds());
     }
 
+    private Func1<List<String>, Observable<List<FireContributor>>> getContributorsFromIds() {
+        return new Func1<List<String>, Observable<List<FireContributor>>>() {
+            @Override
+            public Observable<List<FireContributor>> call(List<String> userIds) {
+                return Observable.from(userIds).flatMap(getUserFromId()).toList();
+            }
+        };
+    }
+
+    private Func1<String, Observable<FireContributor>> getUserFromId() {
+        return new Func1<String, Observable<FireContributor>>() {
+            @Override
+            public Observable<FireContributor> call(final String userId) {
+                return firebaseObservableListeners.listenToSingleValueEvents(contributorsTable.child(userId), asContributor());
+            }
+        };
+    }
+
+    private Func1<DataSnapshot, FireContributor> asContributor() {
+        return new Func1<DataSnapshot, FireContributor>() {
+            @Override
+            public FireContributor call(DataSnapshot dataSnapshot) {
+                FireContributor contributor = dataSnapshot.getValue(FireContributor.class);
+                contributor.setId(dataSnapshot.getKey());
+                Log.d(TAG, "Contributor:" + contributor.getName() + ", " + contributor.getRole());
+                return contributor;
+            }
+        };
+    }
 
     private Func1<DataSnapshot, List<FireBookDetails>> asBooks() {
         return new Func1<DataSnapshot, List<FireBookDetails>>() {
@@ -57,6 +88,14 @@ public class FirebaseBookDatabase implements BookDatabase {
                     FireBookDetails bookDetails = snap.getValue(FireBookDetails.class);
                     Log.d(TAG, "Book Details:" + bookDetails.bookTitle + ". Book URL:" + bookDetails.bookCoverPageUrl);
                     bookDetails.bookId = snap.getKey();
+                    List<String> keys = new ArrayList<>();
+                    if (snap.child(FireBookDetails.CONTRIBUTORS_ITEM_NAME).hasChildren()) {
+                        Iterable<DataSnapshot> children = snap.child(FireBookDetails.CONTRIBUTORS_ITEM_NAME).getChildren();
+                        for (DataSnapshot child : children) {
+                            keys.add(child.getKey());
+                        }
+                    }
+                    bookDetails.setContributors(keys);
                     fireBookDetails.add(bookDetails);
 
                 }
@@ -75,6 +114,15 @@ public class FirebaseBookDatabase implements BookDatabase {
                     fireLanguages.add(language);
                 }
                 return fireLanguages;
+            }
+        };
+    }
+
+    private <T> Func1<DataSnapshot, T> as(final Class<T> tClass) {
+        return new Func1<DataSnapshot, T>() {
+            @Override
+            public T call(DataSnapshot dataSnapshot) {
+                return dataSnapshot.getValue(tClass);
             }
         };
     }

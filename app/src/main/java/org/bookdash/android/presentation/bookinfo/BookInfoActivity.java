@@ -162,7 +162,7 @@ public class BookInfoActivity extends BaseAppCompatActivity implements BookInfoC
         });
 
 
-        actionsListener = new BookInfoPresenter(this.getApplicationContext(), this, Injection.provideBookRepo());
+        actionsListener = new BookInfoPresenter(this.getApplicationContext(), this, Injection.provideBookRepo(), Injection.provideBookService());
         calculateLayoutHeight();
         imageViewBook.getViewTreeObserver().addOnPreDrawListener(new ViewTreeObserver
                 .OnPreDrawListener() {

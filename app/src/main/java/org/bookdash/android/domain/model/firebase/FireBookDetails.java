@@ -6,12 +6,14 @@ import android.os.Parcelable;
 import org.bookdash.android.BookDashApplication;
 
 import java.io.File;
+import java.util.List;
 
 public class FireBookDetails implements Parcelable {
     public static final String TABLE_NAME = "bd_books";
     public static final String CREATED_AT_COL = "createdAt";
     public static final String BOOK_TITLE = "bookTitle";
     public static final String CONTRIBUTORS_NAME = "contributors";
+    public static final String CONTRIBUTORS_ITEM_NAME = "contributors";
     public String bookTitle;
     public String bookUrl;
     public String bookCoverPageUrl;
@@ -19,6 +21,7 @@ public class FireBookDetails implements Parcelable {
     public String bookLanguage;
     public String bookId;
     public String bookDescription;
+    private List<String> contributors;
 
     private boolean isDownloading;
 
@@ -84,6 +87,16 @@ public class FireBookDetails implements Parcelable {
         return null;//todo
     }
 
+
+
+    public List<String> getContributorsIndexList() {
+        return contributors;
+    }
+
+    public void setContributors(final List<String> contributors) {
+        this.contributors = contributors;
+    }
+
     @Override
     public int describeContents() {
         return 0;
@@ -98,6 +111,7 @@ public class FireBookDetails implements Parcelable {
         dest.writeString(this.bookLanguage);
         dest.writeString(this.bookId);
         dest.writeString(this.bookDescription);
+        dest.writeStringList(this.contributors);
         dest.writeByte(this.isDownloading ? (byte) 1 : (byte) 0);
     }
 
@@ -109,10 +123,11 @@ public class FireBookDetails implements Parcelable {
         this.bookLanguage = in.readString();
         this.bookId = in.readString();
         this.bookDescription = in.readString();
+        this.contributors = in.createStringArrayList();
         this.isDownloading = in.readByte() != 0;
     }
 
-    public static final Creator<FireBookDetails> CREATOR = new Creator<FireBookDetails>() {
+    public static final Parcelable.Creator<FireBookDetails> CREATOR = new Parcelable.Creator<FireBookDetails>() {
         @Override
         public FireBookDetails createFromParcel(Parcel source) {
             return new FireBookDetails(source);

@@ -40,7 +40,7 @@ public class ListBooksFragment extends Fragment implements ListBooksContract.Vie
 
     private static final String TAG = ListBooksFragment.class.getCanonicalName();
     private static final int BOOK_DETAIL_REQUEST_CODE = 43;
-    private ListBooksContract.UserActionsListener actionsListener;
+    private ListBooksContract.Presenter listBooksPresenter;
     private Button buttonRetry;
     private RecyclerView recyclerViewBooks;
     private CircularProgressBar circularProgressBar;
@@ -62,7 +62,7 @@ public class ListBooksFragment extends Fragment implements ListBooksContract.Vie
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        actionsListener = new ListBooksPresenter(this, Injection.provideSettingsRepo(getActivity()), Injection.provideBookService());
+        listBooksPresenter = new ListBooksPresenter(this, Injection.provideSettingsRepo(getActivity()), Injection.provideBookService());
 
         circularProgressBar = (CircularProgressBar) view.findViewById(R.id.activity_loading_books);
         linearLayoutErrorScreen = (LinearLayout) view.findViewById(R.id.linear_layout_error);
@@ -74,7 +74,7 @@ public class ListBooksFragment extends Fragment implements ListBooksContract.Vie
             @Override
             public void onClick(View v) {
                 Log.d(TAG, "Retry button clicked");
-                actionsListener.loadBooksForLanguagePreference();
+                listBooksPresenter.loadBooksForLanguagePreference();
             }
         });
         Toolbar toolbar = (Toolbar) view.findViewById(R.id.toolbar);
@@ -89,11 +89,16 @@ public class ListBooksFragment extends Fragment implements ListBooksContract.Vie
             actionBar.setDisplayHomeAsUpEnabled(true);
             actionBar.setTitle(getString(R.string.book_dash));
         }
-        actionsListener.loadLanguages();
-        actionsListener.loadBooksForLanguagePreference();
+        listBooksPresenter.loadLanguages();
+        listBooksPresenter.loadBooksForLanguagePreference();
         setHasOptionsMenu(true);
     }
 
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        listBooksPresenter.stopPresenting();
+    }
 
     private View.OnClickListener bookClickListener = new View.OnClickListener() {
         @Override
@@ -208,7 +213,7 @@ public class ListBooksFragment extends Fragment implements ListBooksContract.Vie
                 dialog.dismiss();
             }
 
-            actionsListener.saveSelectedLanguage(which);
+            listBooksPresenter.saveSelectedLanguage(which);
 
         }
     };
@@ -252,7 +257,7 @@ public class ListBooksFragment extends Fragment implements ListBooksContract.Vie
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         if (item.getItemId() == R.id.action_language_choice) {
-            actionsListener.clickOpenLanguagePopover();
+            listBooksPresenter.clickOpenLanguagePopover();
             return true;
         }
         return super.onOptionsItemSelected(item);

@@ -1,7 +1,6 @@
 package org.bookdash.android.presentation.listbooks;
 
 import org.bookdash.android.data.book.BookService;
-import org.bookdash.android.data.books.BookDetailRepository;
 import org.bookdash.android.data.settings.SettingsRepository;
 import org.bookdash.android.domain.model.firebase.FireBookDetails;
 import org.bookdash.android.domain.model.firebase.FireLanguage;
@@ -15,7 +14,7 @@ import rx.subscriptions.CompositeSubscription;
  * @author rebeccafranks
  * @since 15/11/03.
  */
-public class ListBooksPresenter implements ListBooksContract.UserActionsListener {
+class ListBooksPresenter implements ListBooksContract.Presenter {
 
     private ListBooksContract.View listBooksView;
     private SettingsRepository settingsRepository;
@@ -24,7 +23,7 @@ public class ListBooksPresenter implements ListBooksContract.UserActionsListener
     private BookService bookService;
     private CompositeSubscription compositeSubscription = new CompositeSubscription();
 
-    public ListBooksPresenter(ListBooksContract.View listBooksView, SettingsRepository settingsRepository, BookService bookService) {
+    ListBooksPresenter(ListBooksContract.View listBooksView, SettingsRepository settingsRepository, BookService bookService) {
         this.listBooksView = listBooksView;
         this.settingsRepository = settingsRepository;
         this.bookService = bookService;
@@ -67,7 +66,7 @@ public class ListBooksPresenter implements ListBooksContract.UserActionsListener
         listBooksView.showLoading(true);
         compositeSubscription.add(bookService.getBooksForLanguage(null).subscribe(new Action1<List<FireBookDetails>>() {
             @Override
-            public void call(final List<FireBookDetails> fireBookDetailses) {
+            public void call(final List<FireBookDetails> fireBookDetailses) { //todo
                 listBooksView.showLoading(false);
                 listBooksView.showErrorScreen(false, "", false);
                 listBooksView.showBooks(fireBookDetailses);

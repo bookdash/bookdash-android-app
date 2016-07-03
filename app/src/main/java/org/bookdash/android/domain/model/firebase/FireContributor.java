@@ -4,13 +4,21 @@ package org.bookdash.android.domain.model.firebase;
 public class FireContributor {
     public static final String TABLE_NAME = "bd_contributors";
     private String name;
-    private String profilePicUrl;
+    private String avatar;
     private String role;
+    private String id;
 
     public FireContributor(String name, String profilePicUrl, String role) {
         this.name = name;
-        this.profilePicUrl = profilePicUrl;
+        this.avatar = profilePicUrl;
         this.role = role;
+    }
+
+    public FireContributor(final String name, final String profilePicUrl, final String role, final String id) {
+        this.name = name;
+        this.avatar = profilePicUrl;
+        this.role = role;
+        this.id = id;
     }
 
     public FireContributor() {
@@ -24,12 +32,12 @@ public class FireContributor {
         this.name = name;
     }
 
-    public String getProfilePicUrl() {
-        return profilePicUrl;
+    public String getAvatar() {
+        return avatar;
     }
 
-    public void setProfilePicUrl(String profilePicUrl) {
-        this.profilePicUrl = profilePicUrl;
+    public void setAvatar(final String avatar) {
+        this.avatar = avatar;
     }
 
     public String getRole() {
@@ -38,5 +46,9 @@ public class FireContributor {
 
     public void setRole(String role) {
         this.role = role;
+    }
+
+    public void setId(final String id) {
+        this.id = id;
     }
 }

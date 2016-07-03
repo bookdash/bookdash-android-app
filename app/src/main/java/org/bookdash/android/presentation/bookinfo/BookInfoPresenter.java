@@ -13,11 +13,16 @@ import com.bumptech.glide.request.animation.GlideAnimation;
 import com.bumptech.glide.request.target.SimpleTarget;
 
 import org.bookdash.android.R;
+import org.bookdash.android.data.book.BookService;
 import org.bookdash.android.data.books.BookDetailRepository;
 import org.bookdash.android.domain.model.firebase.FireBookDetails;
 import org.bookdash.android.domain.model.firebase.FireContributor;
 
 import java.util.List;
+
+import rx.android.schedulers.AndroidSchedulers;
+import rx.functions.Action1;
+import rx.schedulers.Schedulers;
 
 /**
  * @author rebeccafranks
@@ -27,65 +32,27 @@ public class BookInfoPresenter implements BookInfoContract.UserActionsListener {
 
     private final BookInfoContract.View booksView;
     private final BookDetailRepository bookDetailRepository;
-
+    private final BookService bookService;
     private final Context context;
 
-    public BookInfoPresenter(Context context, @NonNull BookInfoContract.View booksView, @NonNull BookDetailRepository bookDetailRepository) {
+    public BookInfoPresenter(Context context, @NonNull BookInfoContract.View booksView, @NonNull BookDetailRepository bookDetailRepository, @NonNull BookService bookService) {
 
         this.booksView = booksView;
         this.bookDetailRepository = bookDetailRepository;
         this.context = context;
+        this.bookService = bookService;
     }
 
     @Override
     public void loadContributorInformation(FireBookDetails bookDetailId) {
-        bookDetailRepository.getContributorsForBook(bookDetailId, new BookDetailRepository.GetContributorsCallback() {
+        bookService.getContributorsForBook(bookDetailId).subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread()).subscribe(new Action1<List<FireContributor>>() {
             @Override
-            public void onContributorsLoaded(List<FireContributor> contributors) {
-
+            public void call(final List<FireContributor> fireContributors) {
+                booksView.showContributors(fireContributors);
             }
 
-            @Override
-            public void onContributorsLoadError(Exception e) {
-
-            }
         });
-       /* bookDetailRepository.getContributorsForBook(bookDetailId, new BookDetailRepository.GetContributorsCallback() {
-            @Override
-            public void onContributorsLoaded(List<BookContributor> contributors) {
-
-            }
-
-            @Override
-            public void onContributorsLoadError(Exception e) {
-
-            }
-        });*/
     }
-
-    private void showBookDetail(FireBookDetails bookDetail) {
-
-        booksView.setBookInfoBinding(bookDetail);
-
-        booksView.setToolbarTitle(bookDetail.getBookTitle());
-        if (bookDetail.isDownloadedAlready()) {
-            booksView.showDownloadFinished();
-        }
-        booksView.showBookDetailView();
-       /* bookDetailRepository.getContributorsForBook(bookDetail.getBook(), new BookDetailRepository.GetContributorsCallback() {
-            @Override
-            public void onContributorsLoaded(List<BookContributor> contributors) {
-                booksView.showContributors(contributors);
-            }
-
-            @Override
-            public void onContributorsLoadError(Exception e) {
-
-            }
-        });*/ //TODO
-
-    }
-
 
     @Override
     public void downloadBook(final FireBookDetails bookInfo) {
@@ -175,6 +142,29 @@ public class BookInfoPresenter implements BookInfoContract.UserActionsListener {
                 }
             }
         });
+    }
+
+    private void showBookDetail(FireBookDetails bookDetail) {
+
+        booksView.setBookInfoBinding(bookDetail);
+
+        booksView.setToolbarTitle(bookDetail.getBookTitle());
+        if (bookDetail.isDownloadedAlready()) {
+            booksView.showDownloadFinished();
+        }
+        booksView.showBookDetailView();
+       /* bookDetailRepository.getContributorsForBook(bookDetail.getBook(), new BookDetailRepository.GetContributorsCallback() {
+            @Override
+            public void onContributorsLoaded(List<BookContributor> contributors) {
+                booksView.showContributors(contributors);
+            }
+
+            @Override
+            public void onContributorsLoadError(Exception e) {
+
+            }
+        });*/ //TODO
+
     }
 }
 

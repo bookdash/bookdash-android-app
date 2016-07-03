@@ -23,10 +23,8 @@ public class ContributorAdapter extends RecyclerView.Adapter<ContributorViewHold
     }
 
     @Override
-    public ContributorViewHolder onCreateViewHolder(ViewGroup parent,
-                                                    int viewType) {
-        View v = LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.list_item_contributor, parent, false);
+    public ContributorViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+        View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.list_item_contributor, parent, false);
         return new ContributorViewHolder(v);
     }
 
@@ -36,7 +34,7 @@ public class ContributorAdapter extends RecyclerView.Adapter<ContributorViewHold
 
         holder.textViewContributor.setText(item.getName());
         holder.textViewRole.setText(item.getRole());
-        Glide.with(context).load(item.getProfilePicUrl()).into(holder.imageViewContributorAvatar);
+        Glide.with(context).load(item.getAvatar()).into(holder.imageViewContributorAvatar);
 
     }
 

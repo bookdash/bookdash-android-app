@@ -22,7 +22,7 @@ public interface ListBooksContract {
         void showLanguagePopover(String[] languages, int selected);
     }
 
-    interface UserActionsListener {
+    interface Presenter {
         void loadLanguages();
 
         void saveSelectedLanguage(int indexOfLanguage);
@@ -30,6 +30,8 @@ public interface ListBooksContract {
         void loadBooksForLanguagePreference();
 
         void clickOpenLanguagePopover();
+
+        void stopPresenting();
     }
 
 }
