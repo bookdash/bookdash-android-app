@@ -1,27 +1,20 @@
 package org.bookdash.android.domain.model.firebase;
 
 
+import android.text.TextUtils;
+
+import java.util.ArrayList;
 import java.util.List;
 
 public class FireContributor {
     public static final String TABLE_NAME = "bd_contributors";
+    public static final String ROLES_SECTION = "roles";
     private String name;
     private String avatar;
-    private List<String> roles;
+    private List<String> roleIds = new ArrayList<>();
     private String id;
+    private List<FireRole> fireRoles = new ArrayList<>();
 
-    public FireContributor(String name, String profilePicUrl, List<String> role) {
-        this.name = name;
-        this.avatar = profilePicUrl;
-        this.roles = role;
-    }
-
-    public FireContributor(final String name, final String profilePicUrl, final List<String> role, final String id) {
-        this.name = name;
-        this.avatar = profilePicUrl;
-        this.roles = role;
-        this.id = id;
-    }
 
     @SuppressWarnings("unused") // Used By Firebase
     public FireContributor() {
@@ -43,15 +36,28 @@ public class FireContributor {
         this.avatar = avatar;
     }
 
-    public List<String> getRoles() {
-        return roles;
+    public List<String> getRoleIds() {
+        return roleIds;
     }
 
-    public void setRoles(List<String> role) {
-        this.roles = role;
+    public void setRoleIds(List<String> role) {
+        this.roleIds = role;
     }
 
     public void setId(final String id) {
         this.id = id;
+    }
+
+    public void setActualRoles(final List<FireRole> fireRoles) {
+        this.fireRoles = fireRoles;
+    }
+
+    public String getActualRolesFormatted() {
+        if (fireRoles == null || fireRoles.isEmpty()) {
+            return "";
+        }
+
+        return TextUtils.join(", ", fireRoles);
+
     }
 }

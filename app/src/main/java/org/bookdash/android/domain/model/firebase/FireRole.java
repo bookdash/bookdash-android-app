@@ -12,11 +12,20 @@ public class FireRole {
         this.name = name;
     }
 
+    @SuppressWarnings("unused") //Used by Firebase
+    public FireRole() {
+    }
+
     public String getName() {
         return name;
     }
 
     public void setName(final String name) {
         this.name = name;
+    }
+
+    @Override
+    public String toString() {
+        return name;
     }
 }

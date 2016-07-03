@@ -33,7 +33,7 @@ public class ContributorAdapter extends RecyclerView.Adapter<ContributorViewHold
         FireContributor item = items.get(position);
 
         holder.textViewContributor.setText(item.getName());
-        holder.textViewRole.setText(item.getRole());
+        holder.textViewRole.setText(item.getActualRolesFormatted());
         Glide.with(context).load(item.getAvatar()).into(holder.imageViewContributorAvatar);
 
     }
