@@ -3,15 +3,22 @@ package org.bookdash.android.data.book;
 import android.support.annotation.NonNull;
 import android.util.Log;
 
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.storage.FileDownloadTask;
+
 import org.bookdash.android.data.database.firebase.BookDatabase;
 import org.bookdash.android.domain.model.firebase.FireBookDetails;
 import org.bookdash.android.domain.model.firebase.FireContributor;
 import org.bookdash.android.domain.model.firebase.FireLanguage;
 import org.bookdash.android.domain.model.firebase.FireRole;
+import org.bookdash.android.domain.model.gson.BookPages;
 
+import java.io.File;
 import java.util.List;
 
 import rx.Observable;
+import rx.functions.Func0;
 import rx.functions.Func1;
 import rx.functions.Func2;
 
@@ -35,10 +42,20 @@ public class BookServiceImpl implements BookService {
         return bookDatabase.getBooks().flatMap(filterLanguage(fireLanguage));
     }
 
-
     @Override
     public Observable<List<FireContributor>> getContributorsForBook(final FireBookDetails fireBookDetails) {
         return Observable.just(fireBookDetails.getContributorsIndexList()).flatMap(getContributorsFromIds());
+    }
+
+    @Override
+    public Observable<BookPages> downloadBook(final FireBookDetails fireBookDetails) {
+        return Observable.defer(new Func0<Observable<BookPages>>() {
+            @Override
+            public Observable<BookPages> call() {
+
+                return null;
+            }
+        });
     }
 
     private Func1<List<String>, Observable<List<FireContributor>>> getContributorsFromIds() {

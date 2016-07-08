@@ -1,6 +1,7 @@
 package org.bookdash.android.presentation.bookinfo;
 
 import org.bookdash.android.R;
+import org.bookdash.android.data.book.BookService;
 import org.bookdash.android.data.books.BookDetailRepository;
 import org.bookdash.android.domain.model.firebase.FireBookDetails;
 import org.junit.Before;
@@ -23,6 +24,8 @@ public class BookInfoPresenterTest {
     private BookDetailRepository bookRepository;
 
     @Mock
+    private BookService bookService;
+    @Mock
     private BookInfoContract.View bookInfoView;
 
     /**
@@ -38,7 +41,7 @@ public class BookInfoPresenterTest {
     @Before
     public void setupListBooksPresenter() {
         MockitoAnnotations.initMocks(this);
-        bookInfoPresenter = new BookInfoPresenter(null, bookInfoView, bookRepository);
+        bookInfoPresenter = new BookInfoPresenter(null, bookInfoView, bookRepository, bookService);
         BOOK_DETAIL = new FireBookDetails("test title", "http://test.com","urlcover", true,  "FAKEID", "description");
 
     }

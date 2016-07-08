@@ -4,6 +4,7 @@ package org.bookdash.android.data.book;
 import org.bookdash.android.domain.model.firebase.FireBookDetails;
 import org.bookdash.android.domain.model.firebase.FireContributor;
 import org.bookdash.android.domain.model.firebase.FireLanguage;
+import org.bookdash.android.domain.model.gson.BookPages;
 
 import java.util.List;
 
@@ -17,4 +18,5 @@ public interface BookService {
 
     Observable<List<FireContributor>> getContributorsForBook(final FireBookDetails bookDetails);
 
+    Observable<BookPages> downloadBook(FireBookDetails fireBookDetails);
 }

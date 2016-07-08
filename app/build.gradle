@@ -19,13 +19,13 @@ repositories {
 
 android {
     dataBinding { enabled = true }
-    compileSdkVersion 23
-    buildToolsVersion "23.0.3"
+    compileSdkVersion 24
+    buildToolsVersion "24"
 
     defaultConfig {
         applicationId "org.bookdash.android"
         minSdkVersion 16
-        targetSdkVersion 23
+        targetSdkVersion 24
         versionCode 20
         versionName "1.1.2"
         testInstrumentationRunner "org.bookdash.android.presentation.CustomTestRunner"
@@ -182,8 +182,6 @@ dependencies {
 
     compile 'uk.co.chrisjenx:calligraphy:2.2.0'
     compile 'io.reactivex:rxandroid:1.2.1'
-// Because RxAndroid releases are few and far between, it is recommended you also
-// explicitly depend on RxJava's latest version for bug fixes and new features.
     compile 'io.reactivex:rxjava:1.1.6'
 
 }

@@ -36,7 +36,7 @@ public class DownloadsPresenterTest {
     public void setUp() throws Exception {
         MockitoAnnotations.initMocks(this);
         downloadsPresenter = new DownloadsPresenter(bookRepository, downloadsView);
-        language = new FireLanguage("English", "EN", true);
+        language = new FireLanguage("English", "EN", true, "123");
     }
 
     @After

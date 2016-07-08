@@ -37,7 +37,7 @@ public class BookServiceImplTest {
     @Test
     public void testGetLanguages() throws Exception {
 
-        FireLanguage fireLanguage = new FireLanguage("English", "EN", true);
+        FireLanguage fireLanguage = new FireLanguage("English", "EN", true, "id123");
         ArrayList<FireLanguage> fireLanguages = new ArrayList<>();
         fireLanguages.add(fireLanguage);
         when(bookDatabase.getLanguages()).thenReturn(Observable.<List<FireLanguage>>just(fireLanguages));
@@ -59,12 +59,12 @@ public class BookServiceImplTest {
         FireBookDetails fireBookDetails = new FireBookDetails("Book Title", "url", "cover_url", true, "en", "test description");
         ArrayList<FireBookDetails> bookDetails = new ArrayList<>();
         bookDetails.add(fireBookDetails);
-        doReturn(Observable.<List<FireBookDetails>>just(bookDetails)).when(bookDatabase).getBooksForLanguage(any(FireLanguage.class));
+        doReturn(Observable.<List<FireBookDetails>>just(bookDetails)).when(bookDatabase).getBooks();
 
         TestSubscriber<List<FireBookDetails>> testSubscriber = new TestSubscriber<>();
         bookService.getBooksForLanguage(null).subscribe(testSubscriber);
 
-        verify(bookDatabase).getBooksForLanguage(any(FireLanguage.class));
+        verify(bookDatabase).getBooks();
         testSubscriber.awaitTerminalEvent();
         testSubscriber.assertNoErrors();
 

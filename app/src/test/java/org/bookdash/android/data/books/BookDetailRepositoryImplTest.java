@@ -29,7 +29,7 @@ public class BookDetailRepositoryImplTest {
     }
     @Test
     public void getBooksForLanguageApiSuccess(){
-        bookDetailRepository.getBooksForLanguage("EN", booksForLanguageCallback);
+       // bookDetailRepository.("EN", booksForLanguageCallback);
 
     //    verify(bookDetailApi).getBooksForLanguages("EN", any(BookDetailApi.BookServiceCallback.class));
     }
