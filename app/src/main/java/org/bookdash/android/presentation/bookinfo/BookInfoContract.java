@@ -5,6 +5,8 @@ import android.graphics.Bitmap;
 import org.bookdash.android.domain.model.firebase.FireBookDetails;
 import org.bookdash.android.domain.model.firebase.FireContributor;
 import org.bookdash.android.domain.model.gson.BookPages;
+import org.bookdash.android.presentation.base.MvpPresenter;
+import org.bookdash.android.presentation.base.MvpView;
 
 import java.util.List;
 
@@ -14,7 +16,7 @@ import java.util.List;
  */
 public interface BookInfoContract {
 
-    interface View {
+    interface View  extends MvpView{
 
         void showBookDetailView();
 
@@ -34,24 +36,14 @@ public interface BookInfoContract {
 
         void showContributors(List<FireContributor> contributors);
 
-        void onImageLoaded(Bitmap bitmap);
-
-        void setStatusBarColor(int color);
-
-        void setAccentColor(int accentColor);
-
-        void setToolbarColor(int color);
-
         void sendShareEvent(String bookTitle);
     }
 
-    interface UserActionsListener {
+    interface Presenter extends MvpPresenter<View> {
 
         void loadContributorInformation(FireBookDetails bookDetailId);
 
         void downloadBook(FireBookDetails bookDetail);
-
-        void loadImage(String url);
 
         void shareBookClicked(FireBookDetails bookInfo);
     }

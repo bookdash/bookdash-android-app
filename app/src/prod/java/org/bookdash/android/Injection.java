@@ -5,11 +5,14 @@ import android.content.Context;
 import com.google.firebase.FirebaseApp;
 import com.google.firebase.FirebaseOptions;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.storage.FirebaseStorage;
 
 import org.bookdash.android.config.FirebaseConfig;
 import org.bookdash.android.config.RemoteConfigSettingsApi;
 import org.bookdash.android.data.book.BookService;
 import org.bookdash.android.data.book.BookServiceImpl;
+import org.bookdash.android.data.book.DownloadService;
+import org.bookdash.android.data.book.DownloadServiceImpl;
 import org.bookdash.android.data.books.BookDetailApiImpl;
 import org.bookdash.android.data.books.BookDetailRepositories;
 import org.bookdash.android.data.books.BookDetailRepository;
@@ -27,6 +30,7 @@ public class Injection {
 
     private static BookService bookService = null;
     private static RemoteConfigSettingsApi config;
+    private static DownloadService downloadService = null;
 
     private Injection() {
 
@@ -42,6 +46,7 @@ public class Injection {
             bookService = new BookServiceImpl(bookDatabase);
 
             config = FirebaseConfig.newInstance().init();
+            downloadService = new DownloadServiceImpl(FirebaseStorage.getInstance(firebaseApp));
         }
     }
 
@@ -63,5 +68,9 @@ public class Injection {
 
     public static BookService provideBookService() {
         return bookService;
+    }
+
+    public static DownloadService provideDownloadService() {
+        return downloadService;
     }
 }

@@ -94,8 +94,8 @@ public class FirebaseBookDatabase implements BookDatabase {
                 List<FireBookDetails> fireBookDetails = new ArrayList<>();
                 for (DataSnapshot snap : dataSnapshot.getChildren()) {
                     FireBookDetails bookDetails = snap.getValue(FireBookDetails.class);
-                    Log.d(TAG, "Book Details:" + bookDetails.bookTitle + ". Book URL:" + bookDetails.bookCoverPageUrl);
-                    bookDetails.bookId = snap.getKey();
+                    Log.d(TAG, "Book Details:" + bookDetails.getBookTitle() + ". Book URL:" + bookDetails.getBookCoverUrl());
+                    bookDetails.setBookId(snap.getKey());
                     List<String> keys = new ArrayList<>();
                     if (snap.child(FireBookDetails.CONTRIBUTORS_ITEM_NAME).hasChildren()) {
                         Iterable<DataSnapshot> children = snap.child(FireBookDetails.CONTRIBUTORS_ITEM_NAME).getChildren();
@@ -103,7 +103,7 @@ public class FirebaseBookDatabase implements BookDatabase {
                             keys.add(child.getKey());
                         }
                     }
-                    bookDetails.setContributors(keys);
+                    bookDetails.setContributorsIndexedKeys(keys);
                     fireBookDetails.add(bookDetails);
 
                 }

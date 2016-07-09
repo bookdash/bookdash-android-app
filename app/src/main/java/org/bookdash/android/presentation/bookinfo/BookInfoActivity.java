@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.databinding.DataBindingUtil;
 import android.graphics.Bitmap;
+import android.graphics.Typeface;
 import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.GradientDrawable;
 import android.net.Uri;
@@ -13,7 +14,10 @@ import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.Snackbar;
+import android.support.v4.content.ContextCompat;
+import android.support.v4.graphics.ColorUtils;
 import android.support.v7.app.ActionBar;
+import android.support.v7.graphics.Palette;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -33,6 +37,11 @@ import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.animation.GlideAnimation;
+import com.bumptech.glide.request.target.SimpleTarget;
+
+import org.bookdash.android.BookDashApplication;
 import org.bookdash.android.Injection;
 import org.bookdash.android.R;
 import org.bookdash.android.databinding.ActivityBookInformationBinding;
@@ -45,6 +54,9 @@ import org.bookdash.android.presentation.readbook.BookDetailActivity;
 import java.util.List;
 
 import mbanje.kurt.fabbutton.FabButton;
+import rx.android.schedulers.AndroidSchedulers;
+import rx.schedulers.Schedulers;
+import uk.co.chrisjenx.calligraphy.TypefaceUtils;
 
 
 public class BookInfoActivity extends BaseAppCompatActivity implements BookInfoContract.View {
@@ -54,7 +66,7 @@ public class BookInfoActivity extends BaseAppCompatActivity implements BookInfoC
     /**
      * Presenter object
      */
-    private BookInfoContract.UserActionsListener actionsListener;
+    private BookInfoContract.Presenter bookInfoPresenter;
 
     /**
      * Views
@@ -131,6 +143,9 @@ public class BookInfoActivity extends BaseAppCompatActivity implements BookInfoC
         }
         scrollView = findViewById(R.id.scrollViewBookInfo);
         collapsingToolbarLayout = (CollapsingToolbarLayout) findViewById(R.id.collapsing_toolbar);
+        Typeface tp = TypefaceUtils.load(getAssets(), BookDashApplication.DEFAULT_FONT_LOCATION);
+        collapsingToolbarLayout.setExpandedTitleTypeface(tp);
+        collapsingToolbarLayout.setCollapsedTitleTypeface(tp);
         gradientBackground = findViewById(R.id.toolbar_background_gradient);
         floatingActionButton = (FabButton) findViewById(R.id.fab_download);
         floatingActionButton.setScaleX(0);
@@ -147,12 +162,14 @@ public class BookInfoActivity extends BaseAppCompatActivity implements BookInfoC
                     floatingActionButton.showProgress(true);
                     floatingActionButton.setProgress(0, false);
                 }
-                actionsListener.downloadBook(bookInfo);
+                bookInfoPresenter.downloadBook(bookInfo);
             }
         });
 
 
-        actionsListener = new BookInfoPresenter(this.getApplicationContext(), this, Injection.provideBookRepo(), Injection.provideBookService());
+        bookInfoPresenter = new BookInfoPresenter(
+                Injection.provideBookService(), Injection.provideDownloadService(), Schedulers.io(), AndroidSchedulers.mainThread());
+        bookInfoPresenter.attachView(this);
         calculateLayoutHeight();
         imageViewBook.getViewTreeObserver().addOnPreDrawListener(new ViewTreeObserver
                 .OnPreDrawListener() {
@@ -170,7 +187,6 @@ public class BookInfoActivity extends BaseAppCompatActivity implements BookInfoC
             setBookInfoBinding(bookDetailParcelable);
             startLoadingBook(bookDetailParcelable);
             showBookDetailView();
-            actionsListener.loadImage(bookDetailParcelable.getBookCoverUrl());
         } else {
             onNewIntent(getIntent());
         }
@@ -189,7 +205,7 @@ public class BookInfoActivity extends BaseAppCompatActivity implements BookInfoC
         int id = item.getItemId();
 
         if (id == R.id.action_share_book) {
-            actionsListener.shareBookClicked(bookInfo);
+            bookInfoPresenter.shareBookClicked(bookInfo);
             return true;
         } else if (id == android.R.id.home) {
             onBackPressed();
@@ -199,15 +215,26 @@ public class BookInfoActivity extends BaseAppCompatActivity implements BookInfoC
         return super.onOptionsItemSelected(item);
     }
 
+
+    private void loadImage(String url) {
+        Glide.with(this).load(url).asBitmap().into(new SimpleTarget<Bitmap>() {
+            @Override
+            public void onResourceReady(Bitmap resource, GlideAnimation<? super Bitmap> glideAnimation) {
+                onImageLoaded(resource);
+                extractPaletteColors(resource);
+            }
+        });
+    }
+
     private void startLoadingBook(final FireBookDetails bookDetailId) {
         errorRetryButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                actionsListener.loadContributorInformation(bookDetailId);
+                bookInfoPresenter.loadContributorInformation(bookDetailId);
             }
         });
 
-        actionsListener.loadContributorInformation(bookDetailId);
+        bookInfoPresenter.loadContributorInformation(bookDetailId);
         showBookDetailView();
     }
 
@@ -222,7 +249,7 @@ public class BookInfoActivity extends BaseAppCompatActivity implements BookInfoC
             String bookId = uri.getLastPathSegment();
             String invitationId = uri.getQueryParameter("invitation_id");
             Log.d(TAG, "Action View: book id:" + bookId + ". Full URL:" + uri.toString() + ". InvitationId:" + invitationId);
-          //  startLoadingBook(bookId);
+            //  startLoadingBook(bookId);
         }
     }
 
@@ -250,6 +277,32 @@ public class BookInfoActivity extends BaseAppCompatActivity implements BookInfoC
         }
     }
 
+    private void extractPaletteColors(Bitmap resource) {
+        Palette.from(resource).generate(new Palette.PaletteAsyncListener() {
+            @Override
+            public void onGenerated(Palette palette) {
+                if (null == palette) {
+                    return;
+                }
+                Log.d("onGenerated", palette.toString());
+                Palette.Swatch toolbarSwatch = palette.getMutedSwatch();
+
+                int toolbarColor = toolbarSwatch != null ? toolbarSwatch.getRgb() : ContextCompat.getColor(getApplicationContext(), R.color.colorPrimary);
+                int accentColor = palette.getVibrantColor(ContextCompat.getColor(getApplicationContext(), R.color.colorAccent));
+
+                setToolbarColor(toolbarColor);
+                setAccentColor(accentColor);
+
+                if (toolbarSwatch != null) {
+                    float[] darkerShade = toolbarSwatch.getHsl();
+                    darkerShade[2] = darkerShade[2] * 0.8f; //Make it a darker shade for the status bar
+                    setStatusBarColor(ColorUtils.HSLToColor(darkerShade));
+                } else {
+                    setStatusBarColor(ContextCompat.getColor(getApplicationContext(), R.color.colorPrimaryDark));
+                }
+            }
+        });
+    }
 
     @Override
     protected String getScreenName() {
@@ -321,7 +374,7 @@ public class BookInfoActivity extends BaseAppCompatActivity implements BookInfoC
     public void setBookInfoBinding(FireBookDetails bookInfo) {
         this.bookInfo = bookInfo;
         binding.setBookInfo(bookInfo);
-        actionsListener.loadImage(bookInfo.getBookCoverUrl());
+        loadImage(bookInfo.getBookCoverUrl());
     }
 
     @Override
@@ -350,14 +403,13 @@ public class BookInfoActivity extends BaseAppCompatActivity implements BookInfoC
         contributorRecyclerView.setAdapter(contributorAdapter);
     }
 
-    @Override
-    public void onImageLoaded(Bitmap bitmap) {
+
+    private void onImageLoaded(Bitmap bitmap) {
         imageViewBook.setImageBitmap(bitmap);
 
     }
 
-    @Override
-    public void setStatusBarColor(int color) {
+    private void setStatusBarColor(int color) {
         if (isFinishing()) {
             return;
         }
@@ -368,14 +420,13 @@ public class BookInfoActivity extends BaseAppCompatActivity implements BookInfoC
         }
     }
 
-    @Override
-    public void setAccentColor(int accentColor) {
+
+    private void setAccentColor(int accentColor) {
         floatingActionButton.setColor(accentColor);
 
     }
 
-    @Override
-    public void setToolbarColor(int color) {
+    private void setToolbarColor(int color) {
         if (collapsingToolbarLayout != null) {
             collapsingToolbarLayout.setStatusBarScrimColor(color);
             collapsingToolbarLayout.setContentScrimColor(color);
@@ -401,17 +452,9 @@ public class BookInfoActivity extends BaseAppCompatActivity implements BookInfoC
         startActivity(sendIntent);
     }
 
-
     @Override
-    public void onStart() {
-        super.onStart();
-
-
-    }
-
-    @Override
-    public void onStop() {
-        super.onStop();
-
+    protected void onDestroy() {
+        super.onDestroy();
+        bookInfoPresenter.detachView();
     }
 }

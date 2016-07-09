@@ -15,6 +15,7 @@ import uk.co.chrisjenx.calligraphy.CalligraphyConfig;
  * @since 2015/07/16 8:54 AM
  */
 public class BookDashApplication extends Application {
+    public static final String DEFAULT_FONT_LOCATION = "fonts/minyna.ttf";
     public static boolean isTablet = false;
     public static String FILES_DIR;
     private FirebaseAnalytics firebaseAnalytics;
@@ -39,7 +40,7 @@ public class BookDashApplication extends Application {
         FILES_DIR = getFilesDir().getPath();
         getDefaultTracker();
 
-        CalligraphyConfig.initDefault(new CalligraphyConfig.Builder().setDefaultFontPath("fonts/minyna.ttf")
+        CalligraphyConfig.initDefault(new CalligraphyConfig.Builder().setDefaultFontPath(DEFAULT_FONT_LOCATION)
                 .setFontAttrId(R.attr.fontPath)
                 .build());
 

@@ -14,25 +14,55 @@ public class FireBookDetails implements Parcelable {
     public static final String BOOK_TITLE = "bookTitle";
     public static final String CONTRIBUTORS_NAME = "contributors";
     public static final String CONTRIBUTORS_ITEM_NAME = "contributors";
-    public String bookTitle;
-    public String bookUrl;
-    public String bookCoverPageUrl;
-    public boolean bookEnabled;
-    public String bookLanguage;
-    public String bookId;
-    public String bookDescription;
+    private String bookTitle;
+    private String bookCoverPageUrl;
+    private boolean bookEnabled;
+    private String bookLanguage;
+    private String bookId;
+
+
+    private String bookDescription;
     private List<String> contributors;
 
     private boolean isDownloading;
 
-    public FireBookDetails(String bookTitle, String bookUrl, String bookCoverPageUrl, boolean bookEnabled, String bookLanguage, String bookDescription) {
+
+    public void setBookTitle(String bookTitle) {
         this.bookTitle = bookTitle;
-        this.bookUrl = bookUrl;
-        this.bookCoverPageUrl = bookCoverPageUrl;
-        this.bookEnabled = bookEnabled;
-        this.bookLanguage = bookLanguage;
-        this.bookDescription = bookDescription;
     }
+
+    public boolean isBookEnabled() {
+        return bookEnabled;
+    }
+
+    public void setBookEnabled(boolean bookEnabled) {
+        this.bookEnabled = bookEnabled;
+    }
+
+    public void setBookLanguage(String bookLanguage) {
+        this.bookLanguage = bookLanguage;
+    }
+
+    public String getBookId() {
+        return bookId;
+    }
+
+    public void setDownloading(boolean downloading) {
+        isDownloading = downloading;
+    }
+
+    private String bookUrl;
+
+    public String getBookCoverPageUrl() {
+        return bookCoverPageUrl;
+    }
+
+    public void setBookCoverPageUrl(String bookCoverPageUrl) {
+        this.bookCoverPageUrl = bookCoverPageUrl;
+    }
+
+
+
 
     public FireBookDetails() {
 
@@ -83,19 +113,27 @@ public class FireBookDetails implements Parcelable {
         return bookCoverPageUrl;
     }
 
-    public String getWebUrl() {
-        return null;//todo
+
+    public String getBookUrl() {
+        return bookUrl;
     }
 
+    public void setBookUrl(String bookUrl) {
+        this.bookUrl = bookUrl;
+    }
 
+    public String getBookDescription() {
+        return bookDescription;
+    }
+
+    public void setBookDescription(String bookDescription) {
+        this.bookDescription = bookDescription;
+    }
 
     public List<String> getContributorsIndexList() {
         return contributors;
     }
 
-    public void setContributors(final List<String> contributors) {
-        this.contributors = contributors;
-    }
 
     @Override
     public int describeContents() {
@@ -138,4 +176,16 @@ public class FireBookDetails implements Parcelable {
             return new FireBookDetails[size];
         }
     };
+
+    public String getBookLanguage() {
+        return bookLanguage;
+    }
+
+    public void setBookId(String bookId) {
+        this.bookId = bookId;
+    }
+
+    public void setContributorsIndexedKeys(List<String> contributorsIndexedKeys) {
+        this.contributors = contributorsIndexedKeys;
+    }
 }

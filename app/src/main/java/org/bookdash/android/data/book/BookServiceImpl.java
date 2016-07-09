@@ -106,7 +106,7 @@ public class BookServiceImpl implements BookService {
                     @Override
                     public Boolean call(final FireBookDetails fireBookDetails) {
                         Log.d(TAG, "call() called with: " + "fireBookDetails = [" + fireBookDetails + "]");
-                        return fireBookDetails.bookLanguage.equalsIgnoreCase(fireLanguage.getId());
+                        return fireBookDetails.getBookLanguage().equalsIgnoreCase(fireLanguage.getId());
                     }
                 }).toList();
             }

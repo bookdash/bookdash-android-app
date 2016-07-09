@@ -1,65 +1,88 @@
 package org.bookdash.android.presentation.bookinfo;
 
-import android.content.Context;
-import android.graphics.Bitmap;
 import android.support.annotation.NonNull;
-import android.support.v4.content.ContextCompat;
-import android.support.v4.graphics.ColorUtils;
-import android.support.v7.graphics.Palette;
 import android.util.Log;
-
-import com.bumptech.glide.Glide;
-import com.bumptech.glide.request.animation.GlideAnimation;
-import com.bumptech.glide.request.target.SimpleTarget;
 
 import org.bookdash.android.R;
 import org.bookdash.android.data.book.BookService;
-import org.bookdash.android.data.books.BookDetailRepository;
+import org.bookdash.android.data.book.DownloadService;
+import org.bookdash.android.data.book.DownloadServiceImpl;
 import org.bookdash.android.domain.model.firebase.FireBookDetails;
 import org.bookdash.android.domain.model.firebase.FireContributor;
+import org.bookdash.android.presentation.base.BasePresenter;
 
 import java.util.List;
 
-import rx.android.schedulers.AndroidSchedulers;
+import rx.Scheduler;
+import rx.Subscriber;
 import rx.functions.Action1;
-import rx.schedulers.Schedulers;
 
 /**
  * @author rebeccafranks
  * @since 15/11/03.
  */
-public class BookInfoPresenter implements BookInfoContract.UserActionsListener {
+class BookInfoPresenter extends BasePresenter<BookInfoContract.View> implements BookInfoContract.Presenter {
 
-    private final BookInfoContract.View booksView;
-    private final BookDetailRepository bookDetailRepository;
     private final BookService bookService;
-    private final Context context;
+    private final DownloadService downloadService;
+    private static final String TAG = "BookInfoPresenter";
+    private final Scheduler ioScheduler, mainScheduler;
 
-    public BookInfoPresenter(Context context, @NonNull BookInfoContract.View booksView, @NonNull BookDetailRepository bookDetailRepository, @NonNull BookService bookService) {
-
-        this.booksView = booksView;
-        this.bookDetailRepository = bookDetailRepository;
-        this.context = context;
+    BookInfoPresenter(
+            @NonNull BookService bookService, @NonNull DownloadService downloadService, Scheduler ioScheduler, Scheduler mainScheduler) {
         this.bookService = bookService;
+        this.downloadService = downloadService;
+        this.ioScheduler = ioScheduler;
+        this.mainScheduler = mainScheduler;
     }
 
     @Override
     public void loadContributorInformation(FireBookDetails bookDetailId) {
-        bookService.getContributorsForBook(bookDetailId).subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread()).subscribe(new Action1<List<FireContributor>>() {
-            @Override
-            public void call(final List<FireContributor> fireContributors) {
-                booksView.showContributors(fireContributors);
-            }
+        addSubscription(bookService.getContributorsForBook(bookDetailId)
+                .subscribeOn(ioScheduler)
+                .observeOn(mainScheduler)
+                .subscribe(new Action1<List<FireContributor>>() {
+                    @Override
+                    public void call(final List<FireContributor> fireContributors) {
 
-        });
+                        getView().showContributors(fireContributors);
+                    }
+
+                }));
     }
 
     @Override
     public void downloadBook(final FireBookDetails bookInfo) {
-       /* if (bookInfo == null || bookInfo.getBookFile() == null || bookInfo.getBookFile().getUrl() == null) {
-            booksView.showSnackBarMessage(R.string.book_not_available);
+        if (bookInfo == null || bookInfo.getBookUrl() == null) {
+            getView().showSnackBarMessage(R.string.book_not_available);
             return;
         }
+
+        addSubscription(downloadService.downloadFile(bookInfo.getBookUrl())
+                .subscribeOn(ioScheduler)
+                .observeOn(mainScheduler)
+                .subscribe(new Subscriber<DownloadServiceImpl.DownloadProgressItem>() {
+                    @Override
+                    public void onCompleted() {
+                        Log.d(TAG, "onCompleted() called");
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                        Log.e(TAG, "onError() called with: e = [" + e + "]", e);
+                        if (e != null) {
+                            getView().showSnackBarMessage(R.string.failed_to_download_book);
+                        }
+
+                    }
+
+                    @Override
+                    public void onNext(DownloadServiceImpl.DownloadProgressItem downloadProgressItem) {
+                        Log.d(TAG, "onNext() called with: downloadProgressItem = [" + downloadProgressItem + "]");
+                        getView().showDownloadProgress(downloadProgressItem.getDownloadProgress());
+                    }
+                }));
+       /*
         if (bookInfo.isDownloading()) {
             booksView.showSnackBarMessage(R.string.book_is_downloading);
             return;
@@ -95,76 +118,12 @@ public class BookInfoPresenter implements BookInfoContract.UserActionsListener {
     }
 
     @Override
-    public void loadImage(String url) {
-        Glide.with(context).load(url).asBitmap().into(new SimpleTarget<Bitmap>() {
-            @Override
-            public void onResourceReady(Bitmap resource, GlideAnimation<? super Bitmap> glideAnimation) {
-                booksView.onImageLoaded(resource);
-                extractPaletteColors(resource);
-            }
-        });
-    }
-
-    @Override
     public void shareBookClicked(FireBookDetails bookInfo) {
         if (bookInfo == null) {
-            booksView.showError(context.getString(R.string.book_info_still_loading));
+          //  getView().showError(context.getString(R.string.book_info_still_loading));
             return;
         }
-        booksView.sendShareEvent(bookInfo.getBookTitle());
-    }
-
-    private void extractPaletteColors(Bitmap resource) {
-        Palette.from(resource).generate(new Palette.PaletteAsyncListener() {
-            @Override
-            public void onGenerated(Palette palette) {
-                if (null == palette) {
-                    return;
-                }
-                Log.d("onGenerated", palette.toString());
-                Palette.Swatch toolbarSwatch = palette.getMutedSwatch();
-
-                int toolbarColor = toolbarSwatch != null ? toolbarSwatch.getRgb() : ContextCompat.getColor(context.getApplicationContext(), R.color.colorPrimary);
-                int accentColor = palette.getVibrantColor(ContextCompat.getColor(context.getApplicationContext(), R.color.colorAccent));
-
-                booksView.setToolbarColor(toolbarColor);
-                booksView.setAccentColor(accentColor);
-
-                if (toolbarSwatch != null) {
-                    float[] darkerShade = toolbarSwatch.getHsl();
-                    darkerShade[2] = darkerShade[2] * 0.8f; //Make it a darker shade for the status bar
-                    booksView.setStatusBarColor(ColorUtils.HSLToColor(darkerShade));
-
-                } else {
-
-                    booksView.setStatusBarColor(ContextCompat.getColor(context.getApplicationContext(), R.color.colorPrimaryDark));
-
-                }
-            }
-        });
-    }
-
-    private void showBookDetail(FireBookDetails bookDetail) {
-
-        booksView.setBookInfoBinding(bookDetail);
-
-        booksView.setToolbarTitle(bookDetail.getBookTitle());
-        if (bookDetail.isDownloadedAlready()) {
-            booksView.showDownloadFinished();
-        }
-        booksView.showBookDetailView();
-       /* bookDetailRepository.getContributorsForBook(bookDetail.getBook(), new BookDetailRepository.GetContributorsCallback() {
-            @Override
-            public void onContributorsLoaded(List<BookContributor> contributors) {
-                booksView.showContributors(contributors);
-            }
-
-            @Override
-            public void onContributorsLoadError(Exception e) {
-
-            }
-        });*/ //TODO
-
+        getView().sendShareEvent(bookInfo.getBookTitle());
     }
 }
 

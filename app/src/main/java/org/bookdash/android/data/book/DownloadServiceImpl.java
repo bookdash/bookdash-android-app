@@ -1,93 +1,111 @@
 package org.bookdash.android.data.book;
 
 
-import android.support.annotation.NonNull;
+import android.util.Log;
 
-import com.google.android.gms.tasks.OnFailureListener;
-import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.storage.FileDownloadTask;
-import com.google.firebase.storage.OnProgressListener;
+import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 
 import java.io.File;
 import java.io.IOException;
 
 import rx.Observable;
-import rx.Subscriber;
+import rx.functions.Func1;
 
 
 public class DownloadServiceImpl implements DownloadService {
+    public static final String TAG = "DownloadService";
+    private final FirebaseStorage storageRef;
 
-    private final StorageReference storageRef;
-
-    public DownloadServiceImpl(StorageReference firebaseStorageRef) {
+    public DownloadServiceImpl(FirebaseStorage firebaseStorageRef) {
         this.storageRef = firebaseStorageRef;
     }
 
     @Override
     public Observable<DownloadProgressItem> downloadFile(final String url) {
-        return Observable.create(new Observable.OnSubscribe<DownloadProgressItem>() {
+        final StorageReference fileDownloadRef = storageRef.getReferenceFromUrl(url);
+        File localFile = null;
+        try {
+            localFile = File.createTempFile("images", "zip");
 
-            @Override
-            public void call(final Subscriber<? super DownloadProgressItem> subscriber) {
-                final StorageReference fileDownloadRef = storageRef.child(url);
-
-                File localFile = null;
-                try {
-                    localFile = File.createTempFile("images", "zip");
-                } catch (IOException e) {
-                    e.printStackTrace();
+            return RxFirebaseStorage.getFile(fileDownloadRef, localFile).flatMap(new Func1<FileDownloadTask.TaskSnapshot, Observable<DownloadProgressItem>>() {
+                @Override
+                public Observable<DownloadProgressItem> call(FileDownloadTask.TaskSnapshot taskSnapshot) {
+                    return Observable.just(new DownloadProgressItem(taskSnapshot.getBytesTransferred(), taskSnapshot.getTotalByteCount()));
                 }
+            });
+        } catch (IOException e) {
+            Log.e(TAG, "IOException downloading file", e);
+            return Observable.error(e);
+        }
 
+    }
+
+    public class DownloadProgressItem {
+        long bytesTransferred;
+        long totalByteCount;
+
+        public DownloadProgressItem(long bytesTransferred, long totalByteCount) {
+            this.bytesTransferred = bytesTransferred;
+            this.totalByteCount = totalByteCount;
+        }
+
+        public int getDownloadProgress() {
+            return (int) (((float) (bytesTransferred) / (float) totalByteCount) * 100);
+        }
+    }
+
+    /*public class DownloadSubscriber implements Observable.OnSubscribe<DownloadProgressItem> {
+
+        String url;
+
+        DownloadSubscriber(String url) {
+            this.url = url;
+        }
+
+        @Override
+        public void call(final Subscriber<? super DownloadProgressItem> subscriber) {
+            Log.d(TAG, "call() called with: subscriber = [" + "]");
+            final StorageReference fileDownloadRef = storageRef.getReferenceFromUrl(url);
+
+            File localFile = null;
+            try {
+                localFile = File.createTempFile("images", "zip");
                 fileDownloadRef.getFile(localFile).addOnSuccessListener(new OnSuccessListener<FileDownloadTask.TaskSnapshot>() {
                     @Override
                     public void onSuccess(final FileDownloadTask.TaskSnapshot taskSnapshot) {
-                        // Local temp file has been created
-                        subscriber.onNext(new DownloadProgressItem() {
-                            @Override
-                            public long getBytesTransferred() {
-                                return taskSnapshot.getBytesTransferred();
-                            }
-
-                            @Override
-                            public long getTotalByteCount() {
-                                return taskSnapshot.getTotalByteCount();
-                            }
-                        });
+                        Log.d(TAG, "onSuccess() called with: taskSnapshot = [" + taskSnapshot + "]");
+                        if (subscriber.isUnsubscribed()) {
+                            return;
+                        }
+                        subscriber.onNext(new DownloadProgressItem(taskSnapshot.getBytesTransferred(), taskSnapshot.getTotalByteCount()));
                         subscriber.onCompleted();
 
                     }
                 }).addOnFailureListener(new OnFailureListener() {
                     @Override
                     public void onFailure(@NonNull Exception exception) {
-
+                        Log.d(TAG, "onFailure() called with: exception = [" + exception + "]");
+                        if (subscriber.isUnsubscribed()) {
+                            return;
+                        }
                         subscriber.onError(exception);
                     }
                 }).addOnProgressListener(new OnProgressListener<FileDownloadTask.TaskSnapshot>() {
                     @Override
                     public void onProgress(final FileDownloadTask.TaskSnapshot taskSnapshot) {
-
-                        subscriber.onNext(new DownloadProgressItem() {
-                            @Override
-                            public long getBytesTransferred() {
-                                return taskSnapshot.getBytesTransferred();
-                            }
-
-                            @Override
-                            public long getTotalByteCount() {
-                                return taskSnapshot.getTotalByteCount();
-                            }
-                        });
+                        if (subscriber.isUnsubscribed()) {
+                            return;
+                        }
+                        DownloadProgressItem downloadProgressItem = new DownloadProgressItem(taskSnapshot.getBytesTransferred(), taskSnapshot.getTotalByteCount());
+                        Log.d(TAG, "onProgress() called with: taskSnapshot = [" + downloadProgressItem.getDownloadProgress() + "]");
+                        subscriber.onNext(downloadProgressItem);
                     }
                 });
+            } catch (IOException e) {
+                Log.e(TAG, "IOException downloading file", e);
             }
-        });
-
-    }
-
-    public interface DownloadProgressItem {
-        long getBytesTransferred();
-
-        long getTotalByteCount();
-    }
+        }
+    }*/
 }
