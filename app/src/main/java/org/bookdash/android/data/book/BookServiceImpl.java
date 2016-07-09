@@ -3,10 +3,6 @@ package org.bookdash.android.data.book;
 import android.support.annotation.NonNull;
 import android.util.Log;
 
-import com.google.android.gms.tasks.OnFailureListener;
-import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.firebase.storage.FileDownloadTask;
-
 import org.bookdash.android.data.database.firebase.BookDatabase;
 import org.bookdash.android.domain.model.firebase.FireBookDetails;
 import org.bookdash.android.domain.model.firebase.FireContributor;
@@ -14,7 +10,6 @@ import org.bookdash.android.domain.model.firebase.FireLanguage;
 import org.bookdash.android.domain.model.firebase.FireRole;
 import org.bookdash.android.domain.model.gson.BookPages;
 
-import java.io.File;
 import java.util.List;
 
 import rx.Observable;
