@@ -39,7 +39,7 @@ public class BookDashApplication extends Application {
         FILES_DIR = getFilesDir().getPath();
         getDefaultTracker();
 
-        CalligraphyConfig.initDefault(new CalligraphyConfig.Builder().setDefaultFontPath("fonts/ComingSoon.ttf")
+        CalligraphyConfig.initDefault(new CalligraphyConfig.Builder().setDefaultFontPath("fonts/minyna.ttf")
                 .setFontAttrId(R.attr.fontPath)
                 .build());
 
