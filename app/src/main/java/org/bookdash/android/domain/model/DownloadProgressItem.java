@@ -1,8 +1,11 @@
 package org.bookdash.android.domain.model;
 
+import org.bookdash.android.domain.model.gson.BookPages;
+
 public class DownloadProgressItem {
-    long bytesTransferred;
-    long totalByteCount;
+    private long bytesTransferred;
+    private long totalByteCount;
+    private BookPages bookPages;
 
     public DownloadProgressItem(long bytesTransferred, long totalByteCount) {
         this.bytesTransferred = bytesTransferred;
@@ -11,5 +14,17 @@ public class DownloadProgressItem {
 
     public int getDownloadProgress() {
         return (int) (((float) (bytesTransferred) / (float) totalByteCount) * 100);
+    }
+
+    public boolean isComplete() {
+        return bytesTransferred == totalByteCount;
+    }
+
+    public BookPages getBookPages() {
+        return bookPages;
+    }
+
+    public void setBookPages(BookPages bookPages) {
+        this.bookPages = bookPages;
     }
 }

@@ -50,6 +50,13 @@ public class BookPages implements Parcelable {
         in.readList(this.pages, Page.class.getClassLoader());
     }
 
+    @Override
+    public String toString() {
+        return "BookPages{" +
+                "pages=" + pages +
+                '}';
+    }
+
     public static final Parcelable.Creator<BookPages> CREATOR = new Parcelable.Creator<BookPages>() {
         public BookPages createFromParcel(Parcel source) {
             return new BookPages(source);

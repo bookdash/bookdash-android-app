@@ -6,7 +6,7 @@ import android.util.Log;
 import org.bookdash.android.R;
 import org.bookdash.android.data.book.BookService;
 import org.bookdash.android.data.book.DownloadService;
-import org.bookdash.android.data.book.DownloadServiceImpl;
+import org.bookdash.android.domain.model.DownloadProgressItem;
 import org.bookdash.android.domain.model.firebase.FireBookDetails;
 import org.bookdash.android.domain.model.firebase.FireContributor;
 import org.bookdash.android.presentation.base.BasePresenter;
@@ -61,7 +61,7 @@ class BookInfoPresenter extends BasePresenter<BookInfoContract.View> implements 
         addSubscription(downloadService.downloadFile(bookInfo.getBookUrl())
                 .subscribeOn(ioScheduler)
                 .observeOn(mainScheduler)
-                .subscribe(new Subscriber<DownloadServiceImpl.DownloadProgressItem>() {
+                .subscribe(new Subscriber<DownloadProgressItem>() {
                     @Override
                     public void onCompleted() {
                         Log.d(TAG, "onCompleted() called");
@@ -77,9 +77,12 @@ class BookInfoPresenter extends BasePresenter<BookInfoContract.View> implements 
                     }
 
                     @Override
-                    public void onNext(DownloadServiceImpl.DownloadProgressItem downloadProgressItem) {
+                    public void onNext(DownloadProgressItem downloadProgressItem) {
                         Log.d(TAG, "onNext() called with: downloadProgressItem = [" + downloadProgressItem + "]");
                         getView().showDownloadProgress(downloadProgressItem.getDownloadProgress());
+                        if (downloadProgressItem.isComplete()) {
+                            getView().openBook(bookInfo, downloadProgressItem.getBookPages(), bookInfo.getFolderLocation());
+                        }
                     }
                 }));
        /*
@@ -120,7 +123,7 @@ class BookInfoPresenter extends BasePresenter<BookInfoContract.View> implements 
     @Override
     public void shareBookClicked(FireBookDetails bookInfo) {
         if (bookInfo == null) {
-          //  getView().showError(context.getString(R.string.book_info_still_loading));
+            //  getView().showError(context.getString(R.string.book_info_still_loading));
             return;
         }
         getView().sendShareEvent(bookInfo.getBookTitle());

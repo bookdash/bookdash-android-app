@@ -14,6 +14,7 @@ public class FireBookDetails implements Parcelable {
     public static final String BOOK_TITLE = "bookTitle";
     public static final String CONTRIBUTORS_NAME = "contributors";
     public static final String CONTRIBUTORS_ITEM_NAME = "contributors";
+    public static final String BOOK_FORMAT_JSON_FILE = "bookdetails.json";
     private String bookTitle;
     private String bookCoverPageUrl;
     private boolean bookEnabled;
@@ -60,8 +61,6 @@ public class FireBookDetails implements Parcelable {
     public void setBookCoverPageUrl(String bookCoverPageUrl) {
         this.bookCoverPageUrl = bookCoverPageUrl;
     }
-
-
 
 
     public FireBookDetails() {

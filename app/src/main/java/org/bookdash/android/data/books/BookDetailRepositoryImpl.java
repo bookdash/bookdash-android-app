@@ -40,25 +40,6 @@ public class BookDetailRepositoryImpl implements BookDetailRepository {
     }
 
 
-    @Override
-    public void downloadBook(FireBookDetails bookDetail, @NonNull final GetBookPagesCallback bookPagesCallback) {
-        bookDetailApi.downloadBook(bookDetail, new BookDetailApi.BookServiceCallback<BookPages>() {
-            @Override
-            public void onLoaded(BookPages result) {
-                bookPagesCallback.onBookPagesLoaded(result);
-            }
-
-            @Override
-            public void onError(Exception error) {
-                bookPagesCallback.onBookPagesLoadError(error);
-            }
-        }, new BookDetailApi.BookServiceProgressCallback() {
-            @Override
-            public void onProgressChanged(int progress) {
-                bookPagesCallback.onBookPagesDownloadProgressUpdate(progress);
-            }
-        });
-    }
 
     @Override
     public void deleteBook(final FireBookDetails bookDetail, @NonNull final DeleteBookCallBack deleteBookCallBack) {

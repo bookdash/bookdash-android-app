@@ -15,7 +15,7 @@ import java.io.IOException;
 public class FileManager {
     private static final String TAG = "FileManager";
 
-    public static void saveFile(String filesDir, byte[] bytes, String fileName) {
+   /* public static void saveFile(String filesDir, byte[] bytes, String fileName) {
         File file = new File(filesDir, fileName);
         FileOutputStream outputStream = null;
 
@@ -39,7 +39,7 @@ public class FileManager {
             }
         }
 
-    }
+    }*/
 
     public static boolean deleteFile(String filesDir, String fileName) {
         File file = new File(filesDir, fileName);

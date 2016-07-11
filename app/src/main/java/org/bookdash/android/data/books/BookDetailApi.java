@@ -22,12 +22,5 @@ public interface BookDetailApi {
         void onError(Exception error);
     }
 
-    interface BookServiceProgressCallback {
-        void onProgressChanged(int progress);
-    }
-
-
-    void downloadBook(FireBookDetails bookDetail, BookServiceCallback<BookPages> downloadBookCallback, BookServiceProgressCallback bookServiceProgressCallback);
-
     void deleteBook(FireBookDetails bookDetail, BookServiceCallback<Boolean> deleteBook);
 }

@@ -97,6 +97,16 @@ public class Page implements Parcelable {
     public Page() {
     }
 
+    @Override
+    public String toString() {
+        return "Page{" +
+                "pageNumber=" + pageNumber +
+                ", image='" + image + '\'' +
+                ", audio='" + audio + '\'' +
+                ", text='" + text + '\'' +
+                '}';
+    }
+
     protected Page(Parcel in) {
         this.pageNumber = (Integer) in.readValue(Integer.class.getClassLoader());
         this.image = in.readString();

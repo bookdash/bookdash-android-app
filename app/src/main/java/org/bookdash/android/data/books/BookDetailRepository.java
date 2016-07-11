@@ -17,7 +17,6 @@ public interface BookDetailRepository {
 
     void getDownloadedBooks(GetBooksForLanguageCallback getBooksForLanguageCallback);
 
-    void downloadBook(FireBookDetails bookDetail, @NonNull GetBookPagesCallback bookPagesCallback);
 
     void deleteBook(FireBookDetails bookDetail, @NonNull DeleteBookCallBack deleteBookCallBack);
 
@@ -33,19 +32,6 @@ public interface BookDetailRepository {
         void onBookDetailLoadError(Exception e);
     }
 
-    interface GetLanguagesCallback {
-        void onLanguagesLoaded(List<FireLanguage> languages);
-
-        void onLanguagesLoadError(Exception e);
-    }
-
-    interface GetBookPagesCallback {
-        void onBookPagesLoaded(BookPages bookPages);
-
-        void onBookPagesLoadError(Exception e);
-
-        void onBookPagesDownloadProgressUpdate(int progress);
-    }
 
     interface DeleteBookCallBack {
         void onBookDeleted(FireBookDetails bookDetail);
