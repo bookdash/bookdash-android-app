@@ -35,47 +35,48 @@ public class DownloadServiceImpl implements DownloadService {
     }
 
     @Override
-    public Observable<DownloadProgressItem> downloadFile(final String url) {
-        final StorageReference fileDownloadRef = storageRef.getReferenceFromUrl(url);
+    public Observable<DownloadProgressItem> downloadFile(final FireBookDetails book) {
+        final StorageReference fileDownloadRef = storageRef.getReferenceFromUrl(book.getBookUrl());
         final File localFile;
         try {
-            Uri uri = Uri.parse(url);
-            localFile = File.createTempFile(uri.getLastPathSegment(),"");
+            Uri uri = Uri.parse(book.getBookUrl());
+            localFile = File.createTempFile(uri.getLastPathSegment(), "");
 
             return RxFirebaseStorage.getFile(fileDownloadRef, localFile).flatMap(new Func1<FileDownloadTask.TaskSnapshot, Observable<DownloadProgressItem>>() {
                 @Override
                 public Observable<DownloadProgressItem> call(FileDownloadTask.TaskSnapshot taskSnapshot) {
                     DownloadProgressItem downloadProgressItem = new DownloadProgressItem(taskSnapshot.getBytesTransferred(), taskSnapshot.getTotalByteCount());
                     if (downloadProgressItem.isComplete()) {
-                        return Observable.defer(new TransformFileIntoBookPages(downloadProgressItem, localFile));
+                        return Observable.defer(new TransformFileIntoBookPages(downloadProgressItem, localFile, book));
                     }
                     return Observable.just(downloadProgressItem);
                 }
             });
-        } catch (IOException e) {
+        } catch (Exception e) {
             Log.e(TAG, "IOException downloading file", e);
             return Observable.error(e);
         }
     }
 
-    class TransformFileIntoBookPages implements Func0<Observable<DownloadProgressItem>> {
+    private class TransformFileIntoBookPages implements Func0<Observable<DownloadProgressItem>> {
         private final File file;
         DownloadProgressItem downloadProgressItem;
-
-        TransformFileIntoBookPages(DownloadProgressItem downloadProgressItem, File localFile) {
+        private final FireBookDetails book;
+        TransformFileIntoBookPages(DownloadProgressItem downloadProgressItem, File localFile, FireBookDetails book) {
             this.downloadProgressItem = downloadProgressItem;
+            this.book = book;
             this.file = localFile;
         }
 
         @Override
         public Observable<DownloadProgressItem> call() {
-            String targetLocation = BookDashApplication.FILES_DIR + File.separator + file.getName().replace(".zip", "");
+            String targetLocation = BookDashApplication.FILES_DIR + File.separator + book.getId();
             Log.d(TAG, "Target Location:" + targetLocation);
             ZipManager zipManager = new ZipManager();
             Log.d(TAG, " Absolute Path:" + file.getAbsolutePath());
             zipManager.unzip(file.getAbsolutePath(), targetLocation);
 
-            BookPages bookPages = getBookPages(targetLocation + File.separator + FireBookDetails.BOOK_FORMAT_JSON_FILE);
+            BookPages bookPages = getBookPages(book.getFolderLocation() + File.separator + FireBookDetails.BOOK_FORMAT_JSON_FILE);
             downloadProgressItem.setBookPages(bookPages);
             Log.d(TAG, "TransformFileIntoBookPages call() called - bookPages:" + bookPages);
             return Observable.just(downloadProgressItem);

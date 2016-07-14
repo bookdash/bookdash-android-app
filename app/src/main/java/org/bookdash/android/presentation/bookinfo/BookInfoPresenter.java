@@ -58,7 +58,7 @@ class BookInfoPresenter extends BasePresenter<BookInfoContract.View> implements 
             return;
         }
 
-        addSubscription(downloadService.downloadFile(bookInfo.getBookUrl())
+        addSubscription(downloadService.downloadFile(bookInfo)
                 .subscribeOn(ioScheduler)
                 .observeOn(mainScheduler)
                 .subscribe(new Subscriber<DownloadProgressItem>() {
