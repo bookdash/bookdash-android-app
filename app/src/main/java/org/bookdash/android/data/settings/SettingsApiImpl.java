@@ -19,7 +19,6 @@ import rx.Single;
  */
 public class SettingsApiImpl implements SettingsApi {
     public static final String FIRE_LANGUAGE_PREF = "fire_language_pref";
-    private static final String LANGUAGE_SETTING = "language_option";
     private static final String PREF_IS_FIRST_TIME = "is_first_time";
     private final Context context;
     private final RemoteConfigSettingsApi remoteConfig;

@@ -9,10 +9,7 @@ import org.bookdash.android.R;
 import org.bookdash.android.domain.model.gson.BookPages;
 import org.bookdash.android.presentation.activity.BaseAppCompatActivity;
 
-/**
- * @author Rebecca Franks (rebecca.franks@dstvdm.com)
- * @since 2015/07/21 7:21 PM
- */
+
 public class BookDetailActivity extends BaseAppCompatActivity {
     public static final String BOOK_PAGES = "book_pages";
     public static final String LOCATION_BOOK = "book_location";

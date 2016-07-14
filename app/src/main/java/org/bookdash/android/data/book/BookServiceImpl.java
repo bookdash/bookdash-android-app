@@ -43,8 +43,6 @@ public class BookServiceImpl implements BookService {
         return bookDatabase.getBooks().flatMap(filterDownloadedBooks());
     }
 
-
-
     @NonNull
     private Func1<List<FireBookDetails>, Observable<List<FireBookDetails>>> filterDownloadedBooks() {
         return new Func1<List<FireBookDetails>, Observable<List<FireBookDetails>>>() {

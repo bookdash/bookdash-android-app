@@ -1,9 +1,5 @@
 package org.bookdash.android.domain.model.gson;
 
-/**
- * @author Rebecca Franks (rebecca.franks@dstvdm.com)
- * @since 2015/07/21 8:36 PM
- */
 
 import android.os.Parcel;
 import android.os.Parcelable;

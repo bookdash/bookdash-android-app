@@ -8,10 +8,7 @@ import org.bookdash.android.domain.model.gson.Page;
 
 import java.util.List;
 
-/**
- * @author Rebecca Franks (rebecca.franks@dstvdm.com)
- * @since 2015/07/22 7:21 PM
- */
+
 public class PageAdapter extends FixedFragmentStatePagerAdapter {
 
     private final String rootFileLocation;
