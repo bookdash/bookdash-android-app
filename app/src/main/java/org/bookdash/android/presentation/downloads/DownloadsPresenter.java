@@ -1,44 +1,55 @@
 package org.bookdash.android.presentation.downloads;
 
-import org.bookdash.android.data.books.BookDetailRepository;
+import org.bookdash.android.data.book.BookService;
 import org.bookdash.android.domain.model.firebase.FireBookDetails;
+import org.bookdash.android.presentation.base.BasePresenter;
 
 import java.util.List;
 
-public class DownloadsPresenter implements DownloadsContract.UserActions {
-    private final BookDetailRepository bookRepository;
-    private final DownloadsContract.View view;
+import rx.Scheduler;
+import rx.Subscriber;
 
-    public DownloadsPresenter(BookDetailRepository bookRepository, DownloadsContract.View downloadsView) {
-        this.bookRepository = bookRepository;
-        this.view = downloadsView;
+class DownloadsPresenter extends BasePresenter<DownloadsContract.View> implements DownloadsContract.Presenter {
+    private final BookService bookService;
+    private final Scheduler ioScheduler;
+    private final Scheduler mainScheduler;
+
+    DownloadsPresenter(BookService bookService, Scheduler io, Scheduler main) {
+        this.bookService = bookService;
+        this.ioScheduler = io;
+        this.mainScheduler = main;
     }
 
     public void loadListDownloads() {
-        view.showLoading(true);
-        bookRepository.getDownloadedBooks(new BookDetailRepository.GetBooksForLanguageCallback() {
+        getView().showLoading(true);
+        addSubscription(bookService.getDownloadedBooks().subscribeOn(ioScheduler).observeOn(mainScheduler).subscribe(new Subscriber<List<FireBookDetails>>() {
             @Override
-            public void onBooksLoaded(List<FireBookDetails> books) {
-                view.showLoading(false);
+            public void onCompleted() {
+
+            }
+
+            @Override
+            public void onError(Throwable e) {
+                getView().showErrorScreen(true, e.getMessage(), true);
+                getView().showLoading(false);
+            }
+
+            @Override
+            public void onNext(List<FireBookDetails> books) {
+                getView().showLoading(false);
                 if (books.isEmpty() || books.size() == 0) {
-                    view.showNoBooksDownloadedMessage();
+                    getView().showNoBooksDownloadedMessage();
                     return;
                 }
-                view.showDownloadedBooks(books);
-
+                getView().showDownloadedBooks(books);
             }
+        }));
 
-            @Override
-            public void onBooksLoadError(Exception e) {
-                view.showErrorScreen(true, e.getMessage(), true);
-                view.showLoading(false);
-            }
-        });
     }
 
     @Override
     public void deleteDownload(FireBookDetails bookDetail) {
-        bookRepository.deleteBook(bookDetail, new BookDetailRepository.DeleteBookCallBack() {
+        /*bookRepository.deleteBook(bookDetail, new BookDetailRepository.DeleteBookCallBack() {
 
             @Override
             public void onBookDeleted(FireBookDetails bookDetail) {
@@ -49,6 +60,6 @@ public class DownloadsPresenter implements DownloadsContract.UserActions {
             public void onBookDeleteFailed(Exception e) {
                 view.showSnackBarError(e.getMessage());
             }
-        });
+        });*/
     }
 }

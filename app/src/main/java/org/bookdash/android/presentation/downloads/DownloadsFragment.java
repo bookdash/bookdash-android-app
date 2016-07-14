@@ -33,12 +33,14 @@ import org.bookdash.android.presentation.main.NavDrawerInterface;
 import java.util.List;
 
 import fr.castorflex.android.circularprogressbar.CircularProgressBar;
+import rx.android.schedulers.AndroidSchedulers;
+import rx.schedulers.Schedulers;
 
 
 public class DownloadsFragment extends Fragment implements DownloadsContract.View {
 
     private RecyclerView listDownloadsRecyclerView;
-    private DownloadsContract.UserActions downloadsPresenter;
+    private DownloadsContract.Presenter downloadsPresenter;
     private DownloadsAdapter downloadsAdapter;
     private LinearLayout linearLayoutErrorScreen;
     private Button buttonRetry;
@@ -61,7 +63,8 @@ public class DownloadsFragment extends Fragment implements DownloadsContract.Vie
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         listDownloadsRecyclerView = (RecyclerView) view.findViewById(R.id.recycler_view_list_downloads);
-        downloadsPresenter = new DownloadsPresenter(Injection.provideBookRepo(), this);
+        downloadsPresenter = new DownloadsPresenter(Injection.provideBookService(), Schedulers.io(), AndroidSchedulers.mainThread());
+        downloadsPresenter.attachView(this);
         downloadsAdapter = new DownloadsAdapter(null, getActivity(), new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -99,6 +102,13 @@ public class DownloadsFragment extends Fragment implements DownloadsContract.Vie
         downloadsPresenter.loadListDownloads();
 
         setHasOptionsMenu(false);
+    }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        downloadsPresenter.detachView();
+
     }
 
     private void showBookDetails(FireBookDetails bookDetail) {

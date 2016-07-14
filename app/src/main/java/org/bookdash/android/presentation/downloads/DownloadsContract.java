@@ -2,12 +2,14 @@ package org.bookdash.android.presentation.downloads;
 
 
 import org.bookdash.android.domain.model.firebase.FireBookDetails;
+import org.bookdash.android.presentation.base.MvpPresenter;
+import org.bookdash.android.presentation.base.MvpView;
 
 import java.util.List;
 
-public interface DownloadsContract {
+interface DownloadsContract {
 
-    interface View {
+    interface View extends MvpView {
 
         void showDownloadedBooks(List<FireBookDetails> books);
 
@@ -22,7 +24,7 @@ public interface DownloadsContract {
         void showNoBooksDownloadedMessage();
     }
 
-    interface UserActions {
+    interface Presenter extends MvpPresenter<View> {
         void loadListDownloads();
 
         void deleteDownload(FireBookDetails bookDetail);

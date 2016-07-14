@@ -43,15 +43,20 @@ public class BookServiceImpl implements BookService {
     }
 
     @Override
-    public Observable<BookPages> downloadBook(final FireBookDetails fireBookDetails) {
-        return Observable.defer(new Func0<Observable<BookPages>>() {
+    public Observable<List<FireBookDetails>> getDownloadedBooks() {
+        return bookDatabase.getBooks().flatMap(new Func1<List<FireBookDetails>, Observable<List<FireBookDetails>>>() {
             @Override
-            public Observable<BookPages> call() {
-
-                return null;
+            public Observable<List<FireBookDetails>> call(List<FireBookDetails> fireBookDetailses) {
+                return Observable.from(fireBookDetailses).filter(new Func1<FireBookDetails, Boolean>() {
+                    @Override
+                    public Boolean call(FireBookDetails bookDetails) {
+                        return bookDetails.isDownloadedAlready();
+                    }
+                }).toList();
             }
         });
     }
+
 
     private Func1<List<String>, Observable<List<FireContributor>>> getContributorsFromIds() {
         return new Func1<List<String>, Observable<List<FireContributor>>>() {
