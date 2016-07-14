@@ -13,9 +13,6 @@ import org.bookdash.android.data.book.BookService;
 import org.bookdash.android.data.book.BookServiceImpl;
 import org.bookdash.android.data.book.DownloadService;
 import org.bookdash.android.data.book.DownloadServiceImpl;
-import org.bookdash.android.data.books.BookDetailApiImpl;
-import org.bookdash.android.data.books.BookDetailRepositories;
-import org.bookdash.android.data.books.BookDetailRepository;
 import org.bookdash.android.data.database.firebase.FirebaseBookDatabase;
 import org.bookdash.android.data.settings.SettingsApiImpl;
 import org.bookdash.android.data.settings.SettingsRepositories;
@@ -54,15 +51,12 @@ public class Injection {
         return bookService != null && config != null;
     }
 
-    public static BookDetailRepository provideBookRepo() {
-        return BookDetailRepositories.getInstance(new BookDetailApiImpl());
-    }
 
     public static SettingsRepository provideSettingsRepo(Context context) {
         return SettingsRepositories.getInstance(new SettingsApiImpl(context, provideRemoteConfig()));
     }
 
-    public static RemoteConfigSettingsApi provideRemoteConfig() {
+    private static RemoteConfigSettingsApi provideRemoteConfig() {
         return config;
     }
 

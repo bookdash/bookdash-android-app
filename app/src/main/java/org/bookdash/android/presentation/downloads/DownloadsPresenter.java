@@ -1,6 +1,7 @@
 package org.bookdash.android.presentation.downloads;
 
 import org.bookdash.android.data.book.BookService;
+import org.bookdash.android.data.book.DownloadService;
 import org.bookdash.android.domain.model.firebase.FireBookDetails;
 import org.bookdash.android.presentation.base.BasePresenter;
 
@@ -11,13 +12,15 @@ import rx.Subscriber;
 
 class DownloadsPresenter extends BasePresenter<DownloadsContract.View> implements DownloadsContract.Presenter {
     private final BookService bookService;
-    private final Scheduler ioScheduler;
-    private final Scheduler mainScheduler;
+    private final Scheduler ioScheduler, mainScheduler, computationScheduler;
+    private final DownloadService downloadService;
 
-    DownloadsPresenter(BookService bookService, Scheduler io, Scheduler main) {
+    DownloadsPresenter(BookService bookService, DownloadService downloadService, Scheduler io, Scheduler main, Scheduler compScheduler) {
         this.bookService = bookService;
         this.ioScheduler = io;
         this.mainScheduler = main;
+        this.computationScheduler = compScheduler;
+        this.downloadService = downloadService;
     }
 
     public void loadListDownloads() {
@@ -49,17 +52,22 @@ class DownloadsPresenter extends BasePresenter<DownloadsContract.View> implement
 
     @Override
     public void deleteDownload(FireBookDetails bookDetail) {
-        /*bookRepository.deleteBook(bookDetail, new BookDetailRepository.DeleteBookCallBack() {
+        addSubscription(downloadService.deleteDownload(bookDetail).subscribeOn(computationScheduler).observeOn(mainScheduler).subscribe(new Subscriber<Boolean>() {
+            @Override
+            public void onCompleted() {
+
+            }
 
             @Override
-            public void onBookDeleted(FireBookDetails bookDetail) {
+            public void onError(Throwable e) {
+                getView().showSnackBarError(e.getMessage());
+            }
+
+            @Override
+            public void onNext(Boolean aBoolean) {
                 loadListDownloads();
             }
+        }));
 
-            @Override
-            public void onBookDeleteFailed(Exception e) {
-                view.showSnackBarError(e.getMessage());
-            }
-        });*/
     }
 }

@@ -63,7 +63,7 @@ public class DownloadsFragment extends Fragment implements DownloadsContract.Vie
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         listDownloadsRecyclerView = (RecyclerView) view.findViewById(R.id.recycler_view_list_downloads);
-        downloadsPresenter = new DownloadsPresenter(Injection.provideBookService(), Schedulers.io(), AndroidSchedulers.mainThread());
+        downloadsPresenter = new DownloadsPresenter(Injection.provideBookService(), Injection.provideDownloadService(), Schedulers.io(), AndroidSchedulers.mainThread(), Schedulers.computation());
         downloadsPresenter.attachView(this);
         downloadsAdapter = new DownloadsAdapter(null, getActivity(), new View.OnClickListener() {
             @Override

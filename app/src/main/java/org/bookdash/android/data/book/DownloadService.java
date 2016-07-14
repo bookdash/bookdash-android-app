@@ -8,4 +8,6 @@ import rx.Observable;
 public interface DownloadService {
 
     Observable<DownloadProgressItem> downloadFile(FireBookDetails bookKey);
+
+    Observable<Boolean> deleteDownload(FireBookDetails book);
 }

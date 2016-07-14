@@ -2,6 +2,7 @@ package org.bookdash.android.data.book;
 
 
 import android.net.Uri;
+import android.support.annotation.WorkerThread;
 import android.util.Log;
 
 import com.google.firebase.storage.FileDownloadTask;
@@ -10,6 +11,7 @@ import com.google.firebase.storage.StorageReference;
 import com.google.gson.Gson;
 
 import org.bookdash.android.BookDashApplication;
+import org.bookdash.android.data.utils.FileManager;
 import org.bookdash.android.data.utils.ZipManager;
 import org.bookdash.android.domain.model.DownloadProgressItem;
 import org.bookdash.android.domain.model.firebase.FireBookDetails;
@@ -58,10 +60,27 @@ public class DownloadServiceImpl implements DownloadService {
         }
     }
 
+    public Observable<Boolean> deleteDownload(final FireBookDetails bookToDelete) {
+        return Observable.defer(new Func0<Observable<Boolean>>() {
+            @Override
+            public Observable<Boolean> call() {
+                return Observable.just(deleteLocalBook(bookToDelete));
+            }
+        });
+    }
+
+    @WorkerThread
+    private boolean deleteLocalBook(FireBookDetails book) {
+        FileManager.deleteFolder(book.getFolderLocation());
+        FileManager.deleteFolder(BookDashApplication.FILES_DIR + File.separator + book.getId());
+        return true;
+    }
+
     private class TransformFileIntoBookPages implements Func0<Observable<DownloadProgressItem>> {
         private final File file;
         DownloadProgressItem downloadProgressItem;
         private final FireBookDetails book;
+
         TransformFileIntoBookPages(DownloadProgressItem downloadProgressItem, File localFile, FireBookDetails book) {
             this.downloadProgressItem = downloadProgressItem;
             this.book = book;

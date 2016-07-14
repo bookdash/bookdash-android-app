@@ -1,26 +1,22 @@
 package org.bookdash.android.data.book;
 
 import android.support.annotation.NonNull;
-import android.util.Log;
 
 import org.bookdash.android.data.database.firebase.BookDatabase;
 import org.bookdash.android.domain.model.firebase.FireBookDetails;
 import org.bookdash.android.domain.model.firebase.FireContributor;
 import org.bookdash.android.domain.model.firebase.FireLanguage;
 import org.bookdash.android.domain.model.firebase.FireRole;
-import org.bookdash.android.domain.model.gson.BookPages;
 
 import java.util.List;
 
 import rx.Observable;
-import rx.functions.Func0;
 import rx.functions.Func1;
 import rx.functions.Func2;
 
 
 public class BookServiceImpl implements BookService {
 
-    private static final String TAG = "BookServiceImpl";
     private final BookDatabase bookDatabase;
 
     public BookServiceImpl(BookDatabase bookDatabase) {
@@ -33,18 +29,25 @@ public class BookServiceImpl implements BookService {
     }
 
     @Override
-    public Observable<List<FireBookDetails>> getBooksForLanguage(final FireLanguage fireLanguage) {
-        return bookDatabase.getBooks().flatMap(filterLanguage(fireLanguage));
+    public Observable<List<FireBookDetails>> getBooksForLanguage(final FireLanguage language) {
+        return bookDatabase.getBooks().flatMap(filterLanguage(language));
     }
 
     @Override
-    public Observable<List<FireContributor>> getContributorsForBook(final FireBookDetails fireBookDetails) {
-        return Observable.just(fireBookDetails.getContributorsIndexList()).flatMap(getContributorsFromIds());
+    public Observable<List<FireContributor>> getContributorsForBook(final FireBookDetails book) {
+        return Observable.just(book.getContributorsIndexList()).flatMap(getContributorsFromIds());
     }
 
     @Override
     public Observable<List<FireBookDetails>> getDownloadedBooks() {
-        return bookDatabase.getBooks().flatMap(new Func1<List<FireBookDetails>, Observable<List<FireBookDetails>>>() {
+        return bookDatabase.getBooks().flatMap(filterDownloadedBooks());
+    }
+
+
+
+    @NonNull
+    private Func1<List<FireBookDetails>, Observable<List<FireBookDetails>>> filterDownloadedBooks() {
+        return new Func1<List<FireBookDetails>, Observable<List<FireBookDetails>>>() {
             @Override
             public Observable<List<FireBookDetails>> call(List<FireBookDetails> fireBookDetailses) {
                 return Observable.from(fireBookDetailses).filter(new Func1<FireBookDetails, Boolean>() {
@@ -54,7 +57,7 @@ public class BookServiceImpl implements BookService {
                     }
                 }).toList();
             }
-        });
+        };
     }
 
 
@@ -101,11 +104,9 @@ public class BookServiceImpl implements BookService {
         return new Func1<List<FireBookDetails>, Observable<List<FireBookDetails>>>() {
             @Override
             public Observable<List<FireBookDetails>> call(final List<FireBookDetails> fireBookList) {
-                Log.d(TAG, "call() called with: " + "fireBookList = [" + fireBookList + "]");
                 return Observable.from(fireBookList).filter(new Func1<FireBookDetails, Boolean>() {
                     @Override
                     public Boolean call(final FireBookDetails fireBookDetails) {
-                        Log.d(TAG, "call() called with: " + "fireBookDetails = [" + fireBookDetails + "]");
                         return fireBookDetails.getBookLanguage().equalsIgnoreCase(fireLanguage.getId());
                     }
                 }).toList();

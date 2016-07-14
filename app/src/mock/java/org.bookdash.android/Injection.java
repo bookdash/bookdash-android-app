@@ -2,8 +2,6 @@ package org.bookdash.android;
 
 import android.content.Context;
 
-import org.bookdash.android.data.books.BookDetailRepositories;
-import org.bookdash.android.data.books.BookDetailRepository;
 import org.bookdash.android.data.books.FakeBookDetailApiImpl;
 import org.bookdash.android.data.settings.FakeSettingsApiImpl;
 import org.bookdash.android.data.settings.SettingsRepository;
