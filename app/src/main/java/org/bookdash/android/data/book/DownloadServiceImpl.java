@@ -38,6 +38,9 @@ public class DownloadServiceImpl implements DownloadService {
 
     @Override
     public Observable<DownloadProgressItem> downloadFile(final FireBookDetails book) {
+        if (book.isDownloadedAlready()) {
+            return getBookPagesFromDownloadedBook(book);
+        }
         final StorageReference fileDownloadRef = storageRef.getReferenceFromUrl(book.getBookUrl());
         final File localFile;
         try {
@@ -58,6 +61,20 @@ public class DownloadServiceImpl implements DownloadService {
             Log.e(TAG, "IOException downloading file", e);
             return Observable.error(e);
         }
+    }
+
+    private Observable<DownloadProgressItem> getBookPagesFromDownloadedBook(final FireBookDetails bookDetails) {
+
+        return Observable.defer(new Func0<Observable<DownloadProgressItem>>() {
+            @Override
+            public Observable<DownloadProgressItem> call() {
+                BookPages bookPages = getBookPages(bookDetails.getFolderLocation() + File.separator + FireBookDetails.BOOK_FORMAT_JSON_FILE);
+                DownloadProgressItem downloadProgressItem = new DownloadProgressItem(100, 100);
+                downloadProgressItem.setBookPages(bookPages);
+
+                return Observable.just(downloadProgressItem);
+            }
+        });
     }
 
     public Observable<Boolean> deleteDownload(final FireBookDetails bookToDelete) {

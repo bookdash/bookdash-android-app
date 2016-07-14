@@ -1,6 +1,6 @@
 package org.bookdash.android.presentation.bookinfo;
 
-import android.graphics.Bitmap;
+import android.support.annotation.StringRes;
 
 import org.bookdash.android.domain.model.firebase.FireBookDetails;
 import org.bookdash.android.domain.model.firebase.FireContributor;
@@ -16,11 +16,13 @@ import java.util.List;
  */
 public interface BookInfoContract {
 
-    interface View  extends MvpView{
+    interface View extends MvpView {
 
         void showBookDetailView();
 
         void showError(String errorMessage);
+
+        void showError(@StringRes int stringRes);
 
         void showSnackBarMessage(int message);
 

@@ -10,6 +10,7 @@ import android.graphics.drawable.GradientDrawable;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
+import android.support.annotation.StringRes;
 import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.design.widget.CoordinatorLayout;
@@ -329,6 +330,11 @@ public class BookInfoActivity extends BaseAppCompatActivity implements BookInfoC
     }
 
     @Override
+    public void showError(@StringRes int stringRes) {
+        showError(getString(stringRes));
+    }
+
+    @Override
     public void showSnackBarMessage(int message) {
         Snackbar.make(scrollView, message, Snackbar.LENGTH_LONG).show();
 
@@ -376,6 +382,9 @@ public class BookInfoActivity extends BaseAppCompatActivity implements BookInfoC
     public void setBookInfoBinding(FireBookDetails bookInfo) {
         this.bookInfo = bookInfo;
         binding.setBookInfo(bookInfo);
+        if (bookInfo.isDownloadedAlready()) {
+            showDownloadFinished();
+        }
         loadImage(bookInfo.getBookCoverUrl());
     }
 

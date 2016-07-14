@@ -57,7 +57,10 @@ class BookInfoPresenter extends BasePresenter<BookInfoContract.View> implements 
             getView().showSnackBarMessage(R.string.book_not_available);
             return;
         }
-
+        if (bookInfo.isDownloading()) {
+            getView().showSnackBarMessage(R.string.book_is_downloading);
+        }
+        bookInfo.setIsDownloading(true);
         addSubscription(downloadService.downloadFile(bookInfo)
                 .subscribeOn(ioScheduler)
                 .observeOn(mainScheduler)
@@ -70,6 +73,7 @@ class BookInfoPresenter extends BasePresenter<BookInfoContract.View> implements 
                     @Override
                     public void onError(Throwable e) {
                         Log.e(TAG, "onError() called with: e = [" + e + "]", e);
+                        bookInfo.setIsDownloading(false);
                         if (e != null) {
                             getView().showSnackBarMessage(R.string.failed_to_download_book);
                         }
@@ -81,49 +85,21 @@ class BookInfoPresenter extends BasePresenter<BookInfoContract.View> implements 
                         Log.d(TAG, "onNext() called with: downloadProgressItem = [" + downloadProgressItem + "]");
                         getView().showDownloadProgress(downloadProgressItem.getDownloadProgress());
                         if (downloadProgressItem.isComplete()) {
+                            if (downloadProgressItem.getBookPages() == null) {
+                                getView().showSnackBarMessage(R.string.failed_to_open_book);
+                                return;
+                            }
+                            bookInfo.setIsDownloading(false);
                             getView().openBook(bookInfo, downloadProgressItem.getBookPages(), bookInfo.getFolderLocation());
                         }
                     }
                 }));
-       /*
-        if (bookInfo.isDownloading()) {
-            booksView.showSnackBarMessage(R.string.book_is_downloading);
-            return;
-        }
-        bookInfo.setIsDownloading(true);
-
-
-        bookDetailRepository.downloadBook(bookInfo, new BookDetailRepository.GetBookPagesCallback() {
-            @Override
-            public void onBookPagesLoaded(BookPages bookPages) {
-                if (bookPages == null) {
-                    booksView.showSnackBarMessage(R.string.failed_to_open_book);
-                    return;
-                }
-                bookInfo.setIsDownloading(false);
-                booksView.openBook(bookInfo, bookPages, bookInfo.getFolderLocation());
-            }
-
-            @Override
-            public void onBookPagesLoadError(Exception e) {
-                bookInfo.setIsDownloading(false);
-                if (e != null) {
-                    booksView.showSnackBarMessage(R.string.failed_to_download_book);
-                }
-            }
-
-            @Override
-            public void onBookPagesDownloadProgressUpdate(int progress) {
-                booksView.showDownloadProgress(progress);
-            }
-        });*/
-
     }
 
     @Override
     public void shareBookClicked(FireBookDetails bookInfo) {
         if (bookInfo == null) {
-            //  getView().showError(context.getString(R.string.book_info_still_loading));
+            getView().showError(R.string.book_info_still_loading);
             return;
         }
         getView().sendShareEvent(bookInfo.getBookTitle());
