@@ -25,7 +25,7 @@ ext {
 
     // App dependencies
     supportLibraryVersion = '24.0.0'
-    googlePlayServicesVersion = '9.0.2'
+    googlePlayServicesVersion = '9.2.0'
     guavaVersion = '18.0'
     glideVersion = '3.6.1'
     junitVersion = '4.12'

@@ -110,7 +110,7 @@ android {
         track = "${track}"
     }
 }
-final firebaseVersion = "9.0.2"
+final firebaseVersion = "9.2.0"
 dependencies {
 
     testCompile "junit:junit:$rootProject.ext.junitVersion"
