@@ -9,7 +9,7 @@ dependencies:
     - android list sdk --extended
     - echo y | android update sdk --no-ui --all --filter "tools,platform-tools,android-24"
     - echo y | android update sdk --no-ui --all --filter "build-tools-24.0.0"
-    - echo y | android update sdk --no-ui --all --filter "extra-android-m2repository"
+    - echo y | android update sdk --no-ui --all --filter "extra-android-m2repository,extra-google-google_play_services"
 
 test:
   pre:
