@@ -75,7 +75,7 @@ class BookInfoPresenter extends BasePresenter<BookInfoContract.View> implements 
                         Log.e(TAG, "onError() called with: e = [" + e + "]", e);
                         bookInfo.setIsDownloading(false);
                         if (e != null) {
-                            getView().showSnackBarMessage(R.string.failed_to_download_book);
+                            getView().showSnackBarMessage(R.string.failed_to_download_book, e.getMessage());
                         }
 
                     }

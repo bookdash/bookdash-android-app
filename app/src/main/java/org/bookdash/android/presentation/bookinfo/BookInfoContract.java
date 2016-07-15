@@ -24,6 +24,8 @@ public interface BookInfoContract {
 
         void showError(@StringRes int stringRes);
 
+        void showSnackBarMessage(int message, String errorDetail);
+
         void showSnackBarMessage(int message);
 
         void showDownloadProgress(int downloadProgress);

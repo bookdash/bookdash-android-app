@@ -1,6 +1,5 @@
 package org.bookdash.android.presentation.downloads;
 
-import android.app.Activity;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -111,6 +110,7 @@ public class DownloadsFragment extends Fragment implements DownloadsContract.Vie
 
     }
 
+
     private void showBookDetails(FireBookDetails bookDetail) {
         Intent intent = new Intent(getActivity(), BookInfoActivity.class);
         intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
@@ -161,57 +161,27 @@ public class DownloadsFragment extends Fragment implements DownloadsContract.Vie
 
     @Override
     public void showLoading(final boolean visible) {
-        runUiThread(new Runnable() {
-            @Override
-            public void run() {
-
-                circularProgressBar.setVisibility(visible ? View.VISIBLE : View.GONE);
-                listDownloadsRecyclerView.setVisibility(visible ? View.GONE : View.VISIBLE);
-
-            }
-        });
+        circularProgressBar.setVisibility(visible ? View.VISIBLE : View.GONE);
+        listDownloadsRecyclerView.setVisibility(visible ? View.GONE : View.VISIBLE);
     }
 
     @Override
     public void showSnackBarError(final int message) {
-        runUiThread(new Runnable() {
-            @Override
-            public void run() {
-                Snackbar.make(listDownloadsRecyclerView, message, Snackbar.LENGTH_LONG).show();
-
-            }
-        });
-    }
-
-    private void runUiThread(Runnable runnable) {
-        Activity activity = getActivity();
-        if (activity == null) {
-            return;
-        }
-        activity.runOnUiThread(runnable);
+        Snackbar.make(listDownloadsRecyclerView, message, Snackbar.LENGTH_LONG).show();
     }
 
     @Override
     public void showSnackBarError(final String message) {
-        runUiThread(new Runnable() {
-            @Override
-            public void run() {
-                Snackbar.make(listDownloadsRecyclerView, message, Snackbar.LENGTH_LONG).show();
+        Snackbar.make(listDownloadsRecyclerView, message, Snackbar.LENGTH_LONG).show();
 
-            }
-        });
 
     }
 
     @Override
     public void showNoBooksDownloadedMessage() {
-        runUiThread(new Runnable() {
-            @Override
-            public void run() {
-                showErrorScreen(true, getString(R.string.no_books_downloaded), false);
-                listDownloadsRecyclerView.setVisibility(View.GONE);
-            }
-        });
+        showErrorScreen(true, getString(R.string.no_books_downloaded), false);
+        listDownloadsRecyclerView.setVisibility(View.GONE);
+
 
     }
 

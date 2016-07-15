@@ -61,9 +61,8 @@ import uk.co.chrisjenx.calligraphy.TypefaceUtils;
 
 
 public class BookInfoActivity extends BaseAppCompatActivity implements BookInfoContract.View {
-    private static final String TAG = "BookInfoActivity";
-
     public static final String BOOK_PARCEL = "book_parcel";
+    private static final String TAG = "BookInfoActivity";
     /**
      * Presenter object
      */
@@ -89,7 +88,7 @@ public class BookInfoActivity extends BaseAppCompatActivity implements BookInfoC
     private ActionBar actionBar;
     private FireBookDetails bookInfo;
     private Button errorRetryButton;
-
+    private int progress = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -99,7 +98,8 @@ public class BookInfoActivity extends BaseAppCompatActivity implements BookInfoC
             getWindow().getSharedElementReturnTransition().addListener(new Transition.TransitionListener() {
                 @Override
                 public void onTransitionStart(Transition transition) {
-                    floatingActionButton.animate().scaleY(0).scaleX(0).setInterpolator(new AccelerateInterpolator()).setDuration(getResources().getInteger(android.R.integer.config_shortAnimTime)).start();
+                    floatingActionButton.animate().scaleY(0).scaleX(0).setInterpolator(new AccelerateInterpolator())
+                            .setDuration(getResources().getInteger(android.R.integer.config_shortAnimTime)).start();
 
                 }
 
@@ -170,12 +170,11 @@ public class BookInfoActivity extends BaseAppCompatActivity implements BookInfoC
         });
 
 
-        bookInfoPresenter = new BookInfoPresenter(
-                Injection.provideBookService(), Injection.provideDownloadService(), Schedulers.io(), AndroidSchedulers.mainThread());
+        bookInfoPresenter = new BookInfoPresenter(Injection.provideBookService(), Injection.provideDownloadService(),
+                Schedulers.io(), AndroidSchedulers.mainThread());
         bookInfoPresenter.attachView(this);
         calculateLayoutHeight();
-        imageViewBook.getViewTreeObserver().addOnPreDrawListener(new ViewTreeObserver
-                .OnPreDrawListener() {
+        imageViewBook.getViewTreeObserver().addOnPreDrawListener(new ViewTreeObserver.OnPreDrawListener() {
             @Override
             public boolean onPreDraw() {
                 imageViewBook.getViewTreeObserver().removeOnPreDrawListener(this);
@@ -196,37 +195,36 @@ public class BookInfoActivity extends BaseAppCompatActivity implements BookInfoC
 
     }
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.menu_book_info, menu);
-        return true;
+    private void enterAnimation() {
+
+        floatingActionButton.setScaleX(0);
+        floatingActionButton.setScaleY(0);
+        floatingActionButton.animate().setStartDelay(500).scaleY(1).scaleX(1)
+                .setInterpolator(new OvershootInterpolator())
+                .setDuration(getResources().getInteger(android.R.integer.config_mediumAnimTime)).start();
     }
 
     @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
+    public void showSnackBarMessage(int message) {
+        Snackbar.make(scrollView, message, Snackbar.LENGTH_LONG).show();
 
-        int id = item.getItemId();
+    }
 
-        if (id == R.id.action_share_book) {
-            bookInfoPresenter.shareBookClicked(bookInfo);
-            return true;
-        } else if (id == android.R.id.home) {
-            onBackPressed();
-            return true;
+    @SuppressWarnings("SuspiciousNameCombination")
+    private void calculateLayoutHeight() {
+        if (getResources().getConfiguration().orientation == ActivityInfo.SCREEN_ORIENTATION_PORTRAIT) {
+            Log.d(TAG, "Setting image height");
+            DisplayMetrics dMetrics = new DisplayMetrics();
+            getWindowManager().getDefaultDisplay().getMetrics(dMetrics);
+            CollapsingToolbarLayout.LayoutParams lp = (CollapsingToolbarLayout.LayoutParams) imageViewBook
+                    .getLayoutParams();
+            lp.height = dMetrics.widthPixels;
+            imageViewBook.setLayoutParams(lp);
+
+            CoordinatorLayout.LayoutParams lp2 = (CoordinatorLayout.LayoutParams) appBarLayout.getLayoutParams();
+            lp2.height = dMetrics.widthPixels;
+            appBarLayout.setLayoutParams(lp2);
         }
-
-        return super.onOptionsItemSelected(item);
-    }
-
-
-    private void loadImage(String url) {
-        Glide.with(this).load(url).asBitmap().into(new SimpleTarget<Bitmap>() {
-            @Override
-            public void onResourceReady(Bitmap resource, GlideAnimation<? super Bitmap> glideAnimation) {
-                onImageLoaded(resource);
-                extractPaletteColors(resource);
-            }
-        });
     }
 
     private void startLoadingBook(final FireBookDetails bookDetailId) {
@@ -241,6 +239,16 @@ public class BookInfoActivity extends BaseAppCompatActivity implements BookInfoC
         showBookDetailView();
     }
 
+    @Override
+    public void showBookDetailView() {
+        mainBookCard.setVisibility(View.VISIBLE);
+        loadingProgressBar.setVisibility(View.GONE);
+        errorLayout.setVisibility(View.GONE);
+        coordinatorLayout.setVisibility(View.VISIBLE);
+        scrollView.setVisibility(View.VISIBLE);
+        floatingActionButton.setVisibility(View.VISIBLE);
+    }
+
     protected void onNewIntent(Intent intent) {
         super.onNewIntent(intent);
         String action = intent.getAction();
@@ -251,33 +259,25 @@ public class BookInfoActivity extends BaseAppCompatActivity implements BookInfoC
             Uri uri = Uri.parse(data);
             String bookId = uri.getLastPathSegment();
             String invitationId = uri.getQueryParameter("invitation_id");
-            Log.d(TAG, "Action View: book id:" + bookId + ". Full URL:" + uri.toString() + ". InvitationId:" + invitationId);
+            Log.d(TAG, "Action View: book id:" + bookId + ". Full URL:" + uri
+                    .toString() + ". InvitationId:" + invitationId);
             //  startLoadingBook(bookId);
         }
     }
 
-    private void enterAnimation() {
-
-        floatingActionButton.setScaleX(0);
-        floatingActionButton.setScaleY(0);
-        floatingActionButton.animate().setStartDelay(500).scaleY(1).scaleX(1).setInterpolator(new OvershootInterpolator()).setDuration(getResources().getInteger(android.R.integer.config_mediumAnimTime)).start();
+    private void loadImage(String url) {
+        Glide.with(this).load(url).asBitmap().into(new SimpleTarget<Bitmap>() {
+            @Override
+            public void onResourceReady(Bitmap resource, GlideAnimation<? super Bitmap> glideAnimation) {
+                onImageLoaded(resource);
+                extractPaletteColors(resource);
+            }
+        });
     }
 
+    private void onImageLoaded(Bitmap bitmap) {
+        imageViewBook.setImageBitmap(bitmap);
 
-    @SuppressWarnings("SuspiciousNameCombination")
-    private void calculateLayoutHeight() {
-        if (getResources().getConfiguration().orientation == ActivityInfo.SCREEN_ORIENTATION_PORTRAIT) {
-            Log.d(TAG, "Setting image height");
-            DisplayMetrics dMetrics = new DisplayMetrics();
-            getWindowManager().getDefaultDisplay().getMetrics(dMetrics);
-            CollapsingToolbarLayout.LayoutParams lp = (CollapsingToolbarLayout.LayoutParams) imageViewBook.getLayoutParams();
-            lp.height = dMetrics.widthPixels;
-            imageViewBook.setLayoutParams(lp);
-
-            CoordinatorLayout.LayoutParams lp2 = (CoordinatorLayout.LayoutParams) appBarLayout.getLayoutParams();
-            lp2.height = dMetrics.widthPixels;
-            appBarLayout.setLayoutParams(lp2);
-        }
     }
 
     private void extractPaletteColors(Bitmap resource) {
@@ -290,8 +290,10 @@ public class BookInfoActivity extends BaseAppCompatActivity implements BookInfoC
                 Log.d("onGenerated", palette.toString());
                 Palette.Swatch toolbarSwatch = palette.getMutedSwatch();
 
-                int toolbarColor = toolbarSwatch != null ? toolbarSwatch.getRgb() : ContextCompat.getColor(getApplicationContext(), R.color.colorPrimary);
-                int accentColor = palette.getVibrantColor(ContextCompat.getColor(getApplicationContext(), R.color.colorAccent));
+                int toolbarColor = toolbarSwatch != null ? toolbarSwatch.getRgb() : ContextCompat
+                        .getColor(getApplicationContext(), R.color.colorPrimary);
+                int accentColor = palette
+                        .getVibrantColor(ContextCompat.getColor(getApplicationContext(), R.color.colorAccent));
 
                 setToolbarColor(toolbarColor);
                 setAccentColor(accentColor);
@@ -307,19 +309,37 @@ public class BookInfoActivity extends BaseAppCompatActivity implements BookInfoC
         });
     }
 
-    @Override
-    protected String getScreenName() {
-        return "BookInfoActivity";
+    private void setToolbarColor(int color) {
+        if (collapsingToolbarLayout != null) {
+            collapsingToolbarLayout.setStatusBarScrimColor(color);
+            collapsingToolbarLayout.setContentScrimColor(color);
+        } else {
+            actionBar.setBackgroundDrawable(new ColorDrawable(color));
+        }
+        floatingActionButton.setRingProgressColor(color);
+
+        if (gradientBackground != null) {
+            GradientDrawable gradientDrawable = new GradientDrawable();
+            gradientDrawable.setColor(color);
+            gradientDrawable.setAlpha(140);
+            gradientBackground.setBackground(gradientDrawable);
+        }
     }
 
-    @Override
-    public void showBookDetailView() {
-        mainBookCard.setVisibility(View.VISIBLE);
-        loadingProgressBar.setVisibility(View.GONE);
-        errorLayout.setVisibility(View.GONE);
-        coordinatorLayout.setVisibility(View.VISIBLE);
-        scrollView.setVisibility(View.VISIBLE);
-        floatingActionButton.setVisibility(View.VISIBLE);
+    private void setAccentColor(int accentColor) {
+        floatingActionButton.setColor(accentColor);
+
+    }
+
+    private void setStatusBarColor(int color) {
+        if (isFinishing()) {
+            return;
+        }
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            Window window = getWindow();
+            window.setStatusBarColor(color);
+        }
     }
 
     @Override
@@ -335,12 +355,10 @@ public class BookInfoActivity extends BaseAppCompatActivity implements BookInfoC
     }
 
     @Override
-    public void showSnackBarMessage(int message) {
-        Snackbar.make(scrollView, message, Snackbar.LENGTH_LONG).show();
+    public void showSnackBarMessage(final int message, final String errorDetail) {
+        Snackbar.make(scrollView, getString(message, errorDetail), Snackbar.LENGTH_LONG).show();
 
     }
-
-    private int progress = 0;
 
     @Override
     public void showDownloadProgress(final int downloadProgress) {
@@ -414,46 +432,6 @@ public class BookInfoActivity extends BaseAppCompatActivity implements BookInfoC
         contributorRecyclerView.setAdapter(contributorAdapter);
     }
 
-
-    private void onImageLoaded(Bitmap bitmap) {
-        imageViewBook.setImageBitmap(bitmap);
-
-    }
-
-    private void setStatusBarColor(int color) {
-        if (isFinishing()) {
-            return;
-        }
-
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            Window window = getWindow();
-            window.setStatusBarColor(color);
-        }
-    }
-
-
-    private void setAccentColor(int accentColor) {
-        floatingActionButton.setColor(accentColor);
-
-    }
-
-    private void setToolbarColor(int color) {
-        if (collapsingToolbarLayout != null) {
-            collapsingToolbarLayout.setStatusBarScrimColor(color);
-            collapsingToolbarLayout.setContentScrimColor(color);
-        } else {
-            actionBar.setBackgroundDrawable(new ColorDrawable(color));
-        }
-        floatingActionButton.setRingProgressColor(color);
-
-        if (gradientBackground != null) {
-            GradientDrawable gradientDrawable = new GradientDrawable();
-            gradientDrawable.setColor(color);
-            gradientDrawable.setAlpha(140);
-            gradientBackground.setBackground(gradientDrawable);
-        }
-    }
-
     @Override
     public void sendShareEvent(String bookTitle) {
         Intent sendIntent = new Intent();
@@ -461,6 +439,33 @@ public class BookInfoActivity extends BaseAppCompatActivity implements BookInfoC
         sendIntent.putExtra(Intent.EXTRA_TEXT, getString(R.string.sharing_book_title, bookTitle));
         sendIntent.setType("text/plain");
         startActivity(sendIntent);
+    }
+
+    @Override
+    protected String getScreenName() {
+        return "BookInfoActivity";
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.menu_book_info, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+
+        int id = item.getItemId();
+
+        if (id == R.id.action_share_book) {
+            bookInfoPresenter.shareBookClicked(bookInfo);
+            return true;
+        } else if (id == android.R.id.home) {
+            onBackPressed();
+            return true;
+        }
+
+        return super.onOptionsItemSelected(item);
     }
 
     @Override
