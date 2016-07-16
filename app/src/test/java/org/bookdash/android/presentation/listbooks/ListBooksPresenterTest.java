@@ -6,8 +6,6 @@ import org.bookdash.android.domain.model.firebase.FireBookDetails;
 import org.bookdash.android.domain.model.firebase.FireLanguage;
 import org.junit.Before;
 import org.junit.Test;
-import org.mockito.ArgumentCaptor;
-import org.mockito.Captor;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
@@ -17,8 +15,6 @@ import java.util.List;
 import rx.Single;
 import rx.schedulers.Schedulers;
 
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.eq;
 import static org.mockito.Mockito.when;
 
 /**
@@ -27,36 +23,28 @@ import static org.mockito.Mockito.when;
  */
 public class ListBooksPresenterTest {
 
+    FireLanguage fireLanguage = new FireLanguage("English", "EN", true, "123");
     @Mock
     private BookService bookRepository;
-
     @Mock
     private ListBooksContract.View listBookView;
-
     @Mock
     private SettingsRepository settingsRepository;
-
-    /**
-     * {@link ArgumentCaptor} is a powerful Mockito API to capture argument values and use them to
-     * perform further actions or assertions on them.
-     */
-    @Captor
-    private ArgumentCaptor<BookDetailRepository.GetLanguagesCallback> languagesCallbackArgumentCaptor;
-    @Captor
-    private ArgumentCaptor<BookDetailRepository.GetBooksForLanguageCallback> booksForLanguageCallbackArgumentCaptor;
-    @Captor
-    private ArgumentCaptor<String> languagePreferenceCaptor;
     /**
      * Item under test
      */
     private ListBooksPresenter listBooksPresenter;
+    private List<FireLanguage> LANGUAGES = new ArrayList<>();
+    private List<FireBookDetails> BOOKS = new ArrayList<>();
 
     @Before
     public void setupListBooksPresenter() {
         MockitoAnnotations.initMocks(this);
-        listBooksPresenter = new ListBooksPresenter(listBookView, settingsRepository, bookRepository, Schedulers.immediate(), Schedulers.immediate());
+        listBooksPresenter = new ListBooksPresenter(listBookView, settingsRepository, bookRepository,
+                Schedulers.immediate(), Schedulers.immediate());
+        listBooksPresenter.attachView(listBookView);
     }
-    FireLanguage fireLanguage = new FireLanguage("English", "EN", true, "123");
+
     @Test
     public void loadBooksSuccessfulLoadIntoView() {
         when(settingsRepository.getLanguagePreference()).thenReturn(Single.just(fireLanguage));
@@ -82,28 +70,5 @@ public class ListBooksPresenterTest {
         verify(listBookView).showLoading(false);*/
 
     }
-
-    private List<FireLanguage> LANGUAGES= new ArrayList<>();
-    private List<FireBookDetails> BOOKS = new ArrayList<>();
-
-    @Test
-    public void loadLanguagesCorrectlyNotifyView() {
-        listBooksPresenter.loadLanguages();
-
-      /*  verify(bookRepository).getLanguages(languagesCallbackArgumentCaptor.capture());
-        languagesCallbackArgumentCaptor.getValue().onLanguagesLoaded(LANGUAGES);
-*/
-    }
-
-    @Test
-    public void loadLanguagesIncorrectlyErrorShownToUser() {
-        listBooksPresenter.loadLanguages();
-
-    /*    verify(bookRepository).getLanguages(languagesCallbackArgumentCaptor.capture());
-        languagesCallbackArgumentCaptor.getValue().onLanguagesLoadError(new Exception("Oops"));
-
-        verify(listBookView).showSnackBarError(R.string.error_loading_languages);
-*/    }
-
 
 }

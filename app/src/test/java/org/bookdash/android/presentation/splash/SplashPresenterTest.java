@@ -7,8 +7,8 @@ import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
 import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.eq;
 import static org.mockito.Mockito.when;
+
 /**
  * @author rebeccafranks
  * @since 15/11/05.
@@ -26,6 +26,7 @@ public class SplashPresenterTest {
         MockitoAnnotations.initMocks(this);
         splashPresenter = new SplashPresenter(splashView, settingsRepository);
     }
+
     @Test
     public void loadSplashFistTime() {
         when(settingsRepository.isFirstTime()).thenReturn(true);

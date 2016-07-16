@@ -52,6 +52,7 @@ class DownloadsPresenter extends BasePresenter<DownloadsContract.View> implement
 
     @Override
     public void deleteDownload(FireBookDetails bookDetail) {
+        getView().showLoading(true);
         addSubscription(downloadService.deleteDownload(bookDetail).subscribeOn(computationScheduler).observeOn(mainScheduler).subscribe(new Subscriber<Boolean>() {
             @Override
             public void onCompleted() {
@@ -60,6 +61,7 @@ class DownloadsPresenter extends BasePresenter<DownloadsContract.View> implement
 
             @Override
             public void onError(Throwable e) {
+                getView().showLoading(false);
                 getView().showSnackBarError(e.getMessage());
             }
 

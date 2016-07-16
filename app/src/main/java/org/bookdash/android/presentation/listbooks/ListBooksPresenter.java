@@ -41,7 +41,7 @@ class ListBooksPresenter extends BasePresenter<ListBooksContract.View> implement
 
     @Override
     public void loadLanguages() {
-        addSubscription(bookService.getLanguages()
+        addSubscription(bookService.getLanguages().observeOn(ioScheduler).subscribeOn(mainScheduler)
                 .subscribe(new Action1<List<FireLanguage>>() {
                     @Override
                     public void call(final List<FireLanguage> fireLanguages) {
@@ -52,10 +52,8 @@ class ListBooksPresenter extends BasePresenter<ListBooksContract.View> implement
 
     @Override
     public void saveSelectedLanguage(final int indexOfLanguage) {
-        addSubscription(settingsRepository.saveLanguagePreference(languages.get(indexOfLanguage))
-                .observeOn(ioScheduler)
-                .subscribeOn(mainScheduler)
-                .subscribe(new Subscriber<Boolean>() {
+        addSubscription(settingsRepository.saveLanguagePreference(languages.get(indexOfLanguage)).observeOn(ioScheduler)
+                .subscribeOn(mainScheduler).subscribe(new Subscriber<Boolean>() {
                     @Override
                     public void onCompleted() {
                         Log.d(TAG, "onCompleted() called with: " + "");
@@ -76,9 +74,7 @@ class ListBooksPresenter extends BasePresenter<ListBooksContract.View> implement
 
     @Override
     public void loadBooksForLanguagePreference() {
-        addSubscription(settingsRepository.getLanguagePreference()
-                .observeOn(ioScheduler)
-                .subscribeOn(mainScheduler)
+        addSubscription(settingsRepository.getLanguagePreference().observeOn(ioScheduler).subscribeOn(mainScheduler)
                 .subscribe(new Subscriber<FireLanguage>() {
                     @Override
                     public void onCompleted() {
@@ -104,9 +100,7 @@ class ListBooksPresenter extends BasePresenter<ListBooksContract.View> implement
         if (languages == null) {
             return;
         }
-        addSubscription(settingsRepository.getLanguagePreference()
-                .observeOn(ioScheduler)
-                .subscribeOn(mainScheduler)
+        addSubscription(settingsRepository.getLanguagePreference().observeOn(ioScheduler).subscribeOn(mainScheduler)
                 .subscribe(new Subscriber<FireLanguage>() {
                     @Override
                     public void onCompleted() {
@@ -127,14 +121,11 @@ class ListBooksPresenter extends BasePresenter<ListBooksContract.View> implement
                         int languageToSelect = 0;
 
                         for (int i = 0; i < languages.size(); i++) {
-                            if (languages.get(i)
-                                    .getLanguageName()
-                                    .equals(fireLanguage.getLanguageName())) {
+                            if (languages.get(i).getLanguageName().equals(fireLanguage.getLanguageName())) {
                                 languageToSelect = i;
 
                             }
-                            langArray[i] = languages.get(i)
-                                    .getLanguageName();
+                            langArray[i] = languages.get(i).getLanguageName();
                         }
                         listBooksView.showLanguagePopover(langArray, languageToSelect);
                     }
@@ -144,7 +135,7 @@ class ListBooksPresenter extends BasePresenter<ListBooksContract.View> implement
 
     private void loadBooksForLanguage(FireLanguage language) {
         listBooksView.showLoading(true);
-        addSubscription(bookService.getBooksForLanguage(language)
+        addSubscription(bookService.getBooksForLanguage(language).observeOn(ioScheduler).subscribeOn(mainScheduler)
                 .subscribe(new Action1<List<FireBookDetails>>() {
                     @Override
                     public void call(final List<FireBookDetails> fireBookList) {

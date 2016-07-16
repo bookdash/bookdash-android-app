@@ -1,40 +1,46 @@
 package org.bookdash.android.presentation.downloads;
 
+import org.bookdash.android.data.book.BookService;
+import org.bookdash.android.data.book.DownloadService;
 import org.bookdash.android.domain.model.firebase.FireBookDetails;
 import org.bookdash.android.domain.model.firebase.FireLanguage;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
-import org.mockito.ArgumentCaptor;
-import org.mockito.Captor;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import static org.mockito.Matchers.any;
+import rx.Observable;
+import rx.schedulers.Schedulers;
+
+import static org.mockito.Matchers.anyList;
+import static org.mockito.Mockito.never;
+import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
 
 
 public class DownloadsPresenterTest {
     @Mock
-    private BookDetailRepository bookRepository;
+    private BookService bookService;
+    @Mock
+    private DownloadService downloadService;
 
     private DownloadsPresenter downloadsPresenter;
 
     @Mock
     private DownloadsContract.View downloadsView;
-    @Captor
-    private ArgumentCaptor<BookDetailRepository.GetBooksForLanguageCallback> bookloadedCaptor;
-    @Captor
-    private ArgumentCaptor<BookDetailRepository.DeleteBookCallBack> deleteBookCallBackArgumentCaptor;
     private FireLanguage language;
+    private List<FireBookDetails> BOOKS = new ArrayList<>();
 
     @Before
     public void setUp() throws Exception {
         MockitoAnnotations.initMocks(this);
-        downloadsPresenter = new DownloadsPresenter(bookRepository, downloadsView);
+        downloadsPresenter = new DownloadsPresenter(bookService, downloadService, Schedulers.immediate(),
+                Schedulers.immediate(), Schedulers.immediate());
         language = new FireLanguage("English", "EN", true, "123");
     }
 
@@ -43,57 +49,87 @@ public class DownloadsPresenterTest {
 
     }
 
-    private List<FireBookDetails> BOOKS = new ArrayList<>();
-
     @Test
-    public void testGetListDownloads_ReturnsDownloads() {
+    public void loadListDownloads_NoDownloads_ShowsNoDownloadsMessage() {
+        downloadsPresenter.attachView(downloadsView);
+
+        when(bookService.getDownloadedBooks()).thenReturn(Observable.just(BOOKS));
 
         downloadsPresenter.loadListDownloads();
+
         verify(downloadsView).showLoading(true);
-        verify(bookRepository).getDownloadedBooks(bookloadedCaptor.capture());
-        BOOKS.add(new FireBookDetails("test title", "http://test.com","urlcover", true,  language.getId(), "description"));
-        bookloadedCaptor.getValue().onBooksLoaded(BOOKS);
-
         verify(downloadsView).showLoading(false);
-        verify(downloadsView).showDownloadedBooks(BOOKS);
-    }
-
-    @Test
-    public void testGetListDownloads_Error_ReturnsErrorMessage() {
-        downloadsPresenter.loadListDownloads();
-        verify(downloadsView).showLoading(true);
-        verify(bookRepository).getDownloadedBooks(bookloadedCaptor.capture());
-        bookloadedCaptor.getValue().onBooksLoadError(new Exception("Blah books didn't load"));
-
-        verify(downloadsView).showLoading(false);
-        verify(downloadsView).showErrorScreen(true, "Blah books didn't load", true);
-    }
-
-    @Test
-    public void testDeleteDownload_RemovesDownload() {
-        FireBookDetails bookDetail = new FireBookDetails("FAKE BOOK test title", "http://test.com","urlcover", true,  language.getId(), "description");
-        downloadsPresenter.deleteDownload(bookDetail);
-
-        verify(bookRepository).deleteBook(any(FireBookDetails.class), deleteBookCallBackArgumentCaptor.capture());
-        deleteBookCallBackArgumentCaptor.getValue().onBookDeleted(bookDetail);
-
-        verify(bookRepository).getDownloadedBooks(bookloadedCaptor.capture());
-        bookloadedCaptor.getValue().onBooksLoaded(BOOKS);
-
         verify(downloadsView).showNoBooksDownloadedMessage();
+        verify(downloadsView, never()).showDownloadedBooks(anyList());
     }
 
     @Test
-    public void testDeleteDownload_RemovesDownloadKeepsOthers() {
-        FireBookDetails bookDetail = new FireBookDetails("FAKE BOOK test title", "http://test.com","urlcover", true,  language.getId(), "description");
-        downloadsPresenter.deleteDownload(bookDetail);
+    public void loadListDownloads_DownloadsAvailable_ShowsListDownloads() {
+        downloadsPresenter.attachView(downloadsView);
 
-        verify(bookRepository).deleteBook(any(FireBookDetails.class), deleteBookCallBackArgumentCaptor.capture());
-        deleteBookCallBackArgumentCaptor.getValue().onBookDeleted(bookDetail);
-        BOOKS.add(new FireBookDetails("FAKE BOOK 2 test title", "http://test.com","urlcover", true,  language.getId(), "description"));
-        verify(bookRepository).getDownloadedBooks(bookloadedCaptor.capture());
-        bookloadedCaptor.getValue().onBooksLoaded(BOOKS);
+        FireBookDetails sampleBook = new FireBookDetails("Test Book", "test_url", "cover_url_test", true, "description",
+                language);
+        BOOKS.add(sampleBook);
+        when(bookService.getDownloadedBooks()).thenReturn(Observable.just(BOOKS));
 
+        downloadsPresenter.loadListDownloads();
+
+        verify(downloadsView).showLoading(true);
+        verify(downloadsView).showLoading(false);
         verify(downloadsView).showDownloadedBooks(BOOKS);
+        verify(downloadsView, never()).showNoBooksDownloadedMessage();
+    }
+
+    @Test
+    public void loadListDownloads_DownloadException_ShowsErrorMessage() {
+        downloadsPresenter.attachView(downloadsView);
+
+         when(bookService.getDownloadedBooks()).thenReturn(
+                Observable.<List<FireBookDetails>>error(new Exception("Book Exception")));
+
+        downloadsPresenter.loadListDownloads();
+
+        verify(downloadsView).showLoading(true);
+        verify(downloadsView).showLoading(false);
+        verify(downloadsView, never()).showDownloadedBooks(BOOKS);
+        verify(downloadsView, never()).showNoBooksDownloadedMessage();
+        verify(downloadsView).showErrorScreen(true, "Book Exception", true);
+    }
+
+
+    @Test
+    public void deleteDownload_RemovesDownloadFromList() {
+        downloadsPresenter.attachView(downloadsView);
+        FireBookDetails sampleBook = new FireBookDetails("Test Book", "test_url", "cover_url_test", true, "description",
+                language);
+        FireBookDetails sampleBook2 = new FireBookDetails("Test Book2", "test_url2", "cover_url_test2", true,
+                "description2", language);
+        BOOKS.add(sampleBook2);
+        when(downloadService.deleteDownload(sampleBook)).thenReturn(Observable.just(true));
+        when(bookService.getDownloadedBooks()).thenReturn(Observable.just(BOOKS));
+
+        downloadsPresenter.deleteDownload(sampleBook);
+
+        verify(downloadsView, times(2)).showLoading(true);
+        verify(downloadsView).showLoading(false);
+        verify(downloadsView).showDownloadedBooks(BOOKS);
+        verify(downloadService).deleteDownload(sampleBook);
+    }
+
+    @Test
+    public void deleteDownload_ThrowsError_NotifiesUserOfError() {
+        downloadsPresenter.attachView(downloadsView);
+        FireBookDetails sampleBook = new FireBookDetails("Test Book", "test_url", "cover_url_test", true, "description",
+                language);
+        when(downloadService.deleteDownload(sampleBook))
+                .thenReturn(Observable.<Boolean>error(new Exception("Failed to delete")));
+
+        downloadsPresenter.deleteDownload(sampleBook);
+
+        verify(downloadsView).showLoading(true);
+        verify(downloadsView).showLoading(false);
+        verify(downloadsView, never()).showDownloadedBooks(BOOKS);
+        verify(downloadService).deleteDownload(sampleBook);
+        verify(downloadsView).showSnackBarError("Failed to delete");
     }
 }
