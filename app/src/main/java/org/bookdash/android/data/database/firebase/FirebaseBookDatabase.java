@@ -22,13 +22,16 @@ import rx.functions.Func1;
 public class FirebaseBookDatabase implements BookDatabase {
 
     private static final String TAG = "FirebaseBookDatabase";
+    private static final String COLUMN_ENABLED = "enabled";
+    private static final String BOOK_COLUMN_ENABLED = "bookEnabled";
     private final DatabaseReference booksTable;
     private final DatabaseReference languagesTable;
     private final FirebaseObservableListeners firebaseObservableListeners;
     private final DatabaseReference contributorsTable;
     private final DatabaseReference roleTable;
 
-    public FirebaseBookDatabase(FirebaseDatabase firebaseDatabase, FirebaseObservableListeners firebaseObservableListeners) {
+    public FirebaseBookDatabase(FirebaseDatabase firebaseDatabase,
+                                FirebaseObservableListeners firebaseObservableListeners) {
         this.booksTable = firebaseDatabase.getReference(FireBookDetails.TABLE_NAME);
         this.languagesTable = firebaseDatabase.getReference(FireLanguage.TABLE_NAME);
         this.contributorsTable = firebaseDatabase.getReference(FireContributor.TABLE_NAME);
@@ -38,18 +41,22 @@ public class FirebaseBookDatabase implements BookDatabase {
 
     @Override
     public Observable<List<FireLanguage>> getLanguages() {
-        return firebaseObservableListeners.listenToValueEvents(languagesTable, asLanguages());
+        return firebaseObservableListeners
+                .listenToValueEvents(languagesTable, asLanguages());
     }
 
     @Override
     public Observable<List<FireBookDetails>> getBooks() {
-        return firebaseObservableListeners.listenToValueEvents(booksTable.orderByChild(FireBookDetails.BOOK_TITLE), asBooks());
+        return firebaseObservableListeners
+                .listenToValueEvents(booksTable.orderByChild(BOOK_COLUMN_ENABLED),
+                        asBooks());
     }
 
 
     @Override
     public Observable<FireContributor> getContributorById(final String contributorId) {
-        return firebaseObservableListeners.listenToSingleValueEvents(contributorsTable.child(contributorId), asContributor());
+        return firebaseObservableListeners
+                .listenToSingleValueEvents(contributorsTable.child(contributorId), asContributor());
     }
 
     @Override
@@ -94,11 +101,13 @@ public class FirebaseBookDatabase implements BookDatabase {
                 List<FireBookDetails> fireBookDetails = new ArrayList<>();
                 for (DataSnapshot snap : dataSnapshot.getChildren()) {
                     FireBookDetails bookDetails = snap.getValue(FireBookDetails.class);
-                    Log.d(TAG, "Book Details:" + bookDetails.getBookTitle() + ". Book URL:" + bookDetails.getBookCoverUrl());
+                    Log.d(TAG, "Book Details:" + bookDetails.getBookTitle() + ". Book URL:" + bookDetails
+                            .getBookCoverUrl());
                     bookDetails.setBookId(snap.getKey());
                     List<String> keys = new ArrayList<>();
                     if (snap.child(FireBookDetails.CONTRIBUTORS_ITEM_NAME).hasChildren()) {
-                        Iterable<DataSnapshot> children = snap.child(FireBookDetails.CONTRIBUTORS_ITEM_NAME).getChildren();
+                        Iterable<DataSnapshot> children = snap.child(FireBookDetails.CONTRIBUTORS_ITEM_NAME)
+                                .getChildren();
                         for (DataSnapshot child : children) {
                             keys.add(child.getKey());
                         }

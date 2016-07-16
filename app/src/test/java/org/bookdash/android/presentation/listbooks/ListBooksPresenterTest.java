@@ -45,30 +45,9 @@ public class ListBooksPresenterTest {
         listBooksPresenter.attachView(listBookView);
     }
 
-    @Test
-    public void loadBooksSuccessfulLoadIntoView() {
-        when(settingsRepository.getLanguagePreference()).thenReturn(Single.just(fireLanguage));
+   @Test
+    public void loadLanguages_setsListLanuages(){
 
-        listBooksPresenter.loadBooksForLanguagePreference();
-      /*  verify(bookRepository).getBooksForLanguage(fireLanguage, booksForLanguageCallbackArgumentCaptor.capture());
-        booksForLanguageCallbackArgumentCaptor.getValue().onBooksLoaded(BOOKS);
-
-        verify(listBookView).showBooks(BOOKS);
-        verify(listBookView).showLoading(false);*/
-    }
-
-    @Test
-    public void loadBooksLoadErrorShowErrorRetryScreen() {
-        when(settingsRepository.getLanguagePreference()).thenReturn(Single.just(fireLanguage));
-
-        listBooksPresenter.loadBooksForLanguagePreference();
-
-       /* verify(bookRepository).getBooksForLanguage(eq("EN"), booksForLanguageCallbackArgumentCaptor.capture());
-        booksForLanguageCallbackArgumentCaptor.getValue().onBooksLoadError(new Exception("WHOOPS"));
-
-        verify(listBookView).showErrorScreen(true, "WHOOPS", true);
-        verify(listBookView).showLoading(false);*/
-
-    }
+   }
 
 }

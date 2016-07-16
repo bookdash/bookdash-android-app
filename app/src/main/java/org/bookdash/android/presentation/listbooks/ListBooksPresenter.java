@@ -41,13 +41,23 @@ class ListBooksPresenter extends BasePresenter<ListBooksContract.View> implement
 
     @Override
     public void loadLanguages() {
-        addSubscription(bookService.getLanguages().observeOn(ioScheduler).subscribeOn(mainScheduler)
-                .subscribe(new Action1<List<FireLanguage>>() {
-                    @Override
-                    public void call(final List<FireLanguage> fireLanguages) {
-                        ListBooksPresenter.this.languages = fireLanguages;
-                    }
-                }));
+        addSubscription(bookService.getLanguages().observeOn(ioScheduler).subscribeOn(mainScheduler).subscribe(new Subscriber<List<FireLanguage>>() {
+            @Override
+            public void onCompleted() {
+
+            }
+
+            @Override
+            public void onError(final Throwable e) {
+
+            }
+
+            @Override
+            public void onNext(final List<FireLanguage> fireLanguages) {
+                ListBooksPresenter.this.languages = fireLanguages;
+
+            }
+        }));
     }
 
     @Override

@@ -25,12 +25,42 @@ public class BookServiceImpl implements BookService {
 
     @Override
     public Observable<List<FireLanguage>> getLanguages() {
-        return bookDatabase.getLanguages();
+        return bookDatabase.getLanguages().flatMap(filterEnabledLanguages());
     }
 
     @Override
     public Observable<List<FireBookDetails>> getBooksForLanguage(final FireLanguage language) {
-        return bookDatabase.getBooks().flatMap(filterLanguage(language));
+        return bookDatabase.getBooks().flatMap(filterEnabledBooks()).flatMap(filterLanguage(language));
+    }
+
+    private Func1<List<FireBookDetails>, Observable<List<FireBookDetails>>> filterEnabledBooks() {
+        return new Func1<List<FireBookDetails>, Observable<List<FireBookDetails>>>() {
+            @Override
+            public Observable<List<FireBookDetails>> call(final List<FireBookDetails> fireBookDetailses) {
+                return Observable.from(fireBookDetailses).filter(new Func1<FireBookDetails, Boolean>() {
+                    @Override
+                    public Boolean call(FireBookDetails bookDetails) {
+                        return bookDetails.isBookEnabled();
+                    }
+                }).toList();
+            }
+        };
+    }
+
+    @NonNull
+    private Func1<List<FireBookDetails>, Observable<List<FireBookDetails>>> filterLanguage(
+            final FireLanguage fireLanguage) {
+        return new Func1<List<FireBookDetails>, Observable<List<FireBookDetails>>>() {
+            @Override
+            public Observable<List<FireBookDetails>> call(final List<FireBookDetails> fireBookList) {
+                return Observable.from(fireBookList).filter(new Func1<FireBookDetails, Boolean>() {
+                    @Override
+                    public Boolean call(final FireBookDetails fireBookDetails) {
+                        return fireBookDetails.getBookLanguage().equalsIgnoreCase(fireLanguage.getId());
+                    }
+                }).toList();
+            }
+        };
     }
 
     @Override
@@ -58,7 +88,6 @@ public class BookServiceImpl implements BookService {
         };
     }
 
-
     private Func1<List<String>, Observable<List<FireContributor>>> getContributorsFromIds() {
         return new Func1<List<String>, Observable<List<FireContributor>>>() {
             @Override
@@ -77,13 +106,16 @@ public class BookServiceImpl implements BookService {
         return new Func1<FireContributor, Observable<FireContributor>>() {
             @Override
             public Observable<FireContributor> call(final FireContributor fireContributor) {
-                return Observable.zip(Observable.just(fireContributor), Observable.from(fireContributor.getRoleIds()).flatMap(getRole()).toList(), new Func2<FireContributor, List<FireRole>, FireContributor>() {
-                    @Override
-                    public FireContributor call(final FireContributor fireContributor, final List<FireRole> fireRoles) {
-                        fireContributor.setActualRoles(fireRoles);
-                        return fireContributor;
-                    }
-                });
+                return Observable.zip(Observable.just(fireContributor),
+                        Observable.from(fireContributor.getRoleIds()).flatMap(getRole()).toList(),
+                        new Func2<FireContributor, List<FireRole>, FireContributor>() {
+                            @Override
+                            public FireContributor call(final FireContributor fireContributor,
+                                                        final List<FireRole> fireRoles) {
+                                fireContributor.setActualRoles(fireRoles);
+                                return fireContributor;
+                            }
+                        });
             }
         };
     }
@@ -97,15 +129,14 @@ public class BookServiceImpl implements BookService {
         };
     }
 
-    @NonNull
-    private Func1<List<FireBookDetails>, Observable<List<FireBookDetails>>> filterLanguage(final FireLanguage fireLanguage) {
-        return new Func1<List<FireBookDetails>, Observable<List<FireBookDetails>>>() {
+    private Func1<List<FireLanguage>, Observable<List<FireLanguage>>> filterEnabledLanguages() {
+        return new Func1<List<FireLanguage>, Observable<List<FireLanguage>>>() {
             @Override
-            public Observable<List<FireBookDetails>> call(final List<FireBookDetails> fireBookList) {
-                return Observable.from(fireBookList).filter(new Func1<FireBookDetails, Boolean>() {
+            public Observable<List<FireLanguage>> call(final List<FireLanguage> fireLanguages) {
+                return Observable.from(fireLanguages).filter(new Func1<FireLanguage, Boolean>() {
                     @Override
-                    public Boolean call(final FireBookDetails fireBookDetails) {
-                        return fireBookDetails.getBookLanguage().equalsIgnoreCase(fireLanguage.getId());
+                    public Boolean call(final FireLanguage fireLanguage) {
+                        return fireLanguage.isEnabled();
                     }
                 }).toList();
             }
