@@ -12,9 +12,13 @@ import org.mockito.MockitoAnnotations;
 import java.util.ArrayList;
 import java.util.List;
 
+import rx.Observable;
 import rx.Single;
 import rx.schedulers.Schedulers;
 
+import static org.mockito.Matchers.anyList;
+import static org.mockito.Mockito.never;
+import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 /**
@@ -23,7 +27,6 @@ import static org.mockito.Mockito.when;
  */
 public class ListBooksPresenterTest {
 
-    FireLanguage fireLanguage = new FireLanguage("English", "EN", true, "123");
     @Mock
     private BookService bookRepository;
     @Mock
@@ -36,18 +39,57 @@ public class ListBooksPresenterTest {
     private ListBooksPresenter listBooksPresenter;
     private List<FireLanguage> LANGUAGES = new ArrayList<>();
     private List<FireBookDetails> BOOKS = new ArrayList<>();
+    private FireLanguage ENGLISH_LANGUAGE = new FireLanguage("English", "EN", true, "2");
 
     @Before
-    public void setupListBooksPresenter() {
+    public void setup() {
         MockitoAnnotations.initMocks(this);
-        listBooksPresenter = new ListBooksPresenter(listBookView, settingsRepository, bookRepository,
-                Schedulers.immediate(), Schedulers.immediate());
+        listBooksPresenter = new ListBooksPresenter(settingsRepository, bookRepository, Schedulers.immediate(),
+                Schedulers.immediate());
         listBooksPresenter.attachView(listBookView);
     }
 
-   @Test
-    public void loadLanguages_setsListLanuages(){
+    @Test
+    public void loadBooksForLanguagePreference_LoadsBooks_ShowsBooks() {
+        BOOKS.add(new FireBookDetails("Test title", "url", "cover_url", true, "description", ENGLISH_LANGUAGE));
+        when(settingsRepository.getLanguagePreference()).thenReturn(Single.just(ENGLISH_LANGUAGE));
+        when(bookRepository.getBooksForLanguage(ENGLISH_LANGUAGE)).thenReturn(Observable.just(BOOKS));
 
-   }
+        listBooksPresenter.loadBooksForLanguagePreference();
+
+        verify(listBookView).showLoading(true);
+        verify(listBookView).showLoading(false);
+        verify(listBookView).showBooks(BOOKS);
+    }
+
+
+    @Test
+    public void loadBooksForLanguage_ThrowsError_ShowsError() {
+        BOOKS.add(new FireBookDetails("Test title", "url", "cover_url", true, "description", ENGLISH_LANGUAGE));
+        when(settingsRepository.getLanguagePreference()).thenReturn(Single.just(ENGLISH_LANGUAGE));
+        when(bookRepository.getBooksForLanguage(ENGLISH_LANGUAGE))
+                .thenReturn(Observable.<List<FireBookDetails>>error(new Exception("Eek!")));
+
+        listBooksPresenter.loadBooksForLanguagePreference();
+
+        verify(listBookView).showLoading(true);
+        verify(listBookView).showLoading(false);
+        verify(listBookView, never()).showBooks(anyList());
+        verify(listBookView).showErrorScreen(true, "Eek!", true);
+
+    }
+
+    @Test
+    public void loadBooksForLanguage_LanguageError_ShowsError() {
+        when(settingsRepository.getLanguagePreference()).thenReturn(Single.<FireLanguage>error(new Exception("eek!")));
+
+        listBooksPresenter.loadBooksForLanguagePreference();
+
+        verify(listBookView).showLoading(true);
+        verify(listBookView).showLoading(false);
+        verify(listBookView, never()).showBooks(anyList());
+        verify(listBookView).showErrorScreen(true, "eek!", true);
+    }
+
 
 }

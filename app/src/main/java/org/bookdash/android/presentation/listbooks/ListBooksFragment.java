@@ -64,7 +64,7 @@ public class ListBooksFragment extends Fragment implements ListBooksContract.Vie
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        listBooksPresenter = new ListBooksPresenter(this, Injection.provideSettingsRepo(getActivity()), Injection.provideBookService(), Schedulers.io(), AndroidSchedulers.mainThread());
+        listBooksPresenter = new ListBooksPresenter(Injection.provideSettingsRepo(getActivity()), Injection.provideBookService(), Schedulers.io(), AndroidSchedulers.mainThread());
         listBooksPresenter.attachView(this);
         circularProgressBar = (CircularProgressBar) view.findViewById(R.id.activity_loading_books);
         linearLayoutErrorScreen = (LinearLayout) view.findViewById(R.id.linear_layout_error);

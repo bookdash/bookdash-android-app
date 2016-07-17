@@ -12,7 +12,6 @@ import java.util.List;
 
 import rx.Scheduler;
 import rx.Subscriber;
-import rx.functions.Action1;
 
 /**
  * @author rebeccafranks
@@ -26,13 +25,11 @@ class ListBooksPresenter extends BasePresenter<ListBooksContract.View> implement
     private SettingsRepository settingsRepository;
     private BookService bookService;
 
-    private ListBooksContract.View listBooksView;
     private List<FireLanguage> languages;
     private Scheduler ioScheduler, mainScheduler;
 
-    ListBooksPresenter(ListBooksContract.View listBooksView, SettingsRepository settingsRepository,
-                       BookService bookService, Scheduler ioScheduler, Scheduler mainScheduler) {
-        this.listBooksView = listBooksView;
+    ListBooksPresenter(SettingsRepository settingsRepository, BookService bookService, Scheduler ioScheduler,
+                       Scheduler mainScheduler) {
         this.settingsRepository = settingsRepository;
         this.bookService = bookService;
         this.mainScheduler = mainScheduler;
@@ -41,23 +38,24 @@ class ListBooksPresenter extends BasePresenter<ListBooksContract.View> implement
 
     @Override
     public void loadLanguages() {
-        addSubscription(bookService.getLanguages().observeOn(ioScheduler).subscribeOn(mainScheduler).subscribe(new Subscriber<List<FireLanguage>>() {
-            @Override
-            public void onCompleted() {
+        addSubscription(bookService.getLanguages().observeOn(ioScheduler).subscribeOn(mainScheduler)
+                .subscribe(new Subscriber<List<FireLanguage>>() {
+                    @Override
+                    public void onCompleted() {
 
-            }
+                    }
 
-            @Override
-            public void onError(final Throwable e) {
+                    @Override
+                    public void onError(final Throwable e) {
 
-            }
+                    }
 
-            @Override
-            public void onNext(final List<FireLanguage> fireLanguages) {
-                ListBooksPresenter.this.languages = fireLanguages;
+                    @Override
+                    public void onNext(final List<FireLanguage> fireLanguages) {
+                        ListBooksPresenter.this.languages = fireLanguages;
 
-            }
-        }));
+                    }
+                }));
     }
 
     @Override
@@ -84,6 +82,7 @@ class ListBooksPresenter extends BasePresenter<ListBooksContract.View> implement
 
     @Override
     public void loadBooksForLanguagePreference() {
+        getView().showLoading(true);
         addSubscription(settingsRepository.getLanguagePreference().observeOn(ioScheduler).subscribeOn(mainScheduler)
                 .subscribe(new Subscriber<FireLanguage>() {
                     @Override
@@ -93,12 +92,12 @@ class ListBooksPresenter extends BasePresenter<ListBooksContract.View> implement
 
                     @Override
                     public void onError(final Throwable e) {
-
+                        getView().showLoading(false);
+                        getView().showErrorScreen(true, e.getMessage(), true);
                     }
 
                     @Override
                     public void onNext(final FireLanguage fireLanguage) {
-                        Log.d(TAG, "onNext() called with: " + "fireLanguage = [" + fireLanguage + "]");
                         loadBooksForLanguage(fireLanguage);
                     }
                 }));
@@ -124,9 +123,7 @@ class ListBooksPresenter extends BasePresenter<ListBooksContract.View> implement
 
                     @Override
                     public void onNext(final FireLanguage fireLanguage) {
-                        if (!isViewAttached()) {
-                            return;
-                        }
+
                         String[] langArray = new String[languages.size()];
                         int languageToSelect = 0;
 
@@ -137,24 +134,31 @@ class ListBooksPresenter extends BasePresenter<ListBooksContract.View> implement
                             }
                             langArray[i] = languages.get(i).getLanguageName();
                         }
-                        listBooksView.showLanguagePopover(langArray, languageToSelect);
+                        getView().showLanguagePopover(langArray, languageToSelect);
                     }
                 }));
 
     }
 
     private void loadBooksForLanguage(FireLanguage language) {
-        listBooksView.showLoading(true);
         addSubscription(bookService.getBooksForLanguage(language).observeOn(ioScheduler).subscribeOn(mainScheduler)
-                .subscribe(new Action1<List<FireBookDetails>>() {
+                .subscribe(new Subscriber<List<FireBookDetails>>() {
                     @Override
-                    public void call(final List<FireBookDetails> fireBookList) {
-                        if (!isViewAttached()) {
-                            return;
-                        }
-                        listBooksView.showLoading(false);
-                        listBooksView.showErrorScreen(false, "", false);
-                        listBooksView.showBooks(fireBookList);
+                    public void onCompleted() {
+
+                    }
+
+                    @Override
+                    public void onError(final Throwable e) {
+                        getView().showLoading(false);
+                        getView().showErrorScreen(true, e.getMessage(), true);
+                    }
+
+                    @Override
+                    public void onNext(final List<FireBookDetails> bookList) {
+                        getView().showLoading(false);
+                        getView().showErrorScreen(false, "", false);
+                        getView().showBooks(bookList);
                     }
                 }));
 
