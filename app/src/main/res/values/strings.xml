@@ -88,5 +88,6 @@
     <string name="delete_ok">Delete</string>
     <string name="delete_cancel">Cancel</string>
     <string name="book_dash_nav_header">Book Dash</string>
+    <string name="error_getting_contributors">Error fetching contributors</string>
 
 </resources>

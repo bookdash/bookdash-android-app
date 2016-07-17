@@ -20,6 +20,12 @@ public class FireContributor {
     public FireContributor() {
     }
 
+    public FireContributor(final String name, final String avatar_url, final String id) {
+        this.name = name;
+        this.avatar = avatar_url;
+        this.id = id;
+    }
+
     public String getName() {
         return name;
     }

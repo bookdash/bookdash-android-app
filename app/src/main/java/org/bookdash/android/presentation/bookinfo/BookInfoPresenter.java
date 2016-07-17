@@ -15,7 +15,6 @@ import java.util.List;
 
 import rx.Scheduler;
 import rx.Subscriber;
-import rx.functions.Action1;
 
 /**
  * @author rebeccafranks
@@ -23,13 +22,13 @@ import rx.functions.Action1;
  */
 class BookInfoPresenter extends BasePresenter<BookInfoContract.View> implements BookInfoContract.Presenter {
 
+    private static final String TAG = "BookInfoPresenter";
     private final BookService bookService;
     private final DownloadService downloadService;
-    private static final String TAG = "BookInfoPresenter";
     private final Scheduler ioScheduler, mainScheduler;
 
-    BookInfoPresenter(
-            @NonNull BookService bookService, @NonNull DownloadService downloadService, Scheduler ioScheduler, Scheduler mainScheduler) {
+    BookInfoPresenter(@NonNull BookService bookService, @NonNull DownloadService downloadService, Scheduler ioScheduler,
+                      Scheduler mainScheduler) {
         this.bookService = bookService;
         this.downloadService = downloadService;
         this.ioScheduler = ioScheduler;
@@ -38,17 +37,24 @@ class BookInfoPresenter extends BasePresenter<BookInfoContract.View> implements 
 
     @Override
     public void loadContributorInformation(FireBookDetails bookDetailId) {
-        addSubscription(bookService.getContributorsForBook(bookDetailId)
-                .subscribeOn(ioScheduler)
-                .observeOn(mainScheduler)
-                .subscribe(new Action1<List<FireContributor>>() {
-                    @Override
-                    public void call(final List<FireContributor> fireContributors) {
+        addSubscription(
+                bookService.getContributorsForBook(bookDetailId).subscribeOn(ioScheduler).observeOn(mainScheduler)
+                        .subscribe(new Subscriber<List<FireContributor>>() {
+                            @Override
+                            public void onCompleted() {
 
-                        getView().showContributors(fireContributors);
-                    }
+                            }
 
-                }));
+                            @Override
+                            public void onError(final Throwable e) {
+                                getView().showSnackBarMessage(R.string.error_getting_contributors);
+                            }
+
+                            @Override
+                            public void onNext(final List<FireContributor> fireContributors) {
+                                getView().showContributors(fireContributors);
+                            }
+                        }));
     }
 
     @Override
@@ -59,20 +65,17 @@ class BookInfoPresenter extends BasePresenter<BookInfoContract.View> implements 
         }
         if (bookInfo.isDownloading()) {
             getView().showSnackBarMessage(R.string.book_is_downloading);
+            return;
         }
         bookInfo.setIsDownloading(true);
-        addSubscription(downloadService.downloadFile(bookInfo)
-                .subscribeOn(ioScheduler)
-                .observeOn(mainScheduler)
+        addSubscription(downloadService.downloadFile(bookInfo).subscribeOn(ioScheduler).observeOn(mainScheduler)
                 .subscribe(new Subscriber<DownloadProgressItem>() {
                     @Override
                     public void onCompleted() {
-                        Log.d(TAG, "onCompleted() called");
                     }
 
                     @Override
                     public void onError(Throwable e) {
-                        Log.e(TAG, "onError() called with: e = [" + e + "]", e);
                         bookInfo.setIsDownloading(false);
                         if (e != null) {
                             getView().showSnackBarMessage(R.string.failed_to_download_book, e.getMessage());
@@ -82,15 +85,16 @@ class BookInfoPresenter extends BasePresenter<BookInfoContract.View> implements 
 
                     @Override
                     public void onNext(DownloadProgressItem downloadProgressItem) {
-                        Log.d(TAG, "onNext() called with: downloadProgressItem = [" + downloadProgressItem + "]");
                         getView().showDownloadProgress(downloadProgressItem.getDownloadProgress());
                         if (downloadProgressItem.isComplete()) {
                             if (downloadProgressItem.getBookPages() == null) {
                                 getView().showSnackBarMessage(R.string.failed_to_open_book);
                                 return;
                             }
+                            getView().showDownloadFinished();
                             bookInfo.setIsDownloading(false);
-                            getView().openBook(bookInfo, downloadProgressItem.getBookPages(), bookInfo.getFolderLocation());
+                            getView().openBook(bookInfo, downloadProgressItem.getBookPages(),
+                                    bookInfo.getFolderLocation());
                         }
                     }
                 }));
@@ -99,7 +103,7 @@ class BookInfoPresenter extends BasePresenter<BookInfoContract.View> implements 
     @Override
     public void shareBookClicked(FireBookDetails bookInfo) {
         if (bookInfo == null) {
-            getView().showError(R.string.book_info_still_loading);
+            getView().showSnackBarMessage(R.string.book_info_still_loading);
             return;
         }
         getView().sendShareEvent(bookInfo.getBookTitle());
