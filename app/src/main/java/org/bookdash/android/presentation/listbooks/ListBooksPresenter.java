@@ -1,7 +1,8 @@
 package org.bookdash.android.presentation.listbooks;
 
-import android.util.Log;
+import com.crashlytics.android.Crashlytics;
 
+import org.bookdash.android.R;
 import org.bookdash.android.data.book.BookService;
 import org.bookdash.android.data.settings.SettingsRepository;
 import org.bookdash.android.domain.model.firebase.FireBookDetails;
@@ -18,8 +19,6 @@ import rx.Subscriber;
  * @since 15/11/03.
  */
 class ListBooksPresenter extends BasePresenter<ListBooksContract.View> implements ListBooksContract.Presenter {
-
-    private static final String TAG = "ListBooksPresenter";
 
 
     private SettingsRepository settingsRepository;
@@ -47,7 +46,8 @@ class ListBooksPresenter extends BasePresenter<ListBooksContract.View> implement
 
                     @Override
                     public void onError(final Throwable e) {
-
+                        getView().showSnackBarError(R.string.error_loading_languages);
+                        Crashlytics.logException(e);
                     }
 
                     @Override
@@ -64,12 +64,12 @@ class ListBooksPresenter extends BasePresenter<ListBooksContract.View> implement
                 .subscribeOn(mainScheduler).subscribe(new Subscriber<Boolean>() {
                     @Override
                     public void onCompleted() {
-                        Log.d(TAG, "onCompleted() called with: " + "");
                     }
 
                     @Override
                     public void onError(final Throwable e) {
-                        Log.d(TAG, "onError() called with: " + "e = [" + e + "]");
+                        getView().showSnackBarError(R.string.error_saving_selected_language);
+                        Crashlytics.logException(e);
                     }
 
                     @Override
@@ -113,12 +113,12 @@ class ListBooksPresenter extends BasePresenter<ListBooksContract.View> implement
                 .subscribe(new Subscriber<FireLanguage>() {
                     @Override
                     public void onCompleted() {
-                        Log.d(TAG, "onCompleted() called with: " + "");
                     }
 
                     @Override
                     public void onError(final Throwable e) {
-                        Log.d(TAG, "onError() called with: " + "e = [" + e + "]");
+                        getView().showSnackBarError(R.string.error_opening_languagepopover);
+                        Crashlytics.logException(e);
                     }
 
                     @Override

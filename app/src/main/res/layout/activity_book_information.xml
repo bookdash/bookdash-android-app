@@ -81,6 +81,12 @@
             android:fitsSystemWindows="true"
             android:visibility="visible">
 
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:scaleType="centerCrop"
+                android:src="@drawable/appbackground"/>
+
 
             <android.support.design.widget.AppBarLayout
                 android:id="@+id/app_bar_layout"
@@ -167,20 +173,20 @@
                                 android:textColor="@color/text_secondary_dark"
                                 android:textSize="14sp"/>
 
-                        <!--   TODO <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="48dp"
-                                android:layout_alignParentEnd="false"
-                                android:layout_alignParentRight="true"
-                                android:layout_marginBottom="16dp"
-                                android:layout_marginLeft="16dp"
-                                android:layout_marginRight="16dp"
-                                android:layout_toRightOf="@id/textview_about_heading"
-                                android:fontFamily="sans-serif"
-                                android:gravity="center_vertical|right"
-                                android:text="@{bookInfo.book.dateBookCreated}"
-                                android:textColor="@color/text_secondary_dark"
-                                android:textSize="14sp"/>-->
+                            <!--   TODO <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="48dp"
+                                    android:layout_alignParentEnd="false"
+                                    android:layout_alignParentRight="true"
+                                    android:layout_marginBottom="16dp"
+                                    android:layout_marginLeft="16dp"
+                                    android:layout_marginRight="16dp"
+                                    android:layout_toRightOf="@id/textview_about_heading"
+                                    android:fontFamily="sans-serif"
+                                    android:gravity="center_vertical|right"
+                                    android:text="@{bookInfo.book.dateBookCreated}"
+                                    android:textColor="@color/text_secondary_dark"
+                                    android:textSize="14sp"/>-->
                             <!--     android:text="@{book_info.book.dateBookCreated}"-->
 
 

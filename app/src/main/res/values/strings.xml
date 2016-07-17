@@ -48,6 +48,7 @@
 
 
     Imagery for Help Tutorial <a href="http://www.freepik.com">Designed by Freepik</a><br/>
+    Background cartoon image from <a href="http://all-free-download.com">all-free-download.com</a>
     <div>Book Icon made by <a href="http://www.flaticon.com/authors/rami-mcmin" title="Rami McMin">Rami McMin</a> from <a href="http://www.flaticon.com" title="Flaticon">www.flaticon.com</a>  is licensed by <a href="http://creativecommons.org/licenses/by/3.0/" title="Creative Commons BY 3.0">CC BY 3.0</a></div>
    <b> The following libraries have been used in the app: <br/></b>
     <a href="https://github.com/JakeWharton/ViewPagerIndicator">ViewPagerIndicator</a> which is licensed under the Apache License, Version 2.0.<br/>
@@ -89,5 +90,7 @@
     <string name="delete_cancel">Cancel</string>
     <string name="book_dash_nav_header">Book Dash</string>
     <string name="error_getting_contributors">Error fetching contributors</string>
+    <string name="error_saving_selected_language">There was an error saving the selected language. Please try again later.</string>
+    <string name="error_opening_languagepopover">There was an unexpected error. Please try again later.</string>
 
 </resources>

@@ -6,7 +6,11 @@
                 android:layout_height="match_parent"
                 android:fitsSystemWindows="true"
                 tools:context=".presentation.main.MainActivity">
-
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:scaleType="centerCrop"
+        android:src="@drawable/appbackground"/>
     <android.support.design.widget.CoordinatorLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
