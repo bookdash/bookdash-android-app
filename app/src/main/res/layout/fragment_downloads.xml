@@ -76,13 +76,22 @@
         android:layout_marginTop="16dp">
 
 
+
         <TextView
             android:id="@+id/text_view_error_screen"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:layout_margin="8dp"
-            android:text="@string/error_loading_books"/>
+            android:textSize="16sp"
+            android:background="@drawable/textbox"
+            android:text="@string/error_loading_books"
+            android:gravity="center_vertical|center_horizontal"/>
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="150dp"
+            android:layout_gravity="center"
+            android:src="@drawable/owl_reading_nobooks"/>
 
         <Button
             android:id="@+id/button_retry"
