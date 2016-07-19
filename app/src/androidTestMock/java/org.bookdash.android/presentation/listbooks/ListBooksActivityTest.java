@@ -43,8 +43,7 @@ import static org.hamcrest.Matchers.is;
 public class ListBooksActivityTest {
 
     @Rule
-    public ActivityTestRule<MainActivity> activityTestRule =
-            new ActivityTestRule<>(MainActivity.class);
+    public ActivityTestRule<MainActivity> activityTestRule = new ActivityTestRule<>(MainActivity.class);
 
     @Before
     public void setUp() {
@@ -83,6 +82,25 @@ public class ListBooksActivityTest {
         matchToolbarTitle("Book Dash");
     }
 
+    private static ViewInteraction matchToolbarTitle(CharSequence title) {
+        return onView(isAssignableFrom(Toolbar.class)).check(matches(withToolbarTitle(is(title))));
+    }
+
+    //Custom matchers are used so that we can reuse matching in other tests.
+    private static Matcher<Object> withToolbarTitle(final Matcher<CharSequence> textMatcher) {
+        return new BoundedMatcher<Object, Toolbar>(Toolbar.class) {
+            @Override
+            public boolean matchesSafely(Toolbar toolbar) {
+                return textMatcher.matches(toolbar.getTitle());
+            }
+
+            @Override
+            public void describeTo(Description description) {
+                description.appendText("with toolbar title: ");
+                textMatcher.describeTo(description);
+            }
+        };
+    }
 
     @Test
     public void chooseDifferentLanguage_NewBooksLoaded() {
@@ -102,30 +120,6 @@ public class ListBooksActivityTest {
     @Test
     public void testGetScreenName_IsBookListing() {
         Assert.assertEquals("MainActivity", activityTestRule.getActivity().getScreenName());
-    }
-
-
-    private static ViewInteraction matchToolbarTitle(
-            CharSequence title) {
-        return onView(isAssignableFrom(Toolbar.class))
-                .check(matches(withToolbarTitle(is(title))));
-    }
-
-    //Custom matchers are used so that we can reuse matching in other tests.
-    private static Matcher<Object> withToolbarTitle(
-            final Matcher<CharSequence> textMatcher) {
-        return new BoundedMatcher<Object, Toolbar>(Toolbar.class) {
-            @Override
-            public boolean matchesSafely(Toolbar toolbar) {
-                return textMatcher.matches(toolbar.getTitle());
-            }
-
-            @Override
-            public void describeTo(Description description) {
-                description.appendText("with toolbar title: ");
-                textMatcher.describeTo(description);
-            }
-        };
     }
 
 }

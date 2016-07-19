@@ -2,7 +2,9 @@ package org.bookdash.android;
 
 import android.content.Context;
 
-import org.bookdash.android.data.books.FakeBookDetailApiImpl;
+import org.bookdash.android.data.book.BookService;
+import org.bookdash.android.data.book.DownloadService;
+import org.bookdash.android.data.book.FakeBookServiceApiImpl;
 import org.bookdash.android.data.settings.FakeSettingsApiImpl;
 import org.bookdash.android.data.settings.SettingsRepository;
 import org.bookdash.android.data.settings.SettingsRepositoryImpl;
@@ -14,11 +16,19 @@ import org.bookdash.android.data.settings.SettingsRepositoryImpl;
 public class Injection {
 
 
-    public static BookDetailRepository provideBookRepo(){
-        return BookDetailRepositories.getInstance(new FakeBookDetailApiImpl());
+    public static void init(Context context) {
+
+    }
+
+    public static BookService provideBookService() {
+        return new FakeBookServiceApiImpl();
     }
 
     public static SettingsRepository provideSettingsRepo(Context context) {
         return new SettingsRepositoryImpl(new FakeSettingsApiImpl());
+    }
+
+    public static DownloadService provideDownloadService() {
+        return new FakeDownloadService();
     }
 }

@@ -1,25 +1,15 @@
 package org.bookdash.android.presentation.listbooks;
 
-import android.support.test.InstrumentationRegistry;
 import android.support.test.espresso.intent.Intents;
 import android.support.test.rule.ActivityTestRule;
 import android.support.test.runner.AndroidJUnit4;
 import android.test.suitebuilder.annotation.LargeTest;
 
-import org.bookdash.android.R;
-import org.bookdash.android.data.books.FakeBookDetailApiImpl;
 import org.bookdash.android.presentation.main.MainActivity;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Rule;
-import org.junit.Test;
 import org.junit.runner.RunWith;
-
-import static android.support.test.espresso.Espresso.onView;
-import static android.support.test.espresso.action.ViewActions.click;
-import static android.support.test.espresso.assertion.ViewAssertions.matches;
-import static android.support.test.espresso.matcher.ViewMatchers.isDisplayed;
-import static android.support.test.espresso.matcher.ViewMatchers.withText;
 
 /**
  * @author rebeccafranks
@@ -29,7 +19,8 @@ import static android.support.test.espresso.matcher.ViewMatchers.withText;
 @LargeTest
 public class ListBooksFailActivityTest {
     @Rule
-    public ActivityTestRule<MainActivity> activityActivityTestRule = new ActivityTestRule<>(MainActivity.class, true, false);
+    public ActivityTestRule<MainActivity> activityActivityTestRule = new ActivityTestRule<>(MainActivity.class, true,
+            false);
 
     @Before
     public void setUp() {
@@ -43,7 +34,7 @@ public class ListBooksFailActivityTest {
 
     }
 
-    @Test
+  /*  @Test
     public void loadLanguages_LoadError_ShowSnackBarMessage() {
         FakeBookDetailApiImpl.setShouldFailService(true);
         activityActivityTestRule.launchActivity(null);
@@ -81,5 +72,5 @@ public class ListBooksFailActivityTest {
         onView(withText("Searching for Spring")).check(matches(isDisplayed()));
         onView(withText("Why is Nita Upside Down?")).check(matches(isDisplayed()));
 
-    }
+    }*/
 }
