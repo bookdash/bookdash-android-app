@@ -20,7 +20,7 @@ repositories {
 android {
     dataBinding { enabled = true }
     compileSdkVersion 24
-    buildToolsVersion "24"
+    buildToolsVersion "24.0.1"
 
     defaultConfig {
         applicationId "org.bookdash.android"
