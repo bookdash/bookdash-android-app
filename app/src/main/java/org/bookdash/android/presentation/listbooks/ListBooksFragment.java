@@ -57,7 +57,7 @@ public class ListBooksFragment extends Fragment implements ListBooksContract.Vie
     private NavDrawerInterface navDrawerInterface;
     private BookAdapter bookAdapter;
     private EditText searchEditText;
-    private SearchWatcher searchWatcher;
+    private SearchTextWatcher searchTextWatcher;
 
     public static Fragment newInstance() {
         return new ListBooksFragment();
@@ -76,7 +76,7 @@ public class ListBooksFragment extends Fragment implements ListBooksContract.Vie
 
         toolbarViewSwitcher = (ViewSwitcher) view.findViewById(R.id.view_switcher_toolbar);
         searchEditText = (EditText) view.findViewById(R.id.edit_text_search);
-        searchEditText.addTextChangedListener(searchWatcher = new SearchWatcher());
+        searchEditText.addTextChangedListener(searchTextWatcher = new SearchTextWatcher());
         circularProgressBar = (CircularProgressBar) view.findViewById(R.id.activity_loading_books);
         linearLayoutErrorScreen = (LinearLayout) view.findViewById(R.id.linear_layout_error);
         buttonRetry = (Button) view.findViewById(R.id.button_retry);
@@ -213,7 +213,7 @@ public class ListBooksFragment extends Fragment implements ListBooksContract.Vie
 
     @Override
     public void showBooks(final List<BookDetail> bookDetailList) {
-        searchWatcher.setRequested(false);
+        searchTextWatcher.setRequested(false);
         runUiThread(new Runnable() {
             @Override
             public void run() {
@@ -312,7 +312,7 @@ public class ListBooksFragment extends Fragment implements ListBooksContract.Vie
         return super.onOptionsItemSelected(item);
     }
 
-    private class SearchWatcher implements TextWatcher, Runnable {
+    private class SearchTextWatcher implements TextWatcher, Runnable {
 
         private static final int DURATION_THRESHOLD = 300;
 
@@ -322,7 +322,7 @@ public class ListBooksFragment extends Fragment implements ListBooksContract.Vie
         android.os.Handler watchRequested;
         Runnable watchRequestedRunnable;
 
-        protected SearchWatcher() {
+        protected SearchTextWatcher() {
             watchRequested = new android.os.Handler();
             watchRequestedRunnable = this;
         }
