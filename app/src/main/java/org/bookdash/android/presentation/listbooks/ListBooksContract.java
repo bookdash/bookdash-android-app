@@ -20,6 +20,8 @@ public interface ListBooksContract {
         void showSnackBarError(int message);
 
         void showLanguagePopover(String[] languages, int selected);
+
+        void showSearch();
     }
 
     interface UserActionsListener {
@@ -30,6 +32,8 @@ public interface ListBooksContract {
         void loadBooksForLanguagePreference();
 
         void clickOpenLanguagePopover();
+
+        void clickDisplaySearch();
     }
 
 }

@@ -94,5 +94,10 @@ public class ListBooksPresenter implements ListBooksContract.UserActionsListener
         listBooksView.showLanguagePopover(langArray, languageToSelect);
     }
 
+    @Override
+    public void clickDisplaySearch() {
+        listBooksView.showSearch();
+    }
+
 
 }

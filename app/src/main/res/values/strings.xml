@@ -88,5 +88,7 @@
     <string name="delete_ok">Delete</string>
     <string name="delete_cancel">Cancel</string>
     <string name="book_dash_nav_header">Book Dash</string>
+    <string name="action_search">Search</string>
+    <string name="search_books">Search books</string>
 
 </resources>

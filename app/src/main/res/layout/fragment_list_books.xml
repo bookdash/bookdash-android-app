@@ -1,5 +1,4 @@
-<android.support.design.widget.CoordinatorLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -13,23 +12,68 @@
         android:layout_height="wrap_content"
         android:theme="@style/AppTheme.AppBarOverlay">
 
-        <android.support.v7.widget.Toolbar
-            android:id="@+id/toolbar"
+        <ViewSwitcher
+            android:id="@+id/view_switcher_toolbar"
             android:layout_width="match_parent"
-            android:layout_height="?attr/actionBarSize"
-            android:background="?attr/colorPrimary"
-            android:title="@string/book_dash"
-            app:layout_scrollFlags="scroll|enterAlways"
-            app:popupTheme="@style/ThemeOverlay.AppCompat.Light"/>
+            android:layout_height="match_parent">
 
+            <android.support.v7.widget.Toolbar
+                android:id="@+id/toolbar"
+                android:layout_width="match_parent"
+                android:layout_height="?attr/actionBarSize"
+                android:background="?attr/colorPrimary"
+                android:title="@string/book_dash"
+                app:layout_scrollFlags="scroll|enterAlways"
+                app:popupTheme="@style/ThemeOverlay.AppCompat.Light" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <android.support.v7.widget.CardView
+                    app:cardCornerRadius="2dp"
+                    app:cardElevation="6dp"
+                    app:cardBackgroundColor="@android:color/white"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+
+                    <LinearLayout
+                        android:orientation="horizontal"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent">
+
+                        <ImageView
+                            android:id="@+id/image_view_search_back"
+                            app:srcCompat="@drawable/ic_arrow_left"
+                            android:layout_margin="8dp"
+                            android:background="?attr/selectableItemBackground"
+                            android:layout_gravity="center"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content" />
+
+                        <EditText
+                            android:id="@+id/edit_text_search"
+                            android:background="@android:color/white"
+                            android:textColor="@android:color/black"
+                            android:textColorHint="@color/text_secondary_dark"
+                            android:hint="@string/search_books"
+                            android:focusableInTouchMode="true"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent" />
+                    </LinearLayout>
+
+                </android.support.v7.widget.CardView>
+            </LinearLayout>
+
+        </ViewSwitcher>
 
     </android.support.design.widget.AppBarLayout>
 
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
-        <fr.castorflex.android.circularprogressbar.CircularProgressBar
-            xmlns:android="http://schemas.android.com/apk/res/android"
+
+        <fr.castorflex.android.circularprogressbar.CircularProgressBar xmlns:android="http://schemas.android.com/apk/res/android"
             xmlns:app="http://schemas.android.com/apk/res-auto"
             android:id="@+id/activity_loading_books"
             android:layout_width="48dp"
@@ -46,14 +90,14 @@
             app:cpb_stroke_width="4dp"
             app:cpb_sweep_speed="1.0"
             android:foregroundGravity="center|center_vertical|center_horizontal"
-            android:layout_gravity="center"/>
+            android:layout_gravity="center" />
     </RelativeLayout>
 
 
     <LinearLayout
         android:id="@+id/linear_layout_error"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         android:layout_centerInParent="true"
         android:orientation="vertical"
         android:visibility="gone">
@@ -63,7 +107,7 @@
             android:layout_width="150dp"
             android:layout_height="150dp"
             android:layout_gravity="center_horizontal"
-            android:src="@drawable/lb_ic_sad_cloud"/>
+            android:src="@drawable/lb_ic_sad_cloud" />
 
         <TextView
             android:id="@+id/text_view_error_screen"
@@ -71,14 +115,14 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:layout_margin="8dp"
-            android:text="@string/error_loading_books"/>
+            android:text="@string/error_loading_books" />
 
         <Button
             android:id="@+id/button_retry"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
-            android:text="@string/button_retry_text"/>
+            android:text="@string/button_retry_text" />
     </LinearLayout>
 
     <android.support.v7.widget.RecyclerView
@@ -94,7 +138,7 @@
         android:scrollbars="vertical"
         android:visibility="visible"
         app:layout_behavior="@string/appbar_scrolling_view_behavior"
-        tools:listitem="@layout/list_item_book"/>
+        tools:listitem="@layout/list_item_book" />
 
 </android.support.design.widget.CoordinatorLayout>
 
