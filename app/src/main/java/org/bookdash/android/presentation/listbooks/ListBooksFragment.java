@@ -16,6 +16,7 @@ import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.text.Editable;
+import android.text.TextUtils;
 import android.text.TextWatcher;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -129,6 +130,11 @@ public class ListBooksFragment extends Fragment implements ListBooksContract.Vie
         public void onClick(View v) {
             navDrawerInterface.unlockNavDrawer();
             toolbarViewSwitcher.setDisplayedChild(0);
+            if(recyclerViewBooks.getAdapter() == null || recyclerViewBooks.getAdapter().getItemCount() == 0) {
+                String error = textViewErrorMessage.getText().toString();
+                if(TextUtils.isEmpty(error)) error = getString(R.string.no_books_available);
+                showErrorScreen(true, error, true);
+            }
         }
     };
 
