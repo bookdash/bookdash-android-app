@@ -86,7 +86,9 @@ public class ListBooksFragment extends Fragment implements ListBooksContract.Vie
             @Override
             public void onClick(View v) {
                 Log.d(TAG, "Retry button clicked");
-                actionsListener.loadBooksForLanguagePreference();
+                if (toolbarViewSwitcher.getDisplayedChild() == 0)
+                    actionsListener.loadBooksForLanguagePreference();
+                else actionsListener.searchBooksForLanguage(searchEditText.getText().toString());
             }
         });
         view.findViewById(R.id.image_view_search_back).setOnClickListener(searchBackClickListener);
