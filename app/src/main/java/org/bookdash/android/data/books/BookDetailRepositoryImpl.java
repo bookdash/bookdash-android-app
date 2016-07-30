@@ -26,18 +26,14 @@ public class BookDetailRepositoryImpl implements BookDetailRepository {
 
     @Override
     public void getBooksForLanguage(@NonNull String language, @NonNull final GetBooksForLanguageCallback booksForLanguageCallback) {
-        bookDetailApi.getBooksForLanguages(language, new BookDetailApi.BookServiceCallback<List<BookDetail>>() {
+        bookDetailApi.getBooksForLanguages(language,
+                new BookServiceCallbackImpl(booksForLanguageCallback));
+    }
 
-            @Override
-            public void onLoaded(List<BookDetail> result) {
-                booksForLanguageCallback.onBooksLoaded(result);
-            }
-
-            @Override
-            public void onError(Exception error) {
-                booksForLanguageCallback.onBooksLoadError(error);
-            }
-        });
+    @Override
+    public void searchBooksForLanguage(String searchString, @NonNull String language, @NonNull final GetBooksForLanguageCallback booksForLanguageCallback) {
+        bookDetailApi.searchBooksForLanguages(searchString, language,
+                new BookServiceCallbackImpl(booksForLanguageCallback));
     }
 
     @Override
@@ -141,4 +137,22 @@ public class BookDetailRepositoryImpl implements BookDetailRepository {
     }
 
 
+    private class BookServiceCallbackImpl implements BookDetailApi.BookServiceCallback<List<BookDetail>> {
+
+        private GetBooksForLanguageCallback booksForLanguageCallback;
+
+        public BookServiceCallbackImpl(@NonNull final GetBooksForLanguageCallback booksForLanguageCallback) {
+            this.booksForLanguageCallback = booksForLanguageCallback;
+        }
+
+        @Override
+        public void onLoaded(List<BookDetail> result) {
+            booksForLanguageCallback.onBooksLoaded(result);
+        }
+
+        @Override
+        public void onError(Exception error) {
+            booksForLanguageCallback.onBooksLoadError(error);
+        }
+    }
 }

@@ -19,6 +19,8 @@ public interface BookDetailRepository {
 
     void getBooksForLanguage(@NonNull String language, @NonNull GetBooksForLanguageCallback booksForLanguageCallback);
 
+    void searchBooksForLanguage(String searchString, @NonNull String language, @NonNull GetBooksForLanguageCallback booksForLanguageCallback);
+
     void getDownloadedBooks(GetBooksForLanguageCallback getBooksForLanguageCallback);
 
     interface GetBooksForLanguageCallback {

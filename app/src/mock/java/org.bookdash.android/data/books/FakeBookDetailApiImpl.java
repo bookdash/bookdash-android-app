@@ -60,6 +60,15 @@ public class FakeBookDetailApiImpl implements BookDetailApi {
 
     @Override
     public void getBooksForLanguages(String language, BookServiceCallback<List<BookDetail>> bookServiceCallback) {
+        booksForLanguages(language, bookServiceCallback);
+    }
+
+    @Override
+    public void searchBooksForLanguages(String searchString, String language, BookServiceCallback<List<BookDetail>> bookServiceCallback) {
+        booksForLanguages(language, bookServiceCallback);
+    }
+
+    public void booksForLanguages(String language, BookServiceCallback<List<BookDetail>> bookServiceCallback) {
         if (shouldFailService) {
             bookServiceCallback.onError(new Exception("BOOKS LOAD ERROR"));
         } else {

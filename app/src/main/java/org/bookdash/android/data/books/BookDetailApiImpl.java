@@ -2,6 +2,7 @@ package org.bookdash.android.data.books;
 
 import android.support.annotation.NonNull;
 import android.support.annotation.WorkerThread;
+import android.text.TextUtils;
 import android.util.Log;
 
 import com.google.gson.Gson;
@@ -45,15 +46,23 @@ public class BookDetailApiImpl implements BookDetailApi {
 
     @Override
     public void getBooksForLanguages(@NonNull String language, @NonNull final BookServiceCallback<List<BookDetail>> bookServiceCallback) {
+        searchBooksForLanguages(null, language, bookServiceCallback);
+    }
+
+    @Override
+    public void searchBooksForLanguages(String searchString, @NonNull String language, @NonNull final BookServiceCallback<List<BookDetail>> bookServiceCallback) {
         ParseQuery<Language> queryLanguagesNew = ParseQuery.getQuery(Language.class);
         queryLanguagesNew.whereEqualTo(Language.LANG_NAME_COL, language);
 
         ParseQuery<BookDetail> queryBookDetail = ParseQuery.getQuery(BookDetail.class);
         queryBookDetail.setCachePolicy(ParseQuery.CachePolicy.NETWORK_ELSE_CACHE);
         queryBookDetail.include(BookDetail.BOOK_LANGUAGE_COL);
+        queryBookDetail.include(BookDetail.BOOK_TITLE_COL);
         queryBookDetail.include(BookDetail.BOOK_ID_COL);
         queryBookDetail.whereEqualTo(BookDetail.BOOK_ENABLED_COL, true);
         queryBookDetail.addDescendingOrder(BookDetail.CREATED_AT_COL);
+        if(!TextUtils.isEmpty(searchString))
+            queryBookDetail.whereEqualTo(BookDetail.BOOK_TITLE_COL, searchString);
         queryBookDetail.whereMatchesQuery(BookDetail.BOOK_LANGUAGE_COL, queryLanguagesNew);
         queryBookDetail.findInBackground(new FindCallback<BookDetail>() {
             @Override

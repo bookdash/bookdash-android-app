@@ -16,6 +16,7 @@ import org.mockito.MockitoAnnotations;
 import java.util.ArrayList;
 import java.util.List;
 
+import static org.mockito.Matchers.anyString;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.eq;
 import static org.mockito.Mockito.when;
@@ -84,6 +85,33 @@ public class ListBooksPresenterTest {
 
     private List<Language> LANGUAGES= new ArrayList<>();
     private List<BookDetail> BOOKS = new ArrayList<>();
+
+    @Test
+    public void loadSearchBooksSuccessfulLoadIntoView() {
+        when(settingsRepository.getLanguagePreference()).thenReturn("EN");
+
+        listBooksPresenter.searchBooksForLanguage("SEARCH");
+        verify(bookRepository).searchBooksForLanguage(eq("SEARCH"), eq("EN"), booksForLanguageCallbackArgumentCaptor.capture());
+        booksForLanguageCallbackArgumentCaptor.getValue().onBooksLoaded(BOOKS);
+
+        verify(listBookView).showBooks(BOOKS);
+        verify(listBookView).showLoading(false);
+
+    }
+
+    @Test
+    public void loadSearchBooksLoadErrorShowErrorRetryScreen() {
+        when(settingsRepository.getLanguagePreference()).thenReturn("EN");
+
+        listBooksPresenter.searchBooksForLanguage("SEARCH");
+
+        verify(bookRepository).searchBooksForLanguage(eq("SEARCH"), eq("EN"), booksForLanguageCallbackArgumentCaptor.capture());
+        booksForLanguageCallbackArgumentCaptor.getValue().onBooksLoadError(new Exception("WHOOPS"));
+
+        verify(listBookView).showErrorScreen(true, "WHOOPS", true);
+        verify(listBookView).showLoading(false);
+
+    }
 
     @Test
     public void loadLanguagesCorrectlyNotifyView() {

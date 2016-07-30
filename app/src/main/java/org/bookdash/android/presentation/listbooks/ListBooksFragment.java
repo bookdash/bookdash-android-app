@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.SystemClock;
 import android.support.annotation.Nullable;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
@@ -14,6 +15,9 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.text.Editable;
+import android.text.TextUtils;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -22,11 +26,14 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.ViewSwitcher;
 
 import org.bookdash.android.Injection;
 import org.bookdash.android.R;
+import org.bookdash.android.data.utils.Keyboard;
 import org.bookdash.android.domain.pojo.BookDetail;
 import org.bookdash.android.presentation.bookinfo.BookInfoActivity;
 import org.bookdash.android.presentation.main.NavDrawerInterface;
@@ -41,6 +48,7 @@ public class ListBooksFragment extends Fragment implements ListBooksContract.Vie
     private static final String TAG = ListBooksFragment.class.getCanonicalName();
     private static final int BOOK_DETAIL_REQUEST_CODE = 43;
     private ListBooksContract.UserActionsListener actionsListener;
+    private ViewSwitcher toolbarViewSwitcher;
     private Button buttonRetry;
     private RecyclerView recyclerViewBooks;
     private CircularProgressBar circularProgressBar;
@@ -48,6 +56,8 @@ public class ListBooksFragment extends Fragment implements ListBooksContract.Vie
     private TextView textViewErrorMessage;
     private NavDrawerInterface navDrawerInterface;
     private BookAdapter bookAdapter;
+    private EditText searchEditText;
+    private SearchTextWatcher searchTextWatcher;
 
     public static Fragment newInstance() {
         return new ListBooksFragment();
@@ -64,6 +74,9 @@ public class ListBooksFragment extends Fragment implements ListBooksContract.Vie
         super.onViewCreated(view, savedInstanceState);
         actionsListener = new ListBooksPresenter(this, Injection.provideBookRepo(), Injection.provideSettingsRepo(getActivity()));
 
+        toolbarViewSwitcher = (ViewSwitcher) view.findViewById(R.id.view_switcher_toolbar);
+        searchEditText = (EditText) view.findViewById(R.id.edit_text_search);
+        searchEditText.addTextChangedListener(searchTextWatcher = new SearchTextWatcher());
         circularProgressBar = (CircularProgressBar) view.findViewById(R.id.activity_loading_books);
         linearLayoutErrorScreen = (LinearLayout) view.findViewById(R.id.linear_layout_error);
         buttonRetry = (Button) view.findViewById(R.id.button_retry);
@@ -74,7 +87,17 @@ public class ListBooksFragment extends Fragment implements ListBooksContract.Vie
             @Override
             public void onClick(View v) {
                 Log.d(TAG, "Retry button clicked");
-                actionsListener.loadBooksForLanguagePreference();
+                if (toolbarViewSwitcher.getDisplayedChild() == 0)
+                    actionsListener.loadBooksForLanguagePreference();
+                else actionsListener.searchBooksForLanguage(searchEditText.getText().toString());
+            }
+        });
+        view.findViewById(R.id.image_view_search_back).setOnClickListener(searchBackClickListener);
+        searchEditText.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View v, boolean hasFocus) {
+                if (hasFocus) Keyboard.showKeyboard(v);
+                else Keyboard.hideKeyboard(v);
             }
         });
         Toolbar toolbar = (Toolbar) view.findViewById(R.id.toolbar);
@@ -99,6 +122,19 @@ public class ListBooksFragment extends Fragment implements ListBooksContract.Vie
         @Override
         public void onClick(View v) {
             openBookDetails(v);
+        }
+    };
+
+    private View.OnClickListener searchBackClickListener = new View.OnClickListener() {
+        @Override
+        public void onClick(View v) {
+            navDrawerInterface.unlockNavDrawer();
+            toolbarViewSwitcher.setDisplayedChild(0);
+            if(recyclerViewBooks.getAdapter() == null || recyclerViewBooks.getAdapter().getItemCount() == 0) {
+                String error = textViewErrorMessage.getText().toString();
+                if(TextUtils.isEmpty(error)) error = getString(R.string.no_books_available);
+                showErrorScreen(true, error, true);
+            }
         }
     };
 
@@ -177,6 +213,7 @@ public class ListBooksFragment extends Fragment implements ListBooksContract.Vie
 
     @Override
     public void showBooks(final List<BookDetail> bookDetailList) {
+        searchTextWatcher.setRequested(false);
         runUiThread(new Runnable() {
             @Override
             public void run() {
@@ -228,6 +265,19 @@ public class ListBooksFragment extends Fragment implements ListBooksContract.Vie
     }
 
     @Override
+    public void showSearch() {
+        runUiThread(new Runnable() {
+            @Override
+            public void run() {
+                linearLayoutErrorScreen.setVisibility(View.GONE);
+                navDrawerInterface.lockNavDrawer();
+                toolbarViewSwitcher.setDisplayedChild(1);
+                searchEditText.requestFocus();
+            }
+        });
+    }
+
+    @Override
     public void onAttach(Context context) {
         super.onAttach(context);
         if (context instanceof NavDrawerInterface) {
@@ -251,10 +301,63 @@ public class ListBooksFragment extends Fragment implements ListBooksContract.Vie
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        if (item.getItemId() == R.id.action_language_choice) {
-            actionsListener.clickOpenLanguagePopover();
-            return true;
+        switch (item.getItemId()) {
+            case R.id.action_search_books:
+                actionsListener.clickDisplaySearch();
+                return true;
+            case R.id.action_language_choice:
+                actionsListener.clickOpenLanguagePopover();
+                return true;
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    private class SearchTextWatcher implements TextWatcher, Runnable {
+
+        private static final int DURATION_THRESHOLD = 300;
+
+        long prevTimestamp = 0;
+        boolean requested;
+
+        android.os.Handler watchRequested;
+        Runnable watchRequestedRunnable;
+
+        protected SearchTextWatcher() {
+            watchRequested = new android.os.Handler();
+            watchRequestedRunnable = this;
+        }
+
+        @Override
+        public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+        }
+
+        @Override
+        public void onTextChanged(CharSequence s, int start, int before, int count) {
+            long timestamp = SystemClock.currentThreadTimeMillis();
+            if (timestamp - prevTimestamp > DURATION_THRESHOLD) watchRequested();
+            prevTimestamp = timestamp;
+        }
+
+        @Override
+        public void afterTextChanged(Editable s) {
+        }
+
+        private void watchRequested() {
+            watchRequested.removeCallbacksAndMessages(null);
+            watchRequested.postDelayed(watchRequestedRunnable, DURATION_THRESHOLD);
+        }
+
+        @Override
+        public void run() {
+            if (requested) return;
+            if (toolbarViewSwitcher.getDisplayedChild() != 0) {
+                requested = true;
+                actionsListener.searchBooksForLanguage(searchEditText.getText().toString());
+            }
+        }
+
+        public void setRequested(boolean requested) {
+            this.requested = requested;
+        }
     }
 }
