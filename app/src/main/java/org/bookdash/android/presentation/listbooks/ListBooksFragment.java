@@ -261,6 +261,7 @@ public class ListBooksFragment extends Fragment implements ListBooksContract.Vie
         runUiThread(new Runnable() {
             @Override
             public void run() {
+                linearLayoutErrorScreen.setVisibility(View.GONE);
                 navDrawerInterface.lockNavDrawer();
                 toolbarViewSwitcher.setDisplayedChild(1);
                 searchEditText.requestFocus();
