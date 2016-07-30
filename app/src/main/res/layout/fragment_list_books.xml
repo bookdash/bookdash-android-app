@@ -57,6 +57,7 @@
                             android:textColor="@android:color/black"
                             android:textColorHint="@color/text_secondary_dark"
                             android:hint="@string/search_books"
+                            android:maxLines="1"
                             android:focusableInTouchMode="true"
                             android:layout_width="match_parent"
                             android:layout_height="match_parent" />
