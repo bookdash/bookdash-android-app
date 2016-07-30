@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.SystemClock;
 import android.support.annotation.Nullable;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
@@ -14,6 +15,8 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -53,6 +56,7 @@ public class ListBooksFragment extends Fragment implements ListBooksContract.Vie
     private NavDrawerInterface navDrawerInterface;
     private BookAdapter bookAdapter;
     private EditText searchEditText;
+    private SearchWatcher searchWatcher;
 
     public static Fragment newInstance() {
         return new ListBooksFragment();
@@ -71,6 +75,7 @@ public class ListBooksFragment extends Fragment implements ListBooksContract.Vie
 
         toolbarViewSwitcher = (ViewSwitcher) view.findViewById(R.id.view_switcher_toolbar);
         searchEditText = (EditText) view.findViewById(R.id.edit_text_search);
+        searchEditText.addTextChangedListener(searchWatcher = new SearchWatcher());
         circularProgressBar = (CircularProgressBar) view.findViewById(R.id.activity_loading_books);
         linearLayoutErrorScreen = (LinearLayout) view.findViewById(R.id.linear_layout_error);
         buttonRetry = (Button) view.findViewById(R.id.button_retry);
@@ -88,7 +93,7 @@ public class ListBooksFragment extends Fragment implements ListBooksContract.Vie
         searchEditText.setOnFocusChangeListener(new View.OnFocusChangeListener() {
             @Override
             public void onFocusChange(View v, boolean hasFocus) {
-                if(hasFocus) Keyboard.showKeyboard(v);
+                if (hasFocus) Keyboard.showKeyboard(v);
                 else Keyboard.hideKeyboard(v);
             }
         });
@@ -200,6 +205,7 @@ public class ListBooksFragment extends Fragment implements ListBooksContract.Vie
 
     @Override
     public void showBooks(final List<BookDetail> bookDetailList) {
+        searchWatcher.setRequested(false);
         runUiThread(new Runnable() {
             @Override
             public void run() {
@@ -295,5 +301,54 @@ public class ListBooksFragment extends Fragment implements ListBooksContract.Vie
                 return true;
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    private class SearchWatcher implements TextWatcher, Runnable {
+
+        private static final int DURATION_THRESHOLD = 300;
+
+        long prevTimestamp = 0;
+        boolean requested;
+
+        android.os.Handler watchRequested;
+        Runnable watchRequestedRunnable;
+
+        protected SearchWatcher() {
+            watchRequested = new android.os.Handler();
+            watchRequestedRunnable = this;
+        }
+
+        @Override
+        public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+        }
+
+        @Override
+        public void onTextChanged(CharSequence s, int start, int before, int count) {
+            long timestamp = SystemClock.currentThreadTimeMillis();
+            if (timestamp - prevTimestamp > DURATION_THRESHOLD) watchRequested();
+            prevTimestamp = timestamp;
+        }
+
+        @Override
+        public void afterTextChanged(Editable s) {
+        }
+
+        private void watchRequested() {
+            watchRequested.removeCallbacksAndMessages(null);
+            watchRequested.postDelayed(watchRequestedRunnable, DURATION_THRESHOLD);
+        }
+
+        @Override
+        public void run() {
+            if (requested) return;
+            if (toolbarViewSwitcher.getDisplayedChild() != 0) {
+                requested = true;
+                actionsListener.searchBooksForLanguage(searchEditText.getText().toString());
+            }
+        }
+
+        public void setRequested(boolean requested) {
+            this.requested = requested;
+        }
     }
 }

@@ -31,6 +31,8 @@ public interface ListBooksContract {
 
         void loadBooksForLanguagePreference();
 
+        void searchBooksForLanguage(String searchString);
+
         void clickOpenLanguagePopover();
 
         void clickDisplaySearch();

@@ -32,22 +32,16 @@ public class ListBooksPresenter implements ListBooksContract.UserActionsListener
         loadBooksForLanguage(languagePreference);
     }
 
+    @Override
+    public void searchBooksForLanguage(String searchString) {
+        listBooksView.showLoading(true);
+        bookDetailRepository.searchBooksForLanguage(searchString, settingsRepository.getLanguagePreference(),
+                new OnBookLoadCallback());
+    }
+
     private void loadBooksForLanguage(String language) {
         listBooksView.showLoading(true);
-        bookDetailRepository.getBooksForLanguage(language, new BookDetailRepository.GetBooksForLanguageCallback() {
-            @Override
-            public void onBooksLoaded(List<BookDetail> books) {
-                listBooksView.showLoading(false);
-                listBooksView.showErrorScreen(false, "", false);
-                listBooksView.showBooks(books);
-            }
-
-            @Override
-            public void onBooksLoadError(Exception e) {
-                listBooksView.showLoading(false);
-                listBooksView.showErrorScreen(true, e.getMessage().toUpperCase(), true);
-            }
-        });
+        bookDetailRepository.getBooksForLanguage(language, new OnBookLoadCallback());
 
     }
 
@@ -99,5 +93,26 @@ public class ListBooksPresenter implements ListBooksContract.UserActionsListener
         listBooksView.showSearch();
     }
 
+
+    private class OnBookLoadCallback implements BookDetailRepository.GetBooksForLanguageCallback {
+        @Override
+        public void onBooksLoaded(List<BookDetail> books) {
+            onBooksLoad(books, false, "", false);
+        }
+
+        @Override
+        public void onBooksLoadError(Exception e) {
+            onBooksLoad(null, true, e.getMessage().toUpperCase(), true);
+        }
+
+        public void onBooksLoad(List<BookDetail> books,
+                                boolean show,
+                                String errorMessage,
+                                boolean showRetryButton) {
+            listBooksView.showLoading(false);
+            listBooksView.showErrorScreen(show, errorMessage, showRetryButton);
+            if (books != null) listBooksView.showBooks(books);
+        }
+    }
 
 }
