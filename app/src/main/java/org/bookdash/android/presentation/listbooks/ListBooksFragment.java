@@ -120,6 +120,7 @@ public class ListBooksFragment extends Fragment implements ListBooksContract.Vie
     private View.OnClickListener searchBackClickListener = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
+            navDrawerInterface.unlockNavDrawer();
             toolbarViewSwitcher.setDisplayedChild(0);
         }
     };
@@ -254,6 +255,7 @@ public class ListBooksFragment extends Fragment implements ListBooksContract.Vie
         runUiThread(new Runnable() {
             @Override
             public void run() {
+                navDrawerInterface.lockNavDrawer();
                 toolbarViewSwitcher.setDisplayedChild(1);
                 searchEditText.requestFocus();
             }

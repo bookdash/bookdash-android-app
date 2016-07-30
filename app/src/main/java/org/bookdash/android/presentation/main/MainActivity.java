@@ -297,6 +297,16 @@ public class MainActivity extends BaseAppCompatActivity implements MainContract.
     }
 
     @Override
+    public void lockNavDrawer() {
+        drawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED);
+    }
+
+    @Override
+    public void unlockNavDrawer() {
+        drawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_UNLOCKED);
+    }
+
+    @Override
     public void setToolbar(Toolbar toolbar) {
         setSupportActionBar(toolbar);
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {

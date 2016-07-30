@@ -8,5 +8,9 @@ public interface NavDrawerInterface {
 
     void closeNavDrawer();
 
+    void lockNavDrawer();
+
+    void unlockNavDrawer();
+
     void setToolbar(Toolbar toolbar);
 }
