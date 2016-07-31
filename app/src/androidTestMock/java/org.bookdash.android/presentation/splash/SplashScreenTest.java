@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.support.test.espresso.Espresso;
 import android.support.test.espresso.IdlingResource;
 import android.support.test.espresso.intent.Intents;
+import android.support.test.espresso.intent.rule.IntentsTestRule;
 import android.support.test.rule.ActivityTestRule;
 import android.support.test.runner.AndroidJUnit4;
 import android.test.suitebuilder.annotation.LargeTest;
@@ -33,22 +34,21 @@ import static android.support.test.espresso.matcher.ViewMatchers.withText;
  * @since 15/11/05.
  */
 @RunWith(AndroidJUnit4.class)
-@LargeTest
 public class SplashScreenTest {
 
     private int splashScreenWaitingTime = 1100;
     @Rule
-    public ActivityTestRule<SplashActivity> activityTestRule =
-            new ActivityTestRule<>(SplashActivity.class, true, false);
+    public IntentsTestRule<SplashActivity> activityTestRule =
+            new IntentsTestRule<>(SplashActivity.class, true, false);
 
     @Before
     public void setUp() {
-        Intents.init();
+     //   Intents.init();
     }
 
     @After
     public void tearDown() {
-        Intents.release();
+   //     Intents.release();
     }
 
     @Test
@@ -80,7 +80,7 @@ public class SplashScreenTest {
     }
 
     @Test
-    public void viewSplashScreenFinish_StartListBooks(){
+    public void viewSplashScreenFinish_StartListBooks()  throws InterruptedException{
         FakeSettingsApiImpl.setFirstTime(true);
 
         activityTestRule.launchActivity(null);
