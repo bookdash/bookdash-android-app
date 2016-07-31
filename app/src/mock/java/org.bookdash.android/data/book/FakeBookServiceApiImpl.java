@@ -54,7 +54,10 @@ public class FakeBookServiceApiImpl implements BookService {
 
     @Override
     public Observable<List<FireContributor>> getContributorsForBook(final FireBookDetails bookDetails) {
-        return null;
+        List<FireContributor> fireContributors = new ArrayList<>();
+        FireContributor fireContributor = new FireContributor("Rebecca Franks", "https://riggaroo.co.za/wp-content/uploads/2016/03/rebeccafranks_circle.png", "1");
+        fireContributors.add(fireContributor);
+        return Observable.just(fireContributors);
     }
 
     @Override
