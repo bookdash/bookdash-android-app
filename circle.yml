@@ -31,7 +31,7 @@ test:
     - adb shell settings put global animator_duration_scale 0
 
   override:
-    - ./gradlew connectedMockDebugAndroidTest
+    - ./gradlew createMockDebugCoverageReport
     - ./gradlew test
 
   post:

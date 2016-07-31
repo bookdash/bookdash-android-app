@@ -101,7 +101,7 @@ android {
         debug {
             ext.enableCrashlytics = false
             // Run code coverage reports by default on debug builds.
-          //  testCoverageEnabled = true
+            testCoverageEnabled = true
         }
     }
 
