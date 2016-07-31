@@ -263,7 +263,7 @@
                 android:onClick="@{downloadClick}"
                 android:src="@drawable/ic_file_download"
                 android:visibility="visible"
-                app:fbb_autoStart="true"
+                app:fbb_autoStart="false"
                 app:fbb_endBitmap="@drawable/ic_open_book"
                 app:fbb_hideProgressOnComplete="true"
                 app:fbb_progressColor="?attr/colorAccent"

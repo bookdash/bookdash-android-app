@@ -163,7 +163,7 @@ public class BookInfoActivity extends BaseAppCompatActivity implements BookInfoC
                 if (!bookInfo.isDownloadedAlready()) {
                     floatingActionButton.resetIcon();
                     floatingActionButton.showProgress(true);
-                    floatingActionButton.setProgress(0, false);
+                    floatingActionButton.setProgress(0);
                 }
                 bookInfoPresenter.downloadBook(bookInfo);
             }
@@ -202,12 +202,6 @@ public class BookInfoActivity extends BaseAppCompatActivity implements BookInfoC
         floatingActionButton.animate().setStartDelay(500).scaleY(1).scaleX(1)
                 .setInterpolator(new OvershootInterpolator())
                 .setDuration(getResources().getInteger(android.R.integer.config_mediumAnimTime)).start();
-    }
-
-    @Override
-    public void showSnackBarMessage(int message) {
-        Snackbar.make(scrollView, message, Snackbar.LENGTH_LONG).show();
-
     }
 
     @SuppressWarnings("SuspiciousNameCombination")
@@ -361,8 +355,14 @@ public class BookInfoActivity extends BaseAppCompatActivity implements BookInfoC
     }
 
     @Override
+    public void showSnackBarMessage(int message) {
+        Snackbar.make(scrollView, message, Snackbar.LENGTH_LONG).show();
+
+    }
+
+    @Override
     public void showDownloadProgress(final int downloadProgress) {
-        if (progress == downloadProgress) {
+        if (progress == downloadProgress || downloadProgress == 0) {
             return;
         }
         progress = downloadProgress;
@@ -371,7 +371,7 @@ public class BookInfoActivity extends BaseAppCompatActivity implements BookInfoC
         runOnUiThread(new Runnable() {
             @Override
             public void run() {
-                floatingActionButton.setProgress(downloadProgress, false);
+                floatingActionButton.setProgress(downloadProgress);
             }
         });
 
@@ -381,7 +381,7 @@ public class BookInfoActivity extends BaseAppCompatActivity implements BookInfoC
     public void showDownloadFinished() {
         Log.d(TAG, "Download finished");
         floatingActionButton.resetIcon();
-        floatingActionButton.setProgress(100, false);
+        floatingActionButton.setProgress(100);
     }
 
     @Override
