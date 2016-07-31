@@ -2,6 +2,7 @@ package org.bookdash.android.presentation.splash;
 
 import android.app.Activity;
 import android.app.Instrumentation;
+import android.content.Intent;
 import android.support.test.espresso.Espresso;
 import android.support.test.espresso.IdlingResource;
 import android.support.test.espresso.intent.Intents;
@@ -86,7 +87,7 @@ public class SplashScreenTest {
         IdlingResource idlingResource = new ElapsedTimeIdlingResource(splashScreenWaitingTime);
         Espresso.registerIdlingResources(idlingResource);
 
-        Instrumentation.ActivityResult result = new Instrumentation.ActivityResult(Activity.RESULT_OK, null);
+        Instrumentation.ActivityResult result = new Instrumentation.ActivityResult(Activity.RESULT_OK, new Intent());
 
         intending(hasComponent(MaterialTutorialActivity.class.getName())).respondWith(result);
 
