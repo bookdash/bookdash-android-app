@@ -6,12 +6,10 @@ import android.support.test.espresso.matcher.BoundedMatcher;
 import android.support.test.rule.ActivityTestRule;
 import android.support.test.runner.AndroidJUnit4;
 import android.support.v7.widget.Toolbar;
-import android.test.suitebuilder.annotation.LargeTest;
 
 import junit.framework.Assert;
 
 import org.bookdash.android.R;
-import org.bookdash.android.data.settings.FakeSettingsApiImpl;
 import org.bookdash.android.presentation.bookinfo.BookInfoActivity;
 import org.bookdash.android.presentation.main.MainActivity;
 import org.hamcrest.Description;
@@ -39,7 +37,6 @@ import static org.hamcrest.Matchers.is;
  * @since 15/11/14.
  */
 @RunWith(AndroidJUnit4.class)
-@LargeTest
 public class ListBooksActivityTest {
 
     @Rule
@@ -48,30 +45,36 @@ public class ListBooksActivityTest {
     @Before
     public void setUp() {
         Intents.init();
-        FakeSettingsApiImpl.setLanguagePref("English");
     }
 
     @After
     public void tearDown() {
         Intents.release();
-        FakeSettingsApiImpl.setLanguagePref("English");
     }
 
 
     @Test
     public void loadBooks_BookTitlesVisible() {
         //When
-        //AUTOMATIC LAUNCH OF ACTIVITY
+        onView(withId(R.id.action_language_choice)).perform(click());
+
+        //When
+        onView(withText("English")).perform(click());
 
         //Then
-        onView(withText("Searching for Spring")).check(matches(isDisplayed()));
-        onView(withText("Why is Nita Upside Down?")).check(matches(isDisplayed()));
+        onView(withText("Searching for the Spirit of Spring")).check(matches(isDisplayed()));
     }
 
     @Test
     public void clickOnBook_OpensBookDetails() {
         //When
-        onView(withText("Searching for Spring")).perform(click());
+        onView(withId(R.id.action_language_choice)).perform(click());
+
+        //When
+        onView(withText("English")).perform(click());
+
+        //When
+        onView(withText("Searching for the Spirit of Spring")).perform(click());
         //Then
         intended(hasComponent(BookInfoActivity.class.getName()));
 
@@ -111,10 +114,8 @@ public class ListBooksActivityTest {
         onView(withText("Zulu")).perform(click());
 
         //Then
-        onView(withText("[ZULU]isipilingi")).check(matches(isDisplayed()));
-        onView(withText("Searching for Spring")).check(doesNotExist());
-        onView(withText("[ZULU]kubheke phansi")).check(matches(isDisplayed()));
-        onView(withText("Why is Nita Upside Down?")).check(doesNotExist());
+        onView(withText("Searching for the Spirit of Spring Zulu")).check(matches(isDisplayed()));
+        onView(withText("Searching for the Spirit of Spring")).check(doesNotExist());
     }
 
     @Test

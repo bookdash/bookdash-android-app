@@ -48,15 +48,14 @@ public class BookInfoActivityTest {
         intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         FireBookDetails bookDetailParcelable = new FireBookDetails();
         bookDetailParcelable.setBookId(BOOK_OBJ_ID);
-        bookDetailParcelable.setBookTitle("Searching for Spring");
+        bookDetailParcelable.setBookDescription("Book description is great");
         bookDetailParcelable.setBookCoverPageUrl("http://riggaroo.co.za/bookdash/3-fishgift/xhosa/1-cover.jpg");
         intent.putExtra(BookInfoActivity.BOOK_PARCEL, bookDetailParcelable);
         activityTestRule.launchActivity(intent);
 
-        onView(withText("Searching for Spring"))
+        onView(withText("Book description is great"))
                 .check(matches(withEffectiveVisibility(ViewMatchers.Visibility.VISIBLE)));
 
         onView(withText("Rebecca Franks")).check(matches(withEffectiveVisibility(ViewMatchers.Visibility.VISIBLE)));
-        onView(withText("Johan Smith")).check(matches(withEffectiveVisibility(ViewMatchers.Visibility.VISIBLE)));
     }
 }
