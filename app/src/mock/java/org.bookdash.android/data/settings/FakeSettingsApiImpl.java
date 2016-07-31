@@ -12,7 +12,7 @@ import rx.Single;
  */
 public class FakeSettingsApiImpl implements SettingsApi {
     private static boolean isFirstTime = true;
-    private static FireLanguage fireLanguage = new FireLanguage("English","EN", true, "1");
+    public static FireLanguage fireLanguage = new FireLanguage("English","EN", true, "1");
     @Override
     public boolean isFirstTime() {
         return isFirstTime;
@@ -39,6 +39,8 @@ public class FakeSettingsApiImpl implements SettingsApi {
     public static void setFirstTime(boolean firstTime){
         isFirstTime = firstTime;
     }
+
+
 
 
 }

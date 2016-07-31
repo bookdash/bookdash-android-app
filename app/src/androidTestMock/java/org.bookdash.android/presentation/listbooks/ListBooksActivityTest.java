@@ -1,5 +1,6 @@
 package org.bookdash.android.presentation.listbooks;
 
+import android.support.test.InstrumentationRegistry;
 import android.support.test.espresso.ViewInteraction;
 import android.support.test.espresso.intent.Intents;
 import android.support.test.espresso.matcher.BoundedMatcher;
@@ -9,7 +10,9 @@ import android.support.v7.widget.Toolbar;
 
 import junit.framework.Assert;
 
+import org.bookdash.android.Injection;
 import org.bookdash.android.R;
+import org.bookdash.android.data.settings.FakeSettingsApiImpl;
 import org.bookdash.android.presentation.bookinfo.BookInfoActivity;
 import org.bookdash.android.presentation.main.MainActivity;
 import org.hamcrest.Description;
@@ -44,6 +47,7 @@ public class ListBooksActivityTest {
 
     @Before
     public void setUp() {
+        Injection.provideSettingsRepo(InstrumentationRegistry.getTargetContext()).saveLanguagePreference(FakeSettingsApiImpl.fireLanguage);
         Intents.init();
     }
 
@@ -55,10 +59,9 @@ public class ListBooksActivityTest {
 
     @Test
     public void loadBooks_BookTitlesVisible() {
-        //When
+        //Given
         onView(withId(R.id.action_language_choice)).perform(click());
 
-        //When
         onView(withText("English")).perform(click());
 
         //Then
@@ -67,12 +70,6 @@ public class ListBooksActivityTest {
 
     @Test
     public void clickOnBook_OpensBookDetails() {
-        //When
-        onView(withId(R.id.action_language_choice)).perform(click());
-
-        //When
-        onView(withText("English")).perform(click());
-
         //When
         onView(withText("Searching for the Spirit of Spring")).perform(click());
         //Then
