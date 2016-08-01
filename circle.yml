@@ -1,4 +1,6 @@
 machine:
+   java:
+        version: oraclejdk8
    environment:
      ANDROID_HOME: /usr/local/android-sdk-linux
 
@@ -7,9 +9,9 @@ dependencies:
     - touch app/google-services.json
     - echo $GOOGLE_SERVICES_JSON > app/google-services.json
     - android list sdk --extended
-    - echo y | android update sdk --no-ui --all --filter "tools,platform-tools,android-23"
-    - echo y | android update sdk --no-ui --all --filter "build-tools-23.0.3"
-    - echo y | android update sdk --no-ui --all --filter "extra-android-m2repository"
+    - echo y | android update sdk --no-ui --all --filter "tools,platform-tools,android-24"
+    - echo y | android update sdk --no-ui --all --filter "build-tools-24.0.1"
+    - echo y | android update sdk --no-ui --all --filter "extra-android-m2repository,extra-google-google_play_services,extra-google-m2repository"
 
 test:
   pre:

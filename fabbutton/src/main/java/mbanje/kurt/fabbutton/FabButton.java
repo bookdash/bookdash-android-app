@@ -37,6 +37,7 @@ import android.support.design.widget.Snackbar;
 import android.support.v4.view.ViewCompat;
 import android.support.v4.view.ViewPropertyAnimatorListener;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.View;
 import android.view.animation.Animation;
 import android.widget.FrameLayout;
@@ -50,6 +51,7 @@ import java.util.List;
 @DefaultBehavior(FabButton.Behavior.class)
 public class FabButton extends FrameLayout implements CircleImageView.OnFabViewListener {
 
+    private static final String TAG = "FabButton";
     private CircleImageView circle;
     private ProgressRingView ring;
     private float ringWidthRatio = 0.14f; //of a possible 1f;
@@ -61,24 +63,14 @@ public class FabButton extends FrameLayout implements CircleImageView.OnFabViewL
 
     public FabButton(Context context) {
         super(context);
-        init(context,null, 0);
+        init(context, null, 0);
     }
 
-    public FabButton(Context context, AttributeSet attrs) {
-        super(context, attrs);
-        init(context,attrs, 0);
-    }
-
-    public FabButton(Context context, AttributeSet attrs, int defStyle) {
-        super(context, attrs, defStyle);
-        init(context,attrs, defStyle);
-    }
-
-    protected void init(Context context,AttributeSet attrs, int defStyle) {
-        View v = View.inflate(context, R.layout.widget_fab_button,this);
+    protected void init(Context context, AttributeSet attrs, int defStyle) {
+        View v = View.inflate(context, R.layout.widget_fab_button, this);
         setClipChildren(false);
         circle = (CircleImageView) v.findViewById(R.id.fabbutton_circle);
-        ring = (ProgressRingView)v.findViewById(R.id.fabbutton_ring);
+        ring = (ProgressRingView) v.findViewById(R.id.fabbutton_ring);
         circle.setFabViewListener(this);
         ring.setFabViewListener(this);
         int color = Color.BLACK;
@@ -86,7 +78,7 @@ public class FabButton extends FrameLayout implements CircleImageView.OnFabViewL
         int animDuration = 4000;
         int icon = -1;
         float maxProgress = 0;
-        float progress =0;
+        float progress = 0;
         if (attrs != null) {
             final TypedArray a = context.obtainStyledAttributes(attrs, R.styleable.CircleImageView);
             color = a.getColor(R.styleable.CircleImageView_android_color, Color.BLACK);
@@ -109,26 +101,36 @@ public class FabButton extends FrameLayout implements CircleImageView.OnFabViewL
         circle.setShowEndBitmap(showEndBitmap);
         circle.setRingWidthRatio(ringWidthRatio);
         ring.setProgressColor(progressColor);
-        ring.setProgress(progress, true);
+        ring.setProgress(progress);
         ring.setMaxProgress(maxProgress);
         ring.setAutostartanim(autostartanim);
         ring.setAnimDuration(animDuration);
         ring.setRingWidthRatio(ringWidthRatio);
         ring.setIndeterminate(indeterminate);
-        if(icon != -1){
-            circle.setIcon(icon,endBitmapResource);
+        if (icon != -1) {
+            circle.setIcon(icon, endBitmapResource);
         }
     }
 
-    public void setIcon(int resource,int endIconResource){
-        circle.setIcon(resource,endIconResource);
+    public FabButton(Context context, AttributeSet attrs) {
+        super(context, attrs);
+        init(context, attrs, 0);
+    }
+
+    public FabButton(Context context, AttributeSet attrs, int defStyle) {
+        super(context, attrs, defStyle);
+        init(context, attrs, defStyle);
+    }
+
+    public void setIcon(int resource, int endIconResource) {
+        circle.setIcon(resource, endIconResource);
     }
 
     public void setColor(int color) {
         circle.setColor(color);
     }
 
-    public void setRingProgressColor(int color){
+    public void setRingProgressColor(int color) {
         ring.setProgressColor(color);
     }
 
@@ -136,11 +138,13 @@ public class FabButton extends FrameLayout implements CircleImageView.OnFabViewL
         circle.setIcon(icon, endIcon);
     }
 
-    public void resetIcon(){
+    public void resetIcon() {
         circle.resetIcon();
     }
+
     /**
      * sets the progress to indeterminate or not
+     *
      * @param indeterminate the flag
      */
     public void setIndeterminate(boolean indeterminate) {
@@ -148,21 +152,9 @@ public class FabButton extends FrameLayout implements CircleImageView.OnFabViewL
         ring.setIndeterminate(indeterminate);
     }
 
-    public void setOnClickListener(OnClickListener listener){
+    public void setOnClickListener(OnClickListener listener) {
         ring.setOnClickListener(listener);
         circle.setOnClickListener(listener);
-    }
-
-    /**
-     * shows the animation ring
-     * @param show shows animation ring when set to true
-     */
-    public void showProgress(boolean show){
-        circle.showRing(show);
-    }
-
-    public void hideProgressOnComplete(boolean hide) {
-        hideProgressOnComplete = hide;
     }
 
     public void setEnabled(boolean enabled) {
@@ -172,19 +164,34 @@ public class FabButton extends FrameLayout implements CircleImageView.OnFabViewL
     }
 
     /**
+     * shows the animation ring
+     *
+     * @param show shows animation ring when set to true
+     */
+    public void showProgress(boolean show) {
+        circle.showRing(show);
+    }
+
+    public void hideProgressOnComplete(boolean hide) {
+        hideProgressOnComplete = hide;
+    }
+
+    /**
      * sets current progress
+     *
      * @param progress the current progress to set value too
      */
-    public void setProgress(float progress, boolean animate){
-        ring.setProgress(progress, animate);
+    public void setProgress(float progress) {
+        ring.setProgress(progress);
     }
 
     @Override
     public void onProgressVisibilityChanged(boolean visible) {
-        if(visible){
+        Log.d(TAG, "onProgressVisibilityChanged() called with: " + "visible = [" + visible + "]");
+        if (visible) {
             ring.setVisibility(View.VISIBLE);
             ring.startAnimation();
-        }else{
+        } else {
             ring.stopAnimation(true);
             ring.setVisibility(View.GONE);
         }
@@ -192,13 +199,12 @@ public class FabButton extends FrameLayout implements CircleImageView.OnFabViewL
 
     @Override
     public void onProgressCompleted() {
+        Log.d(TAG, "onProgressCompleted() called with: " + "");
         circle.showCompleted(showEndBitmap, hideProgressOnComplete);
         if (hideProgressOnComplete) {
             ring.setVisibility(View.GONE);
         }
     }
-
-
 
 
     public static class Behavior extends CoordinatorLayout.Behavior<FabButton> {
@@ -211,8 +217,7 @@ public class FabButton extends FrameLayout implements CircleImageView.OnFabViewL
         private float mTranslationY;
 
         @Override
-        public boolean layoutDependsOn(CoordinatorLayout parent, FabButton child,
-                                       View dependency) {
+        public boolean layoutDependsOn(CoordinatorLayout parent, FabButton child, View dependency) {
             // We're dependent on all SnackbarLayouts (if enabled)
             return SNACKBAR_BEHAVIOR_ENABLED && dependency instanceof Snackbar.SnackbarLayout;
         }
@@ -248,20 +253,7 @@ public class FabButton extends FrameLayout implements CircleImageView.OnFabViewL
             return false;
         }
 
-        final int getMinimumHeightForVisibleOverlappingContent(AppBarLayout bar) {
-            int topInset = 0;
-            int minHeight = ViewCompat.getMinimumHeight(bar);
-            if(minHeight != 0) {
-                return minHeight * 2 + topInset;
-            } else {
-                int childCount = bar.getChildCount();
-                return childCount >= 1?ViewCompat.getMinimumHeight(bar.getChildAt(childCount - 1)) * 2 + topInset:0;
-            }
-        }
-
-
-        private void updateFabTranslationForSnackbar(CoordinatorLayout parent,
-                                                     FabButton fab, View snackbar) {
+        private void updateFabTranslationForSnackbar(CoordinatorLayout parent, FabButton fab, View snackbar) {
             final float translationY = getFabTranslationYForSnackbar(parent, fab);
             if (translationY != mTranslationY) {
                 // First, cancel any current animation
@@ -270,10 +262,8 @@ public class FabButton extends FrameLayout implements CircleImageView.OnFabViewL
                 if (Math.abs(translationY - mTranslationY) == snackbar.getHeight()) {
                     // If we're travelling by the height of the Snackbar then we probably need to
                     // animate to the value
-                    ViewCompat.animate(fab)
-                            .translationY(translationY)
-                            .setInterpolator(AnimationUtils.FAST_OUT_SLOW_IN_INTERPOLATOR)
-                            .setListener(null);
+                    ViewCompat.animate(fab).translationY(translationY)
+                            .setInterpolator(AnimationUtils.FAST_OUT_SLOW_IN_INTERPOLATOR).setListener(null);
                 } else {
                     // Else we'll set use setTranslationY
                     ViewCompat.setTranslationY(fab, translationY);
@@ -282,50 +272,21 @@ public class FabButton extends FrameLayout implements CircleImageView.OnFabViewL
             }
         }
 
-        private float getFabTranslationYForSnackbar(CoordinatorLayout parent,
-                                                    FabButton fab) {
-            float minOffset = 0;
-            final List<View> dependencies = parent.getDependencies(fab);
-            for (int i = 0, z = dependencies.size(); i < z; i++) {
-                final View view = dependencies.get(i);
-                if (view instanceof Snackbar.SnackbarLayout && parent.doViewsOverlap(fab, view)) {
-                    minOffset = Math.min(minOffset,
-                            ViewCompat.getTranslationY(view) - view.getHeight());
-                }
-            }
-
-            return minOffset;
-        }
-
-        private void animateIn(FabButton button) {
-            button.setVisibility(View.VISIBLE);
-
-            if (Build.VERSION.SDK_INT >= 14) {
-                ViewCompat.animate(button)
-                        .scaleX(1f)
-                        .scaleY(1f)
-                        .alpha(1f)
-                        .setInterpolator(AnimationUtils.FAST_OUT_SLOW_IN_INTERPOLATOR)
-                        .withLayer()
-                        .setListener(null)
-                        .start();
+        final int getMinimumHeightForVisibleOverlappingContent(AppBarLayout bar) {
+            int topInset = 0;
+            int minHeight = ViewCompat.getMinimumHeight(bar);
+            if (minHeight != 0) {
+                return minHeight * 2 + topInset;
             } else {
-                Animation anim = android.view.animation.AnimationUtils.loadAnimation(
-                        button.getContext(), R.anim.design_fab_in);
-                anim.setDuration(200);
-                anim.setInterpolator(AnimationUtils.FAST_OUT_SLOW_IN_INTERPOLATOR);
-                button.startAnimation(anim);
+                int childCount = bar.getChildCount();
+                return childCount >= 1 ? ViewCompat.getMinimumHeight(bar.getChildAt(childCount - 1)) * 2 + topInset : 0;
             }
         }
 
         private void animateOut(final FabButton button) {
             if (Build.VERSION.SDK_INT >= 14) {
-                ViewCompat.animate(button)
-                        .scaleX(0f)
-                        .scaleY(0f)
-                        .alpha(0f)
-                        .setInterpolator(AnimationUtils.FAST_OUT_SLOW_IN_INTERPOLATOR)
-                        .withLayer()
+                ViewCompat.animate(button).scaleX(0f).scaleY(0f).alpha(0f)
+                        .setInterpolator(AnimationUtils.FAST_OUT_SLOW_IN_INTERPOLATOR).withLayer()
                         .setListener(new ViewPropertyAnimatorListener() {
                             @Override
                             public void onAnimationStart(View view) {
@@ -333,19 +294,19 @@ public class FabButton extends FrameLayout implements CircleImageView.OnFabViewL
                             }
 
                             @Override
-                            public void onAnimationCancel(View view) {
-                                mIsAnimatingOut = false;
-                            }
-
-                            @Override
                             public void onAnimationEnd(View view) {
                                 mIsAnimatingOut = false;
                                 view.setVisibility(View.GONE);
                             }
+
+                            @Override
+                            public void onAnimationCancel(View view) {
+                                mIsAnimatingOut = false;
+                            }
                         }).start();
             } else {
-                Animation anim = android.view.animation.AnimationUtils.loadAnimation(
-                        button.getContext(), R.anim.design_fab_out);
+                Animation anim = android.view.animation.AnimationUtils
+                        .loadAnimation(button.getContext(), R.anim.design_fab_out);
                 anim.setInterpolator(AnimationUtils.FAST_OUT_SLOW_IN_INTERPOLATOR);
                 anim.setDuration(200);
                 anim.setAnimationListener(new AnimationUtils.AnimationListenerAdapter() {
@@ -362,6 +323,35 @@ public class FabButton extends FrameLayout implements CircleImageView.OnFabViewL
                 });
                 button.startAnimation(anim);
             }
+        }
+
+        private void animateIn(FabButton button) {
+            button.setVisibility(View.VISIBLE);
+
+            if (Build.VERSION.SDK_INT >= 14) {
+                ViewCompat.animate(button).scaleX(1f).scaleY(1f).alpha(1f)
+                        .setInterpolator(AnimationUtils.FAST_OUT_SLOW_IN_INTERPOLATOR).withLayer().setListener(null)
+                        .start();
+            } else {
+                Animation anim = android.view.animation.AnimationUtils
+                        .loadAnimation(button.getContext(), R.anim.design_fab_in);
+                anim.setDuration(200);
+                anim.setInterpolator(AnimationUtils.FAST_OUT_SLOW_IN_INTERPOLATOR);
+                button.startAnimation(anim);
+            }
+        }
+
+        private float getFabTranslationYForSnackbar(CoordinatorLayout parent, FabButton fab) {
+            float minOffset = 0;
+            final List<View> dependencies = parent.getDependencies(fab);
+            for (int i = 0, z = dependencies.size(); i < z; i++) {
+                final View view = dependencies.get(i);
+                if (view instanceof Snackbar.SnackbarLayout && parent.doViewsOverlap(fab, view)) {
+                    minOffset = Math.min(minOffset, ViewCompat.getTranslationY(view) - view.getHeight());
+                }
+            }
+
+            return minOffset;
         }
     }
 }

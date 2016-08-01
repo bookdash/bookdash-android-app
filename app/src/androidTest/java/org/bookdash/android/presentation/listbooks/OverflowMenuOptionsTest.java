@@ -22,10 +22,7 @@ import static android.support.test.espresso.matcher.ViewMatchers.isDisplayed;
 import static android.support.test.espresso.matcher.ViewMatchers.withId;
 import static android.support.test.espresso.matcher.ViewMatchers.withText;
 
-/**
- * @author Rebecca Franks (rebecca.franks@dstvdm.com)
- * @since 2015/07/22 3:26 PM
- */
+
 @RunWith(AndroidJUnit4.class)
 @LargeTest
 public class OverflowMenuOptionsTest {

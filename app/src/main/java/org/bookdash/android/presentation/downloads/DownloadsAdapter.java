@@ -9,7 +9,7 @@ import android.view.ViewGroup;
 import com.bumptech.glide.Glide;
 
 import org.bookdash.android.R;
-import org.bookdash.android.domain.pojo.BookDetail;
+import org.bookdash.android.domain.model.firebase.FireBookDetails;
 
 import java.util.List;
 
@@ -17,10 +17,10 @@ public class DownloadsAdapter extends RecyclerView.Adapter<DownloadsViewHolder> 
 
     private final View.OnClickListener deleteClickListener;
     private final View.OnClickListener bookClickListener;
-    private List<BookDetail> bookList;
+    private List<FireBookDetails> bookList;
     private Context context;
 
-    public DownloadsAdapter(List<BookDetail> bookList, Context context, View.OnClickListener deleteClickListener, View.OnClickListener bookClickListener) {
+    public DownloadsAdapter(List<FireBookDetails> bookList, Context context, View.OnClickListener deleteClickListener, View.OnClickListener bookClickListener) {
         this.bookList = bookList;
         this.context = context;
         this.deleteClickListener = deleteClickListener;
@@ -37,10 +37,10 @@ public class DownloadsAdapter extends RecyclerView.Adapter<DownloadsViewHolder> 
 
     @Override
     public void onBindViewHolder(DownloadsViewHolder holder, int position) {
-        BookDetail book = bookList.get(position);
+        FireBookDetails book = bookList.get(position);
         holder.downloadTitleTextView.setText(book.getBookTitle());
         Glide.with(context).load(book.getBookCoverUrl()).into(holder.downloadImageTextView);
-        holder.downloadProgressTextView.setText(book.getLanguage().getLanguageName());
+        //todo holder.downloadProgressTextView.setText(book.getLanguage().getLanguageName());
         holder.downloadActionButtonView.setOnClickListener(deleteClickListener);
         holder.book = book;
         holder.downloadActionButtonView.setTag(holder);
@@ -56,7 +56,7 @@ public class DownloadsAdapter extends RecyclerView.Adapter<DownloadsViewHolder> 
         return bookList.size();
     }
 
-    public void setBooks(List<BookDetail> books) {
+    public void setBooks(List<FireBookDetails> books) {
         this.bookList = books;
     }
 }

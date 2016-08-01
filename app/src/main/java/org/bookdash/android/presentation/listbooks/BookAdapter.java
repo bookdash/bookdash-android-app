@@ -9,7 +9,7 @@ import android.view.ViewGroup;
 import com.bumptech.glide.Glide;
 
 import org.bookdash.android.R;
-import org.bookdash.android.domain.pojo.BookDetail;
+import org.bookdash.android.domain.model.firebase.FireBookDetails;
 
 import java.util.List;
 
@@ -19,11 +19,11 @@ import java.util.List;
  */
 public class BookAdapter extends RecyclerView.Adapter<BookViewHolder> {
     private final Context context;
-    private List<BookDetail> bookDetails;
+    private List<FireBookDetails> bookDetails;
     private View.OnClickListener onClickListener;
 
 
-    public BookAdapter(List<BookDetail> bookDetails, Context context, View.OnClickListener onClickListener) {
+    public BookAdapter(List<FireBookDetails> bookDetails, Context context, View.OnClickListener onClickListener) {
         this.bookDetails = bookDetails;
         this.context = context;
         this.onClickListener = onClickListener;
@@ -39,7 +39,7 @@ public class BookAdapter extends RecyclerView.Adapter<BookViewHolder> {
 
     @Override
     public void onBindViewHolder(BookViewHolder holder, int position) {
-        BookDetail bookDetail = bookDetails.get(position);
+        FireBookDetails bookDetail = bookDetails.get(position);
         holder.bookTitle.setText(bookDetail.getBookTitle());
         Glide.with(context).load(bookDetail.getBookCoverUrl()).placeholder(R.drawable.bookdash_placeholder).error(R.drawable.bookdash_placeholder).into(holder.bookCover);
         holder.bookDetail = bookDetail;

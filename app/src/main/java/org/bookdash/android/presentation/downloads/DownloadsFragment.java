@@ -1,6 +1,5 @@
 package org.bookdash.android.presentation.downloads;
 
-import android.app.Activity;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -26,19 +25,21 @@ import android.widget.TextView;
 
 import org.bookdash.android.Injection;
 import org.bookdash.android.R;
-import org.bookdash.android.domain.pojo.BookDetail;
+import org.bookdash.android.domain.model.firebase.FireBookDetails;
 import org.bookdash.android.presentation.bookinfo.BookInfoActivity;
 import org.bookdash.android.presentation.main.NavDrawerInterface;
 
 import java.util.List;
 
 import fr.castorflex.android.circularprogressbar.CircularProgressBar;
+import rx.android.schedulers.AndroidSchedulers;
+import rx.schedulers.Schedulers;
 
 
 public class DownloadsFragment extends Fragment implements DownloadsContract.View {
 
     private RecyclerView listDownloadsRecyclerView;
-    private DownloadsContract.UserActions downloadsPresenter;
+    private DownloadsContract.Presenter downloadsPresenter;
     private DownloadsAdapter downloadsAdapter;
     private LinearLayout linearLayoutErrorScreen;
     private Button buttonRetry;
@@ -61,7 +62,8 @@ public class DownloadsFragment extends Fragment implements DownloadsContract.Vie
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         listDownloadsRecyclerView = (RecyclerView) view.findViewById(R.id.recycler_view_list_downloads);
-        downloadsPresenter = new DownloadsPresenter(Injection.provideBookRepo(), this);
+        downloadsPresenter = new DownloadsPresenter(Injection.provideBookService(), Injection.provideDownloadService(), Schedulers.io(), AndroidSchedulers.mainThread(), Schedulers.computation());
+        downloadsPresenter.attachView(this);
         downloadsAdapter = new DownloadsAdapter(null, getActivity(), new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -101,14 +103,22 @@ public class DownloadsFragment extends Fragment implements DownloadsContract.Vie
         setHasOptionsMenu(false);
     }
 
-    private void showBookDetails(BookDetail bookDetail) {
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        downloadsPresenter.detachView();
+
+    }
+
+
+    private void showBookDetails(FireBookDetails bookDetail) {
         Intent intent = new Intent(getActivity(), BookInfoActivity.class);
         intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-        intent.putExtra(BookInfoActivity.BOOK_PARCEL, bookDetail.toBookParcelable());
+        intent.putExtra(BookInfoActivity.BOOK_PARCEL, bookDetail);
         startActivity(intent);
     }
 
-    private void showDeleteDialog(final BookDetail bookToDelete) {
+    private void showDeleteDialog(final FireBookDetails bookToDelete) {
         AlertDialog.Builder builder =
                 new AlertDialog.Builder(getActivity(), R.style.AppCompatAlertDialogStyle);
         builder.setTitle(getString(R.string.delete_book_confirmation));
@@ -124,7 +134,7 @@ public class DownloadsFragment extends Fragment implements DownloadsContract.Vie
     }
 
     @Override
-    public void showDownloadedBooks(List<BookDetail> books) {
+    public void showDownloadedBooks(List<FireBookDetails> books) {
         downloadsAdapter.setBooks(books);
         downloadsAdapter.notifyDataSetChanged();
         listDownloadsRecyclerView.setVisibility(View.VISIBLE);
@@ -151,57 +161,27 @@ public class DownloadsFragment extends Fragment implements DownloadsContract.Vie
 
     @Override
     public void showLoading(final boolean visible) {
-        runUiThread(new Runnable() {
-            @Override
-            public void run() {
-
-                circularProgressBar.setVisibility(visible ? View.VISIBLE : View.GONE);
-                listDownloadsRecyclerView.setVisibility(visible ? View.GONE : View.VISIBLE);
-
-            }
-        });
+        circularProgressBar.setVisibility(visible ? View.VISIBLE : View.GONE);
+        listDownloadsRecyclerView.setVisibility(visible ? View.GONE : View.VISIBLE);
     }
 
     @Override
     public void showSnackBarError(final int message) {
-        runUiThread(new Runnable() {
-            @Override
-            public void run() {
-                Snackbar.make(listDownloadsRecyclerView, message, Snackbar.LENGTH_LONG).show();
-
-            }
-        });
-    }
-
-    private void runUiThread(Runnable runnable) {
-        Activity activity = getActivity();
-        if (activity == null) {
-            return;
-        }
-        activity.runOnUiThread(runnable);
+        Snackbar.make(listDownloadsRecyclerView, message, Snackbar.LENGTH_LONG).show();
     }
 
     @Override
     public void showSnackBarError(final String message) {
-        runUiThread(new Runnable() {
-            @Override
-            public void run() {
-                Snackbar.make(listDownloadsRecyclerView, message, Snackbar.LENGTH_LONG).show();
+        Snackbar.make(listDownloadsRecyclerView, message, Snackbar.LENGTH_LONG).show();
 
-            }
-        });
 
     }
 
     @Override
     public void showNoBooksDownloadedMessage() {
-        runUiThread(new Runnable() {
-            @Override
-            public void run() {
-                showErrorScreen(true, getString(R.string.no_books_downloaded), false);
-                listDownloadsRecyclerView.setVisibility(View.GONE);
-            }
-        });
+        showErrorScreen(true, getString(R.string.no_books_downloaded), false);
+        listDownloadsRecyclerView.setVisibility(View.GONE);
+
 
     }
 
