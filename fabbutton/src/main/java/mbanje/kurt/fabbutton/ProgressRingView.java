@@ -35,6 +35,7 @@ import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.RectF;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.View;
 
 
@@ -66,16 +67,6 @@ public class ProgressRingView extends View implements FabUtil.OnFabValueCallback
         init(null, 0);
     }
 
-    public ProgressRingView(Context context, AttributeSet attrs) {
-        super(context, attrs);
-        init(attrs, 0);
-    }
-
-    public ProgressRingView(Context context, AttributeSet attrs, int defStyle) {
-        super(context, attrs, defStyle);
-        init(attrs, defStyle);
-    }
-
     protected void init(AttributeSet attrs, int defStyle) {
         final TypedArray a = getContext().obtainStyledAttributes(attrs, R.styleable.CircleImageView, defStyle, 0);
         progress = a.getFloat(R.styleable.CircleImageView_android_progress, 0f);
@@ -91,10 +82,19 @@ public class ProgressRingView extends View implements FabUtil.OnFabValueCallback
         progressPaint.setStyle(Paint.Style.STROKE);
         progressPaint.setStrokeCap(Paint.Cap.BUTT);
         if (autostartanim) {
-           // startAnimation();
+            // startAnimation();
         }
     }
 
+    public ProgressRingView(Context context, AttributeSet attrs) {
+        super(context, attrs);
+        init(attrs, 0);
+    }
+
+    public ProgressRingView(Context context, AttributeSet attrs, int defStyle) {
+        super(context, attrs, defStyle);
+        init(attrs, defStyle);
+    }
 
     @Override
     protected void onSizeChanged(int w, int h, int oldw, int oldh) {
@@ -104,19 +104,8 @@ public class ProgressRingView extends View implements FabUtil.OnFabValueCallback
         setRingWidth(-1, true);
     }
 
-    public void setRingWidthRatio(float ringWidthRatio) {
-        this.ringWidthRatio = ringWidthRatio;
-    }
-
-    public void setAutostartanim(boolean autostartanim) {
-        this.autostartanim = autostartanim;
-    }
-
-    public void setFabViewListener(CircleImageView.OnFabViewListener fabViewListener) {
-        this.fabViewListener = fabViewListener;
-    }
-
     public void setRingWidth(int width, boolean original) {
+        Log.d(TAG, "setRingWidth() called with: " + "width = [" + width + "], original = [" + original + "]");
         if (original) {
             ringWidth = Math.round((float) viewRadius * ringWidthRatio);
         } else {
@@ -131,11 +120,13 @@ public class ProgressRingView extends View implements FabUtil.OnFabValueCallback
         bounds = new RectF(midRingWidth, midRingWidth, size - midRingWidth, size - midRingWidth);
     }
 
-
     @Override
     protected void onDraw(Canvas canvas) {
         // Draw the arc
         float sweepAngle = isInEditMode() ? (progress / maxProgress * 360) : (actualProgress / maxProgress * 360);
+        if (startAngle < 0 || sweepAngle <= 0.0f) {
+            return;
+        }
         if (!indeterminate) {
             canvas.drawArc(bounds, startAngle, sweepAngle, false, progressPaint);
         } else {
@@ -143,28 +134,38 @@ public class ProgressRingView extends View implements FabUtil.OnFabValueCallback
         }
     }
 
+    public void setRingWidthRatio(float ringWidthRatio) {
+        this.ringWidthRatio = ringWidthRatio;
+    }
+
+    public void setAutostartanim(boolean autostartanim) {
+        this.autostartanim = autostartanim;
+    }
+
+    public void setFabViewListener(CircleImageView.OnFabViewListener fabViewListener) {
+        this.fabViewListener = fabViewListener;
+    }
 
     /**
      * Sets the progress of the progress bar.
      *
      * @param currentProgress the current progress you want to set
-     * @param animate         if you want the progress to animate to the position.
      */
-    public void setProgress(final float currentProgress, boolean animate) {
+    public void setProgress(final float currentProgress) {
         // Reset the determinate animation to approach the new progress
-        if (progress == currentProgress){
+        if (progress == currentProgress) {
             return;
         }
         if (!indeterminate) {
             if (progressAnimator != null && progressAnimator.isRunning()) {
                 progressAnimator.cancel();
             }
-            if (animate) {
+         /*   if (animate) {
                 progressAnimator = FabUtil.createProgressAnimator(this, actualProgress, currentProgress, this, 500);
-            } else {
-                progressAnimator = FabUtil.createProgressAnimator(this, actualProgress, currentProgress, this, 0);
+            } else {*/
+            progressAnimator = FabUtil.createProgressAnimator(this, actualProgress, currentProgress, this, 500);
 
-            }
+
             progressAnimator.start();
         }
         invalidate();
@@ -271,7 +272,11 @@ public class ProgressRingView extends View implements FabUtil.OnFabValueCallback
     }
 
     @Override
-    public void onIndeterminateValuesChanged(float indeterminateSweep, float indeterminateRotateOffset, float startAngle, float progress) {
+    public void onIndeterminateValuesChanged(float indeterminateSweep, float indeterminateRotateOffset,
+                                             float startAngle, float progress) {
+     /*   Log.d(TAG,
+                "onIndeterminateValuesChanged() called with: " + "indeterminateSweep = [" + indeterminateSweep + "], indeterminateRotateOffset = [" + indeterminateRotateOffset + "], startAngle = [" + startAngle + "], progress = [" + progress + "]");
+     */
         if (indeterminateSweep != -1) {
             this.indeterminateSweep = indeterminateSweep;
         }

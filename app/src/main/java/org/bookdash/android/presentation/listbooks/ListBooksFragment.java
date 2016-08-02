@@ -27,20 +27,22 @@ import android.widget.TextView;
 
 import org.bookdash.android.Injection;
 import org.bookdash.android.R;
-import org.bookdash.android.domain.pojo.BookDetail;
+import org.bookdash.android.domain.model.firebase.FireBookDetails;
 import org.bookdash.android.presentation.bookinfo.BookInfoActivity;
 import org.bookdash.android.presentation.main.NavDrawerInterface;
 
 import java.util.List;
 
 import fr.castorflex.android.circularprogressbar.CircularProgressBar;
+import rx.android.schedulers.AndroidSchedulers;
+import rx.schedulers.Schedulers;
 
 
 public class ListBooksFragment extends Fragment implements ListBooksContract.View {
 
     private static final String TAG = ListBooksFragment.class.getCanonicalName();
     private static final int BOOK_DETAIL_REQUEST_CODE = 43;
-    private ListBooksContract.UserActionsListener actionsListener;
+    private ListBooksContract.Presenter listBooksPresenter;
     private Button buttonRetry;
     private RecyclerView recyclerViewBooks;
     private CircularProgressBar circularProgressBar;
@@ -62,8 +64,8 @@ public class ListBooksFragment extends Fragment implements ListBooksContract.Vie
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        actionsListener = new ListBooksPresenter(this, Injection.provideBookRepo(), Injection.provideSettingsRepo(getActivity()));
-
+        listBooksPresenter = new ListBooksPresenter(Injection.provideSettingsRepo(getActivity()), Injection.provideBookService(), Schedulers.io(), AndroidSchedulers.mainThread());
+        listBooksPresenter.attachView(this);
         circularProgressBar = (CircularProgressBar) view.findViewById(R.id.activity_loading_books);
         linearLayoutErrorScreen = (LinearLayout) view.findViewById(R.id.linear_layout_error);
         buttonRetry = (Button) view.findViewById(R.id.button_retry);
@@ -74,7 +76,7 @@ public class ListBooksFragment extends Fragment implements ListBooksContract.Vie
             @Override
             public void onClick(View v) {
                 Log.d(TAG, "Retry button clicked");
-                actionsListener.loadBooksForLanguagePreference();
+                listBooksPresenter.loadBooksForLanguagePreference();
             }
         });
         Toolbar toolbar = (Toolbar) view.findViewById(R.id.toolbar);
@@ -89,11 +91,16 @@ public class ListBooksFragment extends Fragment implements ListBooksContract.Vie
             actionBar.setDisplayHomeAsUpEnabled(true);
             actionBar.setTitle(getString(R.string.book_dash));
         }
-        actionsListener.loadLanguages();
-        actionsListener.loadBooksForLanguagePreference();
+        listBooksPresenter.loadLanguages();
+        listBooksPresenter.loadBooksForLanguagePreference();
         setHasOptionsMenu(true);
     }
 
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        listBooksPresenter.detachView();
+    }
 
     private View.OnClickListener bookClickListener = new View.OnClickListener() {
         @Override
@@ -103,12 +110,12 @@ public class ListBooksFragment extends Fragment implements ListBooksContract.Vie
     };
 
 
-    public void openBookDetails(View v) {
+    private void openBookDetails(View v) {
         Intent intent = new Intent(getActivity(), BookInfoActivity.class);
         // intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         BookViewHolder viewHolder = (BookViewHolder) v.getTag();
-        BookDetail bookDetailResult = viewHolder.bookDetail;
-        intent.putExtra(BookInfoActivity.BOOK_PARCEL, bookDetailResult.toBookParcelable());
+        FireBookDetails bookDetailResult = viewHolder.bookDetail;
+        intent.putExtra(BookInfoActivity.BOOK_PARCEL, bookDetailResult);
         startActivityForResult(intent, BOOK_DETAIL_REQUEST_CODE);
 
     }
@@ -176,7 +183,7 @@ public class ListBooksFragment extends Fragment implements ListBooksContract.Vie
     }
 
     @Override
-    public void showBooks(final List<BookDetail> bookDetailList) {
+    public void showBooks(final List<FireBookDetails> bookDetailList) {
         runUiThread(new Runnable() {
             @Override
             public void run() {
@@ -208,7 +215,7 @@ public class ListBooksFragment extends Fragment implements ListBooksContract.Vie
                 dialog.dismiss();
             }
 
-            actionsListener.saveSelectedLanguage(which);
+            listBooksPresenter.saveSelectedLanguage(which);
 
         }
     };
@@ -252,7 +259,7 @@ public class ListBooksFragment extends Fragment implements ListBooksContract.Vie
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         if (item.getItemId() == R.id.action_language_choice) {
-            actionsListener.clickOpenLanguagePopover();
+            listBooksPresenter.clickOpenLanguagePopover();
             return true;
         }
         return super.onOptionsItemSelected(item);

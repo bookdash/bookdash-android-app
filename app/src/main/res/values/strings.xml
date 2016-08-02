@@ -5,7 +5,7 @@
     <string name="splash">Splash Screen</string>
     <string name="action_language_choice">Language</string>
     <string name="language_selection_heading">Select a language</string>
-    <string name="failed_to_download_book">Failed to download book. Check your connection.</string>
+    <string name="failed_to_download_book">Failed to download book.[%s]</string>
     <string name="error_loading_languages">Error loading available languages</string>
     <string name="book_not_available">Book not available</string>
     <string name="title_activity_about">About Book Dash</string>
@@ -48,6 +48,8 @@
 
 
     Imagery for Help Tutorial <a href="http://www.freepik.com">Designed by Freepik</a><br/>
+    Background cartoon image from <a href="http://all-free-download.com">all-free-download.com</a>
+    School imagery from <a href="http://www.freepik.com/free-vector/hand-drawn-school-graphics_720632.htm">Designed by Freepik</a>
     <div>Book Icon made by <a href="http://www.flaticon.com/authors/rami-mcmin" title="Rami McMin">Rami McMin</a> from <a href="http://www.flaticon.com" title="Flaticon">www.flaticon.com</a>  is licensed by <a href="http://creativecommons.org/licenses/by/3.0/" title="Creative Commons BY 3.0">CC BY 3.0</a></div>
    <b> The following libraries have been used in the app: <br/></b>
     <a href="https://github.com/JakeWharton/ViewPagerIndicator">ViewPagerIndicator</a> which is licensed under the Apache License, Version 2.0.<br/>
@@ -79,7 +81,7 @@
     <string name="invite_friends">Invite Friends</string>
     <string name="action_all_books">All Books</string>
     <string name="action_downloads">Downloaded Books</string>
-    <string name="no_books_downloaded">No books are downloaded. Head to the \"All Books\" section to download some!</string>
+    <string name="no_books_downloaded">Oh no! You haven\'t \n\r downloaded any books.\n\r Head to the \"All Books\" \n\r section to download some!</string>
     <string name="no_books_available">No books available at the moment. Check back soon!</string>
     <string name="book_info_still_loading">Book information is still loading...</string>
     <string name="fragment_title_downloads">Downloads</string>
@@ -88,5 +90,8 @@
     <string name="delete_ok">Delete</string>
     <string name="delete_cancel">Cancel</string>
     <string name="book_dash_nav_header">Book Dash</string>
+    <string name="error_getting_contributors">Error fetching contributors</string>
+    <string name="error_saving_selected_language">There was an error saving the selected language. Please try again later.</string>
+    <string name="error_opening_languagepopover">There was an unexpected error. Please try again later.</string>
 
 </resources>

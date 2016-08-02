@@ -2,6 +2,10 @@ package org.bookdash.android.data.settings;
 
 import android.support.annotation.NonNull;
 
+import org.bookdash.android.domain.model.firebase.FireLanguage;
+
+import rx.Single;
+
 /**
  * @author rebeccafranks
  * @since 15/11/05.
@@ -26,13 +30,13 @@ public class SettingsRepositoryImpl implements SettingsRepository {
     }
 
     @Override
-    public String getLanguagePreference() {
-        return settingsApi.getLanguagePreference();
+    public Single<FireLanguage> getLanguagePreference() {
+        return settingsApi.getSavedLanguage();
     }
 
     @Override
-    public void saveLanguagePreference(String languagePreference) {
-        settingsApi.saveLanguagePreference(languagePreference);
+    public Single<Boolean> saveLanguagePreference(FireLanguage languagePreference) {
+        return settingsApi.saveSelectedLanguage(languagePreference);
     }
 
 

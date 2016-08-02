@@ -1,5 +1,9 @@
 package org.bookdash.android.data.settings;
 
+import org.bookdash.android.domain.model.firebase.FireLanguage;
+
+import rx.Single;
+
 /**
  * @author rebeccafranks
  * @since 15/11/05.
@@ -10,7 +14,7 @@ public interface SettingsRepository {
 
     void setIsFirstTime(boolean isFirstTime);
 
-    String getLanguagePreference();
+    Single<FireLanguage> getLanguagePreference();
 
-    void saveLanguagePreference(String languagePreference);
+    Single<Boolean> saveLanguagePreference(FireLanguage languagePreference);
 }

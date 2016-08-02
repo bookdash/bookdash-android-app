@@ -4,14 +4,11 @@ import android.support.v4.app.FixedFragmentStatePagerAdapter;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 
-import org.bookdash.android.domain.pojo.gson.Page;
+import org.bookdash.android.domain.model.gson.Page;
 
 import java.util.List;
 
-/**
- * @author Rebecca Franks (rebecca.franks@dstvdm.com)
- * @since 2015/07/22 7:21 PM
- */
+
 public class PageAdapter extends FixedFragmentStatePagerAdapter {
 
     private final String rootFileLocation;

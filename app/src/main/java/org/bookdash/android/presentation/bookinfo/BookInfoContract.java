@@ -1,10 +1,12 @@
 package org.bookdash.android.presentation.bookinfo;
 
-import android.graphics.Bitmap;
+import android.support.annotation.StringRes;
 
-import org.bookdash.android.domain.pojo.BookContributor;
-import org.bookdash.android.domain.pojo.BookDetail;
-import org.bookdash.android.domain.pojo.gson.BookPages;
+import org.bookdash.android.domain.model.firebase.FireBookDetails;
+import org.bookdash.android.domain.model.firebase.FireContributor;
+import org.bookdash.android.domain.model.gson.BookPages;
+import org.bookdash.android.presentation.base.MvpPresenter;
+import org.bookdash.android.presentation.base.MvpView;
 
 import java.util.List;
 
@@ -14,13 +16,15 @@ import java.util.List;
  */
 public interface BookInfoContract {
 
-    interface View {
-
-        void showProgress(boolean visible);
+    interface View extends MvpView {
 
         void showBookDetailView();
 
         void showError(String errorMessage);
+
+        void showError(@StringRes int stringRes);
+
+        void showSnackBarMessage(int message, String errorDetail);
 
         void showSnackBarMessage(int message);
 
@@ -30,31 +34,21 @@ public interface BookInfoContract {
 
         void setToolbarTitle(String title);
 
-        void setBookInfoBinding(BookDetail bookInfo);
+        void setBookInfoBinding(FireBookDetails bookInfo);
 
-        void openBook(BookDetail bookDetail, BookPages bookPages, String location);
+        void openBook(FireBookDetails bookDetail, BookPages bookPages, String location);
 
-        void showContributors(List<BookContributor> contributors);
-
-        void onImageLoaded(Bitmap bitmap);
-
-        void setStatusBarColor(int color);
-
-        void setAccentColor(int accentColor);
-
-        void setToolbarColor(int color);
+        void showContributors(List<FireContributor> contributors);
 
         void sendShareEvent(String bookTitle);
     }
 
-    interface UserActionsListener {
+    interface Presenter extends MvpPresenter<View> {
 
-        void loadBookInformation(String bookDetailId);
+        void loadContributorInformation(FireBookDetails bookDetailId);
 
-        void downloadBook(BookDetail bookDetail);
+        void downloadBook(FireBookDetails bookDetail);
 
-        void loadImage(String url);
-
-        void shareBookClicked(BookDetail bookInfo);
+        void shareBookClicked(FireBookDetails bookInfo);
     }
 }

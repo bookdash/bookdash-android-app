@@ -11,8 +11,5 @@
         android:elevation="16dp"
         android:layout_width="match_parent"
         android:layout_height="match_parent"/>
-  <!--  <org.org.bookdash.android.org.bookdash.android.curl.CurlView
-        android:layout_width="fill_parent"
-        android:layout_height="fill_parent"
-        android:id="@+id/curl" />-->
+
 </LinearLayout>
