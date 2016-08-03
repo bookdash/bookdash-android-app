@@ -168,8 +168,13 @@ public class FoxWatchFace extends CanvasWatchFaceService {
             // Load resources that have alternate values for round watches.
             Resources resources = FoxWatchFace.this.getResources();
             boolean isRound = insets.isRound();
-            xOffset = resources.getDimension(R.dimen.fox_x_offset);
-            xOffsetDate = resources.getDimension(R.dimen.fox_x_date_offset);
+            xOffset = resources.getDimension(isRound ? R.dimen.fox_x_offset_round : R.dimen.fox_x_offset);
+            xOffsetDate = resources.getDimension(isRound? R.dimen.fox_x_date_offset_round : R.dimen.fox_x_date_offset);
+            xOffsetBattery = resources.getDimensionPixelOffset(isRound ? R.dimen.fox_x_battery_offset_round : R.dimen.fox_x_battery_offset);
+
+            yOffset = resources.getDimension(isRound ? R.dimen.fox_y_offset_round : R.dimen.fox_y_offset);
+            yOffsetDate = resources.getDimension(isRound? R.dimen.fox_y_date_offset_round : R.dimen.fox_y_date_offset);
+            yOffsetBattery = resources.getDimensionPixelOffset(isRound ? R.dimen.fox_y_battery_offset_round : R.dimen.fox_y_battery_offset);
 
             float textSize = resources
                     .getDimension(isRound ? R.dimen.digital_text_size_round : R.dimen.digital_text_size);
@@ -245,10 +250,6 @@ public class FoxWatchFace extends CanvasWatchFaceService {
                             //.setShowSystemUiTime(false)
                             .setAcceptsTapEvents(true).build());
             Resources resources = FoxWatchFace.this.getResources();
-            yOffset = resources.getDimension(R.dimen.fox_y_offset);
-            yOffsetDate = resources.getDimension(R.dimen.fox_y_date_offset);
-            yOffsetBattery = resources.getDimension(R.dimen.fox_y_battery_offset);
-            xOffsetBattery = resources.getDimension(R.dimen.fox_x_battery_offset);
             backgroundPaint = new Paint();
             backgroundPaint.setColor(ContextCompat.getColor(getApplicationContext(), R.color.background));
             owlBackgroundBitmap = BitmapFactory.decodeResource(getResources(), R.drawable.fox);

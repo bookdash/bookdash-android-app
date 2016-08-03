@@ -188,8 +188,18 @@ public class OwlWatchFace extends CanvasWatchFaceService {
             // Load resources that have alternate values for round watches.
             Resources resources = OwlWatchFace.this.getResources();
             boolean isRound = insets.isRound();
+
             xOffset = resources.getDimension(isRound ? R.dimen.digital_x_offset_round : R.dimen.digital_x_offset);
-            xOffsetDate = resources.getDimension(R.dimen.digital_date_offset_x);
+            xOffsetDate = resources
+                    .getDimension(isRound ? R.dimen.digital_date_offset_x_round : R.dimen.digital_date_offset_x);
+            xOffsetBattery = resources
+                    .getDimension(isRound ? R.dimen.digital_battery_offset_x_round : R.dimen.digital_battery_offset_x);
+            yOffset = resources.getDimension(isRound ? R.dimen.digital_y_offset_round : R.dimen.digital_y_offset);
+            yOffsetDate = resources
+                    .getDimension(isRound ? R.dimen.digital_date_offset_y_round : R.dimen.digital_date_offset_y);
+            yOffsetBattery = resources
+                    .getDimension(isRound ? R.dimen.digital_battery_offset_y_round : R.dimen.digital_battery_offset_y);
+
 
             float textSize = resources
                     .getDimension(isRound ? R.dimen.digital_text_size_round : R.dimen.digital_text_size);
@@ -265,10 +275,6 @@ public class OwlWatchFace extends CanvasWatchFaceService {
                             //.setShowSystemUiTime(false)
                             .setAcceptsTapEvents(true).build());
             Resources resources = OwlWatchFace.this.getResources();
-            yOffset = resources.getDimension(R.dimen.digital_y_offset);
-            yOffsetDate = resources.getDimension(R.dimen.digital_date_offset_y);
-            yOffsetBattery = resources.getDimension(R.dimen.digital_battery_offset_y);
-            xOffsetBattery = resources.getDimension(R.dimen.digital_battery_offset_x);
             backgroundPaint = new Paint();
             backgroundPaint.setColor(ContextCompat.getColor(getApplicationContext(), R.color.background));
             owlBackgroundBitmap = BitmapFactory.decodeResource(getResources(), R.drawable.owl);
