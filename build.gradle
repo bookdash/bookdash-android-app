@@ -21,10 +21,16 @@ allprojects {
 }
 
 ext {
+    //App versions
+    versionCode = 21
+    versionName = "2.0.0"
+    compileSdkVersion = 24
+    buildToolsVersion ="24.0.1"
     // Sdk and tools
 
     // App dependencies
-    supportLibraryVersion = '24.0.0'
+    firebaseVersion = '9.0.2'
+    supportLibraryVersion = '24.1.1'
     googlePlayServicesVersion = '9.2.0'
     guavaVersion = '18.0'
     glideVersion = '3.6.1'
@@ -35,4 +41,5 @@ ext {
     runnerVersion = '0.4.1'
     rulesVersion = '0.4.1'
     espressoVersion = '2.2.1'
+
 }

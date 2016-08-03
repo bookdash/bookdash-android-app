@@ -19,18 +19,16 @@ repositories {
 
 android {
     dataBinding { enabled = true }
-    compileSdkVersion 24
-    buildToolsVersion "24.0.1"
+    compileSdkVersion rootProject.ext.compileSdkVersion
+    buildToolsVersion "$rootProject.ext.buildToolsVersion"
 
     defaultConfig {
         applicationId "org.bookdash.android"
         minSdkVersion 16
-        targetSdkVersion 24
-        versionCode 20
-        versionName "1.1.2"
+        targetSdkVersion rootProject.ext.compileSdkVersion
+        versionCode rootProject.ext.versionCode
+        versionName "$rootProject.ext.versionName"
         testInstrumentationRunner "org.bookdash.android.presentation.CustomTestRunner"
-        buildConfigField "String", "PARSE_APPLICATION_ID", "\"${BOOKDASH_PARSE_APP_ID}\""
-        buildConfigField "String", "PARSE_CLIENT_KEY", "\"${BOOKDASH_PARSE_CLIENT_ID}\""
         vectorDrawables.useSupportLibrary = true
         resConfigs "en"
 
@@ -110,7 +108,6 @@ android {
         track = "${track}"
     }
 }
-final firebaseVersion = "9.0.2"
 dependencies {
 
     testCompile "junit:junit:$rootProject.ext.junitVersion"
@@ -172,13 +169,13 @@ dependencies {
     }
     compile 'za.co.riggaroo:materialhelptutorial:1.0.3'
 
-    compile "com.google.firebase:firebase-invites:${firebaseVersion}"
-    compile "com.google.firebase:firebase-core:${firebaseVersion}"
-    compile "com.google.firebase:firebase-database:${firebaseVersion}"
-    compile "com.google.firebase:firebase-messaging:${firebaseVersion}"
-    compile "com.google.firebase:firebase-storage:${firebaseVersion}"
-    compile "com.google.firebase:firebase-config:${firebaseVersion}"
-    compile "com.google.firebase:firebase-storage:${firebaseVersion}"
+    compile "com.google.firebase:firebase-invites:${rootProject.ext.firebaseVersion}"
+    compile "com.google.firebase:firebase-core:${rootProject.ext.firebaseVersion}"
+    compile "com.google.firebase:firebase-database:${rootProject.ext.firebaseVersion}"
+    compile "com.google.firebase:firebase-messaging:${rootProject.ext.firebaseVersion}"
+    compile "com.google.firebase:firebase-storage:${rootProject.ext.firebaseVersion}"
+    compile "com.google.firebase:firebase-config:${rootProject.ext.firebaseVersion}"
+    compile "com.google.firebase:firebase-storage:${rootProject.ext.firebaseVersion}"
 
     compile 'uk.co.chrisjenx:calligraphy:2.2.0'
     compile 'io.reactivex:rxandroid:1.2.1'
