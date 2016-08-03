@@ -1,19 +1,3 @@
-/*
- * Copyright (C) 2014 The Android Open Source Project
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *      http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-
 package org.bookdash.android;
 
 import android.content.BroadcastReceiver;
@@ -45,11 +29,8 @@ import org.threeten.bp.format.DateTimeFormatter;
 import java.lang.ref.WeakReference;
 import java.util.concurrent.TimeUnit;
 
-/**
- * Digital watch face with seconds. In ambient mode, the seconds aren't displayed. On devices with
- * low-bit ambient mode, the text is drawn without anti-aliasing in ambient mode.
- */
-public class OwlWatchFace extends CanvasWatchFaceService {
+
+public class FoxWatchFace extends CanvasWatchFaceService {
 
     private static final DateTimeFormatter TIME_FORMATTER = DateTimeFormatter.ofPattern("HH:mm");
     private static final DateTimeFormatter DATE_TIME_FORMATTER = DateTimeFormatter.ofPattern("EEE, MMM d");
@@ -65,20 +46,20 @@ public class OwlWatchFace extends CanvasWatchFaceService {
     private Bitmap backgroundScaledBitmap;
 
     @Override
-    public Engine onCreateEngine() {
-        return new Engine();
+    public FoxWatchFace.Engine onCreateEngine() {
+        return new FoxWatchFace.Engine();
     }
 
     private static class EngineHandler extends Handler {
-        private final WeakReference<OwlWatchFace.Engine> mWeakReference;
+        private final WeakReference<FoxWatchFace.Engine> mWeakReference;
 
-        EngineHandler(OwlWatchFace.Engine reference) {
+        EngineHandler(FoxWatchFace.Engine reference) {
             mWeakReference = new WeakReference<>(reference);
         }
 
         @Override
         public void handleMessage(Message msg) {
-            OwlWatchFace.Engine engine = mWeakReference.get();
+            FoxWatchFace.Engine engine = mWeakReference.get();
             if (engine != null) {
                 switch (msg.what) {
                     case MSG_UPDATE_TIME:
@@ -91,7 +72,7 @@ public class OwlWatchFace extends CanvasWatchFaceService {
 
     private class Engine extends CanvasWatchFaceService.Engine {
         private static final String FONT_NAME_WATCHFACE = "fonts/minyna.ttf";
-        final Handler updateTimeHandler = new EngineHandler(this);
+        final Handler updateTimeHandler = new FoxWatchFace.EngineHandler(this);
         boolean registeredTimeZoneReceiver = false;
         Paint backgroundPaint;
         Bitmap owlBackgroundBitmap;
@@ -173,10 +154,9 @@ public class OwlWatchFace extends CanvasWatchFaceService {
             String date = currentTime.format(DATE_TIME_FORMATTER);
             canvas.drawText(date, xOffsetDate, yOffsetDate, textPaintSmall);
 
-            if (!isInAmbientMode()) {
-                canvas.drawText(batteryStatusHelper.getBatteryPercentage() + "%", xOffsetBattery, yOffsetBattery,
-                        textPaintSmall);
-            }
+            canvas.drawText(batteryStatusHelper.getBatteryPercentage() + "%", xOffsetBattery, yOffsetBattery,
+                    textPaintSmall);
+
             super.onDraw(canvas, bounds);
 
         }
@@ -186,10 +166,10 @@ public class OwlWatchFace extends CanvasWatchFaceService {
             super.onApplyWindowInsets(insets);
 
             // Load resources that have alternate values for round watches.
-            Resources resources = OwlWatchFace.this.getResources();
+            Resources resources = FoxWatchFace.this.getResources();
             boolean isRound = insets.isRound();
-            xOffset = resources.getDimension(isRound ? R.dimen.digital_x_offset_round : R.dimen.digital_x_offset);
-            xOffsetDate = resources.getDimension(R.dimen.digital_date_offset_x);
+            xOffset = resources.getDimension(R.dimen.fox_x_offset);
+            xOffsetDate = resources.getDimension(R.dimen.fox_x_date_offset);
 
             float textSize = resources
                     .getDimension(isRound ? R.dimen.digital_text_size_round : R.dimen.digital_text_size);
@@ -257,27 +237,27 @@ public class OwlWatchFace extends CanvasWatchFaceService {
             super.onCreate(holder);
             AndroidThreeTen.init(getApplication());
             setWatchFaceStyle(
-                    new WatchFaceStyle.Builder(OwlWatchFace.this).setCardPeekMode(WatchFaceStyle.PEEK_MODE_SHORT)
+                    new WatchFaceStyle.Builder(FoxWatchFace.this).setCardPeekMode(WatchFaceStyle.PEEK_MODE_SHORT)
                             .setAmbientPeekMode(WatchFaceStyle.PEEK_MODE_SHORT)
                             .setBackgroundVisibility(WatchFaceStyle.BACKGROUND_VISIBILITY_INTERRUPTIVE)
                             // .setStatusBarGravity(Gravity.TOP | Gravity.RIGHT)
                             .setShowUnreadCountIndicator(true)
                             //.setShowSystemUiTime(false)
                             .setAcceptsTapEvents(true).build());
-            Resources resources = OwlWatchFace.this.getResources();
-            yOffset = resources.getDimension(R.dimen.digital_y_offset);
-            yOffsetDate = resources.getDimension(R.dimen.digital_date_offset_y);
-            yOffsetBattery = resources.getDimension(R.dimen.digital_battery_offset_y);
-            xOffsetBattery = resources.getDimension(R.dimen.digital_battery_offset_x);
+            Resources resources = FoxWatchFace.this.getResources();
+            yOffset = resources.getDimension(R.dimen.fox_y_offset);
+            yOffsetDate = resources.getDimension(R.dimen.fox_y_date_offset);
+            yOffsetBattery = resources.getDimension(R.dimen.fox_y_battery_offset);
+            xOffsetBattery = resources.getDimension(R.dimen.fox_x_battery_offset);
             backgroundPaint = new Paint();
             backgroundPaint.setColor(ContextCompat.getColor(getApplicationContext(), R.color.background));
-            owlBackgroundBitmap = BitmapFactory.decodeResource(getResources(), R.drawable.owl);
+            owlBackgroundBitmap = BitmapFactory.decodeResource(getResources(), R.drawable.fox);
             textTimePaint = new Paint();
             textTimePaint = createTextPaint(ContextCompat.getColor(getApplicationContext(), R.color.digital_text));
             textPaintSmall = new Paint();
             textPaintSmall = createTextPaint(ContextCompat.getColor(getApplicationContext(), R.color.black));
 
-            owlVectorAmbient = BitmapFactory.decodeResource(getResources(), R.drawable.lonely_owl_thick);
+            owlVectorAmbient = BitmapFactory.decodeResource(getResources(), R.drawable.slim_fox);
             currentTime = ZonedDateTime.now();
             batteryStatusHelper = new BatteryStatusHelper(getApplicationContext());
         }
@@ -316,7 +296,7 @@ public class OwlWatchFace extends CanvasWatchFaceService {
             }
             registeredTimeZoneReceiver = true;
             IntentFilter filter = new IntentFilter(Intent.ACTION_TIMEZONE_CHANGED);
-            OwlWatchFace.this.registerReceiver(timeZoneReceiver, filter);
+            FoxWatchFace.this.registerReceiver(timeZoneReceiver, filter);
         }
 
         private void unregisterReceiver() {
@@ -324,7 +304,7 @@ public class OwlWatchFace extends CanvasWatchFaceService {
                 return;
             }
             registeredTimeZoneReceiver = false;
-            OwlWatchFace.this.unregisterReceiver(timeZoneReceiver);
+            FoxWatchFace.this.unregisterReceiver(timeZoneReceiver);
         }
 
         /**

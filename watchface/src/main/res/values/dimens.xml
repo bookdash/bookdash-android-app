@@ -13,4 +13,14 @@
 
     <dimen name="digital_battery_offset_y">50dp</dimen>
     <dimen name="digital_battery_offset_x">160dp</dimen>
+
+
+    <dimen name="fox_x_offset">60dp</dimen>
+    <dimen name="fox_y_offset">45dp</dimen>
+
+    <dimen name="fox_x_battery_offset">160dp</dimen>
+    <dimen name="fox_y_battery_offset">105dp</dimen>
+
+    <dimen name="fox_x_date_offset">30dp</dimen>
+    <dimen name="fox_y_date_offset">105dp</dimen>
 </resources>
