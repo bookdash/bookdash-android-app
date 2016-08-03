@@ -90,6 +90,7 @@ public class OwlWatchFace extends CanvasWatchFaceService {
     }
 
     private class Engine extends CanvasWatchFaceService.Engine {
+        public static final String FONT_NAME_WATCHFACE = "fonts/minyna.ttf";
         final Handler updateTimeHandler = new EngineHandler(this);
         boolean registeredTimeZoneReceiver = false;
         Paint backgroundPaint;
@@ -118,6 +119,11 @@ public class OwlWatchFace extends CanvasWatchFaceService {
          * disable anti-aliasing in ambient mode.
          */
         boolean lowBitAmbient;
+        private BatteryStatusHelper batteryStatusHelper;
+        private float yOffsetBattery;
+        private float xOffsetBattery;
+        private Bitmap owlVectorAmbient;
+        private Bitmap ambientScaledBitmap;
 
         @Override
         public void onDestroy() {
@@ -131,6 +137,12 @@ public class OwlWatchFace extends CanvasWatchFaceService {
                     .getHeight() != height) {
                 backgroundScaledBitmap = Bitmap
                         .createScaledBitmap(owlBackgroundBitmap, width, height, true /* filter */);
+
+            }
+            if (ambientScaledBitmap == null || ambientScaledBitmap.getWidth() != width || ambientScaledBitmap
+                    .getHeight() != height) {
+                ambientScaledBitmap = Bitmap.createScaledBitmap(owlVectorAmbient, width, height, true /* filter */);
+
             }
             super.onSurfaceChanged(holder, format, width, height);
         }
@@ -140,6 +152,7 @@ public class OwlWatchFace extends CanvasWatchFaceService {
             // Draw the background.
             if (isInAmbientMode()) {
                 canvas.drawColor(Color.BLACK);
+                canvas.drawBitmap(ambientScaledBitmap, 0, 0, null);
             } else {
                 canvas.drawBitmap(backgroundScaledBitmap, 0, 0, null);
 
@@ -161,6 +174,10 @@ public class OwlWatchFace extends CanvasWatchFaceService {
             String date = currentTime.format(DATE_TIME_FORMATTER);
             canvas.drawText(date, xOffsetDate, yOffsetDate, textPaintSmall);
 
+            if (!isInAmbientMode()) {
+                canvas.drawText(batteryStatusHelper.getBatteryPercentage() + "%", xOffsetBattery, yOffsetBattery,
+                        textPaintSmall);
+            }
             super.onDraw(canvas, bounds);
 
         }
@@ -181,6 +198,7 @@ public class OwlWatchFace extends CanvasWatchFaceService {
                     .getDimension(isRound ? R.dimen.digital_text_size_round_small : R.dimen.digital_text_size_small);
             textTimePaint.setTextSize(textSize);
             textPaintSmall.setTextSize(textSizeSmall);
+
         }
 
         @Override
@@ -250,6 +268,8 @@ public class OwlWatchFace extends CanvasWatchFaceService {
             Resources resources = OwlWatchFace.this.getResources();
             yOffset = resources.getDimension(R.dimen.digital_y_offset);
             yOffsetDate = resources.getDimension(R.dimen.digital_date_offset_y);
+            yOffsetBattery = resources.getDimension(R.dimen.digital_battery_offset_y);
+            xOffsetBattery = resources.getDimension(R.dimen.digital_battery_offset_x);
             backgroundPaint = new Paint();
             backgroundPaint.setColor(ContextCompat.getColor(getApplicationContext(), R.color.background));
             owlBackgroundBitmap = BitmapFactory.decodeResource(getResources(), R.drawable.owl);
@@ -258,14 +278,15 @@ public class OwlWatchFace extends CanvasWatchFaceService {
             textPaintSmall = new Paint();
             textPaintSmall = createTextPaint(ContextCompat.getColor(getApplicationContext(), R.color.black));
 
-
+            owlVectorAmbient = BitmapFactory.decodeResource(getResources(), R.drawable.owl_watchface_withtrees);
             currentTime = ZonedDateTime.now();
+            batteryStatusHelper = new BatteryStatusHelper(getApplicationContext());
         }
 
         private Paint createTextPaint(int textColor) {
             Paint paint = new Paint();
             paint.setColor(textColor);
-            Typeface typeface = Typeface.createFromAsset(getAssets(), "fonts/minyna.ttf");
+            Typeface typeface = Typeface.createFromAsset(getAssets(), FONT_NAME_WATCHFACE);
             paint.setTypeface(typeface);
             paint.setAntiAlias(true);
             return paint;
