@@ -34,13 +34,15 @@ import android.os.Message;
 import android.support.v4.content.ContextCompat;
 import android.support.wearable.watchface.CanvasWatchFaceService;
 import android.support.wearable.watchface.WatchFaceStyle;
-import android.text.format.Time;
-import android.view.Gravity;
 import android.view.SurfaceHolder;
 import android.view.WindowInsets;
 
+import com.jakewharton.threetenabp.AndroidThreeTen;
+
+import org.threeten.bp.ZonedDateTime;
+import org.threeten.bp.format.DateTimeFormatter;
+
 import java.lang.ref.WeakReference;
-import java.util.TimeZone;
 import java.util.concurrent.TimeUnit;
 
 /**
@@ -48,14 +50,14 @@ import java.util.concurrent.TimeUnit;
  * low-bit ambient mode, the text is drawn without anti-aliasing in ambient mode.
  */
 public class OwlWatchFace extends CanvasWatchFaceService {
-    private static final Typeface NORMAL_TYPEFACE = Typeface.create(Typeface.SANS_SERIF, Typeface.NORMAL);
 
+    public static final DateTimeFormatter TIME_FORMATTER = DateTimeFormatter.ofPattern("HH:mm");
+    public static final DateTimeFormatter DATE_TIME_FORMATTER = DateTimeFormatter.ofPattern("EEE, MMM d");
     /**
      * Update rate in milliseconds for interactive mode. We update once a second since seconds are
      * displayed in interactive mode.
      */
     private static final long INTERACTIVE_UPDATE_RATE_MS = TimeUnit.SECONDS.toMillis(1);
-
     /**
      * Handler message id for updating the time periodically in interactive mode.
      */
@@ -88,34 +90,38 @@ public class OwlWatchFace extends CanvasWatchFaceService {
     }
 
     private class Engine extends CanvasWatchFaceService.Engine {
-        final Handler mUpdateTimeHandler = new EngineHandler(this);
-        boolean mRegisteredTimeZoneReceiver = false;
-        Paint mBackgroundPaint;
+        final Handler updateTimeHandler = new EngineHandler(this);
+        boolean registeredTimeZoneReceiver = false;
+        Paint backgroundPaint;
         Bitmap owlBackgroundBitmap;
-        Paint mTextPaint;
-        boolean mAmbient;
-        Time mTime;
-        final BroadcastReceiver mTimeZoneReceiver = new BroadcastReceiver() {
+        Paint textTimePaint;
+        Paint textPaintSmall;
+        boolean ambient;
+        ZonedDateTime currentTime;
+        final BroadcastReceiver timeZoneReceiver = new BroadcastReceiver() {
             @Override
             public void onReceive(Context context, Intent intent) {
-                mTime.clear(intent.getStringExtra("time-zone"));
-                mTime.setToNow();
+                AndroidThreeTen.init(getApplication());
+                // currentTime.clear(intent.getStringExtra("time-zone"));
+                currentTime = ZonedDateTime.now();
             }
         };
-        int mTapCount;
+        int tapCount;
 
-        float mXOffset;
-        float mYOffset;
+        float xOffset;
+        float xOffsetDate;
+        float yOffset;
+        float yOffsetDate;
 
         /**
          * Whether the display supports fewer bits for each color in ambient mode. When true, we
          * disable anti-aliasing in ambient mode.
          */
-        boolean mLowBitAmbient;
+        boolean lowBitAmbient;
 
         @Override
         public void onDestroy() {
-            mUpdateTimeHandler.removeMessages(MSG_UPDATE_TIME);
+            updateTimeHandler.removeMessages(MSG_UPDATE_TIME);
             super.onDestroy();
         }
 
@@ -139,15 +145,22 @@ public class OwlWatchFace extends CanvasWatchFaceService {
 
             }
 
-            // Draw H:MM in ambient mode or H:MM:SS in interactive mode.
-            mTime.setToNow();
-            String text = String.format("%d:%02d", mTime.hour, mTime.minute);
+            currentTime = ZonedDateTime.now();
+            String time = currentTime.format(TIME_FORMATTER);
             if (isInAmbientMode()) {
-                mTextPaint.setColor(ContextCompat.getColor(getApplicationContext(), R.color.white));
+                int colorWhite = ContextCompat.getColor(getApplicationContext(), R.color.white);
+                textTimePaint.setColor(colorWhite);
+                textPaintSmall.setColor(colorWhite);
             } else {
-                mTextPaint.setColor(ContextCompat.getColor(getApplicationContext(), R.color.black));
+                int colorBlack = ContextCompat.getColor(getApplicationContext(), R.color.black);
+                textTimePaint.setColor(colorBlack);
+                textPaintSmall.setColor(colorBlack);
             }
-            canvas.drawText(text, mXOffset, mYOffset, mTextPaint);
+            canvas.drawText(time, xOffset, yOffset, textTimePaint);
+
+            String date = currentTime.format(DATE_TIME_FORMATTER);
+            canvas.drawText(date, xOffsetDate, yOffsetDate, textPaintSmall);
+
             super.onDraw(canvas, bounds);
 
         }
@@ -159,20 +172,25 @@ public class OwlWatchFace extends CanvasWatchFaceService {
             // Load resources that have alternate values for round watches.
             Resources resources = OwlWatchFace.this.getResources();
             boolean isRound = insets.isRound();
-            mXOffset = resources.getDimension(isRound ? R.dimen.digital_x_offset_round : R.dimen.digital_x_offset);
+            xOffset = resources.getDimension(isRound ? R.dimen.digital_x_offset_round : R.dimen.digital_x_offset);
+            xOffsetDate = resources.getDimension(R.dimen.digital_date_offset_x);
+
             float textSize = resources
                     .getDimension(isRound ? R.dimen.digital_text_size_round : R.dimen.digital_text_size);
-
-            mTextPaint.setTextSize(textSize);
+            float textSizeSmall = resources
+                    .getDimension(isRound ? R.dimen.digital_text_size_round_small : R.dimen.digital_text_size_small);
+            textTimePaint.setTextSize(textSize);
+            textPaintSmall.setTextSize(textSizeSmall);
         }
 
         @Override
         public void onAmbientModeChanged(boolean inAmbientMode) {
             super.onAmbientModeChanged(inAmbientMode);
-            if (mAmbient != inAmbientMode) {
-                mAmbient = inAmbientMode;
-                if (mLowBitAmbient) {
-                    mTextPaint.setAntiAlias(!inAmbientMode);
+            if (ambient != inAmbientMode) {
+                ambient = inAmbientMode;
+                if (lowBitAmbient) {
+                    textTimePaint.setAntiAlias(!inAmbientMode);
+                    textPaintSmall.setAntiAlias(!inAmbientMode);
                 }
                 invalidate();
             }
@@ -185,7 +203,7 @@ public class OwlWatchFace extends CanvasWatchFaceService {
         @Override
         public void onPropertiesChanged(Bundle properties) {
             super.onPropertiesChanged(properties);
-            mLowBitAmbient = properties.getBoolean(PROPERTY_LOW_BIT_AMBIENT, false);
+            lowBitAmbient = properties.getBoolean(PROPERTY_LOW_BIT_AMBIENT, false);
         }
 
         @Override
@@ -200,7 +218,6 @@ public class OwlWatchFace extends CanvasWatchFaceService {
          */
         @Override
         public void onTapCommand(int tapType, int x, int y, long eventTime) {
-            Resources resources = OwlWatchFace.this.getResources();
             switch (tapType) {
                 case TAP_TYPE_TOUCH:
                     // The user has started touching the screen.
@@ -210,9 +227,9 @@ public class OwlWatchFace extends CanvasWatchFaceService {
                     break;
                 case TAP_TYPE_TAP:
                     // The user has completed the tap gesture.
-                    mTapCount++;
-                    mBackgroundPaint.setColor(
-                            resources.getColor(mTapCount % 2 == 0 ? R.color.background : R.color.background2));
+                    tapCount++;
+                    backgroundPaint.setColor(ContextCompat.getColor(getApplicationContext(),
+                            tapCount % 2 == 0 ? R.color.background : R.color.background2));
                     break;
             }
             invalidate();
@@ -221,26 +238,28 @@ public class OwlWatchFace extends CanvasWatchFaceService {
         @Override
         public void onCreate(SurfaceHolder holder) {
             super.onCreate(holder);
-
+            AndroidThreeTen.init(getApplication());
             setWatchFaceStyle(
                     new WatchFaceStyle.Builder(OwlWatchFace.this).setCardPeekMode(WatchFaceStyle.PEEK_MODE_SHORT)
                             .setAmbientPeekMode(WatchFaceStyle.PEEK_MODE_SHORT)
                             .setBackgroundVisibility(WatchFaceStyle.BACKGROUND_VISIBILITY_INTERRUPTIVE)
-                            .setStatusBarGravity(Gravity.TOP | Gravity.RIGHT)
+                            // .setStatusBarGravity(Gravity.TOP | Gravity.RIGHT)
                             .setShowUnreadCountIndicator(true)
                             //.setShowSystemUiTime(false)
                             .setAcceptsTapEvents(true).build());
             Resources resources = OwlWatchFace.this.getResources();
-            mYOffset = resources.getDimension(R.dimen.digital_y_offset);
-
-            mBackgroundPaint = new Paint();
-            mBackgroundPaint.setColor(resources.getColor(R.color.background));
+            yOffset = resources.getDimension(R.dimen.digital_y_offset);
+            yOffsetDate = resources.getDimension(R.dimen.digital_date_offset_y);
+            backgroundPaint = new Paint();
+            backgroundPaint.setColor(ContextCompat.getColor(getApplicationContext(), R.color.background));
             owlBackgroundBitmap = BitmapFactory.decodeResource(getResources(), R.drawable.owl);
-            mTextPaint = new Paint();
-            mTextPaint = createTextPaint(resources.getColor(R.color.digital_text));
+            textTimePaint = new Paint();
+            textTimePaint = createTextPaint(ContextCompat.getColor(getApplicationContext(), R.color.digital_text));
+            textPaintSmall = new Paint();
+            textPaintSmall = createTextPaint(ContextCompat.getColor(getApplicationContext(), R.color.black));
 
 
-            mTime = new Time();
+            currentTime = ZonedDateTime.now();
         }
 
         private Paint createTextPaint(int textColor) {
@@ -260,8 +279,8 @@ public class OwlWatchFace extends CanvasWatchFaceService {
                 registerReceiver();
 
                 // Update time zone in case it changed while we weren't visible.
-                mTime.clear(TimeZone.getDefault().getID());
-                mTime.setToNow();
+
+                currentTime = ZonedDateTime.now();
             } else {
                 unregisterReceiver();
             }
@@ -272,35 +291,35 @@ public class OwlWatchFace extends CanvasWatchFaceService {
         }
 
         private void registerReceiver() {
-            if (mRegisteredTimeZoneReceiver) {
+            if (registeredTimeZoneReceiver) {
                 return;
             }
-            mRegisteredTimeZoneReceiver = true;
+            registeredTimeZoneReceiver = true;
             IntentFilter filter = new IntentFilter(Intent.ACTION_TIMEZONE_CHANGED);
-            OwlWatchFace.this.registerReceiver(mTimeZoneReceiver, filter);
+            OwlWatchFace.this.registerReceiver(timeZoneReceiver, filter);
         }
 
         private void unregisterReceiver() {
-            if (!mRegisteredTimeZoneReceiver) {
+            if (!registeredTimeZoneReceiver) {
                 return;
             }
-            mRegisteredTimeZoneReceiver = false;
-            OwlWatchFace.this.unregisterReceiver(mTimeZoneReceiver);
+            registeredTimeZoneReceiver = false;
+            OwlWatchFace.this.unregisterReceiver(timeZoneReceiver);
         }
 
         /**
-         * Starts the {@link #mUpdateTimeHandler} timer if it should be running and isn't currently
+         * Starts the {@link #updateTimeHandler} timer if it should be running and isn't currently
          * or stops it if it shouldn't be running but currently is.
          */
         private void updateTimer() {
-            mUpdateTimeHandler.removeMessages(MSG_UPDATE_TIME);
+            updateTimeHandler.removeMessages(MSG_UPDATE_TIME);
             if (shouldTimerBeRunning()) {
-                mUpdateTimeHandler.sendEmptyMessage(MSG_UPDATE_TIME);
+                updateTimeHandler.sendEmptyMessage(MSG_UPDATE_TIME);
             }
         }
 
         /**
-         * Returns whether the {@link #mUpdateTimeHandler} timer should be running. The timer should
+         * Returns whether the {@link #updateTimeHandler} timer should be running. The timer should
          * only run when we're visible and in interactive mode.
          */
         private boolean shouldTimerBeRunning() {
@@ -315,7 +334,7 @@ public class OwlWatchFace extends CanvasWatchFaceService {
             if (shouldTimerBeRunning()) {
                 long timeMs = System.currentTimeMillis();
                 long delayMs = INTERACTIVE_UPDATE_RATE_MS - (timeMs % INTERACTIVE_UPDATE_RATE_MS);
-                mUpdateTimeHandler.sendEmptyMessageDelayed(MSG_UPDATE_TIME, delayMs);
+                updateTimeHandler.sendEmptyMessageDelayed(MSG_UPDATE_TIME, delayMs);
             }
         }
     }
