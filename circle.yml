@@ -12,6 +12,9 @@ dependencies:
     - echo y | android update sdk --no-ui --all --filter "tools,platform-tools,android-24"
     - echo y | android update sdk --no-ui --all --filter "build-tools-24.0.1"
     - echo y | android update sdk --no-ui --all --filter "extra-android-m2repository,extra-google-google_play_services,extra-google-m2repository"
+  override:
+    - bundle install: 
+        timeout: 1200
 
 test:
   pre:
