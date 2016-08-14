@@ -180,7 +180,7 @@ dependencies {
     compile 'uk.co.chrisjenx:calligraphy:2.2.0'
     compile 'io.reactivex:rxandroid:1.2.1'
     compile 'io.reactivex:rxjava:1.1.6'
-
+    compile 'com.jakewharton.threetenabp:threetenabp:1.0.3'
 }
 
 // Grant animation permissions to avoid test failure because of ui sync.

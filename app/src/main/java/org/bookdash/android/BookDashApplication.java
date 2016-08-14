@@ -6,6 +6,7 @@ import android.content.Context;
 import com.crashlytics.android.Crashlytics;
 import com.crashlytics.android.core.CrashlyticsCore;
 import com.google.firebase.analytics.FirebaseAnalytics;
+import com.jakewharton.threetenabp.AndroidThreeTen;
 
 import io.fabric.sdk.android.Fabric;
 import uk.co.chrisjenx.calligraphy.CalligraphyConfig;
@@ -27,11 +28,9 @@ public class BookDashApplication extends Application {
     @Override
     public void onCreate() {
         super.onCreate();
-
-        Crashlytics crashlyticsKit = new Crashlytics.Builder().core(
-                new CrashlyticsCore.Builder().disabled(BuildConfig.DEBUG)
-                        .build())
-                .build();
+        AndroidThreeTen.init(this);
+        Crashlytics crashlyticsKit = new Crashlytics.Builder()
+                .core(new CrashlyticsCore.Builder().disabled(BuildConfig.DEBUG).build()).build();
         Fabric.with(this, crashlyticsKit);
 
         Injection.init(this);
@@ -40,9 +39,9 @@ public class BookDashApplication extends Application {
         FILES_DIR = getFilesDir().getPath();
         getDefaultTracker();
 
-        CalligraphyConfig.initDefault(new CalligraphyConfig.Builder().setDefaultFontPath(DEFAULT_FONT_LOCATION)
-                .setFontAttrId(R.attr.fontPath)
-                .build());
+        CalligraphyConfig.initDefault(
+                new CalligraphyConfig.Builder().setDefaultFontPath(DEFAULT_FONT_LOCATION).setFontAttrId(R.attr.fontPath)
+                        .build());
 
 
     }

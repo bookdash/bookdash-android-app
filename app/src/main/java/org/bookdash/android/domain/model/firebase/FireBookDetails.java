@@ -2,19 +2,24 @@ package org.bookdash.android.domain.model.firebase;
 
 import android.os.Parcel;
 import android.os.Parcelable;
+import android.util.Log;
 
 import org.bookdash.android.BookDashApplication;
+import org.threeten.bp.Instant;
+import org.threeten.bp.ZoneId;
+import org.threeten.bp.ZonedDateTime;
+import org.threeten.bp.format.DateTimeFormatter;
+import org.threeten.bp.format.FormatStyle;
 
 import java.io.File;
+import java.util.Comparator;
 import java.util.List;
 
 public class FireBookDetails implements Parcelable {
     public static final String TABLE_NAME = "bd_books";
-    public static final String CREATED_AT_COL = "createdAt";
-    public static final String BOOK_TITLE = "bookTitle";
-    public static final String CONTRIBUTORS_NAME = "contributors";
     public static final String CONTRIBUTORS_ITEM_NAME = "contributors";
     public static final String BOOK_FORMAT_JSON_FILE = "bookdetails.json";
+    public static final String BOOK_COLUMN_CREATED_DATE = "createdDate";
     public static final Parcelable.Creator<FireBookDetails> CREATOR = new Parcelable.Creator<FireBookDetails>() {
         @Override
         public FireBookDetails createFromParcel(Parcel source) {
@@ -26,6 +31,15 @@ public class FireBookDetails implements Parcelable {
             return new FireBookDetails[size];
         }
     };
+    public static final Comparator<? super FireBookDetails> COMPARATOR = new Comparator<FireBookDetails>() {
+        @Override
+        public int compare(final FireBookDetails bookDetails, final FireBookDetails bookDetails2) {
+            Long long1 = Long.valueOf(bookDetails.createdDate);
+            Long long2 = Long.valueOf(bookDetails2.createdDate);
+            return long2.compareTo(long1);
+        }
+    };
+
     private String bookTitle;
     private String bookCoverPageUrl;
     private boolean bookEnabled;
@@ -35,15 +49,17 @@ public class FireBookDetails implements Parcelable {
     private List<String> contributors;
     private boolean isDownloading;
     private String bookUrl;
+    private long createdDate;
 
     public FireBookDetails(final String title, final String url, final String coverUrl, final boolean enabled,
-                           final String description, FireLanguage fireLanguage) {
+                           final String description, FireLanguage fireLanguage, long createdDate) {
         this.bookTitle = title;
         this.bookCoverPageUrl = coverUrl;
         this.bookUrl = url;
         this.bookEnabled = enabled;
         this.bookDescription = description;
         this.bookLanguage = fireLanguage.getId();
+        this.createdDate = createdDate;
     }
 
     public FireBookDetails() {
@@ -60,6 +76,7 @@ public class FireBookDetails implements Parcelable {
         this.bookDescription = in.readString();
         this.contributors = in.createStringArrayList();
         this.isDownloading = in.readByte() != 0;
+        this.createdDate = in.readLong();
     }
 
     public boolean isBookEnabled() {
@@ -174,6 +191,7 @@ public class FireBookDetails implements Parcelable {
         dest.writeString(this.bookDescription);
         dest.writeStringList(this.contributors);
         dest.writeByte(this.isDownloading ? (byte) 1 : (byte) 0);
+        dest.writeLong(this.createdDate);
     }
 
     public String getBookLanguage() {
@@ -186,5 +204,20 @@ public class FireBookDetails implements Parcelable {
 
     public void setContributorsIndexedKeys(List<String> contributorsIndexedKeys) {
         this.contributors = contributorsIndexedKeys;
+    }
+
+    public String getCreatedDateFormatted() {
+        Log.d("bookdateials", "getCreatedDateFormatted() called:" + createdDate);
+        Instant i = Instant.ofEpochMilli(createdDate);
+        ZonedDateTime z = ZonedDateTime.ofInstant(i, ZoneId.systemDefault());
+        return z.format(DateTimeFormatter.ofLocalizedDate(FormatStyle.LONG));
+    }
+
+    public long getCreatedDate() {
+        return createdDate;
+    }
+
+    public void setCreatedDate(final long createdDate) {
+        this.createdDate = createdDate;
     }
 }

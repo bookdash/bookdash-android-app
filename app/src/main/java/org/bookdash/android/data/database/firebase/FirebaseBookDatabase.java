@@ -41,14 +41,13 @@ public class FirebaseBookDatabase implements BookDatabase {
 
     @Override
     public Observable<List<FireLanguage>> getLanguages() {
-        return firebaseObservableListeners
-                .listenToValueEvents(languagesTable, asLanguages());
+        return firebaseObservableListeners.listenToValueEvents(languagesTable, asLanguages());
     }
 
     @Override
     public Observable<List<FireBookDetails>> getBooks() {
         return firebaseObservableListeners
-                .listenToValueEvents(booksTable.orderByChild(BOOK_COLUMN_ENABLED),
+                .listenToValueEvents(booksTable.orderByChild(FireBookDetails.BOOK_COLUMN_CREATED_DATE),
                         asBooks());
     }
 

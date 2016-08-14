@@ -9,6 +9,7 @@ import org.bookdash.android.domain.model.firebase.FireBookDetails;
 import org.bookdash.android.domain.model.firebase.FireLanguage;
 import org.bookdash.android.presentation.base.BasePresenter;
 
+import java.util.Collections;
 import java.util.List;
 
 import rx.Scheduler;
@@ -158,6 +159,7 @@ class ListBooksPresenter extends BasePresenter<ListBooksContract.View> implement
                     public void onNext(final List<FireBookDetails> bookList) {
                         getView().showLoading(false);
                         getView().showErrorScreen(false, "", false);
+                        Collections.sort(bookList, FireBookDetails.COMPARATOR);
                         getView().showBooks(bookList);
                     }
                 }));

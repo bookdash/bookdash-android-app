@@ -173,21 +173,21 @@
                                 android:textColor="@color/text_secondary_dark"
                                 android:textSize="14sp"/>
 
-                            <!--   TODO <TextView
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="48dp"
-                                    android:layout_alignParentEnd="false"
-                                    android:layout_alignParentRight="true"
-                                    android:layout_marginBottom="16dp"
-                                    android:layout_marginLeft="16dp"
-                                    android:layout_marginRight="16dp"
-                                    android:layout_toRightOf="@id/textview_about_heading"
-                                    android:fontFamily="sans-serif"
-                                    android:gravity="center_vertical|right"
-                                    android:text="@{bookInfo.book.dateBookCreated}"
-                                    android:textColor="@color/text_secondary_dark"
-                                    android:textSize="14sp"/>-->
-                            <!--     android:text="@{book_info.book.dateBookCreated}"-->
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="48dp"
+                                android:layout_alignParentEnd="false"
+                                android:layout_alignParentRight="true"
+                                android:layout_marginBottom="16dp"
+                                android:layout_marginLeft="16dp"
+                                android:layout_marginRight="16dp"
+                                android:layout_toRightOf="@id/textview_about_heading"
+                                android:fontFamily="sans-serif"
+                                android:gravity="center_vertical|right"
+                                android:text="@{bookInfo.getCreatedDateFormatted()}"
+                                android:textColor="@color/text_secondary_dark"
+                                android:textSize="14sp"
+                                />
 
 
                             <TextView

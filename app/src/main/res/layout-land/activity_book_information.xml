@@ -181,7 +181,7 @@
                                     android:text="@{bookInfo.bookTitle}"
                                     android:textColor="@color/text_color_primary_dark"
                                     android:textSize="24sp"/>
-<!-- TODO
+
                                 <TextView
                                     android:id="@+id/text_view_date_book_created"
                                     android:layout_width="wrap_content"
@@ -193,9 +193,9 @@
                                     android:layout_marginTop="8dp"
                                     android:fontFamily="sans-serif"
                                     android:gravity="center_vertical"
-                                    android:text="@{bookInfo.book.dateBookCreated}"
+                                    android:text="@{bookInfo.getCreatedDateFormatted()}"
                                     android:textColor="@color/text_secondary_dark"
-                                    android:textSize="14sp"/>-->
+                                    android:textSize="14sp"/>
                             </RelativeLayout>
 
                             <View
