@@ -1,0 +1,9 @@
+service firebase.storage {
+  // TODO: Change the book-dash placeholder below to your configuration. e.g. my-project-12345.appspot.com
+  match /b/book-dash.appspot.com/o {
+  	match /{allPaths=**} {
+      allow read;
+      allow write: if (request.auth != null && (request.auth.uid == 'yYbUpGGM96cguByLZAI1XHnqQhH3' || request.auth.uid == 'HZLH0Txg1wWN8c6yjP7RcKGIxij2'));
+    }
+  }
+}

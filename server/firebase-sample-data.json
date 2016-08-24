@@ -1,0 +1,230 @@
+{
+  "bd_books": {
+    "-KGeVyevR6pYqBLYMgMS": {
+      "bookCoverPageUrl": "https://c2.staticflickr.com/6/5051/5407406717_bb762c0fc3.jpg",
+      "bookEnabled": true,
+      "bookLanguage": "-KKTGoi7w8gxmLNXcmmu",
+      "bookTitle": "Its so fluffy \uD83C\uDF89",
+      "bookUrl": "http://www.yahoo.com/1",
+      "contributors": {
+        "-KGPfiFGaGWYhZVwFi20": true
+      },
+      "createdDate": 1451433600000
+    },
+    "-KIuJpFkdcaz8rIY9uoJ": {
+      "bookCoverPageUrl": "http://bookdash.org/wp-content/uploads/2016/05/mrs-penguins-perfect-palace_english_20160521_Page_01.jpg",
+      "bookDescription": "The Penguin family lives on the beach, surrounded by rubbish. Until one day, Mrs Penguin says: we need a house! But how will they build one?",
+      "bookEnabled": true,
+      "bookLanguage": "-KFQlsLuj6nKinrrPdZy",
+      "bookTitle": "Mrs Penguin's Perfect Palace",
+      "bookUrl": "http://www.yahoo.com",
+      "contributors": {
+        "-KEgSSPayuN3foieNdGe": true,
+        "-KGPfiFGaGWYhZVwFi20": true
+      },
+      "createdDate": 1470096000000
+    },
+    "-KKTS7ta_dCopJmmDI6a": {
+      "bookCoverPageUrl": "https://storage.googleapis.com/bookdash_books/books/19_littleantsbigplan/afr/cover/Page_01.jpg",
+      "bookDescription": "Klein Meirtjie has a big plan",
+      "bookEnabled": true,
+      "bookLanguage": "-KFajYWR2O-yE_-fbAgT",
+      "bookTitle": "Klein Meirtjie se groot Plan",
+      "bookUrl": "https://storage.googleapis.com/bookdash_books/books/19_littleantsbigplan/afr/download/littleantbigplan-afr.zip",
+      "contributors": {
+        "-KEgSSPayuN3foieNdGe": true
+      },
+      "createdDate": 1470700800000
+    },
+    "-KLUQ0XmRdLRv5IWo5Oy": {
+      "bookCoverPageUrl": "http://www.lancegleason.com/gallery2/main.php?g2_view=core.DownloadItem&g2_itemId=34&g2_serialNumber=3",
+      "bookDescription": "The tale of the fickleness of a cat",
+      "bookEnabled": false,
+      "bookLanguage": "-KFQlsLuj6nKinrrPdZy",
+      "bookTitle": "Allie Wants to Go Out",
+      "bookUrl": "http://www.lancegleason.com/gallery2/main.php?g2_view=core.DownloadItem&g2_itemId=34&g2_serialNumber=3",
+      "contributors": {
+        "-KEgSSPayuN3foieNdGe": true
+      },
+      "createdDate": 1470700800000
+    },
+    "-KLgKMoH3TFtT3HcRu3k": {
+      "bookCoverPageUrl": "http://bookdash.org/wp-content/uploads/2016/05/what-is-it_english_english_20160521_Page_01.jpg",
+      "bookDescription": "What is it? It isn’t like me. Do you think it’s dangerous?",
+      "bookEnabled": true,
+      "bookLanguage": "-KKTGoi7w8gxmLNXcmmu",
+      "bookTitle": "What is it?",
+      "bookUrl": "http://bookdash.org/wp-content/uploads/2016/05/what-is-it_english_english_20160521_Page_01.jpg",
+      "contributors": {
+        "-KEgSSPayuN3foieNdGe": true,
+        "-KLl-xWwgnAeZAee0HfW": true
+      },
+      "createdDate": 1470700800000
+    },
+    "-KLlCiDjk6f8Yhp8ejMe": {
+      "bookCoverPageUrl": "http://bookdash.org/wp-content/uploads/2016/04/the-best-thing-ever_english_20160409_Page_01-1.jpg",
+      "bookDescription": "Zulu book description",
+      "bookEnabled": true,
+      "bookLanguage": "-KLZvZm7FJ6OLgQ05QxK",
+      "bookTitle": "Zulu Book",
+      "bookUrl": "http://bookdash.org/wp-content/uploads/2016/04/the-best-thing-ever_english_20160409_Page_01-1.jpg",
+      "contributors": {
+        "-KGPfiFGaGWYhZVwFi20": true,
+        "-KLl-xWwgnAeZAee0HfW": true
+      },
+      "createdDate": 1470700800000
+    },
+    "-KLlCqOJNXIA7OVb7tIJ": {
+      "bookCoverPageUrl": "http://bookdash.org/wp-content/uploads/2016/04/the-best-thing-ever_english_20160409_Page_01-1.jpg",
+      "bookDescription": "Xhosa",
+      "bookEnabled": true,
+      "bookLanguage": "-KLZvylY_UPd_Uo3-LdM",
+      "bookTitle": "Xhosa Title",
+      "bookUrl": "http://bookdash.org/wp-content/uploads/2016/04/the-best-thing-ever_english_20160409_Page_01-1.jpg",
+      "contributors": {
+        "-KLZLMPsNdm-U0baRYQS": true,
+        "-KLZQvBDVVNn_TM8C03y": true,
+        "-KLZrKjspxu3GVGJs8WD": true,
+        "-KLl-xWwgnAeZAee0HfW": true
+      },
+      "createdDate": 1423612800000
+    },
+    "-KMEaE3ozxhSZczA_1Pg": {
+      "bookCoverPageUrl": "http://bookdash.org/wp-content/uploads/2016/01/a-beautiful-day_cover_20160104.jpg",
+      "bookDescription": "It’s a beautiful day for a picnic. Everyone wants to join in the fun.",
+      "bookEnabled": true,
+      "bookLanguage": "-KFQlsLuj6nKinrrPdZy",
+      "bookTitle": "A Beautiful Day",
+      "bookUrl": "gs://book-dash.appspot.com/testing/abeautifulday-en.zip",
+      "contributors": {
+        "-KEgSSPayuN3foieNdGe": true,
+        "-KLl-xWwgnAeZAee0HfW": true
+      },
+      "createdDate": 1470268800000
+    }
+  },
+  "bd_contributors": {
+    "-KEgSSPayuN3foieNdGe": {
+      "avatar": "http://orig07.deviantart.net/431f/f/2012/208/f/d/beavis_after_the_eyedoctors_by_lithiumchemicals-d58vkpm.png",
+      "name": "Lance Gleason",
+      "roles": {
+        "-KEKbgn4aU--0aBT8mjE": true,
+        "-KEKdk0bFoAzxuHmbBNU": true,
+        "-KEKjHtU3kbvVunTwO04": true
+      }
+    },
+    "-KGPfiFGaGWYhZVwFi20": {
+      "avatar": "http://www.lancegleason.com/gallery2/main.php?g2_view=core.DownloadItem&g2_itemId=32&g2_serialNumber=3",
+      "name": "Allie Cat",
+      "roles": {
+        "-KEKbgn4aU--0aBT8mjE": true,
+        "-KEKjHtU3kbvVunTwO04": true
+      }
+    },
+    "-KLZJ7gtdmwYmWixRR66": {
+      "avatar": "http://www.lancegleason.com/gallery2/main.php?g2_view=core.DownloadItem&g2_itemId=19528&g2_serialNumber=2",
+      "name": "Max",
+      "roles": {
+        "-KEKbgn4aU--0aBT8mjE": true
+      }
+    },
+    "-KLZJ8eOyHc3Nwnssq68": {
+      "avatar": "http://www.lancegleason.com/gallery2/main.php?g2_view=core.DownloadItem&g2_itemId=19528&g2_serialNumber=2",
+      "name": "Max"
+    },
+    "-KLZJHWS8s0HF3JXwsE4": {
+      "avatar": "http://www.lancegleason.com/gallery2/main.php?g2_view=core.DownloadItem&g2_itemId=19528&g2_serialNumber=2",
+      "name": "Max 3"
+    },
+    "-KLZKjOjDjK8gLUN4H0-": {
+      "avatar": "http://www.lancegleason.com/gallery2/main.php?g2_view=core.DownloadItem&g2_itemId=30132&g2_serialNumber=2",
+      "name": "Purr Programmer"
+    },
+    "-KLZLMPsNdm-U0baRYQS": {
+      "avatar": "http://www.lancegleason.com/gallery2/main.php?g2_view=core.DownloadItem&g2_itemId=30132&g2_serialNumber=2",
+      "name": "Purr Programmer 1"
+    },
+    "-KLZNL-RPzBb_Napa_aO": {
+      "avatar": "http://www.lancegleason.com/gallery2/main.php?g2_view=core.DownloadItem&g2_itemId=16776&g2_serialNumber=3",
+      "name": "Grover"
+    },
+    "-KLZPNKFm_zFvUX1hTZy": {
+      "avatar": "http://www.lancegleason.com/gallery2/main.php?g2_view=core.DownloadItem&g2_itemId=12524&g2_serialNumber=3",
+      "name": "My Toys"
+    },
+    "-KLZQiUAQl5TFTZDpXDz": {
+      "avatar": "http://www.lancegleason.com/gallery2/main.php?g2_view=core.DownloadItem&g2_itemId=12524&g2_serialNumber=3",
+      "name": "More My Toys",
+      "roles": {
+        "-KEKdk0bFoAzxuHmbBNU": true
+      }
+    },
+    "-KLZQvBDVVNn_TM8C03y": {
+      "avatar": "http://www.lancegleason.com/gallery2/main.php?g2_view=core.DownloadItem&g2_itemId=12524&g2_serialNumber=3",
+      "name": "Lots of Toys",
+      "roles": {
+        "-KEKbgn4aU--0aBT8mjE": true,
+        "-KEKdk0bFoAzxuHmbBNU": true,
+        "-KEKjHtU3kbvVunTwO04": true
+      }
+    },
+    "-KLZrKjspxu3GVGJs8WD": {
+      "avatar": "http://www.lancegleason.com/gallery2/main.php?g2_view=core.DownloadItem&g2_itemId=12533&g2_serialNumber=3",
+      "name": "Chemo",
+      "roles": {
+        "-KEKbgn4aU--0aBT8mjE": true,
+        "-KEKdk0bFoAzxuHmbBNU": true
+      }
+    },
+    "-KLl-xWwgnAeZAee0HfW": {
+      "avatar": "http://riggaroo.co.za/wp-content/uploads/2016/03/rebeccafranks_circle.png",
+      "name": "Rebecca Franks",
+      "roles": {
+        "-KEKbgn4aU--0aBT8mjE": true,
+        "-KEKdk0bFoAzxuHmbBNU": true,
+        "-KEKjHtU3kbvVunTwO04": true
+      }
+    }
+  },
+  "bd_languages": {
+    "-KFQlsLuj6nKinrrPdZy": {
+      "enabled": true,
+      "languageAbbreviation": "EN",
+      "languageName": "English"
+    },
+    "-KFajYWR2O-yE_-fbAgT": {
+      "enabled": true,
+      "languageAbbreviation": "AF",
+      "languageName": "Afrikaans"
+    },
+    "-KKTGoi7w8gxmLNXcmmu": {
+      "enabled": true,
+      "languageAbbreviation": "SE",
+      "languageName": "Sesotho"
+    },
+    "-KLZvZm7FJ6OLgQ05QxK": {
+      "enabled": true,
+      "languageAbbreviation": "ZU",
+      "languageName": "Zulu"
+    },
+    "-KLZvylY_UPd_Uo3-LdM": {
+      "enabled": false,
+      "languageAbbreviation": "XH",
+      "languageName": "Xhosa"
+    }
+  },
+  "bd_roles": {
+    "-KEKbgn4aU--0aBT8mjE": {
+      "name": "Writer"
+    },
+    "-KEKdk0bFoAzxuHmbBNU": {
+      "name": "Illustrator"
+    },
+    "-KEKjHtU3kbvVunTwO04": {
+      "name": "Editor"
+    },
+    "-KL_BSg2cGQ6h3QJXhaP": {
+      "name": "Admin 1"
+    }
+  }
+}
