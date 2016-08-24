@@ -68,7 +68,7 @@ public class DownloadsPresenterTest {
         downloadsPresenter.attachView(downloadsView);
 
         FireBookDetails sampleBook = new FireBookDetails("Test Book", "test_url", "cover_url_test", true, "description",
-                language);
+                language, System.currentTimeMillis());
         BOOKS.add(sampleBook);
         when(bookService.getDownloadedBooks()).thenReturn(Observable.just(BOOKS));
 
@@ -101,9 +101,9 @@ public class DownloadsPresenterTest {
     public void deleteDownload_RemovesDownloadFromList() {
         downloadsPresenter.attachView(downloadsView);
         FireBookDetails sampleBook = new FireBookDetails("Test Book", "test_url", "cover_url_test", true, "description",
-                language);
+                language, System.currentTimeMillis());
         FireBookDetails sampleBook2 = new FireBookDetails("Test Book2", "test_url2", "cover_url_test2", true,
-                "description2", language);
+                "description2", language, System.currentTimeMillis());
         BOOKS.add(sampleBook2);
         when(downloadService.deleteDownload(sampleBook)).thenReturn(Observable.just(true));
         when(bookService.getDownloadedBooks()).thenReturn(Observable.just(BOOKS));
@@ -120,7 +120,7 @@ public class DownloadsPresenterTest {
     public void deleteDownload_ThrowsError_NotifiesUserOfError() {
         downloadsPresenter.attachView(downloadsView);
         FireBookDetails sampleBook = new FireBookDetails("Test Book", "test_url", "cover_url_test", true, "description",
-                language);
+                language, System.currentTimeMillis());
         when(downloadService.deleteDownload(sampleBook))
                 .thenReturn(Observable.<Boolean>error(new Exception("Failed to delete")));
 

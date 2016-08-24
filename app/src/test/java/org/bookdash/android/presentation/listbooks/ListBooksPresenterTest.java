@@ -51,7 +51,8 @@ public class ListBooksPresenterTest {
 
     @Test
     public void loadBooksForLanguagePreference_LoadsBooks_ShowsBooks() {
-        BOOKS.add(new FireBookDetails("Test title", "url", "cover_url", true, "description", ENGLISH_LANGUAGE));
+        BOOKS.add(new FireBookDetails("Test title", "url", "cover_url", true, "description", ENGLISH_LANGUAGE,
+                System.currentTimeMillis()));
         when(settingsRepository.getLanguagePreference()).thenReturn(Single.just(ENGLISH_LANGUAGE));
         when(bookRepository.getBooksForLanguage(ENGLISH_LANGUAGE)).thenReturn(Observable.just(BOOKS));
 
@@ -65,7 +66,8 @@ public class ListBooksPresenterTest {
 
     @Test
     public void loadBooksForLanguage_ThrowsError_ShowsError() {
-        BOOKS.add(new FireBookDetails("Test title", "url", "cover_url", true, "description", ENGLISH_LANGUAGE));
+        BOOKS.add(new FireBookDetails("Test title", "url", "cover_url", true, "description", ENGLISH_LANGUAGE,
+                System.currentTimeMillis()));
         when(settingsRepository.getLanguagePreference()).thenReturn(Single.just(ENGLISH_LANGUAGE));
         when(bookRepository.getBooksForLanguage(ENGLISH_LANGUAGE))
                 .thenReturn(Observable.<List<FireBookDetails>>error(new Exception("Eek!")));

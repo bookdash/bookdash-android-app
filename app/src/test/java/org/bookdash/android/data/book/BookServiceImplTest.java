@@ -58,7 +58,7 @@ public class BookServiceImplTest {
         FireLanguage fireLanguage = new FireLanguage("English", "EN", true, "123");
 
         FireBookDetails fireBookDetails = new FireBookDetails("Book Title", "url", "cover_url", true,
-                "test description", fireLanguage);
+                "test description", fireLanguage, System.currentTimeMillis());
         ArrayList<FireBookDetails> bookDetails = new ArrayList<>();
         bookDetails.add(fireBookDetails);
         doReturn(Observable.<List<FireBookDetails>>just(bookDetails)).when(bookDatabase).getBooks();
