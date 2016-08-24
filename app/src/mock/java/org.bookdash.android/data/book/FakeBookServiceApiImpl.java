@@ -21,11 +21,11 @@ public class FakeBookServiceApiImpl implements BookService {
     FireBookDetails fireBookDetails1 = new FireBookDetails("Searching for the Spirit of Spring",
             "https://storage.googleapis.com/bookdash_books/books/50-itwasntme/itwasntme-en.zip",
             "https://storage.googleapis.com/bookdash_books/books/50-itwasntme/Page_01.jpg", true, "description_dummy",
-            fireLanguageEnglish);
+            fireLanguageEnglish, System.currentTimeMillis());
     FireBookDetails fireBookDetails2 = new FireBookDetails("Searching for the Spirit of Spring Zulu",
             "https://storage.googleapis.com/bookdash_books/books/50-itwasntme/itwasntme-en.zip",
             "https://storage.googleapis.com/bookdash_books/books/50-itwasntme/Page_01.jpg", true, "description_dummy",
-            fireLanguageZulu);
+            fireLanguageZulu, System.currentTimeMillis());
 
 
     public FakeBookServiceApiImpl() {
@@ -55,7 +55,8 @@ public class FakeBookServiceApiImpl implements BookService {
     @Override
     public Observable<List<FireContributor>> getContributorsForBook(final FireBookDetails bookDetails) {
         List<FireContributor> fireContributors = new ArrayList<>();
-        FireContributor fireContributor = new FireContributor("Rebecca Franks", "https://riggaroo.co.za/wp-content/uploads/2016/03/rebeccafranks_circle.png", "1");
+        FireContributor fireContributor = new FireContributor("Rebecca Franks",
+                "https://riggaroo.co.za/wp-content/uploads/2016/03/rebeccafranks_circle.png", "1");
         fireContributors.add(fireContributor);
         return Observable.just(fireContributors);
     }
