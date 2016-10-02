@@ -403,7 +403,7 @@ public class BookInfoActivity extends BaseAppCompatActivity implements BookInfoC
         if (bookInfo.isDownloadedAlready()) {
             showDownloadFinished();
         }
-        loadImage(bookInfo.getBookCoverUrl());
+        loadImage(bookInfo.getFireBaseBookCoverUrl());
     }
 
     @Override

@@ -38,6 +38,12 @@ public class FireContributor {
         return avatar;
     }
 
+    public String getFirebaseAvatar() {
+        String firebaseAvatar = "https://firebasestorage.googleapis.com/v0/b/book-dash.appspot.com/o/contributors%2F";
+        firebaseAvatar += avatar + "?alt=media";
+        return firebaseAvatar;
+    }
+
     public void setAvatar(final String avatar) {
         this.avatar = avatar;
     }
