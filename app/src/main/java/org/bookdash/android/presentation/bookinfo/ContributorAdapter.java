@@ -34,7 +34,7 @@ public class ContributorAdapter extends RecyclerView.Adapter<ContributorViewHold
 
         holder.textViewContributor.setText(item.getName());
         holder.textViewRole.setText(item.getActualRolesFormatted());
-        Glide.with(context).load(item.getAvatar()).into(holder.imageViewContributorAvatar);
+        Glide.with(context).load(item.getFirebaseAvatar()).into(holder.imageViewContributorAvatar);
 
     }
 

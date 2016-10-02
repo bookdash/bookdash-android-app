@@ -45,10 +45,15 @@ public class FirebaseBookDatabase implements BookDatabase {
     }
 
     @Override
-    public Observable<List<FireBookDetails>> getBooks() {
+     public Observable<List<FireBookDetails>> getBooks() {
+        return getBooks(null);
+    }
+
+    @Override
+    public Observable<List<FireBookDetails>> getBooks(String languageAbbreviation) {
         return firebaseObservableListeners
                 .listenToValueEvents(booksTable.orderByChild(FireBookDetails.BOOK_COLUMN_CREATED_DATE),
-                        asBooks());
+                        asBooks(languageAbbreviation));
     }
 
 
@@ -92,7 +97,7 @@ public class FirebaseBookDatabase implements BookDatabase {
         };
     }
 
-    private Func1<DataSnapshot, List<FireBookDetails>> asBooks() {
+    private Func1<DataSnapshot, List<FireBookDetails>> asBooks(final String languageAbbreviation) {
         return new Func1<DataSnapshot, List<FireBookDetails>>() {
             @Override
             public List<FireBookDetails> call(DataSnapshot dataSnapshot) {
@@ -101,8 +106,9 @@ public class FirebaseBookDatabase implements BookDatabase {
                 for (DataSnapshot snap : dataSnapshot.getChildren()) {
                     FireBookDetails bookDetails = snap.getValue(FireBookDetails.class);
                     Log.d(TAG, "Book Details:" + bookDetails.getBookTitle() + ". Book URL:" + bookDetails
-                            .getBookCoverUrl());
+                            .getFireBaseBookCoverUrl());
                     bookDetails.setBookId(snap.getKey());
+                    bookDetails.setBookLanguageAbbreviation(languageAbbreviation);
                     List<String> keys = new ArrayList<>();
                     if (snap.child(FireBookDetails.CONTRIBUTORS_ITEM_NAME).hasChildren()) {
                         Iterable<DataSnapshot> children = snap.child(FireBookDetails.CONTRIBUTORS_ITEM_NAME)

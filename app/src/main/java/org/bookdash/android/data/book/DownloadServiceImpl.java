@@ -42,10 +42,13 @@ public class DownloadServiceImpl implements DownloadService {
             return getBookPagesFromDownloadedBook(book);
         }
         try {
-            final StorageReference fileDownloadRef = storageRef.getReferenceFromUrl(book.getBookUrl());
+            final StorageReference fileDownloadRef = storageRef.getReferenceFromUrl(book.getFireBaseBookUrl());
             final File localFile;
-            Uri uri = Uri.parse(book.getBookUrl());
-            localFile = File.createTempFile(uri.getLastPathSegment(), "");
+            Uri uri = Uri.parse(book.getFireBaseBookUrl());
+            String tempFileName = uri.getLastPathSegment();
+            String tempFileParsed[] = tempFileName.split("/");
+            tempFileName = tempFileParsed[tempFileParsed.length -1];
+            localFile = File.createTempFile(tempFileName, "");
 
             return RxFirebaseStorage.getFile(fileDownloadRef, localFile)
                     .flatMap(new Func1<FileDownloadTask.TaskSnapshot, Observable<DownloadProgressItem>>() {
