@@ -139,15 +139,18 @@ dependencies {
 
     }
     androidTestCompile("com.android.support.test.espresso:espresso-contrib:$rootProject.ext.espressoVersion") {
-        exclude module: 'recyclerview-v7'
         exclude module: 'support-annotations'
-        exclude module: 'support-v4'
+        exclude group: 'com.android.support', module: 'appcompat'
+        exclude group: 'com.android.support', module: 'support-v4'
+        exclude module: 'recyclerview-v7'
     }
     androidTestCompile("com.android.support.test.espresso:espresso-intents:$rootProject.ext.espressoVersion") {
         exclude module: 'recyclerview-v7'
         exclude module: 'support-annotations'
         exclude module: 'support-v4'
     }
+    androidTestCompile 'com.android.support:appcompat-v7:24.2.1'
+    androidTestCompile 'com.android.support:design:24.2.1'
 
     compile fileTree(dir: 'libs', include: ['*.jar'])
     compile project(':fabbutton')

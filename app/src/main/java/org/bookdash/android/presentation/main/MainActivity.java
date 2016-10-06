@@ -208,7 +208,7 @@ public class MainActivity extends BaseAppCompatActivity implements MainContract.
                     .build();
             startActivityForResult(intent, INVITE_REQUEST_CODE);
         } catch (ActivityNotFoundException ac) {
-            Snackbar.make(navigationView, R.string.common_google_play_services_api_unavailable_text, Snackbar.LENGTH_LONG).show();
+            Snackbar.make(navigationView, R.string.common_google_play_services_unsupported_title, Snackbar.LENGTH_LONG).show();
         }
     }
 
