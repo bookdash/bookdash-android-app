@@ -44,6 +44,7 @@ public class FireBookDetails implements Parcelable {
     private String bookCoverPageUrl;
     private boolean bookEnabled;
     private String bookLanguage;
+    private String bookLanguageAbbreviation;
     private String bookId;
     private String bookDescription;
     private List<String> contributors;
@@ -59,6 +60,7 @@ public class FireBookDetails implements Parcelable {
         this.bookEnabled = enabled;
         this.bookDescription = description;
         this.bookLanguage = fireLanguage.getId();
+        this.bookLanguageAbbreviation = fireLanguage.getLanguageAbbreviation();
         this.createdDate = createdDate;
     }
 
@@ -77,6 +79,7 @@ public class FireBookDetails implements Parcelable {
         this.contributors = in.createStringArrayList();
         this.isDownloading = in.readByte() != 0;
         this.createdDate = in.readLong();
+        this.bookLanguageAbbreviation = in.readString();
     }
 
     public boolean isBookEnabled() {
@@ -151,9 +154,26 @@ public class FireBookDetails implements Parcelable {
         this.bookTitle = bookTitle;
     }
 
+    public void setBookLanguageAbbreviation(String languageAbbreviation){
+        this.bookLanguageAbbreviation = languageAbbreviation;
+    }
+
+    public String getFireBaseBookCoverUrl(){
+        String firebaseBookCoverUrl = "https://firebasestorage.googleapis.com/v0/b/book-dash.appspot.com/o/book_covers%2F";
+        firebaseBookCoverUrl += bookLanguageAbbreviation + "%2F" + bookCoverPageUrl + "?alt=media";
+        return firebaseBookCoverUrl;
+    }
+
     public String getBookCoverUrl() {
         return bookCoverPageUrl;
     }
+
+    public String getFireBaseBookUrl(){
+        String firebaseBookUrl = "https://firebasestorage.googleapis.com/v0/b/book-dash.appspot.com/o/books%2F";
+        firebaseBookUrl += bookLanguageAbbreviation + "%2F" + bookUrl + "?alt=media";
+        return firebaseBookUrl;
+    }
+
 
     public String getBookUrl() {
         return bookUrl;
@@ -192,6 +212,7 @@ public class FireBookDetails implements Parcelable {
         dest.writeStringList(this.contributors);
         dest.writeByte(this.isDownloading ? (byte) 1 : (byte) 0);
         dest.writeLong(this.createdDate);
+        dest.writeString(this.bookLanguageAbbreviation);
     }
 
     public String getBookLanguage() {

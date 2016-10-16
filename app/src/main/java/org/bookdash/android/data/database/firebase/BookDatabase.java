@@ -16,6 +16,8 @@ public interface BookDatabase {
 
     Observable<List<FireBookDetails>> getBooks();
 
+    Observable<List<FireBookDetails>> getBooks(String languageAbbreviation);
+
     Observable<FireContributor> getContributorById(String contributorId);
 
     Observable<FireRole> getRoleById(String roleId);
