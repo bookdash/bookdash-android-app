@@ -39,7 +39,7 @@ public class DownloadsAdapter extends RecyclerView.Adapter<DownloadsViewHolder> 
     public void onBindViewHolder(DownloadsViewHolder holder, int position) {
         FireBookDetails book = bookList.get(position);
         holder.downloadTitleTextView.setText(book.getBookTitle());
-        Glide.with(context).load(book.getFirebaseStorageReference()).into(holder.downloadImageTextView);
+        Glide.with(context).load(book.getFirebaseBookCoverUrl()).into(holder.downloadImageTextView);
         //todo holder.downloadProgressTextView.setText(book.getLanguage().getLanguageName());
         holder.downloadActionButtonView.setOnClickListener(deleteClickListener);
         holder.book = book;

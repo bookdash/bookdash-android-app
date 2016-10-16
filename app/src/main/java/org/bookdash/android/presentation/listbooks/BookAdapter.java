@@ -42,7 +42,7 @@ public class BookAdapter extends RecyclerView.Adapter<BookViewHolder> {
         FireBookDetails bookDetail = bookDetails.get(position);
         holder.bookTitle.setText(bookDetail.getBookTitle());
         Log.d("BookAdapter", "Book url:" + bookDetail.getBookCoverPageUrl());
-        Glide.with(context).using(new FirebaseImageLoader()).load(bookDetail.getFirebaseStorageReference())
+        Glide.with(context).using(new FirebaseImageLoader()).load(bookDetail.getFirebaseBookCoverUrl())
                 .placeholder(R.drawable.bookdash_placeholder).error(R.drawable.bookdash_placeholder)
                 .into(holder.bookCover);
         holder.bookDetail = bookDetail;

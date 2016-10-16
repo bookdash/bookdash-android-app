@@ -106,7 +106,7 @@ public class FireBookDetails implements Parcelable {
         return FirebaseConfig.STORAGE_PREFIX + bookCoverPageUrl;
     }
 
-    public StorageReference getFirebaseStorageReference(){
+    public StorageReference getFirebaseBookCoverUrl(){
         StorageReference storageRef = FirebaseStorage.getInstance().getReferenceFromUrl(FirebaseConfig.STORAGE_PREFIX);
         return storageRef.child(bookCoverPageUrl);
     }
@@ -164,25 +164,18 @@ public class FireBookDetails implements Parcelable {
         this.bookTitle = bookTitle;
     }
 
-    public void setBookLanguageAbbreviation(String languageAbbreviation) {
-        this.bookLanguageAbbreviation = languageAbbreviation;
+
+
+    public StorageReference getBookUrlStorageRef(){
+        if (bookUrl == null || bookUrl.isEmpty()){
+            return null;
+        }
+        StorageReference storageRef = FirebaseStorage.getInstance().getReferenceFromUrl(FirebaseConfig.STORAGE_PREFIX);
+        return storageRef.child(bookUrl);
     }
 
-    /*public String getFireBaseBookCoverUrl() {
-        String firebaseBookCoverUrl = "https://firebasestorage.googleapis.com/v0/b/book-dash.appspot.com/o/book_covers%2F";
-        firebaseBookCoverUrl += bookLanguageAbbreviation + "%2F" + bookCoverPageUrl + "?alt=media";
-        return firebaseBookCoverUrl;
-    }*/
-
-    /*public String getFireBaseBookUrl() {
-        String firebaseBookUrl = "https://firebasestorage.googleapis.com/v0/b/book-dash.appspot.com/o/books%2F";
-        firebaseBookUrl += bookLanguageAbbreviation + "%2F" + bookUrl + "?alt=media";
-        return firebaseBookUrl;
-    }*/
-
-
     public String getBookUrl() {
-        return FirebaseConfig.STORAGE_PREFIX + bookUrl;
+        return bookUrl;
     }
 
     public void setBookUrl(String bookUrl) {

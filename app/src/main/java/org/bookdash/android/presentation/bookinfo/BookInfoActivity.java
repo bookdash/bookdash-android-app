@@ -405,7 +405,7 @@ public class BookInfoActivity extends BaseAppCompatActivity implements BookInfoC
         if (bookInfo.isDownloadedAlready()) {
             showDownloadFinished();
         }
-        loadImage(bookInfo.getFirebaseStorageReference());
+        loadImage(bookInfo.getFirebaseBookCoverUrl());
     }
 
     @Override
