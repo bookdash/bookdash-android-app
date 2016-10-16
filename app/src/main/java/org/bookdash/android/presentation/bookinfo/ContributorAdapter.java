@@ -7,6 +7,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.bumptech.glide.Glide;
+import com.firebase.ui.storage.images.FirebaseImageLoader;
 
 import org.bookdash.android.R;
 import org.bookdash.android.domain.model.firebase.FireContributor;
@@ -34,7 +35,9 @@ public class ContributorAdapter extends RecyclerView.Adapter<ContributorViewHold
 
         holder.textViewContributor.setText(item.getName());
         holder.textViewRole.setText(item.getActualRolesFormatted());
-        Glide.with(context).load(item.getFirebaseAvatar()).into(holder.imageViewContributorAvatar);
+        Glide.with(context).using(new FirebaseImageLoader()).load(item.getFirebaseAvatar())
+                .placeholder(R.drawable.placeholder_avatar).error(R.drawable.placeholder_avatar)
+                .into(holder.imageViewContributorAvatar);
 
     }
 

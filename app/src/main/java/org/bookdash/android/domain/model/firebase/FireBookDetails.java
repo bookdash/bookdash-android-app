@@ -4,7 +4,11 @@ import android.os.Parcel;
 import android.os.Parcelable;
 import android.util.Log;
 
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
+
 import org.bookdash.android.BookDashApplication;
+import org.bookdash.android.config.FirebaseConfig;
 import org.threeten.bp.Instant;
 import org.threeten.bp.ZoneId;
 import org.threeten.bp.ZonedDateTime;
@@ -44,7 +48,7 @@ public class FireBookDetails implements Parcelable {
     private String bookCoverPageUrl;
     private boolean bookEnabled;
     private String bookLanguage;
-    private String bookLanguageAbbreviation;
+    private String bookLanguageAbbreviation = "en";
     private String bookId;
     private String bookDescription;
     private List<String> contributors;
@@ -99,8 +103,14 @@ public class FireBookDetails implements Parcelable {
     }
 
     public String getBookCoverPageUrl() {
-        return bookCoverPageUrl;
+        return FirebaseConfig.STORAGE_PREFIX + bookCoverPageUrl;
     }
+
+    public StorageReference getFirebaseStorageReference(){
+        StorageReference storageRef = FirebaseStorage.getInstance().getReferenceFromUrl(FirebaseConfig.STORAGE_PREFIX);
+        return storageRef.child(bookCoverPageUrl);
+    }
+
 
     public void setBookCoverPageUrl(String bookCoverPageUrl) {
         this.bookCoverPageUrl = bookCoverPageUrl;
@@ -154,29 +164,25 @@ public class FireBookDetails implements Parcelable {
         this.bookTitle = bookTitle;
     }
 
-    public void setBookLanguageAbbreviation(String languageAbbreviation){
+    public void setBookLanguageAbbreviation(String languageAbbreviation) {
         this.bookLanguageAbbreviation = languageAbbreviation;
     }
 
-    public String getFireBaseBookCoverUrl(){
+    /*public String getFireBaseBookCoverUrl() {
         String firebaseBookCoverUrl = "https://firebasestorage.googleapis.com/v0/b/book-dash.appspot.com/o/book_covers%2F";
         firebaseBookCoverUrl += bookLanguageAbbreviation + "%2F" + bookCoverPageUrl + "?alt=media";
         return firebaseBookCoverUrl;
-    }
+    }*/
 
-    public String getBookCoverUrl() {
-        return bookCoverPageUrl;
-    }
-
-    public String getFireBaseBookUrl(){
+    /*public String getFireBaseBookUrl() {
         String firebaseBookUrl = "https://firebasestorage.googleapis.com/v0/b/book-dash.appspot.com/o/books%2F";
         firebaseBookUrl += bookLanguageAbbreviation + "%2F" + bookUrl + "?alt=media";
         return firebaseBookUrl;
-    }
+    }*/
 
 
     public String getBookUrl() {
-        return bookUrl;
+        return FirebaseConfig.STORAGE_PREFIX + bookUrl;
     }
 
     public void setBookUrl(String bookUrl) {

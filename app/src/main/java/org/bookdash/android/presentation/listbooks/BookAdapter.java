@@ -2,11 +2,13 @@ package org.bookdash.android.presentation.listbooks;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import com.bumptech.glide.Glide;
+import com.firebase.ui.storage.images.FirebaseImageLoader;
 
 import org.bookdash.android.R;
 import org.bookdash.android.domain.model.firebase.FireBookDetails;
@@ -30,10 +32,8 @@ public class BookAdapter extends RecyclerView.Adapter<BookViewHolder> {
     }
 
     @Override
-    public BookViewHolder onCreateViewHolder(ViewGroup parent,
-                                             int viewType) {
-        View v = LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.list_item_book, parent, false);
+    public BookViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+        View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.list_item_book, parent, false);
         return new BookViewHolder(v);
     }
 
@@ -41,7 +41,10 @@ public class BookAdapter extends RecyclerView.Adapter<BookViewHolder> {
     public void onBindViewHolder(BookViewHolder holder, int position) {
         FireBookDetails bookDetail = bookDetails.get(position);
         holder.bookTitle.setText(bookDetail.getBookTitle());
-        Glide.with(context).load(bookDetail.getFireBaseBookCoverUrl()).placeholder(R.drawable.bookdash_placeholder).error(R.drawable.bookdash_placeholder).into(holder.bookCover);
+        Log.d("BookAdapter", "Book url:" + bookDetail.getBookCoverPageUrl());
+        Glide.with(context).using(new FirebaseImageLoader()).load(bookDetail.getFirebaseStorageReference())
+                .placeholder(R.drawable.bookdash_placeholder).error(R.drawable.bookdash_placeholder)
+                .into(holder.bookCover);
         holder.bookDetail = bookDetail;
         holder.downloadedIcon.setVisibility(bookDetail.isDownloadedAlready() ? View.VISIBLE : View.INVISIBLE);
         holder.cardContainer.setTag(holder);

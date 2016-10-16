@@ -3,6 +3,11 @@ package org.bookdash.android.domain.model.firebase;
 
 import android.text.TextUtils;
 
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
+
+import org.bookdash.android.config.FirebaseConfig;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -38,14 +43,16 @@ public class FireContributor {
         return avatar;
     }
 
-    public String getFirebaseAvatar() {
-        String firebaseAvatar = "https://firebasestorage.googleapis.com/v0/b/book-dash.appspot.com/o/contributors%2F";
-        firebaseAvatar += avatar + "?alt=media";
-        return firebaseAvatar;
-    }
-
     public void setAvatar(final String avatar) {
         this.avatar = avatar;
+    }
+
+    public StorageReference getFirebaseAvatar() {
+        if (avatar == null) {
+            return null;
+        }
+        StorageReference storageRef = FirebaseStorage.getInstance().getReferenceFromUrl(FirebaseConfig.STORAGE_PREFIX);
+        return storageRef.child(avatar);
     }
 
     public List<String> getRoleIds() {

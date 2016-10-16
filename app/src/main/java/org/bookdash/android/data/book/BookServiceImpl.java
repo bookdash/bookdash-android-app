@@ -30,7 +30,7 @@ public class BookServiceImpl implements BookService {
 
     @Override
     public Observable<List<FireBookDetails>> getBooksForLanguage(final FireLanguage language) {
-        return bookDatabase.getBooks(language.getLanguageAbbreviation().toLowerCase()).flatMap(filterEnabledBooks()).flatMap(filterLanguage(language));
+        return bookDatabase.getBooks().flatMap(filterEnabledBooks()).flatMap(filterLanguage(language));
     }
 
     private Func1<List<FireBookDetails>, Observable<List<FireBookDetails>>> filterEnabledBooks() {

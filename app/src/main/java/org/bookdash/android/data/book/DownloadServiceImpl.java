@@ -42,9 +42,9 @@ public class DownloadServiceImpl implements DownloadService {
             return getBookPagesFromDownloadedBook(book);
         }
         try {
-            final StorageReference fileDownloadRef = storageRef.getReferenceFromUrl(book.getFireBaseBookUrl());
+            final StorageReference fileDownloadRef = storageRef.getReferenceFromUrl(book.getBookUrl());
             final File localFile;
-            Uri uri = Uri.parse(book.getFireBaseBookUrl());
+            Uri uri = Uri.parse(book.getBookUrl());
             String tempFileName = uri.getLastPathSegment();
             String tempFileParsed[] = tempFileName.split("/");
             tempFileName = tempFileParsed[tempFileParsed.length -1];

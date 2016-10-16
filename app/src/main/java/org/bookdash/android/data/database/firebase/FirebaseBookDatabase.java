@@ -45,17 +45,10 @@ public class FirebaseBookDatabase implements BookDatabase {
     }
 
     @Override
-     public Observable<List<FireBookDetails>> getBooks() {
-        return getBooks(null);
-    }
-
-    @Override
-    public Observable<List<FireBookDetails>> getBooks(String languageAbbreviation) {
+    public Observable<List<FireBookDetails>> getBooks() {
         return firebaseObservableListeners
-                .listenToValueEvents(booksTable.orderByChild(FireBookDetails.BOOK_COLUMN_CREATED_DATE),
-                        asBooks(languageAbbreviation));
+                .listenToValueEvents(booksTable.orderByChild(FireBookDetails.BOOK_COLUMN_CREATED_DATE), asBooks());
     }
-
 
     @Override
     public Observable<FireContributor> getContributorById(final String contributorId) {
@@ -97,7 +90,7 @@ public class FirebaseBookDatabase implements BookDatabase {
         };
     }
 
-    private Func1<DataSnapshot, List<FireBookDetails>> asBooks(final String languageAbbreviation) {
+    private Func1<DataSnapshot, List<FireBookDetails>> asBooks() {
         return new Func1<DataSnapshot, List<FireBookDetails>>() {
             @Override
             public List<FireBookDetails> call(DataSnapshot dataSnapshot) {
@@ -106,9 +99,9 @@ public class FirebaseBookDatabase implements BookDatabase {
                 for (DataSnapshot snap : dataSnapshot.getChildren()) {
                     FireBookDetails bookDetails = snap.getValue(FireBookDetails.class);
                     Log.d(TAG, "Book Details:" + bookDetails.getBookTitle() + ". Book URL:" + bookDetails
-                            .getFireBaseBookCoverUrl());
+                            .getBookCoverPageUrl());
                     bookDetails.setBookId(snap.getKey());
-                    bookDetails.setBookLanguageAbbreviation(languageAbbreviation);
+              //      bookDetails.setBookLanguageAbbreviation(languageAbbreviation);
                     List<String> keys = new ArrayList<>();
                     if (snap.child(FireBookDetails.CONTRIBUTORS_ITEM_NAME).hasChildren()) {
                         Iterable<DataSnapshot> children = snap.child(FireBookDetails.CONTRIBUTORS_ITEM_NAME)
