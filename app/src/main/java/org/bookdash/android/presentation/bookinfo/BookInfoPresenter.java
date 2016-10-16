@@ -1,7 +1,6 @@
 package org.bookdash.android.presentation.bookinfo;
 
 import android.support.annotation.NonNull;
-import android.util.Log;
 
 import org.bookdash.android.R;
 import org.bookdash.android.data.book.BookService;

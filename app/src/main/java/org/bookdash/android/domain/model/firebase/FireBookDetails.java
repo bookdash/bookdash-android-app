@@ -4,7 +4,11 @@ import android.os.Parcel;
 import android.os.Parcelable;
 import android.util.Log;
 
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
+
 import org.bookdash.android.BookDashApplication;
+import org.bookdash.android.config.FirebaseConfig;
 import org.threeten.bp.Instant;
 import org.threeten.bp.ZoneId;
 import org.threeten.bp.ZonedDateTime;
@@ -44,6 +48,7 @@ public class FireBookDetails implements Parcelable {
     private String bookCoverPageUrl;
     private boolean bookEnabled;
     private String bookLanguage;
+    private String bookLanguageAbbreviation = "en";
     private String bookId;
     private String bookDescription;
     private List<String> contributors;
@@ -59,6 +64,7 @@ public class FireBookDetails implements Parcelable {
         this.bookEnabled = enabled;
         this.bookDescription = description;
         this.bookLanguage = fireLanguage.getId();
+        this.bookLanguageAbbreviation = fireLanguage.getLanguageAbbreviation();
         this.createdDate = createdDate;
     }
 
@@ -77,6 +83,7 @@ public class FireBookDetails implements Parcelable {
         this.contributors = in.createStringArrayList();
         this.isDownloading = in.readByte() != 0;
         this.createdDate = in.readLong();
+        this.bookLanguageAbbreviation = in.readString();
     }
 
     public boolean isBookEnabled() {
@@ -96,8 +103,14 @@ public class FireBookDetails implements Parcelable {
     }
 
     public String getBookCoverPageUrl() {
-        return bookCoverPageUrl;
+        return FirebaseConfig.STORAGE_PREFIX + bookCoverPageUrl;
     }
+
+    public StorageReference getFirebaseBookCoverUrl(){
+        StorageReference storageRef = FirebaseStorage.getInstance().getReferenceFromUrl(FirebaseConfig.STORAGE_PREFIX);
+        return storageRef.child(bookCoverPageUrl);
+    }
+
 
     public void setBookCoverPageUrl(String bookCoverPageUrl) {
         this.bookCoverPageUrl = bookCoverPageUrl;
@@ -151,8 +164,14 @@ public class FireBookDetails implements Parcelable {
         this.bookTitle = bookTitle;
     }
 
-    public String getBookCoverUrl() {
-        return bookCoverPageUrl;
+
+
+    public StorageReference getBookUrlStorageRef(){
+        if (bookUrl == null || bookUrl.isEmpty()){
+            return null;
+        }
+        StorageReference storageRef = FirebaseStorage.getInstance().getReferenceFromUrl(FirebaseConfig.STORAGE_PREFIX);
+        return storageRef.child(bookUrl);
     }
 
     public String getBookUrl() {
@@ -192,6 +211,7 @@ public class FireBookDetails implements Parcelable {
         dest.writeStringList(this.contributors);
         dest.writeByte(this.isDownloading ? (byte) 1 : (byte) 0);
         dest.writeLong(this.createdDate);
+        dest.writeString(this.bookLanguageAbbreviation);
     }
 
     public String getBookLanguage() {

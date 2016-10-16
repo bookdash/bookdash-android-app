@@ -7,7 +7,6 @@ import android.util.Log;
 
 import com.google.firebase.storage.FileDownloadTask;
 import com.google.firebase.storage.FirebaseStorage;
-import com.google.firebase.storage.StorageReference;
 import com.google.gson.Gson;
 
 import org.bookdash.android.BookDashApplication;
@@ -42,12 +41,14 @@ public class DownloadServiceImpl implements DownloadService {
             return getBookPagesFromDownloadedBook(book);
         }
         try {
-            final StorageReference fileDownloadRef = storageRef.getReferenceFromUrl(book.getBookUrl());
             final File localFile;
             Uri uri = Uri.parse(book.getBookUrl());
-            localFile = File.createTempFile(uri.getLastPathSegment(), "");
+            String tempFileName = uri.getLastPathSegment();
+            String tempFileParsed[] = tempFileName.split("/");
+            tempFileName = tempFileParsed[tempFileParsed.length - 1];
+            localFile = File.createTempFile(tempFileName, "");
 
-            return RxFirebaseStorage.getFile(fileDownloadRef, localFile)
+            return RxFirebaseStorage.getFile(book.getBookUrlStorageRef(), localFile)
                     .flatMap(new Func1<FileDownloadTask.TaskSnapshot, Observable<DownloadProgressItem>>() {
                         @Override
                         public Observable<DownloadProgressItem> call(FileDownloadTask.TaskSnapshot taskSnapshot) {

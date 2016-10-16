@@ -55,7 +55,7 @@ public class BookServiceImplTest {
     @Test
     public void testGetBooksForLanguage() throws Exception {
 
-        FireLanguage fireLanguage = new FireLanguage("English", "EN", true, "123");
+        FireLanguage fireLanguage = new FireLanguage("English", "en", true, "123");
 
         FireBookDetails fireBookDetails = new FireBookDetails("Book Title", "url", "cover_url", true,
                 "test description", fireLanguage, System.currentTimeMillis());

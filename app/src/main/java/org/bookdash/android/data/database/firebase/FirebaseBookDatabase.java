@@ -47,10 +47,8 @@ public class FirebaseBookDatabase implements BookDatabase {
     @Override
     public Observable<List<FireBookDetails>> getBooks() {
         return firebaseObservableListeners
-                .listenToValueEvents(booksTable.orderByChild(FireBookDetails.BOOK_COLUMN_CREATED_DATE),
-                        asBooks());
+                .listenToValueEvents(booksTable.orderByChild(FireBookDetails.BOOK_COLUMN_CREATED_DATE), asBooks());
     }
-
 
     @Override
     public Observable<FireContributor> getContributorById(final String contributorId) {
@@ -101,8 +99,9 @@ public class FirebaseBookDatabase implements BookDatabase {
                 for (DataSnapshot snap : dataSnapshot.getChildren()) {
                     FireBookDetails bookDetails = snap.getValue(FireBookDetails.class);
                     Log.d(TAG, "Book Details:" + bookDetails.getBookTitle() + ". Book URL:" + bookDetails
-                            .getBookCoverUrl());
+                            .getBookCoverPageUrl());
                     bookDetails.setBookId(snap.getKey());
+              //      bookDetails.setBookLanguageAbbreviation(languageAbbreviation);
                     List<String> keys = new ArrayList<>();
                     if (snap.child(FireBookDetails.CONTRIBUTORS_ITEM_NAME).hasChildren()) {
                         Iterable<DataSnapshot> children = snap.child(FireBookDetails.CONTRIBUTORS_ITEM_NAME)

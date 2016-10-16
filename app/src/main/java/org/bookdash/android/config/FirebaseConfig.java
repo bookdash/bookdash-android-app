@@ -12,6 +12,8 @@ import org.bookdash.android.BuildConfig;
 import org.bookdash.android.R;
 
 public class FirebaseConfig implements RemoteConfigSettingsApi {
+    public static final String STORAGE_PREFIX = "gs://book-dash.appspot.com/";
+
     private static final int CACHE_EXPIRATION_IN_SECONDS = 3600;
     private static final String DEFAULT_LANGUAGE_ID = "default_language_id";
     private static final String DEFAULT_LANGUAGE_NAME = "default_language_name";
@@ -27,7 +29,8 @@ public class FirebaseConfig implements RemoteConfigSettingsApi {
 
     public static FirebaseConfig newInstance() {
         final FirebaseRemoteConfig firebaseRemoteConfig = FirebaseRemoteConfig.getInstance();
-        FirebaseRemoteConfigSettings configSettings = new FirebaseRemoteConfigSettings.Builder().setDeveloperModeEnabled(BuildConfig.DEBUG).build();
+        FirebaseRemoteConfigSettings configSettings = new FirebaseRemoteConfigSettings.Builder()
+                .setDeveloperModeEnabled(BuildConfig.DEBUG).build();
         firebaseRemoteConfig.setConfigSettings(configSettings);
         firebaseRemoteConfig.setDefaults(R.xml.firebase_remote_config_defaults);
         return new FirebaseConfig(firebaseRemoteConfig);

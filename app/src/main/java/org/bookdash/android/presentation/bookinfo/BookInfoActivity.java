@@ -41,6 +41,8 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.animation.GlideAnimation;
 import com.bumptech.glide.request.target.SimpleTarget;
+import com.firebase.ui.storage.images.FirebaseImageLoader;
+import com.google.firebase.storage.StorageReference;
 
 import org.bookdash.android.BookDashApplication;
 import org.bookdash.android.Injection;
@@ -259,8 +261,8 @@ public class BookInfoActivity extends BaseAppCompatActivity implements BookInfoC
         }
     }
 
-    private void loadImage(String url) {
-        Glide.with(this).load(url).asBitmap().into(new SimpleTarget<Bitmap>() {
+    private void loadImage(StorageReference url) {
+        Glide.with(this).using(new FirebaseImageLoader()).load(url).asBitmap().into(new SimpleTarget<Bitmap>() {
             @Override
             public void onResourceReady(Bitmap resource, GlideAnimation<? super Bitmap> glideAnimation) {
                 onImageLoaded(resource);
@@ -403,7 +405,7 @@ public class BookInfoActivity extends BaseAppCompatActivity implements BookInfoC
         if (bookInfo.isDownloadedAlready()) {
             showDownloadFinished();
         }
-        loadImage(bookInfo.getBookCoverUrl());
+        loadImage(bookInfo.getFirebaseBookCoverUrl());
     }
 
     @Override
