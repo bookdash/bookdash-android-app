@@ -14,14 +14,11 @@ import com.bumptech.glide.Glide;
 
 import org.bookdash.android.R;
 import org.bookdash.android.databinding.FragmentPageBinding;
-import org.bookdash.android.domain.pojo.gson.Page;
+import org.bookdash.android.domain.model.gson.Page;
 
 import java.io.File;
 
-/**
- * @author Rebecca Franks (rebecca.franks@dstvdm.com)
- * @since 2015/07/22 3:12 PM
- */
+
 public class PageFragment extends Fragment {
 
     private static final String PAGE_ARG = "page_arg";

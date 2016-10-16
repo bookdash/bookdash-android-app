@@ -71,8 +71,7 @@ public class AboutFragmentTest {
 
         intended(allOf(hasAction(Intent.ACTION_VIEW),
                 hasData(Uri.parse("http://bookdash.org"))
-                )
-        );
+                ));
     }
 
     @Test

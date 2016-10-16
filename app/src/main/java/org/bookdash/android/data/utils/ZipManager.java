@@ -13,10 +13,7 @@ import java.util.Enumeration;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipFile;
 
-/**
- * @author Rebecca Franks (rebecca.franks@dstvdm.com)
- * @since 2015/07/21 8:13 PM
- */
+
 public class ZipManager {
 
     private static final String TAG = "ZipManager";

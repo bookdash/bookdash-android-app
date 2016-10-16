@@ -1,78 +1,108 @@
 package org.bookdash.android.presentation.listbooks;
 
-import org.bookdash.android.R;
-import org.bookdash.android.data.books.BookDetailRepository;
-import org.bookdash.android.data.settings.SettingsRepository;
-import org.bookdash.android.domain.pojo.BookDetail;
-import org.bookdash.android.domain.pojo.Language;
+import com.crashlytics.android.Crashlytics;
 
+import org.bookdash.android.R;
+import org.bookdash.android.data.book.BookService;
+import org.bookdash.android.data.settings.SettingsRepository;
+import org.bookdash.android.domain.model.firebase.FireBookDetails;
+import org.bookdash.android.domain.model.firebase.FireLanguage;
+import org.bookdash.android.presentation.base.BasePresenter;
+
+import java.util.Collections;
 import java.util.List;
+
+import rx.Scheduler;
+import rx.Subscriber;
 
 /**
  * @author rebeccafranks
  * @since 15/11/03.
  */
-public class ListBooksPresenter implements ListBooksContract.UserActionsListener {
+class ListBooksPresenter extends BasePresenter<ListBooksContract.View> implements ListBooksContract.Presenter {
 
-    private ListBooksContract.View listBooksView;
-    private BookDetailRepository bookDetailRepository;
+
     private SettingsRepository settingsRepository;
+    private BookService bookService;
 
-    private List<Language> languages;
+    private List<FireLanguage> languages;
+    private Scheduler ioScheduler, mainScheduler;
 
-    public ListBooksPresenter(ListBooksContract.View listBooksView, BookDetailRepository bookDetailRepository, SettingsRepository settingsRepository) {
-        this.listBooksView = listBooksView;
-        this.bookDetailRepository = bookDetailRepository;
+    ListBooksPresenter(SettingsRepository settingsRepository, BookService bookService, Scheduler ioScheduler,
+                       Scheduler mainScheduler) {
         this.settingsRepository = settingsRepository;
-    }
-
-    @Override
-    public void loadBooksForLanguagePreference() {
-        String languagePreference = settingsRepository.getLanguagePreference();
-        loadBooksForLanguage(languagePreference);
-    }
-
-    private void loadBooksForLanguage(String language) {
-        listBooksView.showLoading(true);
-        bookDetailRepository.getBooksForLanguage(language, new BookDetailRepository.GetBooksForLanguageCallback() {
-            @Override
-            public void onBooksLoaded(List<BookDetail> books) {
-                listBooksView.showLoading(false);
-                listBooksView.showErrorScreen(false, "", false);
-                listBooksView.showBooks(books);
-            }
-
-            @Override
-            public void onBooksLoadError(Exception e) {
-                listBooksView.showLoading(false);
-                listBooksView.showErrorScreen(true, e.getMessage().toUpperCase(), true);
-            }
-        });
-
+        this.bookService = bookService;
+        this.mainScheduler = mainScheduler;
+        this.ioScheduler = ioScheduler;
     }
 
     @Override
     public void loadLanguages() {
-        bookDetailRepository.getLanguages(new BookDetailRepository.GetLanguagesCallback() {
+        addSubscription(bookService.getLanguages().observeOn(ioScheduler).subscribeOn(mainScheduler)
+                .subscribe(new Subscriber<List<FireLanguage>>() {
+                    @Override
+                    public void onCompleted() {
 
-            @Override
-            public void onLanguagesLoaded(List<Language> languages) {
-                ListBooksPresenter.this.languages = languages;
-            }
+                    }
 
-            @Override
-            public void onLanguagesLoadError(Exception e) {
-                listBooksView.showSnackBarError(R.string.error_loading_languages);
-            }
-        });
+                    @Override
+                    public void onError(final Throwable e) {
+                        getView().showSnackBarError(R.string.error_loading_languages);
+                        Crashlytics.logException(e);
+                    }
+
+                    @Override
+                    public void onNext(final List<FireLanguage> fireLanguages) {
+                        ListBooksPresenter.this.languages = fireLanguages;
+
+                    }
+                }));
+    }
+
+    @Override
+    public void saveSelectedLanguage(final int indexOfLanguage) {
+        addSubscription(settingsRepository.saveLanguagePreference(languages.get(indexOfLanguage)).observeOn(ioScheduler)
+                .subscribeOn(mainScheduler).subscribe(new Subscriber<Boolean>() {
+                    @Override
+                    public void onCompleted() {
+                    }
+
+                    @Override
+                    public void onError(final Throwable e) {
+                        getView().showSnackBarError(R.string.error_saving_selected_language);
+                        Crashlytics.logException(e);
+                    }
+
+                    @Override
+                    public void onNext(final Boolean aBoolean) {
+                        loadBooksForLanguage(languages.get(indexOfLanguage));
+                    }
+                }));
 
     }
 
     @Override
-    public void saveSelectedLanguage(int indexOfLanguage) {
-        settingsRepository.saveLanguagePreference(languages.get(indexOfLanguage).getLanguageName());
+    public void loadBooksForLanguagePreference() {
+        getView().showLoading(true);
+        addSubscription(settingsRepository.getLanguagePreference().observeOn(ioScheduler).subscribeOn(mainScheduler)
+                .subscribe(new Subscriber<FireLanguage>() {
+                    @Override
+                    public void onCompleted() {
 
-        loadBooksForLanguage(languages.get(indexOfLanguage).getLanguageName());
+                    }
+
+                    @Override
+                    public void onError(final Throwable e) {
+                        getView().showLoading(false);
+                        getView().showErrorScreen(true, e.getMessage(), true);
+                    }
+
+                    @Override
+                    public void onNext(final FireLanguage fireLanguage) {
+                        loadBooksForLanguage(fireLanguage);
+                    }
+                }));
+
     }
 
     @Override
@@ -80,18 +110,60 @@ public class ListBooksPresenter implements ListBooksContract.UserActionsListener
         if (languages == null) {
             return;
         }
-        int languageToSelect = 0;
-        String selectedLanguage = settingsRepository.getLanguagePreference();
-        String[] langArray = new String[languages.size()];
+        addSubscription(settingsRepository.getLanguagePreference().observeOn(ioScheduler).subscribeOn(mainScheduler)
+                .subscribe(new Subscriber<FireLanguage>() {
+                    @Override
+                    public void onCompleted() {
+                    }
 
-        for (int i = 0; i < languages.size(); i++) {
-            if (languages.get(i).getLanguageName().equals(selectedLanguage)) {
-                languageToSelect = i;
+                    @Override
+                    public void onError(final Throwable e) {
+                        getView().showSnackBarError(R.string.error_opening_languagepopover);
+                        Crashlytics.logException(e);
+                    }
 
-            }
-            langArray[i] = languages.get(i).getLanguageName();
-        }
-        listBooksView.showLanguagePopover(langArray, languageToSelect);
+                    @Override
+                    public void onNext(final FireLanguage fireLanguage) {
+
+                        String[] langArray = new String[languages.size()];
+                        int languageToSelect = 0;
+
+                        for (int i = 0; i < languages.size(); i++) {
+                            if (languages.get(i).getLanguageName().equals(fireLanguage.getLanguageName())) {
+                                languageToSelect = i;
+
+                            }
+                            langArray[i] = languages.get(i).getLanguageName();
+                        }
+                        getView().showLanguagePopover(langArray, languageToSelect);
+                    }
+                }));
+
+    }
+
+    private void loadBooksForLanguage(FireLanguage language) {
+        addSubscription(bookService.getBooksForLanguage(language).observeOn(ioScheduler).subscribeOn(mainScheduler)
+                .subscribe(new Subscriber<List<FireBookDetails>>() {
+                    @Override
+                    public void onCompleted() {
+
+                    }
+
+                    @Override
+                    public void onError(final Throwable e) {
+                        getView().showLoading(false);
+                        getView().showErrorScreen(true, e.getMessage(), true);
+                    }
+
+                    @Override
+                    public void onNext(final List<FireBookDetails> bookList) {
+                        getView().showLoading(false);
+                        getView().showErrorScreen(false, "", false);
+                        Collections.sort(bookList, FireBookDetails.COMPARATOR);
+                        getView().showBooks(bookList);
+                    }
+                }));
+
     }
 
 

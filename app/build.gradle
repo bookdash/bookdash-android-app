@@ -8,7 +8,6 @@ buildscript {
     }
 }
 apply plugin: 'com.android.application'
-apply plugin: 'com.google.gms.google-services'
 apply plugin: 'io.fabric'
 apply plugin: 'com.github.triplet.play'
 
@@ -20,21 +19,22 @@ repositories {
 
 android {
     dataBinding { enabled = true }
-    compileSdkVersion 23
-    buildToolsVersion "23.0.3"
+    compileSdkVersion rootProject.ext.compileSdkVersion
+    buildToolsVersion "$rootProject.ext.buildToolsVersion"
 
     defaultConfig {
         applicationId "org.bookdash.android"
         minSdkVersion 16
-        targetSdkVersion 23
-        versionCode 20
-        versionName "1.1.2"
+        targetSdkVersion rootProject.ext.compileSdkVersion
+        versionCode rootProject.ext.versionCode
+        versionName "$rootProject.ext.versionName"
         testInstrumentationRunner "org.bookdash.android.presentation.CustomTestRunner"
-        buildConfigField "String", "PARSE_APPLICATION_ID", "\"${BOOKDASH_PARSE_APP_ID}\""
-        buildConfigField "String", "PARSE_CLIENT_KEY", "\"${BOOKDASH_PARSE_CLIENT_ID}\""
         vectorDrawables.useSupportLibrary = true
+        resConfigs "en"
 
     }
+
+
 
     File signFile = rootProject.file('release-keystore.properties')
     if (signFile.exists()) {
@@ -108,7 +108,6 @@ android {
         track = "${track}"
     }
 }
-
 dependencies {
 
     testCompile "junit:junit:$rootProject.ext.junitVersion"
@@ -140,15 +139,18 @@ dependencies {
 
     }
     androidTestCompile("com.android.support.test.espresso:espresso-contrib:$rootProject.ext.espressoVersion") {
-        exclude module: 'recyclerview-v7'
         exclude module: 'support-annotations'
-        exclude module: 'support-v4'
+        exclude group: 'com.android.support', module: 'appcompat'
+        exclude group: 'com.android.support', module: 'support-v4'
+        exclude module: 'recyclerview-v7'
     }
     androidTestCompile("com.android.support.test.espresso:espresso-intents:$rootProject.ext.espressoVersion") {
         exclude module: 'recyclerview-v7'
         exclude module: 'support-annotations'
         exclude module: 'support-v4'
     }
+    androidTestCompile 'com.android.support:appcompat-v7:24.2.1'
+    androidTestCompile 'com.android.support:design:24.2.1'
 
     compile fileTree(dir: 'libs', include: ['*.jar'])
     compile project(':fabbutton')
@@ -169,10 +171,22 @@ dependencies {
         transitive = true;
     }
     compile 'za.co.riggaroo:materialhelptutorial:1.0.3'
-    compile "com.google.android.gms:play-services-appinvite:$rootProject.ext.googlePlayServicesVersion"
-    compile "com.google.android.gms:play-services-appindexing:$rootProject.ext.googlePlayServicesVersion"
-    compile "com.android.support:design:$rootProject.ext.googlePlayServicesVersion"
-    compile "com.google.android.gms:play-services-analytics:$rootProject.ext.googlePlayServicesVersion"
+
+    compile "com.google.firebase:firebase-invites:${rootProject.ext.googlePlayServicesVersion}"
+    compile "com.google.firebase:firebase-core:${rootProject.ext.googlePlayServicesVersion}"
+    compile "com.google.firebase:firebase-database:${rootProject.ext.googlePlayServicesVersion}"
+    compile "com.google.firebase:firebase-messaging:${rootProject.ext.googlePlayServicesVersion}"
+    compile "com.google.firebase:firebase-storage:${rootProject.ext.googlePlayServicesVersion}"
+    compile "com.google.firebase:firebase-config:${rootProject.ext.googlePlayServicesVersion}"
+    compile "com.google.firebase:firebase-storage:${rootProject.ext.googlePlayServicesVersion}"
+    // FirebaseUI Storage only
+    compile 'com.firebaseui:firebase-ui-storage:0.6.0'
+
+
+    compile 'uk.co.chrisjenx:calligraphy:2.2.0'
+    compile 'io.reactivex:rxandroid:1.2.1'
+    compile 'io.reactivex:rxjava:1.1.6'
+    compile 'com.jakewharton.threetenabp:threetenabp:1.0.3'
 }
 
 // Grant animation permissions to avoid test failure because of ui sync.
@@ -194,3 +208,23 @@ afterEvaluate {
         }
     }
 }
+/*
+ * Workaround for https://code.google.com/p/android/issues/detail?id=182715
+ *
+ * The Android Gradle plugin is creating DataBindingExportBuildInfoTasks for the instrumentation
+ * APK that generates from the app APKs layouts. This creates duplicate classes in the app and
+ * instrumentation APK which leads to
+ *      java.lang.IllegalAccessError: Class ref in pre-verified class resolved to unexpected implementation
+ * on older devices.
+ *
+ * The workaround is to get the DataBindingExportBuildInfoTasks tasks for the instrumentation APK
+ * and delete the files right after it creates them.
+ */
+tasks.withType(com.android.build.gradle.internal.tasks.databinding.DataBindingExportBuildInfoTask) { task ->
+    if (task.name.endsWith("AndroidTest")) {
+        task.finalizedBy(tasks.create("${task.name}Workaround") << {
+            task.output.deleteDir()
+        })
+    }
+}
+apply plugin: 'com.google.gms.google-services'

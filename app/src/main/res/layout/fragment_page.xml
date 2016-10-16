@@ -11,11 +11,11 @@
 
         <variable
             name="page"
-            type="org.bookdash.android.domain.pojo.gson.Page" />
+            type="org.bookdash.android.domain.model.gson.Page" />
 
         <variable
             name="page2"
-            type="org.bookdash.android.domain.pojo.gson.Page" />
+            type="org.bookdash.android.domain.model.gson.Page" />
     </data>
 
     <android.support.percent.PercentRelativeLayout

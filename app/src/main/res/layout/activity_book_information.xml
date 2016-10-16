@@ -5,19 +5,19 @@
         android:layout_height="match_parent"
     >
 
-    <data android:layout_width="match_parent">
+    <data>
 
         <import type="android.view.View"/>
 
         <import type="android.text.TextUtils"/>
 
         <variable
-            name="download_click"
+            name="downloadClick"
             type="View.OnClickListener"/>
 
         <variable
-            name="book_info"
-            type="org.bookdash.android.domain.pojo.BookDetail"/>
+            name="bookInfo"
+            type="org.bookdash.android.domain.model.firebase.FireBookDetails"/>
     </data>
 
     <FrameLayout>
@@ -81,12 +81,18 @@
             android:fitsSystemWindows="true"
             android:visibility="visible">
 
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:scaleType="centerCrop"
+                android:src="@drawable/appbackground"/>
+
 
             <android.support.design.widget.AppBarLayout
                 android:id="@+id/app_bar_layout"
-                android:fitsSystemWindows="true"
                 android:layout_width="match_parent"
                 android:layout_height="200dp"
+                android:fitsSystemWindows="true"
                 android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar">
 
                 <android.support.design.widget.CollapsingToolbarLayout
@@ -96,7 +102,7 @@
                     app:layout_scrollFlags="scroll|exitUntilCollapsed"
                     app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
                     app:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
-                    app:title="@{book_info.bookTitle}">
+                    app:title="@{bookInfo.bookTitle}">
 
                     <ImageView
                         android:id="@+id/image_view_book_cover"
@@ -148,7 +154,7 @@
                         android:layout_marginRight="@dimen/activity_horizontal_margin"
 
                         android:layout_marginTop="8dp"
-                        android:visibility="@{TextUtils.isEmpty(book_info.aboutBook) ? View.GONE : View.VISIBLE}">
+                        android:visibility="@{TextUtils.isEmpty(bookInfo.bookDescription) ? View.GONE : View.VISIBLE}">
 
                         <RelativeLayout
                             android:layout_width="match_parent"
@@ -178,10 +184,10 @@
                                 android:layout_toRightOf="@id/textview_about_heading"
                                 android:fontFamily="sans-serif"
                                 android:gravity="center_vertical|right"
-                                android:text="@{book_info.book.dateBookCreated}"
+                                android:text="@{bookInfo.getCreatedDateFormatted()}"
                                 android:textColor="@color/text_secondary_dark"
-                                android:textSize="14sp"/>
-                            <!--     android:text="@{book_info.book.dateBookCreated}"-->
+                                android:textSize="14sp"
+                                />
 
 
                             <TextView
@@ -193,7 +199,7 @@
                                 android:layout_marginRight="16dp"
                                 android:layout_marginTop="2dp"
                                 android:fontFamily="sans-serif"
-                                android:text="@{book_info.aboutBook}"
+                                android:text="@{bookInfo.bookDescription}"
                                 android:textColor="@color/text_color_primary_dark"
                                 android:textSize="16sp"/>
 
@@ -228,13 +234,13 @@
                                 android:textColor="@color/text_secondary_dark"
                                 android:textSize="14sp"/>
 
-                            <LinearLayout
-                                android:id="@+id/linear_layout_contributors"
+                            <android.support.v7.widget.RecyclerView
+                                android:id="@+id/recyclerview_contributors"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:orientation="vertical">
 
-                            </LinearLayout>
+                            </android.support.v7.widget.RecyclerView>
 
 
                         </LinearLayout>
@@ -254,10 +260,10 @@
                 android:color="?attr/colorPrimaryDark"
                 android:indeterminate="false"
                 android:max="100"
-                android:onClick="@{download_click}"
+                android:onClick="@{downloadClick}"
                 android:src="@drawable/ic_file_download"
                 android:visibility="visible"
-                app:fbb_autoStart="true"
+                app:fbb_autoStart="false"
                 app:fbb_endBitmap="@drawable/ic_open_book"
                 app:fbb_hideProgressOnComplete="true"
                 app:fbb_progressColor="?attr/colorAccent"

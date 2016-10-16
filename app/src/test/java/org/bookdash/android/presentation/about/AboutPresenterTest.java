@@ -5,33 +5,26 @@ import android.content.Context;
 import android.content.res.Configuration;
 import android.os.Environment;
 
-import org.bookdash.android.BookDashApplication;
+import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
+import org.mockito.MockitoAnnotations;
 import org.powermock.core.classloader.annotations.PrepareForTest;
 import org.powermock.modules.junit4.PowerMockRunner;
 
 import java.io.File;
 
 import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.eq;
-
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.eq;
-import static org.mockito.Mockito.when;
-
-import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 import static org.powermock.api.mockito.PowerMockito.mockStatic;
+
 /**
  * @author rebeccafranks
  * @since 15/11/07.
  */
 
-@RunWith(PowerMockRunner.class)
-@PrepareForTest({Environment.class, File.class})
 public class AboutPresenterTest {
 
     @Mock
@@ -39,24 +32,20 @@ public class AboutPresenterTest {
 
     @Mock
     private Context context;
-    @Mock
-    private UiModeManager uiModeManager;
-    @Mock
-    private File directory;
 
-    @InjectMocks
-    private AboutPresenter aboutPresenter = new AboutPresenter(aboutView);
+    private AboutPresenter aboutPresenter;
+
+    @Before
+    public void setUp() throws Exception {
+        MockitoAnnotations.initMocks(this);
+        aboutPresenter = new AboutPresenter(aboutView);
+
+    }
 
     @Test
-    public void clickOnSomethingRequiresContext(){
-        when(context.getSystemService(Context.UI_MODE_SERVICE)).thenReturn(uiModeManager);
-        when(uiModeManager.getCurrentModeType()).thenReturn(Configuration.UI_MODE_TYPE_NORMAL);
+    public void clickLearnMore_ShowsMorePage(){
+        aboutPresenter.clickLearnMore();
 
-        mockStatic(Environment.class, File.class);
-
-        when(Environment.getExternalStorageDirectory())
-                .thenReturn(directory);
-
-        //Do actual test code
+        verify(aboutView).showLearnMorePage("http://bookdash.org");
     }
 }

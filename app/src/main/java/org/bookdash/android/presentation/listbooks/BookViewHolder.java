@@ -7,7 +7,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import org.bookdash.android.R;
-import org.bookdash.android.domain.pojo.BookDetail;
+import org.bookdash.android.domain.model.firebase.FireBookDetails;
 
 /**
  * @author rebeccafranks
@@ -18,7 +18,7 @@ public class BookViewHolder extends RecyclerView.ViewHolder {
     public TextView bookTitle;
     public ImageView bookCover;
     public CardView cardContainer;
-    public BookDetail bookDetail;
+    public FireBookDetails bookDetail;
     public ImageView downloadedIcon;
 
     public BookViewHolder(View v) {

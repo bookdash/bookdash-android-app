@@ -1,0 +1,6 @@
+{
+  "rules": {
+    ".read": true,
+    ".write": "auth !== null && (auth.uid === 'google:111900879832370059633' || auth.uid === 'google:117030935449976517020' || auth.uid === 'HZLH0Txg1wWN8c6yjP7RcKGIxij2' || auth.uid === 'yYbUpGGM96cguByLZAI1XHnqQhH3')"
+  }
+}

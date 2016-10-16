@@ -1,23 +1,24 @@
 package org.bookdash.android.presentation.listbooks;
 
-import org.bookdash.android.R;
-import org.bookdash.android.data.books.BookDetailRepository;
+import org.bookdash.android.data.book.BookService;
 import org.bookdash.android.data.settings.SettingsRepository;
-import org.bookdash.android.domain.pojo.BookDetail;
-import org.bookdash.android.domain.pojo.Language;
+import org.bookdash.android.domain.model.firebase.FireBookDetails;
+import org.bookdash.android.domain.model.firebase.FireLanguage;
 import org.junit.Before;
 import org.junit.Test;
-import org.mockito.ArgumentCaptor;
-import org.mockito.Captor;
-import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
 import java.util.ArrayList;
 import java.util.List;
 
+import rx.Observable;
+import rx.Single;
+import rx.schedulers.Schedulers;
+
+import static org.mockito.Matchers.anyList;
+import static org.mockito.Mockito.never;
 import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.eq;
 import static org.mockito.Mockito.when;
 
 /**
@@ -27,81 +28,69 @@ import static org.mockito.Mockito.when;
 public class ListBooksPresenterTest {
 
     @Mock
-    private BookDetailRepository bookRepository;
-
+    private BookService bookRepository;
     @Mock
     private ListBooksContract.View listBookView;
-
     @Mock
     private SettingsRepository settingsRepository;
-
-    /**
-     * {@link ArgumentCaptor} is a powerful Mockito API to capture argument values and use them to
-     * perform further actions or assertions on them.
-     */
-    @Captor
-    private ArgumentCaptor<BookDetailRepository.GetLanguagesCallback> languagesCallbackArgumentCaptor;
-    @Captor
-    private ArgumentCaptor<BookDetailRepository.GetBooksForLanguageCallback> booksForLanguageCallbackArgumentCaptor;
-    @Captor
-    private ArgumentCaptor<String> languagePreferenceCaptor;
     /**
      * Item under test
      */
     private ListBooksPresenter listBooksPresenter;
+    private List<FireLanguage> LANGUAGES = new ArrayList<>();
+    private List<FireBookDetails> BOOKS = new ArrayList<>();
+    private FireLanguage ENGLISH_LANGUAGE = new FireLanguage("English", "EN", true, "2");
 
     @Before
-    public void setupListBooksPresenter() {
+    public void setup() {
         MockitoAnnotations.initMocks(this);
-        listBooksPresenter = new ListBooksPresenter(listBookView, bookRepository, settingsRepository);
+        listBooksPresenter = new ListBooksPresenter(settingsRepository, bookRepository, Schedulers.immediate(),
+                Schedulers.immediate());
+        listBooksPresenter.attachView(listBookView);
     }
 
     @Test
-    public void loadBooksSuccessfulLoadIntoView() {
-        when(settingsRepository.getLanguagePreference()).thenReturn("EN");
+    public void loadBooksForLanguagePreference_LoadsBooks_ShowsBooks() {
+        BOOKS.add(new FireBookDetails("Test title", "url", "cover_url", true, "description", ENGLISH_LANGUAGE,
+                System.currentTimeMillis()));
+        when(settingsRepository.getLanguagePreference()).thenReturn(Single.just(ENGLISH_LANGUAGE));
+        when(bookRepository.getBooksForLanguage(ENGLISH_LANGUAGE)).thenReturn(Observable.just(BOOKS));
 
         listBooksPresenter.loadBooksForLanguagePreference();
-        verify(bookRepository).getBooksForLanguage(eq("EN"), booksForLanguageCallbackArgumentCaptor.capture());
-        booksForLanguageCallbackArgumentCaptor.getValue().onBooksLoaded(BOOKS);
 
+        verify(listBookView).showLoading(true);
+        verify(listBookView).showLoading(false);
         verify(listBookView).showBooks(BOOKS);
-        verify(listBookView).showLoading(false);
     }
 
+
     @Test
-    public void loadBooksLoadErrorShowErrorRetryScreen() {
-        when(settingsRepository.getLanguagePreference()).thenReturn("EN");
+    public void loadBooksForLanguage_ThrowsError_ShowsError() {
+        BOOKS.add(new FireBookDetails("Test title", "url", "cover_url", true, "description", ENGLISH_LANGUAGE,
+                System.currentTimeMillis()));
+        when(settingsRepository.getLanguagePreference()).thenReturn(Single.just(ENGLISH_LANGUAGE));
+        when(bookRepository.getBooksForLanguage(ENGLISH_LANGUAGE))
+                .thenReturn(Observable.<List<FireBookDetails>>error(new Exception("Eek!")));
 
         listBooksPresenter.loadBooksForLanguagePreference();
 
-        verify(bookRepository).getBooksForLanguage(eq("EN"), booksForLanguageCallbackArgumentCaptor.capture());
-        booksForLanguageCallbackArgumentCaptor.getValue().onBooksLoadError(new Exception("WHOOPS"));
-
-        verify(listBookView).showErrorScreen(true, "WHOOPS", true);
+        verify(listBookView).showLoading(true);
         verify(listBookView).showLoading(false);
-
-    }
-
-    private List<Language> LANGUAGES= new ArrayList<>();
-    private List<BookDetail> BOOKS = new ArrayList<>();
-
-    @Test
-    public void loadLanguagesCorrectlyNotifyView() {
-        listBooksPresenter.loadLanguages();
-
-        verify(bookRepository).getLanguages(languagesCallbackArgumentCaptor.capture());
-        languagesCallbackArgumentCaptor.getValue().onLanguagesLoaded(LANGUAGES);
+        verify(listBookView, never()).showBooks(anyList());
+        verify(listBookView).showErrorScreen(true, "Eek!", true);
 
     }
 
     @Test
-    public void loadLanguagesIncorrectlyErrorShownToUser() {
-        listBooksPresenter.loadLanguages();
+    public void loadBooksForLanguage_LanguageError_ShowsError() {
+        when(settingsRepository.getLanguagePreference()).thenReturn(Single.<FireLanguage>error(new Exception("eek!")));
 
-        verify(bookRepository).getLanguages(languagesCallbackArgumentCaptor.capture());
-        languagesCallbackArgumentCaptor.getValue().onLanguagesLoadError(new Exception("Oops"));
+        listBooksPresenter.loadBooksForLanguagePreference();
 
-        verify(listBookView).showSnackBarError(R.string.error_loading_languages);
+        verify(listBookView).showLoading(true);
+        verify(listBookView).showLoading(false);
+        verify(listBookView, never()).showBooks(anyList());
+        verify(listBookView).showErrorScreen(true, "eek!", true);
     }
 
 
