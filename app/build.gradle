@@ -109,7 +109,7 @@ android {
     }
 }
 dependencies {
-
+    wearApp project(':watchface')
     testCompile "junit:junit:$rootProject.ext.junitVersion"
     testCompile "org.mockito:mockito-all:$rootProject.ext.mockitoVersion"
     testCompile "org.hamcrest:hamcrest-all:$rootProject.ext.hamcrestVersion"
