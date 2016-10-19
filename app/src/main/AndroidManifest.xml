@@ -86,8 +86,6 @@
             android:theme="@style/AppTheme.NoActionBar">
         </activity>
 
-        <service android:name="com.parse.PushService"/>
-
         <meta-data
             android:name="com.google.android.gms.version"
             android:value="@integer/google_play_services_version"/>

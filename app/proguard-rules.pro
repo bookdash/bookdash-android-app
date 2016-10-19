@@ -19,7 +19,6 @@
 
 -keep class me.zhanghai.android.materialprogressbar.** { *; }
 -keep class com.joanzapata.** { *; }
--keep class com.parse.** { *; }
 
 
 
