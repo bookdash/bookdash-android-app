@@ -18,6 +18,7 @@ import android.os.Message;
 import android.support.v4.content.ContextCompat;
 import android.support.wearable.watchface.CanvasWatchFaceService;
 import android.support.wearable.watchface.WatchFaceStyle;
+import android.util.Log;
 import android.view.SurfaceHolder;
 import android.view.WindowInsets;
 
@@ -33,7 +34,8 @@ import java.util.concurrent.TimeUnit;
 public class FoxWatchFace extends CanvasWatchFaceService {
 
     private static final DateTimeFormatter TIME_FORMATTER = DateTimeFormatter.ofPattern("HH:mm");
-    private static final DateTimeFormatter DATE_TIME_FORMATTER = DateTimeFormatter.ofPattern("EEE, MMM d");
+    private static final DateTimeFormatter DATE_TIME_FORMATTER = DateTimeFormatter.ofPattern("MMM d");
+    private static final DateTimeFormatter DAY_FORMATTER = DateTimeFormatter.ofPattern("EEE,");
     /**
      * Update rate in milliseconds for interactive mode. We update once a second since seconds are
      * displayed in interactive mode.
@@ -93,6 +95,8 @@ public class FoxWatchFace extends CanvasWatchFaceService {
         float xOffsetDate;
         float yOffset;
         float yOffsetDate;
+        int chinSize;
+
 
         /**
          * Whether the display supports fewer bits for each color in ambient mode. When true, we
@@ -104,6 +108,9 @@ public class FoxWatchFace extends CanvasWatchFaceService {
         private float xOffsetBattery;
         private Bitmap owlVectorAmbient;
         private Bitmap ambientScaledBitmap;
+        private boolean isRound;
+        private float centreX, centreY;
+        private float width, height;
 
         @Override
         public void onDestroy() {
@@ -113,15 +120,18 @@ public class FoxWatchFace extends CanvasWatchFaceService {
 
         @Override
         public void onSurfaceChanged(SurfaceHolder holder, int format, int width, int height) {
+            centreX = (float) width / (float) 2;
+            centreY = (float) height / (float) 2;
+            this.width = width;
+            this.height = height;
             if (backgroundScaledBitmap == null || backgroundScaledBitmap.getWidth() != width || backgroundScaledBitmap
                     .getHeight() != height) {
-                backgroundScaledBitmap = Bitmap
-                        .createScaledBitmap(owlBackgroundBitmap, width, height, true /* filter */);
+                backgroundScaledBitmap = Bitmap.createScaledBitmap(owlBackgroundBitmap, width - chinSize, height - chinSize, true);
 
             }
             if (ambientScaledBitmap == null || ambientScaledBitmap.getWidth() != width || ambientScaledBitmap
                     .getHeight() != height) {
-                ambientScaledBitmap = Bitmap.createScaledBitmap(owlVectorAmbient, width, height, true /* filter */);
+                ambientScaledBitmap = Bitmap.createScaledBitmap(owlVectorAmbient, width - chinSize, height - chinSize, true);
 
             }
             super.onSurfaceChanged(holder, format, width, height);
@@ -129,13 +139,14 @@ public class FoxWatchFace extends CanvasWatchFaceService {
 
         @Override
         public void onDraw(Canvas canvas, Rect bounds) {
-            // Draw the background.
+            super.onDraw(canvas, bounds);
+           // bounds.bottom = bounds.bottom - chinSize;
             if (isInAmbientMode()) {
                 canvas.drawColor(Color.BLACK);
-                canvas.drawBitmap(ambientScaledBitmap, 0, 0, null);
+                canvas.drawBitmap(ambientScaledBitmap, null, bounds, null);
             } else {
-                canvas.drawBitmap(backgroundScaledBitmap, 0, 0, null);
-
+                Log.d("FoxWatchFace", "bounds:" + bounds);
+                canvas.drawBitmap(backgroundScaledBitmap, null, bounds, null);
             }
 
             currentTime = ZonedDateTime.now();
@@ -149,37 +160,39 @@ public class FoxWatchFace extends CanvasWatchFaceService {
                 textTimePaint.setColor(colorBlack);
                 textPaintSmall.setColor(colorBlack);
             }
-            canvas.drawText(time, xOffset, yOffset, textTimePaint);
+            textTimePaint.setTextAlign(Paint.Align.CENTER);
+            canvas.drawText(time, centreX, yOffset, textTimePaint);
 
             String date = currentTime.format(DATE_TIME_FORMATTER);
-            canvas.drawText(date, xOffsetDate, yOffsetDate, textPaintSmall);
+            String day = currentTime.format(DAY_FORMATTER);
+            canvas.drawText(day, xOffsetDate, centreY, textPaintSmall);
+            canvas.drawText(date, xOffsetDate, centreY + 20, textPaintSmall);
 
-            canvas.drawText(batteryStatusHelper.getBatteryPercentage() + "%", xOffsetBattery, yOffsetBattery,
+            textTimePaint.setTextAlign(Paint.Align.CENTER);
+            canvas.drawText(batteryStatusHelper.getBatteryPercentage() + "%", width - xOffsetBattery, centreY,
                     textPaintSmall);
-
-            super.onDraw(canvas, bounds);
 
         }
 
         @Override
         public void onApplyWindowInsets(WindowInsets insets) {
             super.onApplyWindowInsets(insets);
-
-            // Load resources that have alternate values for round watches.
+            Log.d("Fox", "insets" + insets.toString());
+            // centreX =
+            chinSize = insets.getSystemWindowInsetBottom();
             Resources resources = FoxWatchFace.this.getResources();
-            boolean isRound = insets.isRound();
-            xOffset = resources.getDimension(isRound ? R.dimen.fox_x_offset_round : R.dimen.fox_x_offset);
-            xOffsetDate = resources.getDimension(isRound? R.dimen.fox_x_date_offset_round : R.dimen.fox_x_date_offset);
-            xOffsetBattery = resources.getDimensionPixelOffset(isRound ? R.dimen.fox_x_battery_offset_round : R.dimen.fox_x_battery_offset);
+            isRound = insets.isRound();
+            Log.d("FoxWatch", "IsRound? " + isRound);
+            xOffset = resources.getDimensionPixelOffset(R.dimen.fox_x_offset);
+            xOffsetDate = resources.getDimensionPixelOffset(R.dimen.fox_x_date_offset);
+            xOffsetBattery = resources.getDimensionPixelOffset(R.dimen.fox_x_battery_offset);
 
-            yOffset = resources.getDimension(isRound ? R.dimen.fox_y_offset_round : R.dimen.fox_y_offset);
-            yOffsetDate = resources.getDimension(isRound? R.dimen.fox_y_date_offset_round : R.dimen.fox_y_date_offset);
-            yOffsetBattery = resources.getDimensionPixelOffset(isRound ? R.dimen.fox_y_battery_offset_round : R.dimen.fox_y_battery_offset);
+            yOffset = resources.getDimensionPixelOffset(R.dimen.fox_y_offset);
+            yOffsetDate = resources.getDimensionPixelOffset(R.dimen.fox_y_date_offset);
+        //    yOffsetBattery = resources.getDimensionPixelOffset(R.dimen.fox_y_battery_offset);
 
-            float textSize = resources
-                    .getDimension(isRound ? R.dimen.digital_text_size_round : R.dimen.digital_text_size);
-            float textSizeSmall = resources
-                    .getDimension(isRound ? R.dimen.digital_text_size_round_small : R.dimen.digital_text_size_small);
+            float textSize = resources.getDimensionPixelSize(R.dimen.digital_text_size);
+            float textSizeSmall = resources.getDimensionPixelSize(R.dimen.digital_text_size_small);
             textTimePaint.setTextSize(textSize);
             textPaintSmall.setTextSize(textSizeSmall);
 
@@ -245,11 +258,11 @@ public class FoxWatchFace extends CanvasWatchFaceService {
                     new WatchFaceStyle.Builder(FoxWatchFace.this).setCardPeekMode(WatchFaceStyle.PEEK_MODE_SHORT)
                             .setAmbientPeekMode(WatchFaceStyle.PEEK_MODE_SHORT)
                             .setBackgroundVisibility(WatchFaceStyle.BACKGROUND_VISIBILITY_INTERRUPTIVE)
+                            .setHideHotwordIndicator(true)
                             // .setStatusBarGravity(Gravity.TOP | Gravity.RIGHT)
                             .setShowUnreadCountIndicator(true)
                             //.setShowSystemUiTime(false)
                             .setAcceptsTapEvents(true).build());
-            Resources resources = FoxWatchFace.this.getResources();
             backgroundPaint = new Paint();
             backgroundPaint.setColor(ContextCompat.getColor(getApplicationContext(), R.color.background));
             owlBackgroundBitmap = BitmapFactory.decodeResource(getResources(), R.drawable.fox);

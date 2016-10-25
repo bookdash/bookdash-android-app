@@ -123,7 +123,7 @@ public class OwlWatchFace extends CanvasWatchFaceService {
         private float xOffsetBattery;
         private Bitmap owlVectorAmbient;
         private Bitmap ambientScaledBitmap;
-
+        private int width, height;
         @Override
         public void onDestroy() {
             updateTimeHandler.removeMessages(MSG_UPDATE_TIME);
@@ -132,6 +132,8 @@ public class OwlWatchFace extends CanvasWatchFaceService {
 
         @Override
         public void onSurfaceChanged(SurfaceHolder holder, int format, int width, int height) {
+            this.width = width;
+            this.height = height;
             if (backgroundScaledBitmap == null || backgroundScaledBitmap.getWidth() != width || backgroundScaledBitmap
                     .getHeight() != height) {
                 backgroundScaledBitmap = Bitmap
@@ -168,13 +170,13 @@ public class OwlWatchFace extends CanvasWatchFaceService {
                 textTimePaint.setColor(colorBlack);
                 textPaintSmall.setColor(colorBlack);
             }
-            canvas.drawText(time, xOffset, yOffset, textTimePaint);
+            canvas.drawText(time, width - xOffset, yOffset, textTimePaint);
 
             String date = currentTime.format(DATE_TIME_FORMATTER);
-            canvas.drawText(date, xOffsetDate, yOffsetDate, textPaintSmall);
+            canvas.drawText(date, width -  xOffsetDate, yOffsetDate, textPaintSmall);
 
             if (!isInAmbientMode()) {
-                canvas.drawText(batteryStatusHelper.getBatteryPercentage() + "%", xOffsetBattery, yOffsetBattery,
+                canvas.drawText(batteryStatusHelper.getBatteryPercentage() + "%", width - xOffsetBattery, yOffsetBattery,
                         textPaintSmall);
             }
             super.onDraw(canvas, bounds);
@@ -189,22 +191,22 @@ public class OwlWatchFace extends CanvasWatchFaceService {
             Resources resources = OwlWatchFace.this.getResources();
             boolean isRound = insets.isRound();
 
-            xOffset = resources.getDimension(isRound ? R.dimen.digital_x_offset_round : R.dimen.digital_x_offset);
+            xOffset = resources.getDimensionPixelOffset(R.dimen.digital_x_offset);
             xOffsetDate = resources
-                    .getDimension(isRound ? R.dimen.digital_date_offset_x_round : R.dimen.digital_date_offset_x);
+                    .getDimensionPixelOffset(R.dimen.digital_date_offset_x);
             xOffsetBattery = resources
-                    .getDimension(isRound ? R.dimen.digital_battery_offset_x_round : R.dimen.digital_battery_offset_x);
-            yOffset = resources.getDimension(isRound ? R.dimen.digital_y_offset_round : R.dimen.digital_y_offset);
+                    .getDimensionPixelOffset(R.dimen.digital_battery_offset_x);
+            yOffset = resources.getDimensionPixelOffset(isRound ? R.dimen.digital_y_offset : R.dimen.digital_y_offset_square);
             yOffsetDate = resources
-                    .getDimension(isRound ? R.dimen.digital_date_offset_y_round : R.dimen.digital_date_offset_y);
+                    .getDimensionPixelOffset(isRound ? R.dimen.digital_date_offset_y: R.dimen.digital_date_offset_y_square);
             yOffsetBattery = resources
-                    .getDimension(isRound ? R.dimen.digital_battery_offset_y_round : R.dimen.digital_battery_offset_y);
+                    .getDimensionPixelOffset(isRound ? R.dimen.digital_battery_offset_y: R.dimen.digital_battery_offset_y_square);
 
 
             float textSize = resources
-                    .getDimension(isRound ? R.dimen.digital_text_size_round : R.dimen.digital_text_size);
+                    .getDimensionPixelSize( R.dimen.digital_text_size);
             float textSizeSmall = resources
-                    .getDimension(isRound ? R.dimen.digital_text_size_round_small : R.dimen.digital_text_size_small);
+                    .getDimensionPixelSize(R.dimen.digital_text_size_small);
             textTimePaint.setTextSize(textSize);
             textPaintSmall.setTextSize(textSizeSmall);
 
@@ -282,7 +284,8 @@ public class OwlWatchFace extends CanvasWatchFaceService {
             textTimePaint = createTextPaint(ContextCompat.getColor(getApplicationContext(), R.color.digital_text));
             textPaintSmall = new Paint();
             textPaintSmall = createTextPaint(ContextCompat.getColor(getApplicationContext(), R.color.black));
-
+            textTimePaint.setTextAlign(Paint.Align.RIGHT);
+            textPaintSmall.setTextAlign(Paint.Align.RIGHT);
             owlVectorAmbient = BitmapFactory.decodeResource(getResources(), R.drawable.lonely_owl_thick);
             currentTime = ZonedDateTime.now();
             batteryStatusHelper = new BatteryStatusHelper(getApplicationContext());
