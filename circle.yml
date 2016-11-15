@@ -9,9 +9,9 @@ dependencies:
     - touch app/google-services.json
     - echo $GOOGLE_SERVICES_JSON > app/google-services.json
     - android list sdk --extended
-    - echo y | android update sdk --no-ui --all --filter "tools,platform-tools,android-24"
+    - echo y | android update sdk --no-ui --all --filter "tools,platform-tools,android-24,android-22"
     - echo y | android update sdk --no-ui --all --filter "build-tools-24.0.1"
-    - echo y | android update sdk --no-ui --all --filter "extra-android-m2repository,extra-google-google_play_services,extra-google-m2repository"
+    - echo y | android update sdk --no-ui --all --filter "extra-android-m2repository,extra-google-google_play_services,extra-google-m2repository,sys-img-armeabi-v7a-google_apis-22"
 
 test:
   override:
@@ -19,11 +19,11 @@ test:
         timeout: 1200
   pre:
     - android list targets
-    - echo no | android create avd -n emulatorwithgoogleapi22 -t 9 --abi google_apis/armeabi-v7a
+    - echo no | android create avd -n emulatorwithgoogleapi22 -t android-22 --abi google_apis/armeabi-v7a
     - echo 'vm.heapSize=512' >> ~/.android/avd/emulatorwithgoogleapi22.ini
     - echo 'hw.ramSize=1024' >> ~/.android/avd/emulatorwithgoogleapi22.ini
     - cat ~/.android/avd/emulatorwithgoogleapi22.ini
-    - emulator -avd emulatorwithgoogleapi22 -no-audio -no-window :
+    - echo "no" | emulator -avd emulatorwithgoogleapi22 -no-audio -no-window :
         background: true
         parallel: true
     - circle-android wait-for-boot
