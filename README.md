@@ -40,9 +40,12 @@ http://bookdash.org/
 1. Clone or download this repo.
 2. This app runs off a Firebase backend. You will need to generate your firebase backend. To do this, navigate to https://firebase.google.com/ and sign up. Create a project called 
 "Book Dash" (or what ever you want to call it). 
-3. Navigate to "Database", select the three dots and then select "Import JSON". Select the file [server/firebase-sample-data.json](server/firebase-sample-data.json). 
-Allow Firebase to import the data. You will also then need to place books in the storage container on firebase. You should be able to download some books,
- upload then and change the URL references to point to your book in your storage container.
+3. Navigate to "Database", select the three dots and then select "Import JSON". Select the file [server/book-dash-a93c3-export.json](server/book-dash-a93c3-export.json). 
+Allow Firebase to import the data. You will also then need to place books in the storage container on firebase. You can find an example book located here: 
+[server/simaandsiza-en.zip](server/simaandsiza-en.zip). Navigate to your Firebase console, and click storage, create a folder for the books and place them in there. 
+You can then set the download URL of one of the books to use the book you have just uploaded to firebase storage in the STORAGE_PREFIX object.
+ Within each zip file for a book, there is a file called bookdetails.json, this file is used to describe the images used and the number of pages in a book. 
+In FirebaseConfig class you will need to change the base url of your book storage in the variable named - 
 4. The database rules and storage rules can also be imported into Firebase, those files are also located in the server folder. 
 (For more info on getting your own server up and running, check out https://github.com/bookdash/bookdash-backend-admin-portal
 5. You will need to generate your own google-services.json file to use with the app. Navigate to the Firebase project settings dashboard. You should see an option to download the 
