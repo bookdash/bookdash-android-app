@@ -1,6 +1,6 @@
 # Bookdash Android
 
-[![Circle CI](https://circleci.com/gh/bookdash/bookdash-android-app.svg?style=svg)](https://circleci.com/gh/bookdash/bookdash-android-app)
+[![BuddyBuild](https://dashboard.buddybuild.com/api/statusImage?appID=57bde66fa530dc0100e902b3&branch=master&build=latest)](https://dashboard.buddybuild.com/apps/57bde66fa530dc0100e902b3/build/latest)
 
 Check out the blog post here: http://riggaroo.co.za/book-dash-android-app/
 
