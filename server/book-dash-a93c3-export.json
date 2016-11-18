@@ -1,0 +1,1990 @@
+{
+  "bd_books" : {
+    "-KT3HmrsoalcdJawW8v1" : {
+      "bookCoverPageUrl" : "book_covers/zu/bookdash1-slothenglishslothcover-english.jpg",
+      "bookEnabled" : true,
+      "bookLanguage" : "-KT3Hmo8KfvvoBwFpCnH",
+      "bookTitle" : "UMnumzane Sinamba owozelayo",
+      "bookUrl" : "books/zu/tfss-dac5f422-6d9b-4ce5-b428-3acd175f8f6a-sloth-1-zulu.zip",
+      "contributors" : {
+        "-KT3HmowguIObUjY-Kdk" : true,
+        "-KT3Hmoxqgjahw4SVkNQ" : true,
+        "-KT3Hmp3zPfEQ36r6qou" : true,
+        "-KT3HmphsKDPRprb9XEV" : true,
+        "-KT3HmqoP86xHaAkUfVd" : true
+      },
+      "createdDate" : 1441826832224
+    },
+    "-KT3HmrwnRllI-LquDIR" : {
+      "bookCoverPageUrl" : "book_covers/en/bookdash43-hippowantstodanceenPage_01.jpg",
+      "bookDescription" : "Hippo wants to dance. Won’t anyone dance with her?",
+      "bookEnabled" : true,
+      "bookLanguage" : "-KT3Hmo6eLZ_eAPu-QXZ",
+      "bookTitle" : "Hippo Wants to Dance",
+      "bookUrl" : "books/en/tfss-cf1ed682-ab5d-49be-817e-f6420ee9ee7d-hippowantstodance-en.zip",
+      "contributors" : {
+        "-KT3Hmp8v9QqUE9UG-B_" : true,
+        "-KT3HmpNNPdzZKI9FDOT" : true,
+        "-KT3HmqCMhDGgkrIyzwN" : true
+      },
+      "createdDate" : 1459446289683
+    },
+    "-KT3HmryARhINsxAwEmK" : {
+      "bookCoverPageUrl" : "book_covers/en/bookdash23-walkingtogetherenPage_01.jpg",
+      "bookDescription" : "A walk to the clinic doesn’t have to be dull, when there are so many wonderful things to see on the way.",
+      "bookEnabled" : true,
+      "bookLanguage" : "-KT3Hmo6eLZ_eAPu-QXZ",
+      "bookTitle" : "Walking Together",
+      "bookUrl" : "books/en/tfss-b81f8c7a-b17c-48f2-8e5c-c99299445e12-walkingtogether-en.zip",
+      "contributors" : {
+        "-KT3HmpCPX53G1HXCYaS" : true,
+        "-KT3HmpIDqrLWww02Zie" : true,
+        "-KT3HmqtU05_SRq02dDP" : true
+      },
+      "createdDate" : 1449081925834
+    },
+    "-KT3HmrzkT1F69Es6mrf" : {
+      "bookCoverPageUrl" : "book_covers/en/riggaroo.co.zabookdash10-queenofsowetocover.jpg",
+      "bookDescription" : "Basetsana Kumalo is a beauty queen, but she’s also so much more. She teaches us that true beauty is about having a heart filled with love and generosity. Her story shows us that if you have courage and determination, you can achieve your dreams – whatever they may be.",
+      "bookEnabled" : true,
+      "bookLanguage" : "-KT3Hmo6eLZ_eAPu-QXZ",
+      "bookTitle" : "Queen of Soweto",
+      "bookUrl" : "books/en/tfss-39a1c1db-1631-4daa-9643-19f21759268e-queen-soweto-en.zip",
+      "contributors" : {
+        "-KT3HmpEDeVaC8yOxtnL" : true,
+        "-KT3Hmpscac4zJeFSS2Y" : true,
+        "-KT3Hmqz3u6Os1ip02wm" : true
+      },
+      "createdDate" : 1448742568942
+    },
+    "-KT3Hms106L8U14fILUR" : {
+      "bookCoverPageUrl" : "book_covers/en/bookdash38-shongoloshoesenPage_01.jpg",
+      "bookDescription" : "Shongololo has lost his shoes, and the other animals are NOT being very helpful. Will he ever find them?",
+      "bookEnabled" : true,
+      "bookLanguage" : "-KT3Hmo6eLZ_eAPu-QXZ",
+      "bookTitle" : "Shongololo’s Shoes",
+      "bookUrl" : "books/en/tfss-4b011ddc-798a-449f-98b0-bb93a684246c-shongololos-en.zip",
+      "contributors" : {
+        "-KT3HmohzVfcFm7BYOb6" : true,
+        "-KT3HmpM06_duoPoIwSL" : true,
+        "-KT3HmpqTTgqN4PIKJkL" : true
+      },
+      "createdDate" : 1459441405773
+    },
+    "-KT3Hms3ivJJxABTb8Aa" : {
+      "bookCoverPageUrl" : "book_covers/tn/19_littleantsbigplansetswanacoverPage_01.jpg",
+      "bookDescription" : "Eno ke kgang ka tshoswanenyana e e nang le leano le legolo, le ka fa go rata go buisa ga yone go thusitseng ka teng.",
+      "bookEnabled" : true,
+      "bookLanguage" : "-KT3Hmnq1JlS5AuXxB6w",
+      "bookTitle" : "Leano le Legolo la Tshoswane",
+      "bookUrl" : "books/tn/tfss-0b183f05-890d-4be3-ac8e-dade0c71c7e1-littleantbigplan-setswana.zip",
+      "contributors" : {
+        "-KT3Hmp-TjJJut-i3r3G" : true,
+        "-KT3HmqLNXNBwrBQE1Nj" : true,
+        "-KT3HmquAOXbjLMzxMLj" : true
+      },
+      "createdDate" : 1461518595132
+    },
+    "-KT3Hms5XhdxIzu9cd_x" : {
+      "bookCoverPageUrl" : "book_covers/en/books49_whatisitenPage_01.jpg",
+      "bookDescription" : "What is it? It isn’t like me. Do you think it’s dangerous?",
+      "bookEnabled" : true,
+      "bookLanguage" : "-KT3Hmo6eLZ_eAPu-QXZ",
+      "bookTitle" : "What is it?",
+      "bookUrl" : "books/en/tfss-5ea3038f-19e9-4b5e-bb88-e3740cca09cb-49_whatisit_en.zip",
+      "contributors" : {
+        "-KT3HmpPWaI6bZWCDoTv" : true,
+        "-KT3Hmpy3X_oeaT0XPH6" : true,
+        "-KT3HmqvLGRI9pMNU9Un" : true
+      },
+      "createdDate" : 1469553894298
+    },
+    "-KT3Hms62zqAFMC6_GOj" : {
+      "bookCoverPageUrl" : "book_covers/xh/19_littleantsbigplanxhosacoverPage_01.jpg",
+      "bookDescription" : "Eli libali elimalunga nembovane encinane enamalungiselelo amakhulu, kwanangendlela uthando lwayo lokufunda oluthe lwasindisa ngayo usuku.",
+      "bookEnabled" : true,
+      "bookLanguage" : "-KT3Hmo6eLZ_eAPu-QXY",
+      "bookTitle" : "Amalungiselelo Amakhulu Embovane Encinane",
+      "bookUrl" : "books/xh/tfss-4ae806cc-172a-4a9c-a275-ea9e1b5bbc23-littleantbigplan-xhosa.zip",
+      "contributors" : {
+        "-KT3Hmp-TjJJut-i3r3G" : true,
+        "-KT3HmqLNXNBwrBQE1Nj" : true,
+        "-KT3HmquAOXbjLMzxMLj" : true
+      },
+      "createdDate" : 1461514975724
+    },
+    "-KT3Hms8eFtk_D-PQJvC" : {
+      "bookCoverPageUrl" : "book_covers/en/riggaroo.co.zabookdash7-togetherwerestrongcover.jpg",
+      "bookDescription" : "From the day she was born to the day she died, Albertina Sisulu lived a life of love and sacrifice. A brave girl who rode a horse, she was a blessing to her family, to her community and to South Africa. This story of a unique and powerful woman, who stood up for her beliefs no matter what, will inspire and enchant.",
+      "bookEnabled" : true,
+      "bookLanguage" : "-KT3Hmo6eLZ_eAPu-QXZ",
+      "bookTitle" : "Together We're Strong",
+      "bookUrl" : "books/en/tfss-9269e55d-7d7c-4ddd-9dc3-58e6da8e4256-togetherwerestrong-11.zip",
+      "contributors" : {
+        "-KT3HmorM2aycQwHF0hX" : true,
+        "-KT3Hmprx_QraXxa42oe" : true,
+        "-KT3HmqqvizGEo_SRuik" : true
+      },
+      "createdDate" : 1443288219480
+    },
+    "-KT3Hms9qihSy8lbvNNB" : {
+      "bookCoverPageUrl" : "book_covers/en/bookdash45-laraenPage_01.jpg",
+      "bookDescription" : "A yellow bug in a world of red, Lara the Ladybird just wants to fit in.",
+      "bookEnabled" : true,
+      "bookLanguage" : "-KT3Hmo6eLZ_eAPu-QXZ",
+      "bookTitle" : "Lara the Yellow Ladybird",
+      "bookUrl" : "books/en/tfss-691b85a8-08d5-40aa-8478-6bc1973e4822-lara-the-yellowladybird.zip",
+      "contributors" : {
+        "-KT3Hmq8-vVjtt_r7FjT" : true,
+        "-KT3HmqntN605FjK2ddH" : true,
+        "-KT3HmqwY1cEiJjMno6C" : true
+      },
+      "createdDate" : 1461328642638
+    },
+    "-KT3HmsCleKs7O7mltaJ" : {
+      "bookCoverPageUrl" : "book_covers/en/bookdash13-gracadreamenPage_01.jpg",
+      "bookDescription" : "The inspiring story of Graça Machel, and her dream to instill a love for reading and learning in the children of Mozambique and the rest of Africa.",
+      "bookEnabled" : true,
+      "bookLanguage" : "-KT3Hmo6eLZ_eAPu-QXZ",
+      "bookTitle" : "Graca's Dream",
+      "bookUrl" : "books/en/tfss-c4127e7c-f622-4bb3-9c98-88b18b74dd1f-gracasdream-en.zip",
+      "contributors" : {
+        "-KT3Hmpy3X_oeaT0XPH7" : true,
+        "-KT3HmqIoajuX4Zgb0h9" : true,
+        "-KT3HmqNKk7xQ-Pai3Wz" : true
+      },
+      "createdDate" : 1448738065209
+    },
+    "-KT3HmsD_Qhi4x2U_BFo" : {
+      "bookCoverPageUrl" : "book_covers/en/books47_karabosquestionenPage_01.jpg",
+      "bookDescription" : "Little Karabo watches all the grown-ups in her family, and wonders, ‘What do I do? What do I know?’",
+      "bookEnabled" : true,
+      "bookLanguage" : "-KT3Hmo6eLZ_eAPu-QXZ",
+      "bookTitle" : "Karabo's Question",
+      "bookUrl" : "books/en/tfss-56e339fd-2b6e-4951-a1cc-66b6cb998fd5-karabos-question-en.zip",
+      "contributors" : {
+        "-KT3HmorM2aycQwHF0hX" : true,
+        "-KT3Hmq5-qXwEhJmSYUf" : true,
+        "-KT3HmqVaupPr06oqm4A" : true
+      },
+      "createdDate" : 1464452258844
+    },
+    "-KT3HmsFSWMF4rfckRHT" : {
+      "bookCoverPageUrl" : "book_covers/en/bookdash15-zanelesituenPage_01.jpg",
+      "bookDescription" : "As a young girl Zanele Situ was told that she would never walk again. Being in a wheelchair did not stop her. She worked and trained hard and became a winning athlete on the world stage. This is her story…",
+      "bookEnabled" : true,
+      "bookLanguage" : "-KT3Hmo6eLZ_eAPu-QXZ",
+      "bookTitle" : "Zanele Situ: My Story",
+      "bookUrl" : "books/en/tfss-71fa7715-86de-4976-bb65-7333427d79b0-zanelesitu-en.zip",
+      "contributors" : {
+        "-KT3HmplBU_7zqluhikY" : true,
+        "-KT3Hmq3-bJrZUtc-QXb" : true,
+        "-KT3HmqTxJoj8Bfe3nB0" : true
+      },
+      "createdDate" : 1448784573897
+    },
+    "-KT3HmsHRydsed6oR5tm" : {
+      "bookCoverPageUrl" : "book_covers/en/bookdash18-bathtubenPage_01.jpg",
+      "bookDescription" : "Jack’s bath time takes a wild turn as things in his bathtub start to change, and a group of animals becomes part of his adventurous bathtub safari!",
+      "bookEnabled" : true,
+      "bookLanguage" : "-KT3Hmo6eLZ_eAPu-QXZ",
+      "bookTitle" : "Bathtub Safari",
+      "bookUrl" : "books/en/tfss-09cbb4f3-2c75-4f06-b9ce-9bd47013c5b7-bathtub-safari-en.zip",
+      "contributors" : {
+        "-KT3Hmp9tI6bOMO6ZiuI" : true,
+        "-KT3HmpA423Po194ynLZ" : true,
+        "-KT3HmqTxJoj8Bfe3nB-" : true
+      },
+      "createdDate" : 1448804042125
+    },
+    "-KT3HmsIdofypzmBkHz2" : {
+      "bookCoverPageUrl" : "book_covers/en/bookdash20-amazingdaisyenPage_01.jpg",
+      "bookDescription" : "On a little farm lives Daisy, a little chicken who wishes she could fly. All the other chickens laugh at her daily flying practice. But one day something amazing happens …",
+      "bookEnabled" : true,
+      "bookLanguage" : "-KT3Hmo6eLZ_eAPu-QXZ",
+      "bookTitle" : "Amazing Daisy",
+      "bookUrl" : "books/en/tfss-41a2e044-fd82-45f3-b0e1-30c3f8e40669-amazing-daisy-en.zip",
+      "contributors" : {
+        "-KT3HmpSip3EwNeeHjpR" : true,
+        "-KT3HmpgbTYsSVwD-gRn" : true,
+        "-KT3Hmqx3fhJNSXxCXku" : true
+      },
+      "createdDate" : 1449082094963
+    },
+    "-KT3HmsK4fd-oT7VQHDq" : {
+      "bookCoverPageUrl" : "book_covers/zu/bookdash3-fishgiftzulucover-1.jpg",
+      "bookEnabled" : true,
+      "bookLanguage" : "-KT3Hmo8KfvvoBwFpCnH",
+      "bookTitle" : "Inhlanzi nesipho",
+      "bookUrl" : "books/zu/tfss-f8036550-5c93-4f6b-b6c5-5e3066e403a0-fishgift-5-zulu.zip",
+      "contributors" : {
+        "-KT3HmorM2aycQwHF0hX" : true,
+        "-KT3HmplBU_7zqluhikY" : true,
+        "-KT3Hmq3-bJrZUtc-QXb" : true
+      },
+      "createdDate" : 1446390071357
+    },
+    "-KT3HmsL7VEJgSV3gc2V" : {
+      "bookCoverPageUrl" : "book_covers/en/books48_mrspenguinsenPage_01.jpg",
+      "bookDescription" : "The Penguin family lives on the beach, surrounded by rubbish. Until one day, Mrs Penguin says: we need a house! But how will they build one?",
+      "bookEnabled" : true,
+      "bookLanguage" : "-KT3Hmo6eLZ_eAPu-QXZ",
+      "bookTitle" : "Mrs Penguin's Perfect Palace",
+      "bookUrl" : "books/en/tfss-83a5a623-02b6-40e6-a371-e4898283497a-48-mrspenguin-en.zip",
+      "contributors" : {
+        "-KT3Hmp4rvGl75w6_nhN" : true,
+        "-KT3HmpJcoqqWU4yTgPz" : true,
+        "-KT3HmqH7q9jKW8krodf" : true
+      },
+      "createdDate" : 1464453476321
+    },
+    "-KT3HmsNiq8eHXcbK4Lz" : {
+      "bookCoverPageUrl" : "book_covers/en/bookdash16-misshelenenPage_01.jpg",
+      "bookDescription" : "This is the story of Helen Martins’ battle against darkness, told by one of the creatures she loved best, the wise old owl.",
+      "bookEnabled" : true,
+      "bookLanguage" : "-KT3Hmo6eLZ_eAPu-QXZ",
+      "bookTitle" : "Miss Helen's Magical World",
+      "bookUrl" : "books/en/tfss-8b040f3b-2b47-463d-a1e9-f5c285c73440-miss-helen-en.zip",
+      "contributors" : {
+        "-KT3HmpqTTgqN4PIKJkL" : true,
+        "-KT3HmqGHche7iJpS1tl" : true,
+        "-KT3HmqhCjCqXPXoj4Af" : true
+      },
+      "createdDate" : 1448801098801
+    },
+    "-KT3HmsO1ITb07YU8IbY" : {
+      "bookCoverPageUrl" : "book_covers/en/bookdash5-housemouseenglishenglishcover.jpg",
+      "bookDescription" : "Mouse is looking for a new house. Friendly animals offer to share their homes with him. But nothing is right until he finds his own little spot, warm and cosy.",
+      "bookEnabled" : true,
+      "bookLanguage" : "-KT3Hmo6eLZ_eAPu-QXZ",
+      "bookTitle" : "A House for Mouse",
+      "bookUrl" : "books/en/tfss-fbc4737c-6964-4825-b05c-b09e05b24f33-house-mouse-10.zip",
+      "contributors" : {
+        "-KT3HmojlQ0TIk0W9JiE" : true,
+        "-KT3HmoqE-ursqCU-ak4" : true,
+        "-KT3HmqEmzPfZAaRZNPx" : true
+      },
+      "createdDate" : 1443284712557
+    },
+    "-KT3HmsPh0kno0nmdGTx" : {
+      "bookCoverPageUrl" : "book_covers/en/riggaroo.co.zabookdash31-abeautifuldayPage_01.jpg",
+      "bookDescription" : "It’s a beautiful day for a picnic. \nEveryone wants to join in the fun.",
+      "bookEnabled" : true,
+      "bookLanguage" : "-KT3Hmo6eLZ_eAPu-QXZ",
+      "bookTitle" : "A Beautiful Day",
+      "bookUrl" : "books/en/tfss-ba4d7b19-eee4-4985-84fa-c81ee807cccc-abeautifulday-en.zip",
+      "contributors" : {
+        "-KT3HmpRg60mW1T4i0tX" : true,
+        "-KT3HmqDfNo5yYf1mAKJ" : true,
+        "-KT3HmqJnWX05waJ5G4e" : true
+      },
+      "createdDate" : 1454154321938
+    },
+    "-KT3HmsRDn_AQ4iucUcn" : {
+      "bookCoverPageUrl" : "book_covers/en/bookdash33-theremustbearainbowenPage_01.jpg",
+      "bookDescription" : "In this delightful tale of hope, Jabulile’s dream of helping people comes true after a terrible storm hits the Valley.",
+      "bookEnabled" : true,
+      "bookLanguage" : "-KT3Hmo6eLZ_eAPu-QXZ",
+      "bookTitle" : "There Must be a Rainbow",
+      "bookUrl" : "books/en/tfss-fa8b0c69-7fa7-4cdd-8b67-44e7d8158d2a-theremustbearainbow-en.zip",
+      "contributors" : {
+        "-KT3Hmp9tI6bOMO6ZiuH" : true,
+        "-KT3HmpCPX53G1HXCYaR" : true,
+        "-KT3HmqiZh7sllugwldl" : true
+      },
+      "createdDate" : 1454173090788
+    },
+    "-KT3HmsSGsIEMCMiEJ_E" : {
+      "bookCoverPageUrl" : "book_covers/en/bookdash27-whosebuttonenPage_01.jpg",
+      "bookDescription" : "Tinny Tim sets out on an adventure to return a lost button. Along the way he goes exploring, has a miraculous escape, and makes new friends.",
+      "bookEnabled" : true,
+      "bookLanguage" : "-KT3Hmo6eLZ_eAPu-QXZ",
+      "bookTitle" : "Whose button is this?",
+      "bookUrl" : "books/en/tfss-0483fe28-57d0-4a7c-8a32-4c729af566fc-whose-button-en.zip",
+      "contributors" : {
+        "-KT3HmphsKDPRprb9XEV" : true,
+        "-KT3Hmq2EJae53ojnuhm" : true,
+        "-KT3HmqH7q9jKW8krode" : true
+      },
+      "createdDate" : 1449081782710
+    },
+    "-KT3HmsVPojl7pXg4Y-Q" : {
+      "bookCoverPageUrl" : "book_covers/af/bookdash1-slothenglishslothcover-english.jpg",
+      "bookEnabled" : true,
+      "bookLanguage" : "-KT3Hmo7MVpw1ifqsUBs",
+      "bookTitle" : "Lawwe Luidier",
+      "bookUrl" : "books/af/tfss-bc90ce72-7534-4301-91b4-7640716441d8-sloth-1-afrikaans.zip",
+      "contributors" : {
+        "-KT3HmowguIObUjY-Kdk" : true,
+        "-KT3Hmoxqgjahw4SVkNQ" : true,
+        "-KT3Hmp3zPfEQ36r6qou" : true,
+        "-KT3HmphsKDPRprb9XEV" : true,
+        "-KT3HmqoP86xHaAkUfVd" : true
+      },
+      "createdDate" : 1441824019296
+    },
+    "-KT3HmsZjcQVOiiWGMI4" : {
+      "bookCoverPageUrl" : "book_covers/en/bookdash40-springloadedenPage_01.jpg",
+      "bookDescription" : "Neo’s father is an inventor. When he invents a helicopter hat and flies away, Neo decides to make an invention of her own.",
+      "bookEnabled" : true,
+      "bookLanguage" : "-KT3Hmo6eLZ_eAPu-QXZ",
+      "bookTitle" : "Springloaded",
+      "bookUrl" : "books/en/tfss-15049fac-8e58-4a65-b75a-6e25cae785fa-springloaded-40-en.zip",
+      "contributors" : {
+        "-KT3HmpQRaLoRhnphX2e" : true,
+        "-KT3Hmq7Z9V5mZdj0Jrp" : true,
+        "-KT3Hmr0ehwJi2qbl7Yz" : true
+      },
+      "createdDate" : 1459443093180
+    },
+    "-KT3Hmsahqyizm-yK9hD" : {
+      "bookCoverPageUrl" : "book_covers/af/19_littleantsbigplanafrcoverPage_01.jpg",
+      "bookDescription" : "Hierdie is ’n storie oor ’n klein miertjie met ’n groot plan, en hoe sy liefde vir lees die miere se redding was. ",
+      "bookEnabled" : true,
+      "bookLanguage" : "-KT3Hmo7MVpw1ifqsUBs",
+      "bookTitle" : "Klein Miertjie se Groot Plan",
+      "bookUrl" : "books/af/tfss-5385de81-dfb8-4999-a64b-b7522dfd2211-littleantbigplan-afr.zip",
+      "contributors" : {
+        "-KT3Hmp-TjJJut-i3r3G" : true,
+        "-KT3HmqLNXNBwrBQE1Nj" : true,
+        "-KT3HmquAOXbjLMzxMLj" : true
+      },
+      "createdDate" : 1461512152747
+    },
+    "-KT3Hmsb8G1-W4CCjKsY" : {
+      "bookCoverPageUrl" : "book_covers/zu/bookdash11-singenglish1-cover.jpg",
+      "bookEnabled" : true,
+      "bookLanguage" : "-KT3Hmo8KfvvoBwFpCnH",
+      "bookTitle" : "Indaba ka-Miriam Makeba",
+      "bookUrl" : "books/zu/tfss-b295c1df-7e8b-4fc7-aef1-2c622bc18932-singingtruth-11-zulu.zip",
+      "contributors" : {
+        "-KT3HmpCPX53G1HXCYaS" : true,
+        "-KT3HmpIDqrLWww02Zie" : true,
+        "-KT3HmqtU05_SRq02dDP" : true
+      },
+      "createdDate" : 1442934568231
+    },
+    "-KT3HmsdFjwITiVZJSVm" : {
+      "bookCoverPageUrl" : "book_covers/en/bookdash34-simaandsizaenPage_01.jpg",
+      "bookDescription" : "Sima wants to be a nurse one day. His favourite game is hospital-hospital. But papa and his friends do not approve. What will change their minds?",
+      "bookEnabled" : true,
+      "bookLanguage" : "-KT3Hmo6eLZ_eAPu-QXZ",
+      "bookTitle" : "Sima and Siza",
+      "bookUrl" : "books/en/tfss-c987a288-7e41-4637-ab12-ec40dd241807-simaandsiza-en.zip",
+      "contributors" : {
+        "-KT3HmowguIObUjY-Kdk" : true,
+        "-KT3HmpONNpdav5srGX6" : true,
+        "-KT3HmqCMhDGgkrIyzwM" : true
+      },
+      "createdDate" : 1454174356819
+    },
+    "-KT3HmsehoxfXUI_L9ET" : {
+      "bookCoverPageUrl" : "book_covers/zu/bookdash2-comebackcatzuluPage_01.jpg",
+      "bookEnabled" : true,
+      "bookLanguage" : "-KT3Hmo8KfvvoBwFpCnH",
+      "bookTitle" : "Buya, Kati!",
+      "bookUrl" : "books/zu/tfss-93b6fd6c-58d7-40c0-9a0c-373b49770f60-comebackcat-zulu.zip",
+      "contributors" : {
+        "-KT3HmooCfp14GKMgMfz" : true,
+        "-KT3Hmpk13bsRjHREcEd" : true,
+        "-KT3HmqAh7rBr-FLINIF" : true,
+        "-KT3HmqOmPJdm8Kp_Wdt" : true
+      },
+      "createdDate" : 1455730828069
+    },
+    "-KT3HmsgCHNckEkT-0qO" : {
+      "bookCoverPageUrl" : "book_covers/xh/bookdash11-singxhosa1-cover.jpg",
+      "bookEnabled" : true,
+      "bookLanguage" : "-KT3Hmo6eLZ_eAPu-QXY",
+      "bookTitle" : "Imvumi Yenyaniso",
+      "bookUrl" : "books/xh/tfss-02f7dbbf-1528-4a65-af19-aa51a749d2ee-singingtruth-11-xhosa.zip",
+      "contributors" : {
+        "-KT3HmpCPX53G1HXCYaS" : true,
+        "-KT3HmpIDqrLWww02Zie" : true,
+        "-KT3HmqtU05_SRq02dDP" : true
+      },
+      "createdDate" : 1446385336981
+    },
+    "-KT3HmshfCjrkZSh4KqD" : {
+      "bookCoverPageUrl" : "book_covers/en/bookdash39-elephantinroomenPage_01.jpg",
+      "bookDescription" : "Lindi finds a very large elephant in her room. But is it really there if no one else believes in it?",
+      "bookEnabled" : true,
+      "bookLanguage" : "-KT3Hmo6eLZ_eAPu-QXZ",
+      "bookTitle" : "The Elephant in the Room",
+      "bookUrl" : "books/en/tfss-a156b518-7a27-4ff3-ae23-3232c5e52a5c-elephantinroom-39-en.zip",
+      "contributors" : {
+        "-KT3HmowguIObUjY-Kdk" : true,
+        "-KT3HmpNNPdzZKI9FDOS" : true,
+        "-KT3HmpQRaLoRhnphX2e" : true,
+        "-KT3Hmpnu3iK0RvMU--r" : true
+      },
+      "createdDate" : 1459442150623
+    },
+    "-KT3HmsjUSyEN3aBnk37" : {
+      "bookCoverPageUrl" : "book_covers/nr/19_littleantsbigplanndecoverPage_01.jpg",
+      "bookDescription" : "Isitori lesi simayelana notjhontjhwani omncani onehlelo elikhulu nokobana ithando lakhe lokufunda laliphephisa njani ilanga.",
+      "bookEnabled" : true,
+      "bookLanguage" : "-KT3Hmo6eLZ_eAPu-QX_",
+      "bookTitle" : "IQhinga lakaTjhontjhwani",
+      "bookUrl" : "books/nr/tfss-da86ed58-107d-4080-bdeb-a18dc5dbb56c-littleantbigplan-nde.zip",
+      "contributors" : {
+        "-KT3Hmp-TjJJut-i3r3G" : true,
+        "-KT3HmqLNXNBwrBQE1Nj" : true,
+        "-KT3HmquAOXbjLMzxMLj" : true
+      },
+      "createdDate" : 1461513783114
+    },
+    "-KT3HmskosZ6at8K19t3" : {
+      "bookCoverPageUrl" : "book_covers/en/bookdash6-sizweenglishsizwe-cover.jpg",
+      "bookDescription" : "Today Sizwe learns that a smile is something you can give away without losing it. ",
+      "bookEnabled" : true,
+      "bookLanguage" : "-KT3Hmo6eLZ_eAPu-QXZ",
+      "bookTitle" : "Sizwe's Smile",
+      "bookUrl" : "books/en/tfss-978bad20-09ee-4e24-93ff-4ae48255c90d-sizwesmile-6.zip",
+      "contributors" : {
+        "-KT3Hmodr5SKOWGZ2xGM" : true,
+        "-KT3HmozbNL5U7YGyqHi" : true,
+        "-KT3HmqtU05_SRq02dDQ" : true
+      },
+      "createdDate" : 1442937034896
+    },
+    "-KT3Hmslkk_bDzpra92k" : {
+      "bookCoverPageUrl" : "book_covers/en/bookdash26-nitaupsidedownenPage_01.jpg",
+      "bookDescription" : "Nita’s hanging upside down. Can she turn the right way round?",
+      "bookEnabled" : true,
+      "bookLanguage" : "-KT3Hmo6eLZ_eAPu-QXZ",
+      "bookTitle" : "Why is Nita Upside Down?",
+      "bookUrl" : "books/en/tfss-2ef124f5-f1c2-4402-a62c-29383b873fe1-whynitaupsidedown-en.zip",
+      "contributors" : {
+        "-KT3HmpeKekAPT6XD29c" : true,
+        "-KT3Hmq40gj5Tr6zY8x9" : true,
+        "-KT3HmqmX1KLOfxKOrfh" : true
+      },
+      "createdDate" : 1449081799019
+    },
+    "-KT3HmsnmnmQNiZLBiwL" : {
+      "bookCoverPageUrl" : "book_covers/en/bookdash32-sindiandthemoonenPage_01.jpg",
+      "bookDescription" : "Sindi buzzes with colourful songs and dance. Will starting school end all that?",
+      "bookEnabled" : true,
+      "bookLanguage" : "-KT3Hmo6eLZ_eAPu-QXZ",
+      "bookTitle" : "Sindi and the Moon",
+      "bookUrl" : "books/en/tfss-0cc51e06-2aa2-4eff-a849-e34f3f94ac0d-sindiandthemoon-en.zip",
+      "contributors" : {
+        "-KT3Hmpb6prjMtey-3VZ" : true,
+        "-KT3HmqMtsQS98gMg5YO" : true,
+        "-KT3HmqprxQ0oViXssQr" : true
+      },
+      "createdDate" : 1454155473604
+    },
+    "-KT3HmspZLtgrNLFgkfw" : {
+      "bookCoverPageUrl" : "book_covers/en/bookdash4-maddyenglishmaddy-cover.jpg",
+      "bookDescription" : "It’s Maddy Moona’s birthday and she really wants a pet! But which silly animal will picky Maddy get?",
+      "bookEnabled" : true,
+      "bookLanguage" : "-KT3Hmo6eLZ_eAPu-QXZ",
+      "bookTitle" : "Maddy Moona's Menagerie!",
+      "bookUrl" : "books/en/tfss-488fb9e2-11ea-4c7e-8790-75dd2b60fa7b-maddymoody-eng.zip",
+      "contributors" : {
+        "-KT3Hmoxqgjahw4SVkNQ" : true,
+        "-KT3HmphsKDPRprb9XEW" : true,
+        "-KT3HmqlYUYcoxRs9hJ2" : true
+      },
+      "createdDate" : 1448741498070
+    },
+    "-KT3Hmsq6JWyzbj35LeR" : {
+      "bookCoverPageUrl" : "book_covers/en/bookdash46-thebestthingeverenPage_01.jpg",
+      "bookDescription" : "Muzi loves to build with his toys. But when he leaves them behind to travel to uGogo’s house, he discovers something very special about the world. And he learns something new about himself.",
+      "bookEnabled" : true,
+      "bookLanguage" : "-KT3Hmo6eLZ_eAPu-QXZ",
+      "bookTitle" : "The Best Thing Ever",
+      "bookUrl" : "books/en/tfss-3f545c78-51b7-4612-8a05-4f95bd003683-thebestthingever-46-en.zip",
+      "contributors" : {
+        "-KT3HmqDfNo5yYf1mAKK" : true,
+        "-KT3HmqNKk7xQ-Pai3Wz" : true,
+        "-KT3Hmqr3wi_u7EDUWQc" : true
+      },
+      "createdDate" : 1461329786746
+    },
+    "-KT3HmssMjBwpXZqZVUY" : {
+      "bookCoverPageUrl" : "book_covers/en/bookdash14-sindiwefirefliesenPage_01_Cover.jpeg",
+      "bookDescription" : "There once was a girl named Sindiwe Magona. She had a special gift for stories. At night, little Sindiwe’s grandmother told her magical stories about ogres and giants, animals of the forests and the little creatures of the veld. This was Sindiwe’s favourite time. See how she grows up to live out her own adventures and she travels over oceans to change the world with her stories. ",
+      "bookEnabled" : true,
+      "bookLanguage" : "-KT3Hmo6eLZ_eAPu-QXZ",
+      "bookTitle" : "Sindiwe and the Fireflies",
+      "bookUrl" : "books/en/tfss-a36b3397-6f2b-4055-a129-2102419eba8d-sindiwe-fireflies-en.zip",
+      "contributors" : {
+        "-KT3Hmp5g7Spchtg4HUP" : true,
+        "-KT3HmqFM5lLzVKnY0dh" : true,
+        "-KT3Hmqz3u6Os1ip02wl" : true
+      },
+      "createdDate" : 1448742082183
+    },
+    "-KT3HmstiehJAP5wowZa" : {
+      "bookCoverPageUrl" : "book_covers/en/bookdash29-londienPage_01.jpg",
+      "bookDescription" : "Londi loves to dream all day. But where will her dreams take her? ",
+      "bookEnabled" : true,
+      "bookLanguage" : "-KT3Hmo6eLZ_eAPu-QXZ",
+      "bookTitle" : "Londi: The Dreaming Girl",
+      "bookUrl" : "books/en/tfss-4698a26f-faa3-4822-918b-20edae89111d-londi-en.zip",
+      "contributors" : {
+        "-KT3Hmq-w9n0Xqq1b-Rx" : true,
+        "-KT3HmqlYUYcoxRs9hJ3" : true
+      },
+      "createdDate" : 1454151308954
+    },
+    "-KT3HmsvSR94AejpgCdL" : {
+      "bookCoverPageUrl" : "book_covers/ss/19_littleantsbigplansiswaticoverPage_01.jpg",
+      "bookDescription" : "Lena yindzaba lekhuluma ngelisu lentfutfwane lencane, nekutsi lutsandvo lwayo lwekufundza lwayisindzisa kanjani.",
+      "bookEnabled" : true,
+      "bookLanguage" : "-KT3HmoADEnjRLjLX4ZR",
+      "bookTitle" : "Lelikhulu LaNtfutfwane Lomncane",
+      "bookUrl" : "books/ss/tfss-7f2c9114-08db-487b-b304-43b447a6ea15-littleantbigplan-siswati.zip",
+      "contributors" : {
+        "-KT3Hmp-TjJJut-i3r3G" : true,
+        "-KT3HmqLNXNBwrBQE1Nj" : true,
+        "-KT3HmquAOXbjLMzxMLj" : true
+      },
+      "createdDate" : 1461603693905
+    },
+    "-KT3Hmsxb7nJibovRamk" : {
+      "bookCoverPageUrl" : "book_covers/sp/bookdash1-slothenglishslothcover-english.jpg",
+      "bookEnabled" : true,
+      "bookLanguage" : "-KT3Hmo9gVRslxE2B7nt",
+      "bookTitle" : "Morena Motlapa wa go swarwa ke boroko",
+      "bookUrl" : "books/sp/tfss-e31b5faf-6a7b-4bb1-a6e1-e88098b5c5a1-sloth-1-sepedi.zip",
+      "contributors" : {
+        "-KT3HmowguIObUjY-Kdk" : true,
+        "-KT3Hmoxqgjahw4SVkNQ" : true,
+        "-KT3Hmp3zPfEQ36r6qou" : true,
+        "-KT3HmphsKDPRprb9XEV" : true,
+        "-KT3HmqoP86xHaAkUfVd" : true
+      },
+      "createdDate" : 1441905870839
+    },
+    "-KT3HmsysmIo08i-ESRe" : {
+      "bookCoverPageUrl" : "book_covers/en/bookdash28-searchingforspiritenPage_01.jpg",
+      "bookDescription" : "Nkanyezi can’t wait for the Spring festival, but the people of Ndlovu have lost their spirit of celebration. She must go in search of the spirit of Spring. What will she find?",
+      "bookEnabled" : true,
+      "bookLanguage" : "-KT3Hmo6eLZ_eAPu-QXZ",
+      "bookTitle" : "Searching for the Spirit of Spring",
+      "bookUrl" : "books/en/tfss-65a6ed5c-2bdd-4bcd-a71f-abbfa7f29bcb-searchingforspirit-en.zip",
+      "contributors" : {
+        "-KT3HmpK-_gKbeJdmM-T" : true,
+        "-KT3HmpxDRurVvagUYzC" : true,
+        "-KT3HmqQuHTStOt3aBTi" : true
+      },
+      "createdDate" : 1449081770537
+    },
+    "-KT3Hmt-vc6EIevjbVkk" : {
+      "bookCoverPageUrl" : "book_covers/en/bookdash3-fishgiftenglishfishcover-english.jpg",
+      "bookDescription" : "Yusuf waits on the beach while Papa pushes out his boat. Surfers, turtles and sharks come from the sea. What will Papa bring back for Yusuf?",
+      "bookEnabled" : true,
+      "bookLanguage" : "-KT3Hmo6eLZ_eAPu-QXZ",
+      "bookTitle" : "A Fish and a Gift",
+      "bookUrl" : "books/en/tfss-c8dc5091-3ce0-439f-8983-c657b05b4505-fishgift-5.zip",
+      "contributors" : {
+        "-KT3HmorM2aycQwHF0hX" : true,
+        "-KT3HmplBU_7zqluhikY" : true,
+        "-KT3Hmq3-bJrZUtc-QXb" : true
+      },
+      "createdDate" : 1442937004875
+    },
+    "-KT3Hmt5g3LamDZHCNk_" : {
+      "bookCoverPageUrl" : "book_covers/en/bookdash37-thatosbirthdayenPage_01.jpg",
+      "bookDescription" : "It is one week until Thato’s Birthday. His mama tells him he will have a big surprise. What will it be?",
+      "bookEnabled" : true,
+      "bookLanguage" : "-KT3Hmo6eLZ_eAPu-QXZ",
+      "bookTitle" : "Thato's Birthday Surprise",
+      "bookUrl" : "books/en/tfss-7c6ddedb-1b7a-41a3-bd9d-8e8769c12039-thatos-en.zip",
+      "contributors" : {
+        "-KT3HmoyOsrnat6cA0fZ" : true,
+        "-KT3HmqBwPpYtmQf_hoM" : true,
+        "-KT3HmqLNXNBwrBQE1Ni" : true
+      },
+      "createdDate" : 1459440425065
+    },
+    "-KT3Hmt78_J141A8Shew" : {
+      "bookCoverPageUrl" : "book_covers/xh/bookdash3-fishgiftxhosa1-cover.jpg",
+      "bookEnabled" : true,
+      "bookLanguage" : "-KT3Hmo6eLZ_eAPu-QXY",
+      "bookTitle" : "Intlanzi kunye nesipho",
+      "bookUrl" : "books/xh/tfss-c6ce5b6d-177a-4d89-a042-e16e9cc2ff13-fishgift-5-xhosa.zip",
+      "contributors" : {
+        "-KT3HmorM2aycQwHF0hX" : true,
+        "-KT3HmplBU_7zqluhikY" : true,
+        "-KT3Hmq3-bJrZUtc-QXb" : true
+      },
+      "createdDate" : 1446392308312
+    },
+    "-KT3Hmt8jF8ugDoffhC9" : {
+      "bookCoverPageUrl" : "book_covers/en/bookdash2-comebackcatenglishcomebackcat.jpg",
+      "bookDescription" : "A delightful tale about an independent cat.",
+      "bookEnabled" : true,
+      "bookLanguage" : "-KT3Hmo6eLZ_eAPu-QXZ",
+      "bookTitle" : "Come back, Cat!",
+      "bookUrl" : "books/en/tfss-e2cb9f7e-9e66-44cb-a22b-e227dbba9802-comebackcat-eng.zip",
+      "contributors" : {
+        "-KT3HmooCfp14GKMgMfz" : true,
+        "-KT3Hmpk13bsRjHREcEd" : true,
+        "-KT3HmqAh7rBr-FLINIF" : true,
+        "-KT3HmqOmPJdm8Kp_Wdt" : true
+      },
+      "createdDate" : 1448649433378
+    },
+    "-KT3HmtBqjfteUhOxNeS" : {
+      "bookCoverPageUrl" : "book_covers/st/bookdash23-walkingtogethersesothoPage_01.jpg",
+      "bookEnabled" : true,
+      "bookLanguage" : "-KT3Hmo8KfvvoBwFpCnI",
+      "bookTitle" : "Ho tsamaea ’moho",
+      "bookUrl" : "books/st/tfss-1285162c-2a80-4765-961f-b30d1601fd87-walkingtogether-sesotho.zip",
+      "contributors" : {
+        "-KT3HmpCPX53G1HXCYaS" : true,
+        "-KT3HmpIDqrLWww02Zie" : true,
+        "-KT3HmqtU05_SRq02dDP" : true
+      },
+      "createdDate" : 1449081924397
+    },
+    "-KT3HmtDzjXqMWUeSPQ8" : {
+      "bookCoverPageUrl" : "book_covers/en/bookdash17-tortoisehomeenPage_01.jpg",
+      "bookDescription" : "Tortoise sets off in search of his house. Along the way, he meets new friends to help him. But the sky is darkening, and lightning flashes in the distance. Will Tortoise find his house in time?",
+      "bookEnabled" : true,
+      "bookLanguage" : "-KT3Hmo6eLZ_eAPu-QXZ",
+      "bookTitle" : "Tortoise finds his home",
+      "bookUrl" : "books/en/tfss-8c426d99-f30d-407a-9220-5cf52bbb6f6c-tortoise-findshome-en.zip",
+      "contributors" : {
+        "-KT3HmoezvVj92E4LH_o" : true,
+        "-KT3Hmpk13bsRjHREcEd" : true,
+        "-KT3HmqqvizGEo_SRuij" : true
+      },
+      "createdDate" : 1448802602356
+    },
+    "-KT3HmtEoiKij8WDrSg8" : {
+      "bookCoverPageUrl" : "book_covers/xh/bookdash2-comebackcatzuluPage_01.jpg",
+      "bookEnabled" : true,
+      "bookLanguage" : "-KT3Hmo6eLZ_eAPu-QXY",
+      "bookTitle" : "Buya, Kati!",
+      "bookUrl" : "books/xh/tfss-3b503d1f-9c96-42d1-8e92-a8154eb2e02d-comebackcat-xhosa.zip",
+      "contributors" : {
+        "-KT3HmooCfp14GKMgMfz" : true,
+        "-KT3Hmpk13bsRjHREcEd" : true,
+        "-KT3HmqAh7rBr-FLINIF" : true,
+        "-KT3HmqOmPJdm8Kp_Wdt" : true
+      },
+      "createdDate" : 1455730867340
+    },
+    "-KT3HmtFbbj7WfJ3qXo4" : {
+      "bookCoverPageUrl" : "book_covers/en/bookdash35-sbuspecialshoesenPage_01.jpg",
+      "bookDescription" : "Sbu’s little brother finds Sbu’s favourite shoes. When he tries them on, he discovers something very special about them.",
+      "bookEnabled" : true,
+      "bookLanguage" : "-KT3Hmo6eLZ_eAPu-QXZ",
+      "bookTitle" : "Sbu's Special Shoes",
+      "bookUrl" : "books/en/tfss-11e849cf-edf7-4e60-bc48-c852c80244ed-sbus-shoes-en.zip",
+      "contributors" : {
+        "-KT3HmovWzlTpfVW_ixg" : true,
+        "-KT3HmpDtSATfPYIO9Ld" : true,
+        "-KT3Hmr-zwweA659rjJp" : true
+      },
+      "createdDate" : 1454175409322
+    },
+    "-KT3HmtGITXPCp4uZSLg" : {
+      "bookCoverPageUrl" : "book_covers/en/bookdash25-rafikistyleenPage_01.jpg",
+      "bookDescription" : "Rafiki’s style is all his own, but when the Cool Cat Crew struts by, he starts to wonder if it’s good enough.",
+      "bookEnabled" : true,
+      "bookLanguage" : "-KT3Hmo6eLZ_eAPu-QXZ",
+      "bookTitle" : "Rafiki's Style",
+      "bookUrl" : "books/en/tfss-4dfc331c-f6ee-4409-814d-49867052d218-rafiki-style-en.zip",
+      "contributors" : {
+        "-KT3HmoikmOK9WR2AEJ8" : true,
+        "-KT3HmqJnWX05waJ5G4f" : true,
+        "-KT3HmqMtsQS98gMg5YP" : true
+      },
+      "createdDate" : 1449081819831
+    },
+    "-KT3HmtH9Wh3V6NQl25h" : {
+      "bookCoverPageUrl" : "book_covers/en/riggaroo.co.zabookdash30-iwillhelpyouPage_01.jpg",
+      "bookDescription" : "When Mama Heron needs help, Lungile comes to her rescue. ",
+      "bookEnabled" : true,
+      "bookLanguage" : "-KT3Hmo6eLZ_eAPu-QXZ",
+      "bookTitle" : "I Will Help You",
+      "bookUrl" : "books/en/tfss-3c383c4b-d979-4036-8c1b-97eb252d1d9a-iwillhelpyou-en.zip",
+      "contributors" : {
+        "-KT3Hmp04jAo0kZ37mMg" : true,
+        "-KT3Hmq1MOfBNErfG90M" : true,
+        "-KT3Hmq9_W0PgW2bumA1" : true
+      },
+      "createdDate" : 1454153330066
+    },
+    "-KT3HmtI4OLYpSlanJYH" : {
+      "bookCoverPageUrl" : "book_covers/en/bookdash22-anyonelikemeenPage_01.jpg",
+      "bookDescription" : "I wonder if there’s another me somewhere in the world…",
+      "bookEnabled" : true,
+      "bookLanguage" : "-KT3Hmo6eLZ_eAPu-QXZ",
+      "bookTitle" : "Is There Anyone Like Me?",
+      "bookUrl" : "books/en/tfss-20b8fcf6-463c-47d0-8b36-2e34146c236f-anyonelikeme-en.zip",
+      "contributors" : {
+        "-KT3HmpcOrQ95gR6WkUg" : true,
+        "-KT3Hmq2EJae53ojnuhl" : true,
+        "-KT3HmqvLGRI9pMNU9Um" : true
+      },
+      "createdDate" : 1449081938632
+    },
+    "-KT3HmtJY53ZWPKIbkLk" : {
+      "bookCoverPageUrl" : "book_covers/en/bookdash41-whenigrowupenPage_01.jpg",
+      "bookDescription" : "I don’t know what I want to be when I grow up. Can you help me choose?",
+      "bookEnabled" : true,
+      "bookLanguage" : "-KT3Hmo6eLZ_eAPu-QXZ",
+      "bookTitle" : "When I Grow Up",
+      "bookUrl" : "books/en/tfss-f52dee11-6a8b-4da8-93f0-6baa258c8652-whenigrowup-en.zip",
+      "contributors" : {
+        "-KT3HmojlQ0TIk0W9JiE" : true,
+        "-KT3HmoqE-ursqCU-ak4" : true,
+        "-KT3Hmp6mhseypynyqw2" : true
+      },
+      "createdDate" : 1459443900102
+    },
+    "-KT3HmtL7etU1Kyumif3" : {
+      "bookCoverPageUrl" : "book_covers/af/bookdash17-tortoisehomeafrPage_01.jpg",
+      "bookEnabled" : true,
+      "bookLanguage" : "-KT3Hmo7MVpw1ifqsUBs",
+      "bookTitle" : "Skilpad soek sy huis",
+      "bookUrl" : "books/af/tfss-9afab9e3-1f15-4214-b984-636c4b897838-tortise-finds-home-afr.zip",
+      "contributors" : {
+        "-KT3HmoezvVj92E4LH_o" : true,
+        "-KT3Hmpk13bsRjHREcEd" : true,
+        "-KT3HmqqvizGEo_SRuij" : true
+      },
+      "createdDate" : 1448802755250
+    },
+    "-KT3HmtMZjrO-rN_pXjg" : {
+      "bookCoverPageUrl" : "book_covers/en/bookdash19-lorydoryenPage_01.jpg",
+      "bookDescription" : "Lory Dory was born invisible. No one understands that she is real. Until, one day, she finds a way to show them who she is.",
+      "bookEnabled" : true,
+      "bookLanguage" : "-KT3Hmo6eLZ_eAPu-QXZ",
+      "bookTitle" : "Lory Dory",
+      "bookUrl" : "books/en/tfss-52c56ef5-9521-4400-8492-bc5376ed44fc-lorydory-en.zip",
+      "contributors" : {
+        "-KT3HmopuhDGRDtZiF7H" : true,
+        "-KT3HmowguIObUjY-Kdk" : true,
+        "-KT3HmqFM5lLzVKnY0dg" : true
+      },
+      "createdDate" : 1448819633243
+    },
+    "-KT3HmtN_d8P_EXBhyDW" : {
+      "bookCoverPageUrl" : "book_covers/en/riggaroo.co.zabookdash12-tinyseedcover.jpg",
+      "bookDescription" : "In a village on the slopes of Mount Kenya, a little girl worked in the fields with her mother. She worried as she saw the big forests disappearing, but she knew the power of a tiny seed.",
+      "bookEnabled" : true,
+      "bookLanguage" : "-KT3Hmo6eLZ_eAPu-QXZ",
+      "bookTitle" : "A Tiny Seed",
+      "bookUrl" : "books/en/tfss-2ee29f78-f2e7-4f5a-9d58-6b8abb7e0feb-a-tiny-seed-14.zip",
+      "contributors" : {
+        "-KT3Hmp_MYfsceKIqCAH" : true,
+        "-KT3HmqWiGNwrKkxe_M-" : true
+      },
+      "createdDate" : 1444332503366
+    },
+    "-KT3HmtOloSAzC_LKimI" : {
+      "bookCoverPageUrl" : "book_covers/af/bookdash2-comebackcatafrikaanscomebackcat-afri.jpg",
+      "bookEnabled" : true,
+      "bookLanguage" : "-KT3Hmo7MVpw1ifqsUBs",
+      "bookTitle" : "Kom Terug, Kat!",
+      "bookUrl" : "books/af/tfss-7c9831a7-1232-4309-be63-8d0352c4a66a-comebackcat-afr.zip",
+      "contributors" : {
+        "-KT3HmooCfp14GKMgMfz" : true,
+        "-KT3Hmpk13bsRjHREcEd" : true,
+        "-KT3HmqAh7rBr-FLINIF" : true,
+        "-KT3HmqOmPJdm8Kp_Wdt" : true
+      },
+      "createdDate" : 1448818468048
+    },
+    "-KT3HmtPUxtp1F0lAE3g" : {
+      "bookCoverPageUrl" : "book_covers/ve/19_littleantsbigplanvendacoverPage_01.jpg",
+      "bookDescription" : "Hetshi ndi tshiṱori tsha nga ha lusunzi luṱuku lwe lwa vha lu na maano mahulu, na nḓila ye lufuno lwalwo lwa u vhala lwa kona u thusa.",
+      "bookEnabled" : true,
+      "bookLanguage" : "-KT3Hmo8KfvvoBwFpCnJ",
+      "bookTitle" : "Maano mahulu a lusunzi",
+      "bookUrl" : "books/ve/tfss-4981349d-387b-47f3-bdee-181d67872d27-littleantbigplan-venda.zip",
+      "contributors" : {
+        "-KT3Hmp-TjJJut-i3r3G" : true,
+        "-KT3HmqLNXNBwrBQE1Nj" : true,
+        "-KT3HmquAOXbjLMzxMLj" : true
+      },
+      "createdDate" : 1461605627459
+    },
+    "-KT3HmtQalUA8mNdCwGs" : {
+      "bookCoverPageUrl" : "book_covers/zu/19_littleantsbigplanzulucoverPage_01.jpg",
+      "bookDescription" : "Lena yindaba emayelana nentuthwane encane enecebo elikhulu, kanye nokuthi uthando lwayo lokufunda lwasiza kanjani.",
+      "bookEnabled" : true,
+      "bookLanguage" : "-KT3Hmo8KfvvoBwFpCnH",
+      "bookTitle" : "Icebo Elikhulu LikaNtuthwane Omncane",
+      "bookUrl" : "books/zu/tfss-a747a2cb-80c8-4dc2-a590-857711a3e2e7-littleantbigplan-zulu.zip",
+      "contributors" : {
+        "-KT3Hmp-TjJJut-i3r3G" : true,
+        "-KT3HmqLNXNBwrBQE1Nj" : true,
+        "-KT3HmquAOXbjLMzxMLj" : true
+      },
+      "createdDate" : 1461515310078
+    },
+    "-KT3HmtRBVoeGpULufRt" : {
+      "bookCoverPageUrl" : "book_covers/en/riggaroo.co.zabookdash9-adancerstalecover.jpg",
+      "bookDescription" : "Phyllis Spira was dancing by the age of four. That was just the beginning of her journey towards becoming one of South Africa’s Prima Ballerinas.",
+      "bookEnabled" : true,
+      "bookLanguage" : "-KT3Hmo6eLZ_eAPu-QXZ",
+      "bookTitle" : "A Dancer's Tale",
+      "bookUrl" : "books/en/tfss-716faa12-be96-46ff-9f6a-9e1b5ba9683a-a-dancers-tale-13.zip",
+      "contributors" : {
+        "-KT3HmoezvVj92E4LH_p" : true,
+        "-KT3HmqRKtGlyeIxGx5P" : true,
+        "-KT3Hmqk7Sizij1aKkBB" : true
+      },
+      "createdDate" : 1459440952334
+    },
+    "-KT3HmtSv_ruZ2bE-iZL" : {
+      "bookCoverPageUrl" : "book_covers/en/bookdash36-whatifenPage_01.jpg",
+      "bookDescription" : "Nandi is wondering all sorts of strange things about the world. And it begins with a simple question: What if…?",
+      "bookEnabled" : true,
+      "bookLanguage" : "-KT3Hmo6eLZ_eAPu-QXZ",
+      "bookTitle" : "What if...?",
+      "bookUrl" : "books/en/tfss-c76fbcdb-7479-4622-bb62-09571cd2881f-whatif-en.zip",
+      "contributors" : {
+        "-KT3Hmp5g7Spchtg4HUQ" : true,
+        "-KT3HmplBU_7zqluhikX" : true,
+        "-KT3HmqKuKhIhH5PZiFd" : true
+      },
+      "createdDate" : 1459435352921
+    },
+    "-KT3HmtTkrhXymxXfxUy" : {
+      "bookCoverPageUrl" : "book_covers/sp/19_littleantsbigplansepedicoverPage_01.jpg",
+      "bookDescription" : "Kanegelo ye e bolela ka tšhošane ye nnyane ye e nago le leano le legolo, le ka fao lerato la gagwe la go bala le phološitšego letšatši.",
+      "bookEnabled" : true,
+      "bookLanguage" : "-KT3Hmo9gVRslxE2B7nt",
+      "bookTitle" : "Leano le Legolo la Ngwana Tšhošane",
+      "bookUrl" : "books/sp/tfss-23b7b9cb-70ee-4129-af7b-c4d120bb66ed-littleantbigplan-sepedi.zip",
+      "contributors" : {
+        "-KT3Hmp-TjJJut-i3r3G" : true,
+        "-KT3HmqLNXNBwrBQE1Nj" : true,
+        "-KT3HmquAOXbjLMzxMLj" : true
+      },
+      "createdDate" : 1461516136001
+    },
+    "-KT3HmtUfPWT8FNF9R7D" : {
+      "bookCoverPageUrl" : "book_covers/en/riggaroo.co.zabookdash8-little-ants-big-plancover-1.jpg",
+      "bookDescription" : "This is a story about a little ant with a big plan, and how his love for reading saved the day.",
+      "bookEnabled" : true,
+      "bookLanguage" : "-KT3Hmo6eLZ_eAPu-QXZ",
+      "bookTitle" : "Little Ant's Big Plan",
+      "bookUrl" : "books/en/tfss-64cef0db-42e2-41ec-adb4-0b647f39997a-little-ant-big-plan-13.zip",
+      "contributors" : {
+        "-KT3Hmp-TjJJut-i3r3G" : true,
+        "-KT3HmqLNXNBwrBQE1Nj" : true,
+        "-KT3HmquAOXbjLMzxMLj" : true
+      },
+      "createdDate" : 1443352895812
+    },
+    "-KT3HmtV8gIn6wvTP0oy" : {
+      "bookCoverPageUrl" : "book_covers/en/bookdash_booksbooks50-itwasntmePage_01.jpg",
+      "bookDescription" : "Mom is going out for five minutes. What could go wrong?",
+      "bookEnabled" : true,
+      "bookLanguage" : "-KT3Hmo6eLZ_eAPu-QXZ",
+      "bookTitle" : "It Wasn't Me!",
+      "bookUrl" : "books/en/tfss-c2842a80-ac7d-46e5-bb6f-c6ba6f7cdba5-itwasntme-en.zip",
+      "contributors" : {
+        "-KT3HmouyjOX3qwN0eex" : true,
+        "-KT3Hmq3-bJrZUtc-QXc" : true,
+        "-KT3HmqjqwfyjHBnEfbn" : true
+      },
+      "createdDate" : 1469554664060
+    },
+    "-KT3HmtWJm4G7DThpbr9" : {
+      "bookCoverPageUrl" : "book_covers/en/bookdash44-littlesockenPage_01.jpg",
+      "bookDescription" : "It’s wash day for the Socks, but where has Little Sock gone?",
+      "bookEnabled" : true,
+      "bookLanguage" : "-KT3Hmo6eLZ_eAPu-QXZ",
+      "bookTitle" : "Little Sock and the Tiny Creatures",
+      "bookUrl" : "books/en/tfss-e3a554c5-a39b-42b3-b8fa-a9e0af48261f-littlesock-en.zip",
+      "contributors" : {
+        "-KT3HmpQRaLoRhnphX2f" : true,
+        "-KT3HmpTTmZqTl4Oj2nL" : true,
+        "-KT3Hmpp8aqOMOwALU60" : true
+      },
+      "createdDate" : 1462192651514
+    },
+    "-KT3HmtXWZKqus21CW9Q" : {
+      "bookCoverPageUrl" : "book_covers/en/bookdash42-whoisourfriendenPage_01.jpg",
+      "bookDescription" : "Rhino, Crocodile, Giraffe and Zebra all have an unlikely friend. Can you guess who he is?",
+      "bookEnabled" : true,
+      "bookLanguage" : "-KT3Hmo6eLZ_eAPu-QXZ",
+      "bookTitle" : "Who is our friend?",
+      "bookUrl" : "books/en/tfss-0ab41eec-e1d6-4045-8ed1-74c2c20e1659-whoisourfriend-en.zip",
+      "contributors" : {
+        "-KT3HmpIDqrLWww02Zie" : true,
+        "-KT3HmpuXJGT6Hr0FLLc" : true,
+        "-KT3HmqSHqjYC1ncgM2r" : true
+      },
+      "createdDate" : 1459444727587
+    },
+    "-KT3HmtYK0A2Bj8XzZUj" : {
+      "bookCoverPageUrl" : "book_covers/en/bookdash24-grandpasgoldenPage_01.jpg",
+      "bookDescription" : "The children are talking about their grandpas. Giraffe’s grandpa can build a skyscraper. Elephant’s grandpa can cook a massive feast. But whose grandpa will give the children the biggest surprise?",
+      "bookEnabled" : true,
+      "bookLanguage" : "-KT3Hmo6eLZ_eAPu-QXZ",
+      "bookTitle" : "Grandpa's Gold",
+      "bookUrl" : "books/en/tfss-94edea24-f6ac-4348-bb02-456921f581d8-grandapasgold-en.zip",
+      "contributors" : {
+        "-KT3Hmpi1P-PnyjINBO9" : true,
+        "-KT3HmqPPru2eZ37z5hg" : true,
+        "-KT3Hmqx3fhJNSXxCXkt" : true
+      },
+      "createdDate" : 1449081910841
+    },
+    "-KT3HmtZf4C0ckzOV5Fo" : {
+      "bookCoverPageUrl" : "book_covers/st/19_littleantsbigplansesothocoverPage_01.jpg",
+      "bookDescription" : "Ena ke pale e mabapi le\nbohlwanyana bo nang le leano le\nleholo, le ka moo lerato la hae la\nho bala le ileng la ba pholosa.",
+      "bookEnabled" : true,
+      "bookLanguage" : "-KT3Hmo8KfvvoBwFpCnI",
+      "bookTitle" : "Leano le Leholo la Bohlwanyana",
+      "bookUrl" : "books/st/tfss-fed4a37c-62bc-4f54-97e9-e1e4929928a2-littleantbigplan-sesotho.zip",
+      "contributors" : {
+        "-KT3Hmp-TjJJut-i3r3G" : true,
+        "-KT3HmqLNXNBwrBQE1Nj" : true,
+        "-KT3HmquAOXbjLMzxMLj" : true
+      },
+      "createdDate" : 1461516898613
+    },
+    "-KT3HmtaZIlDQPa4TNaU" : {
+      "bookCoverPageUrl" : "book_covers/xh/bookdash1-slothenglishslothcover-english.jpg",
+      "bookEnabled" : true,
+      "bookLanguage" : "-KT3Hmo6eLZ_eAPu-QXY",
+      "bookTitle" : "USloth Vilavoco",
+      "bookUrl" : "books/xh/tfss-2d5be98a-7b07-4f6e-a06c-0e5007ac48fa-sloth-1-xhosa.zip",
+      "contributors" : {
+        "-KT3HmowguIObUjY-Kdk" : true,
+        "-KT3Hmoxqgjahw4SVkNQ" : true,
+        "-KT3Hmp3zPfEQ36r6qou" : true,
+        "-KT3HmphsKDPRprb9XEV" : true,
+        "-KT3HmqoP86xHaAkUfVd" : true
+      },
+      "createdDate" : 1441827386756
+    },
+    "-KT3HmtbQrt_xxGbIIWX" : {
+      "bookCoverPageUrl" : "book_covers/tso/19_littleantsbigplantsongacoverPage_01.jpg",
+      "bookDescription" : "Lexi i xitori hi mayelana na\nN’warisokotinyana loyi a ri na\nkungu lerikulu, na hilaha rirhandzu\nra yena ra ku hlaya ri va poniseke\nhakona.",
+      "bookEnabled" : true,
+      "bookLanguage" : "-KT3Hmo58c8eCCBg6GR0",
+      "bookTitle" : "Kungu Lerikulu ra\nN’warisokotinyana",
+      "bookUrl" : "books/tso/tfss-6aff6ab4-a775-4e12-a982-724419cf6b93-littlebigplan-tsonga.zip",
+      "contributors" : {
+        "-KT3Hmp-TjJJut-i3r3G" : true,
+        "-KT3HmqLNXNBwrBQE1Nj" : true,
+        "-KT3HmquAOXbjLMzxMLj" : true
+      },
+      "createdDate" : 1461606076025
+    },
+    "-KT3HmtcX3DwmM0eP06d" : {
+      "bookCoverPageUrl" : "book_covers/en/bookdash11-singenglish1-cover.jpg",
+      "bookDescription" : "Learn about the amazing life of a little girl who grew up to use her gift of singing to help bring freedom to South Africa.",
+      "bookEnabled" : true,
+      "bookLanguage" : "-KT3Hmo6eLZ_eAPu-QXZ",
+      "bookTitle" : "Singing the Truth",
+      "bookUrl" : "books/en/tfss-c1eaf6a8-4aa3-4fcb-bbd3-8d12b6158311-singingtruth-11.zip",
+      "contributors" : {
+        "-KT3HmpCPX53G1HXCYaS" : true,
+        "-KT3HmpIDqrLWww02Zie" : true,
+        "-KT3HmqtU05_SRq02dDP" : true
+      },
+      "createdDate" : 1442937104569
+    },
+    "-KT3Hmtdvt6Rub9yB_tm" : {
+      "bookCoverPageUrl" : "book_covers/en/bookdash21-howaboutyouenPage_01.jpg",
+      "bookDescription" : "You don’t need to be alike to be friends. When two very different children meet an unusual creature, it’s a chance to ask, How About You?",
+      "bookEnabled" : true,
+      "bookLanguage" : "-KT3Hmo6eLZ_eAPu-QXZ",
+      "bookTitle" : "How about you?",
+      "bookUrl" : "books/en/tfss-4f33f4d8-9885-445e-a0a4-a5f115296d18-howaboutyou-en.zip",
+      "contributors" : {
+        "-KT3HmoghEBK5VW9uzdV" : true,
+        "-KT3HmqQuHTStOt3aBTh" : true,
+        "-KT3HmqZvcj0U4BvExHh" : true
+      },
+      "createdDate" : 1449082082603
+    },
+    "-KT3HmteNWK35-5tg3qK" : {
+      "bookCoverPageUrl" : "book_covers/en/bookdash1-slothenglishslothcover-english.jpg",
+      "bookDescription" : "He’s quite good at climbing. He knows how to swing. But sleeping’s his favourite, favourite thing!",
+      "bookEnabled" : true,
+      "bookLanguage" : "-KT3Hmo6eLZ_eAPu-QXZ",
+      "bookTitle" : "Sleepy Mr Sloth",
+      "bookUrl" : "books/en/tfss-d616364b-d3f1-49cd-995a-39b415a5c4d9-sloth-1.zip",
+      "contributors" : {
+        "-KT3HmowguIObUjY-Kdk" : true,
+        "-KT3Hmoxqgjahw4SVkNQ" : true,
+        "-KT3Hmp3zPfEQ36r6qou" : true,
+        "-KT3HmphsKDPRprb9XEV" : true,
+        "-KT3HmqoP86xHaAkUfVd" : true
+      },
+      "createdDate" : 1442935010518
+    },
+    "-KUDkW0vY-BScrg2xZmU" : {
+      "bookCoverPageUrl" : "book_covers/en/katiitis-song-english-Page_01.jpg",
+      "bookDescription" : "Every day, Katiiti’s mother calls her with a beautiful song. One day, a crafty gorilla tries to sing as sweetly as her mother. ",
+      "bookEnabled" : true,
+      "bookLanguage" : "-KT3Hmo6eLZ_eAPu-QXZ",
+      "bookTitle" : "Katiiti's Song",
+      "bookUrl" : "books/en/katiitis-song-english.zip",
+      "contributors" : {
+        "-KUDlEtb-JjdPC3ed-bk" : true,
+        "-KUDlT97xgRKQUJfPo8j" : true,
+        "-KUDlkFgF84Fm0JkaA7p" : true
+      },
+      "createdDate" : 1457136000000
+    }
+  },
+  "bd_contributors" : {
+    "-KT3Hmodr5SKOWGZ2xGM" : {
+      "avatar" : "contributors/tfss-ec5d28b2-23a5-4a1e-9f24-92cd94c5a16a-lauren-rycroft-150x150.png",
+      "name" : "Lauren Rycroft",
+      "roles" : {
+        "-KT3Hmock0E684XLX23U" : true
+      }
+    },
+    "-KT3HmoezvVj92E4LH_o" : {
+      "avatar" : "contributors/tfss-ef0baf8b-81b8-4a3e-863f-01456aa9775b-damian-gibbs-150x150.png",
+      "name" : "Damian Gibbs",
+      "roles" : {
+        "-KT3Hmock0E684XLX23U" : true
+      }
+    },
+    "-KT3HmoezvVj92E4LH_p" : {
+      "avatar" : "contributors/tfss-32017c6a-88f5-4022-ba8c-bcd42e379b8d-roberto-pita-150x150.png",
+      "name" : "Roberto Pita",
+      "roles" : {
+        "-KT3Hmock0E684XLX23U" : true
+      }
+    },
+    "-KT3HmoghEBK5VW9uzdV" : {
+      "name" : "Margot Bertelsmann",
+      "roles" : {
+        "-KT3HmofJSKsmB0ULX3S" : true
+      }
+    },
+    "-KT3HmohzVfcFm7BYOb6" : {
+      "name" : "Marteli Kleyn",
+      "roles" : {
+        "-KT3Hmock0E684XLX23U" : true
+      }
+    },
+    "-KT3HmoikmOK9WR2AEJ8" : {
+      "name" : "Audrey Anderson",
+      "roles" : {
+        "-KT3HmoikmOK9WR2AEJ7" : true
+      }
+    },
+    "-KT3HmojlQ0TIk0W9JiE" : {
+      "name" : "Jennifer Jacobs",
+      "roles" : {
+        "-KT3Hmock0E684XLX23U" : true
+      }
+    },
+    "-KT3HmooCfp14GKMgMfz" : {
+      "avatar" : "contributors/tfss-daf5b7dc-63c8-4e6f-b77a-ffd689ff44d0-karen-lilje-150x150.png",
+      "name" : "Karen Lilje",
+      "roles" : {
+        "-KT3HmoikmOK9WR2AEJ7" : true
+      }
+    },
+    "-KT3HmopuhDGRDtZiF7H" : {
+      "name" : "Sonia Dearling",
+      "roles" : {
+        "-KT3HmoikmOK9WR2AEJ7" : true
+      }
+    },
+    "-KT3HmoqE-ursqCU-ak4" : {
+      "name" : "Michele Fry",
+      "roles" : {
+        "-KT3HmofJSKsmB0ULX3S" : true
+      }
+    },
+    "-KT3HmorM2aycQwHF0hX" : {
+      "avatar" : "contributors/tfss-3c16222e-51a9-45b4-a1ee-1a7b67ef1b7a-liesl-jobson-150x150.png",
+      "name" : "Liesl Jobson",
+      "roles" : {
+        "-KT3HmofJSKsmB0ULX3S" : true
+      }
+    },
+    "-KT3HmouyjOX3qwN0eex" : {
+      "name" : "Lesley Beake",
+      "roles" : {
+        "-KT3HmofJSKsmB0ULX3S" : true
+      }
+    },
+    "-KT3HmovWzlTpfVW_ixg" : {
+      "name" : "Éidín Griffin",
+      "roles" : {
+        "-KT3HmoikmOK9WR2AEJ7" : true
+      }
+    },
+    "-KT3HmowguIObUjY-Kdk" : {
+      "avatar" : "contributors/tfss-7c85d3f7-31ab-4826-afd3-3474d4fecd6f-arthur1-150x150.png",
+      "name" : "Arthur Attwell",
+      "roles" : {
+        "-KT3Hmock0E684XLX23U" : true,
+        "-KT3HmowguIObUjY-Kdj" : true
+      }
+    },
+    "-KT3Hmoxqgjahw4SVkNQ" : {
+      "avatar" : "contributors/tfss-9c726f71-36a1-4363-8b43-c22cd7aa9a14-nick-mulgrew1-150x150.png",
+      "name" : "Nick Mulgrew",
+      "roles" : {
+        "-KT3Hmock0E684XLX23U" : true
+      }
+    },
+    "-KT3HmoyOsrnat6cA0fZ" : {
+      "name" : "Jodi Houareau",
+      "roles" : {
+        "-KT3Hmock0E684XLX23U" : true
+      }
+    },
+    "-KT3HmozbNL5U7YGyqHi" : {
+      "name" : "Genevieve Terblanche",
+      "roles" : {
+        "-KT3HmoikmOK9WR2AEJ7" : true
+      }
+    },
+    "-KT3Hmp-TjJJut-i3r3G" : {
+      "name" : "Steven McKimmie",
+      "roles" : {
+        "-KT3HmoikmOK9WR2AEJ7" : true
+      }
+    },
+    "-KT3Hmp04jAo0kZ37mMg" : {
+      "name" : "Andrea Abbott",
+      "roles" : {
+        "-KT3HmofJSKsmB0ULX3S" : true
+      }
+    },
+    "-KT3Hmp3zPfEQ36r6qou" : {
+      "avatar" : "contributors/tfss-1eb8a145-84c3-4dc4-851b-ffa641d0ce7d-tarryn1-150x150.png",
+      "name" : "Tarryn-Anne Anderson",
+      "roles" : {
+        "-KT3Hmp17FkTaQU5pe1r" : true,
+        "-KT3Hmp2A7gxHccvFYHH" : true
+      }
+    },
+    "-KT3Hmp4rvGl75w6_nhN" : {
+      "name" : "Helen Brain",
+      "roles" : {
+        "-KT3HmofJSKsmB0ULX3S" : true
+      }
+    },
+    "-KT3Hmp5g7Spchtg4HUP" : {
+      "name" : "Jano Strydom",
+      "roles" : {
+        "-KT3HmoikmOK9WR2AEJ7" : true
+      }
+    },
+    "-KT3Hmp5g7Spchtg4HUQ" : {
+      "name" : "Mary-Anne Hampton",
+      "roles" : {
+        "-KT3HmoikmOK9WR2AEJ7" : true
+      }
+    },
+    "-KT3Hmp6mhseypynyqw2" : {
+      "name" : "Simóne van der Spuy",
+      "roles" : {
+        "-KT3HmoikmOK9WR2AEJ7" : true
+      }
+    },
+    "-KT3Hmp8v9QqUE9UG-B_" : {
+      "name" : "Marisa Steyn",
+      "roles" : {
+        "-KT3Hmock0E684XLX23U" : true
+      }
+    },
+    "-KT3Hmp9tI6bOMO6ZiuH" : {
+      "name" : "Nerissa Govender",
+      "roles" : {
+        "-KT3HmofJSKsmB0ULX3S" : true
+      }
+    },
+    "-KT3Hmp9tI6bOMO6ZiuI" : {
+      "avatar" : "contributors/tfss-6d596f16-a5a6-4435-8f18-a50b3a72b1b8-tracy-lynn-chemaly-150x150.png",
+      "name" : "Tracy Lynn Chemaly",
+      "roles" : {
+        "-KT3HmofJSKsmB0ULX3S" : true
+      }
+    },
+    "-KT3HmpA423Po194ynLZ" : {
+      "name" : "Robert McEwan",
+      "roles" : {
+        "-KT3HmoikmOK9WR2AEJ7" : true
+      }
+    },
+    "-KT3HmpCPX53G1HXCYaR" : {
+      "name" : "Sinomonde Ngwane",
+      "roles" : {
+        "-KT3HmoikmOK9WR2AEJ7" : true
+      }
+    },
+    "-KT3HmpCPX53G1HXCYaS" : {
+      "avatar" : "contributors/tfss-b9490522-a4e8-4cb3-806c-c49f7772898e-louwrisa-blaauw-150x150.png",
+      "name" : "Louwrisa Blaauw",
+      "roles" : {
+        "-KT3HmoikmOK9WR2AEJ7" : true
+      }
+    },
+    "-KT3HmpDtSATfPYIO9Ld" : {
+      "name" : "Mark Hardie",
+      "roles" : {
+        "-KT3Hmock0E684XLX23U" : true
+      }
+    },
+    "-KT3HmpEDeVaC8yOxtnL" : {
+      "avatar" : "contributors/tfss-2a35d97a-0d17-4239-9c58-c59bf0ae52d4-marli-fourie-150x150.png",
+      "name" : "Marli Fourie",
+      "roles" : {
+        "-KT3Hmock0E684XLX23U" : true
+      }
+    },
+    "-KT3HmpIDqrLWww02Zie" : {
+      "avatar" : "contributors/tfss-d09607c1-a2f1-4237-8e95-74f98e6a5c00-jade-mathieson-150x150.png",
+      "name" : "Jade Mathieson",
+      "roles" : {
+        "-KT3HmofJSKsmB0ULX3S" : true,
+        "-KT3HmoikmOK9WR2AEJ7" : true
+      }
+    },
+    "-KT3HmpJcoqqWU4yTgPz" : {
+      "name" : "Vian Oelofsen",
+      "roles" : {
+        "-KT3HmpJcoqqWU4yTgPy" : true
+      }
+    },
+    "-KT3HmpK-_gKbeJdmM-T" : {
+      "name" : "Selina Morulane",
+      "roles" : {
+        "-KT3HmoikmOK9WR2AEJ7" : true
+      }
+    },
+    "-KT3HmpM06_duoPoIwSL" : {
+      "name" : "Megan Lotter",
+      "roles" : {
+        "-KT3HmoikmOK9WR2AEJ7" : true
+      }
+    },
+    "-KT3HmpNNPdzZKI9FDOS" : {
+      "name" : "Michael Tymbios",
+      "roles" : {
+        "-KT3HmoikmOK9WR2AEJ7" : true
+      }
+    },
+    "-KT3HmpNNPdzZKI9FDOT" : {
+      "name" : "Sam Beckbessinger",
+      "roles" : {
+        "-KT3HmofJSKsmB0ULX3S" : true
+      }
+    },
+    "-KT3HmpONNpdav5srGX6" : {
+      "name" : "Claire Ingram",
+      "roles" : {
+        "-KT3HmoikmOK9WR2AEJ7" : true
+      }
+    },
+    "-KT3HmpPWaI6bZWCDoTv" : {
+      "name" : "Kate Sidley",
+      "roles" : {
+        "-KT3HmofJSKsmB0ULX3S" : true
+      }
+    },
+    "-KT3HmpQRaLoRhnphX2e" : {
+      "name" : "Sam Wilson",
+      "roles" : {
+        "-KT3HmofJSKsmB0ULX3S" : true
+      }
+    },
+    "-KT3HmpQRaLoRhnphX2f" : {
+      "name" : "Jon Keevy",
+      "roles" : {
+        "-KT3HmofJSKsmB0ULX3S" : true
+      }
+    },
+    "-KT3HmpRg60mW1T4i0tX" : {
+      "name" : "Raeesah Vawda",
+      "roles" : {
+        "-KT3Hmock0E684XLX23U" : true
+      }
+    },
+    "-KT3HmpSip3EwNeeHjpR" : {
+      "name" : "Siya Masuku",
+      "roles" : {
+        "-KT3HmoikmOK9WR2AEJ7" : true
+      }
+    },
+    "-KT3HmpTTmZqTl4Oj2nL" : {
+      "name" : "Chani Coetzee",
+      "roles" : {
+        "-KT3Hmock0E684XLX23U" : true
+      }
+    },
+    "-KT3Hmp_MYfsceKIqCAH" : {
+      "avatar" : "contributors/tfss-34f67aa1-097a-4018-bf8c-8109d20305da-maya-fowler-150x150.png",
+      "name" : "Maya Marshak",
+      "roles" : {
+        "-KT3HmofJSKsmB0ULX3S" : true,
+        "-KT3HmpWBUkDZOeFbpIN" : true
+      }
+    },
+    "-KT3Hmpb6prjMtey-3VZ" : {
+      "name" : "Thokozani Mkhize",
+      "roles" : {
+        "-KT3Hmock0E684XLX23U" : true
+      }
+    },
+    "-KT3HmpcOrQ95gR6WkUg" : {
+      "name" : "Jess Jardim-Wedepohl",
+      "roles" : {
+        "-KT3HmoikmOK9WR2AEJ7" : true
+      }
+    },
+    "-KT3HmpeKekAPT6XD29c" : {
+      "name" : "Emma Hearne",
+      "roles" : {
+        "-KT3Hmock0E684XLX23U" : true
+      }
+    },
+    "-KT3HmpgbTYsSVwD-gRn" : {
+      "name" : "Leona Ingram",
+      "roles" : {
+        "-KT3Hmock0E684XLX23U" : true
+      }
+    },
+    "-KT3HmphsKDPRprb9XEV" : {
+      "avatar" : "contributors/tfss-1c321493-1446-493a-9d14-138e1f658aa4-paul-kennedy1-150x150.png",
+      "name" : "Paul Kennedy",
+      "roles" : {
+        "-KT3HmofJSKsmB0ULX3S" : true
+      }
+    },
+    "-KT3HmphsKDPRprb9XEW" : {
+      "name" : "Candice Di Talamo",
+      "roles" : {
+        "-KT3HmoikmOK9WR2AEJ7" : true
+      }
+    },
+    "-KT3Hmpi1P-PnyjINBO9" : {
+      "name" : "Kerry Saadien-Raad",
+      "roles" : {
+        "-KT3HmofJSKsmB0ULX3S" : true
+      }
+    },
+    "-KT3Hmpk13bsRjHREcEd" : {
+      "avatar" : "contributors/tfss-e0016157-efd0-42a2-b6a7-968b3f1d9b56-maya-fowler-150x150.png",
+      "name" : "Maya Fowler",
+      "roles" : {
+        "-KT3HmofJSKsmB0ULX3S" : true,
+        "-KT3HmpWBUkDZOeFbpIN" : true
+      }
+    },
+    "-KT3HmplBU_7zqluhikX" : {
+      "name" : "Cristy Zinn",
+      "roles" : {
+        "-KT3HmofJSKsmB0ULX3S" : true
+      }
+    },
+    "-KT3HmplBU_7zqluhikY" : {
+      "avatar" : "contributors/tfss-7cf32fd9-dfd7-4518-ba94-03ee3f7895e7-jesse-breytenbach-150x150.png",
+      "name" : "Jesse Breytenbach",
+      "roles" : {
+        "-KT3HmoikmOK9WR2AEJ7" : true
+      }
+    },
+    "-KT3Hmpnu3iK0RvMU--r" : {
+      "name" : "Thomas Pepler",
+      "roles" : {
+        "-KT3Hmock0E684XLX23U" : true
+      }
+    },
+    "-KT3Hmpp8aqOMOwALU60" : {
+      "name" : "Lili Probart",
+      "roles" : {
+        "-KT3HmoikmOK9WR2AEJ7" : true
+      }
+    },
+    "-KT3HmpqTTgqN4PIKJkL" : {
+      "avatar" : "contributors/tfss-42cda626-04ed-4439-b5f6-4043c3ac9d19-jacqui-lange-150x150.png",
+      "name" : "Jacqui L’Ange",
+      "roles" : {
+        "-KT3HmofJSKsmB0ULX3S" : true
+      }
+    },
+    "-KT3Hmprx_QraXxa42oe" : {
+      "avatar" : "contributors/tfss-9d1cbbce-ef4c-4e3c-a6d1-34f83f1dccde-nazli-jacobs-150x150.png",
+      "name" : "Nazli Jacobs",
+      "roles" : {
+        "-KT3Hmock0E684XLX23U" : true
+      }
+    },
+    "-KT3Hmpscac4zJeFSS2Y" : {
+      "avatar" : "contributors/tfss-5ceeba9f-ec33-47a6-8f64-823c712329ac-jessica-taylor-150x150.png",
+      "name" : "Jessica Taylor",
+      "roles" : {
+        "-KT3HmofJSKsmB0ULX3S" : true
+      }
+    },
+    "-KT3HmpuXJGT6Hr0FLLc" : {
+      "name" : "Gerhard Van Wyk",
+      "roles" : {
+        "-KT3HmoikmOK9WR2AEJ7" : true
+      }
+    },
+    "-KT3HmpxDRurVvagUYzC" : {
+      "name" : "Mosa Mahlaba",
+      "roles" : {
+        "-KT3HmofJSKsmB0ULX3S" : true
+      }
+    },
+    "-KT3Hmpy3X_oeaT0XPH6" : {
+      "name" : "Ann Roberts",
+      "roles" : {
+        "-KT3Hmock0E684XLX23U" : true
+      }
+    },
+    "-KT3Hmpy3X_oeaT0XPH7" : {
+      "avatar" : "contributors/tfss-3fdd9191-6cc2-4b68-a3dd-f0f9b56ea81a-karlien-de-villiers-150x150.png",
+      "name" : "Karlien de Villiers",
+      "roles" : {
+        "-KT3HmoikmOK9WR2AEJ7" : true
+      }
+    },
+    "-KT3Hmq-w9n0Xqq1b-Rx" : {
+      "name" : "Lauren Holliday",
+      "roles" : {
+        "-KT3HmoikmOK9WR2AEJ7" : true
+      }
+    },
+    "-KT3Hmq1MOfBNErfG90M" : {
+      "name" : "Olivia Villet",
+      "roles" : {
+        "-KT3HmoikmOK9WR2AEJ7" : true
+      }
+    },
+    "-KT3Hmq2EJae53ojnuhl" : {
+      "name" : "Fred Strydom",
+      "roles" : {
+        "-KT3HmofJSKsmB0ULX3S" : true
+      }
+    },
+    "-KT3Hmq2EJae53ojnuhm" : {
+      "avatar" : "contributors/tfss-0a9767df-6614-4e75-8ea5-003c45ad2e48-james-woolley-150x150.png",
+      "name" : "James Woolley",
+      "roles" : {
+        "-KT3HmoikmOK9WR2AEJ7" : true
+      }
+    },
+    "-KT3Hmq3-bJrZUtc-QXb" : {
+      "name" : "Andy Thesen",
+      "roles" : {
+        "-KT3Hmock0E684XLX23U" : true
+      }
+    },
+    "-KT3Hmq3-bJrZUtc-QXc" : {
+      "name" : "Alexandria Mackinnon",
+      "roles" : {
+        "-KT3Hmock0E684XLX23U" : true
+      }
+    },
+    "-KT3Hmq40gj5Tr6zY8x9" : {
+      "name" : "Roxana Bouwer",
+      "roles" : {
+        "-KT3HmofJSKsmB0ULX3S" : true
+      }
+    },
+    "-KT3Hmq5-qXwEhJmSYUf" : {
+      "name" : "Marike Beyleveld",
+      "roles" : {
+        "-KT3Hmq40gj5Tr6zY8xA" : true
+      }
+    },
+    "-KT3Hmq7Z9V5mZdj0Jrp" : {
+      "name" : "Chenél Ferreira",
+      "roles" : {
+        "-KT3Hmock0E684XLX23U" : true
+      }
+    },
+    "-KT3Hmq8-vVjtt_r7FjT" : {
+      "name" : "Catherine Holtzhausen",
+      "roles" : {
+        "-KT3HmoikmOK9WR2AEJ7" : true
+      }
+    },
+    "-KT3Hmq9_W0PgW2bumA1" : {
+      "name" : "Fathima Kathrada",
+      "roles" : {
+        "-KT3Hmock0E684XLX23U" : true
+      }
+    },
+    "-KT3HmqAh7rBr-FLINIF" : {
+      "avatar" : "contributors/tfss-0b54b73a-248c-4dd8-bc03-439bd6137b07-sam-scarborough-150x150.png",
+      "name" : "Sam Scarborough",
+      "roles" : {
+        "-KT3Hmock0E684XLX23U" : true
+      }
+    },
+    "-KT3HmqBwPpYtmQf_hoM" : {
+      "name" : "Corinne Lamoral-Rosmarin",
+      "roles" : {
+        "-KT3HmofJSKsmB0ULX3S" : true
+      }
+    },
+    "-KT3HmqCMhDGgkrIyzwM" : {
+      "name" : "Lwando Xaso",
+      "roles" : {
+        "-KT3HmofJSKsmB0ULX3S" : true
+      }
+    },
+    "-KT3HmqCMhDGgkrIyzwN" : {
+      "name" : "Megan Andrews",
+      "roles" : {
+        "-KT3HmoikmOK9WR2AEJ7" : true
+      }
+    },
+    "-KT3HmqDfNo5yYf1mAKJ" : {
+      "name" : "Elana Bregin",
+      "roles" : {
+        "-KT3HmofJSKsmB0ULX3S" : true
+      }
+    },
+    "-KT3HmqDfNo5yYf1mAKK" : {
+      "name" : "Stefania Origgi",
+      "roles" : {
+        "-KT3Hmock0E684XLX23U" : true
+      }
+    },
+    "-KT3HmqEmzPfZAaRZNPx" : {
+      "avatar" : "contributors/tfss-0b92eb7b-8b67-43af-a2ef-d3e25eeb35d7-amy-uzzell-150x150.png",
+      "name" : "Amy Uzzell",
+      "roles" : {
+        "-KT3HmoikmOK9WR2AEJ7" : true
+      }
+    },
+    "-KT3HmqFM5lLzVKnY0dg" : {
+      "name" : "Brendon O’Neill",
+      "roles" : {
+        "-KT3HmofJSKsmB0ULX3S" : true
+      }
+    },
+    "-KT3HmqFM5lLzVKnY0dh" : {
+      "avatar" : "contributors/tfss-3efa8260-b797-4263-97d2-52aa028a2dc6-cherene-pienaar-150x150.png",
+      "name" : "Cherene Pienaar",
+      "roles" : {
+        "-KT3HmofJSKsmB0ULX3S" : true
+      }
+    },
+    "-KT3HmqGHche7iJpS1tl" : {
+      "name" : "Wendy Morison",
+      "roles" : {
+        "-KT3HmoikmOK9WR2AEJ7" : true
+      }
+    },
+    "-KT3HmqH7q9jKW8krode" : {
+      "avatar" : "contributors/tfss-84dbc567-7187-435f-87c1-f9c0e56b9203-louise-gale1-150x150.png",
+      "name" : "Louise Gale",
+      "roles" : {
+        "-KT3Hmock0E684XLX23U" : true
+      }
+    },
+    "-KT3HmqH7q9jKW8krodf" : {
+      "name" : "Celeste Beckerling",
+      "roles" : {
+        "-KT3HmoikmOK9WR2AEJ7" : true
+      }
+    },
+    "-KT3HmqIoajuX4Zgb0h9" : {
+      "name" : "Marike le Roux",
+      "roles" : {
+        "-KT3Hmock0E684XLX23U" : true
+      }
+    },
+    "-KT3HmqJnWX05waJ5G4e" : {
+      "name" : "Lindy Pelzl",
+      "roles" : {
+        "-KT3HmoikmOK9WR2AEJ7" : true
+      }
+    },
+    "-KT3HmqJnWX05waJ5G4f" : {
+      "name" : "Wesley Thompson",
+      "roles" : {
+        "-KT3Hmock0E684XLX23U" : true
+      }
+    },
+    "-KT3HmqKuKhIhH5PZiFd" : {
+      "name" : "Julie Smith-Belton",
+      "roles" : {
+        "-KT3Hmock0E684XLX23U" : true
+      }
+    },
+    "-KT3HmqLNXNBwrBQE1Ni" : {
+      "name" : "Brad Cuzen",
+      "roles" : {
+        "-KT3HmoikmOK9WR2AEJ7" : true
+      }
+    },
+    "-KT3HmqLNXNBwrBQE1Nj" : {
+      "name" : "Candice Dingwall ",
+      "roles" : {
+        "-KT3HmofJSKsmB0ULX3S" : true
+      }
+    },
+    "-KT3HmqMtsQS98gMg5YO" : {
+      "name" : "Zanele Dlamini",
+      "roles" : {
+        "-KT3HmofJSKsmB0ULX3S" : true
+      }
+    },
+    "-KT3HmqMtsQS98gMg5YP" : {
+      "name" : "Louis Greenberg",
+      "roles" : {
+        "-KT3HmofJSKsmB0ULX3S" : true
+      }
+    },
+    "-KT3HmqNKk7xQ-Pai3Wz" : {
+      "avatar" : "contributors/tfss-526109b1-b87f-4453-a449-e124835b8106-melissa-fagan-150x150.png",
+      "name" : "Melissa Fagan",
+      "roles" : {
+        "-KT3HmofJSKsmB0ULX3S" : true
+      }
+    },
+    "-KT3HmqOmPJdm8Kp_Wdt" : {
+      "avatar" : "contributors/tfss-bc6117ed-25e0-49a4-9fbd-1181d852e91b-nicola-rijsdijk-150x150.png",
+      "name" : "Nicola Rijsdijk",
+      "roles" : {
+        "-KT3HmofJSKsmB0ULX3S" : true
+      }
+    },
+    "-KT3HmqPPru2eZ37z5hg" : {
+      "avatar" : "contributors/tfss-0bae42dc-a660-41e7-9005-c33212f7a746-mathilde-de-blois-150x150.png",
+      "name" : "Mathilde de Blois",
+      "roles" : {
+        "-KT3Hmock0E684XLX23U" : true
+      }
+    },
+    "-KT3HmqQuHTStOt3aBTh" : {
+      "name" : "Ronèll Botes",
+      "roles" : {
+        "-KT3Hmock0E684XLX23U" : true
+      }
+    },
+    "-KT3HmqQuHTStOt3aBTi" : {
+      "name" : "Sibusiso Mkhwanazi",
+      "roles" : {
+        "-KT3Hmock0E684XLX23U" : true
+      }
+    },
+    "-KT3HmqRKtGlyeIxGx5P" : {
+      "avatar" : "contributors/tfss-bbfcd67a-5873-406c-a0de-bad3da1abc15-thea-nicole-de-klerk-150x150.png",
+      "name" : "Thea Nicole De Klerk",
+      "roles" : {
+        "-KT3HmofJSKsmB0ULX3S" : true
+      }
+    },
+    "-KT3HmqSHqjYC1ncgM2r" : {
+      "name" : "Lara de Groot",
+      "roles" : {
+        "-KT3Hmock0E684XLX23U" : true
+      }
+    },
+    "-KT3HmqTxJoj8Bfe3nB-" : {
+      "avatar" : "contributors/tfss-e9057b24-03df-41cc-b03c-e4953885074b-sarah-jane-williams-150x150.png",
+      "name" : "Sarah-Jane Williams",
+      "roles" : {
+        "-KT3HmoikmOK9WR2AEJ7" : true
+      }
+    },
+    "-KT3HmqTxJoj8Bfe3nB0" : {
+      "avatar" : "contributors/tfss-d60ca108-ef80-4d76-b00f-fc0d394a8015-liz-sparg-150x150.png",
+      "name" : "Liz Sparg",
+      "roles" : {
+        "-KT3HmofJSKsmB0ULX3S" : true
+      }
+    },
+    "-KT3HmqVaupPr06oqm4A" : {
+      "name" : "Natalie Edwards",
+      "roles" : {
+        "-KT3HmoikmOK9WR2AEJ7" : true
+      }
+    },
+    "-KT3HmqWiGNwrKkxe_M-" : {
+      "avatar" : "contributors/tfss-75f0838a-b506-447b-853a-6ef0b30f4ba0-nicola-rijsdijk-150x150.png",
+      "name" : "Nicola Rijsdijk",
+      "roles" : {
+        "-KT3HmofJSKsmB0ULX3S" : true
+      }
+    },
+    "-KT3HmqZvcj0U4BvExHh" : {
+      "name" : "Renate van Rensburg",
+      "roles" : {
+        "-KT3HmoikmOK9WR2AEJ7" : true
+      }
+    },
+    "-KT3HmqhCjCqXPXoj4Af" : {
+      "name" : "Nadene Kriel",
+      "roles" : {
+        "-KT3Hmock0E684XLX23U" : true
+      }
+    },
+    "-KT3HmqiZh7sllugwldl" : {
+      "name" : "Thulisizwe Mamba",
+      "roles" : {
+        "-KT3Hmock0E684XLX23U" : true
+      }
+    },
+    "-KT3HmqjqwfyjHBnEfbn" : {
+      "name" : "Gwendoline van der Merwe",
+      "roles" : {
+        "-KT3HmoikmOK9WR2AEJ7" : true
+      }
+    },
+    "-KT3Hmqk7Sizij1aKkBB" : {
+      "avatar" : "contributors/tfss-5d193e6a-c5ae-4e98-9f3c-2aac3812c3a1-samantha-cutler-150x150.png",
+      "name" : "Samantha Cutler",
+      "roles" : {
+        "-KT3HmoikmOK9WR2AEJ7" : true
+      }
+    },
+    "-KT3HmqlYUYcoxRs9hJ2" : {
+      "avatar" : "contributors/tfss-b05a2f00-3519-4943-ac9c-3fffcfae6b1f-rachel-zadok-150x150.png",
+      "name" : "Rachel Zadok",
+      "roles" : {
+        "-KT3HmofJSKsmB0ULX3S" : true
+      }
+    },
+    "-KT3HmqlYUYcoxRs9hJ3" : {
+      "name" : "Nathalie Koenig",
+      "roles" : {
+        "-KT3HmofJSKsmB0ULX3S" : true
+      }
+    },
+    "-KT3HmqmX1KLOfxKOrfh" : {
+      "name" : "Sarah Bouwer",
+      "roles" : {
+        "-KT3HmoikmOK9WR2AEJ7" : true
+      }
+    },
+    "-KT3HmqntN605FjK2ddH" : {
+      "name" : "Nadene Kriel",
+      "roles" : {
+        "-KT3Hmock0E684XLX23U" : true
+      }
+    },
+    "-KT3HmqoP86xHaAkUfVd" : {
+      "avatar" : "contributors/tfss-f6164acb-51a6-4aae-963c-652747e001a5-graham-paterson1-150x150.png",
+      "name" : "Graham Paterson",
+      "roles" : {
+        "-KT3HmoikmOK9WR2AEJ7" : true
+      }
+    },
+    "-KT3HmqprxQ0oViXssQr" : {
+      "name" : "Wesley van Eeden",
+      "roles" : {
+        "-KT3HmoikmOK9WR2AEJ7" : true
+      }
+    },
+    "-KT3HmqqvizGEo_SRuij" : {
+      "avatar" : "contributors/tfss-912b4c33-750c-465c-82df-439a3566292d-katrin-coetzer-150x150.png",
+      "name" : "Katrien Coetzer",
+      "roles" : {
+        "-KT3HmoikmOK9WR2AEJ7" : true
+      }
+    },
+    "-KT3HmqqvizGEo_SRuik" : {
+      "name" : "Alice Toich",
+      "roles" : {
+        "-KT3HmoikmOK9WR2AEJ7" : true
+      }
+    },
+    "-KT3Hmqr3wi_u7EDUWQc" : {
+      "name" : "Lauren Nel",
+      "roles" : {
+        "-KT3HmoikmOK9WR2AEJ7" : true
+      }
+    },
+    "-KT3HmqtU05_SRq02dDP" : {
+      "name" : "Bianca de Jong",
+      "roles" : {
+        "-KT3Hmock0E684XLX23U" : true,
+        "-KT3HmoikmOK9WR2AEJ7" : true
+      }
+    },
+    "-KT3HmqtU05_SRq02dDQ" : {
+      "avatar" : "contributors/tfss-4f836b9d-fe32-44c4-9ab3-d28a9c0ceee4-vianne-venter-150x150.png",
+      "name" : "Vianne Venter",
+      "roles" : {
+        "-KT3HmofJSKsmB0ULX3S" : true
+      }
+    },
+    "-KT3HmquAOXbjLMzxMLj" : {
+      "name" : "Telri Stoop",
+      "roles" : {
+        "-KT3Hmock0E684XLX23U" : true
+      }
+    },
+    "-KT3HmqvLGRI9pMNU9Um" : {
+      "name" : "Stephen Wallace",
+      "roles" : {
+        "-KT3Hmock0E684XLX23U" : true
+      }
+    },
+    "-KT3HmqvLGRI9pMNU9Un" : {
+      "name" : "Robyn Penn",
+      "roles" : {
+        "-KT3HmoikmOK9WR2AEJ7" : true
+      }
+    },
+    "-KT3HmqwY1cEiJjMno6C" : {
+      "name" : "Martha Evans",
+      "roles" : {
+        "-KT3HmofJSKsmB0ULX3S" : true
+      }
+    },
+    "-KT3Hmqx3fhJNSXxCXkt" : {
+      "avatar" : "contributors/tfss-f0df67cb-2a3b-4ff5-9695-e32c9be6fc7b-elsabe-milandri-150x150.png",
+      "name" : "Elsabé Milandri ",
+      "roles" : {
+        "-KT3HmoikmOK9WR2AEJ7" : true
+      }
+    },
+    "-KT3Hmqx3fhJNSXxCXku" : {
+      "name" : "Nozizwe Herero",
+      "roles" : {
+        "-KT3HmofJSKsmB0ULX3S" : true
+      }
+    },
+    "-KT3Hmqz3u6Os1ip02wl" : {
+      "avatar" : "contributors/tfss-b85c8e02-1597-4fa6-bd5a-eb6ab44b9566-tess-gadd-150x150.png",
+      "name" : "Tess Gadd",
+      "roles" : {
+        "-KT3Hmock0E684XLX23U" : true
+      }
+    },
+    "-KT3Hmqz3u6Os1ip02wm" : {
+      "avatar" : "contributors/tfss-fa558746-d99f-4ffa-ba58-2ae6ab6d11c4-mia-du-plessis-150x150.png",
+      "name" : "Mia du Plessis",
+      "roles" : {
+        "-KT3HmoikmOK9WR2AEJ7" : true
+      }
+    },
+    "-KT3Hmr-zwweA659rjJp" : {
+      "name" : "Megan Pirie",
+      "roles" : {
+        "-KT3HmofJSKsmB0ULX3S" : true
+      }
+    },
+    "-KT3Hmr0ehwJi2qbl7Yz" : {
+      "name" : "Thea Nicole de Klerk",
+      "roles" : {
+        "-KT3HmoikmOK9WR2AEJ7" : true
+      }
+    },
+    "-KUDlEtb-JjdPC3ed-bk" : {
+      "avatar" : "contributors/phillipa_thumb-150x150.jpg",
+      "name" : "Philippa Namutebi Kabali-Kagwa",
+      "roles" : {
+        "-KT3HmofJSKsmB0ULX3S" : true
+      }
+    },
+    "-KUDlT97xgRKQUJfPo8j" : {
+      "avatar" : " ",
+      "name" : "Mary Marble",
+      "roles" : {
+        "-KT3HmoikmOK9WR2AEJ7" : true
+      }
+    },
+    "-KUDlkFgF84Fm0JkaA7p" : {
+      "avatar" : "contributors/kirsten_walker_150x150.jpg",
+      "name" : "Kirsten Walker",
+      "roles" : {
+        "-KT3Hmock0E684XLX23U" : true
+      }
+    }
+  },
+  "bd_languages" : {
+    "-KT3Hmnq1JlS5AuXxB6w" : {
+      "enabled" : true,
+      "languageAbbreviation" : "tn",
+      "languageName" : "Setswana"
+    },
+    "-KT3Hmo58c8eCCBg6GR0" : {
+      "enabled" : true,
+      "languageAbbreviation" : "tso",
+      "languageName" : "Xitsonga"
+    },
+    "-KT3Hmo6eLZ_eAPu-QXY" : {
+      "enabled" : true,
+      "languageAbbreviation" : "xh",
+      "languageName" : "isiXhosa"
+    },
+    "-KT3Hmo6eLZ_eAPu-QXZ" : {
+      "enabled" : true,
+      "languageAbbreviation" : "en",
+      "languageName" : "English"
+    },
+    "-KT3Hmo6eLZ_eAPu-QX_" : {
+      "enabled" : true,
+      "languageAbbreviation" : "nr",
+      "languageName" : "isiNdebele"
+    },
+    "-KT3Hmo7MVpw1ifqsUBs" : {
+      "enabled" : true,
+      "languageAbbreviation" : "af",
+      "languageName" : "Afrikaans"
+    },
+    "-KT3Hmo8KfvvoBwFpCnH" : {
+      "enabled" : true,
+      "languageAbbreviation" : "zu",
+      "languageName" : "isiZulu"
+    },
+    "-KT3Hmo8KfvvoBwFpCnI" : {
+      "enabled" : true,
+      "languageAbbreviation" : "st",
+      "languageName" : "Sesotho"
+    },
+    "-KT3Hmo8KfvvoBwFpCnJ" : {
+      "enabled" : true,
+      "languageAbbreviation" : "ve",
+      "languageName" : "Tshivenda"
+    },
+    "-KT3Hmo9gVRslxE2B7nt" : {
+      "enabled" : true,
+      "languageAbbreviation" : "sp",
+      "languageName" : "Sepedi"
+    },
+    "-KT3HmoADEnjRLjLX4ZR" : {
+      "enabled" : true,
+      "languageAbbreviation" : "ss",
+      "languageName" : "Siswati"
+    }
+  },
+  "bd_roles" : {
+    "-KT3Hmock0E684XLX23U" : {
+      "name" : "Designer"
+    },
+    "-KT3HmofJSKsmB0ULX3S" : {
+      "name" : "Writer"
+    },
+    "-KT3HmoikmOK9WR2AEJ7" : {
+      "name" : "Illustrator"
+    },
+    "-KT3HmowguIObUjY-Kdj" : {
+      "name" : "Editor"
+    },
+    "-KT3Hmp17FkTaQU5pe1r" : {
+      "name" : "Facilitator"
+    },
+    "-KT3Hmp2A7gxHccvFYHH" : {
+      "name" : "Management team"
+    },
+    "-KT3HmpJcoqqWU4yTgPy" : {
+      "name" : "Contributor"
+    },
+    "-KT3HmpWBUkDZOeFbpIN" : {
+      "name" : "Translator"
+    }
+  }
+}
