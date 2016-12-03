@@ -70,7 +70,7 @@ android {
 
     productFlavors {
         mock {
-
+            applicationIdSuffix ".qa"
         }
         qa {
             applicationIdSuffix ".qa"
@@ -113,7 +113,9 @@ android {
     }
 }
 dependencies {
-    wearApp project(':watchface')
+    debugWearApp project(path: ':watchface', configuration: 'debugApk')
+    releaseWearApp project(path: ':watchface', configuration: 'releaseApk')
+
     testCompile "junit:junit:$rootProject.ext.junitVersion"
     testCompile "org.mockito:mockito-all:$rootProject.ext.mockitoVersion"
     testCompile "org.hamcrest:hamcrest-all:$rootProject.ext.hamcrestVersion"
@@ -153,8 +155,8 @@ dependencies {
         exclude module: 'support-annotations'
         exclude module: 'support-v4'
     }
-    androidTestCompile 'com.android.support:appcompat-v7:24.2.1'
-    androidTestCompile 'com.android.support:design:24.2.1'
+    androidTestCompile "com.android.support:appcompat-v7:$rootProject.ext.supportLibraryVersion"
+    androidTestCompile "com.android.support:design:$rootProject.ext.supportLibraryVersion"
 
     compile fileTree(dir: 'libs', include: ['*.jar'])
     compile project(':fabbutton')
