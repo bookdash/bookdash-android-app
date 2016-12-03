@@ -6,6 +6,7 @@ import android.text.TextUtils;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 
+import org.bookdash.android.Injection;
 import org.bookdash.android.config.FirebaseConfig;
 
 import java.util.ArrayList;
@@ -51,7 +52,7 @@ public class FireContributor {
         if (avatar == null) {
             return null;
         }
-        StorageReference storageRef = FirebaseStorage.getInstance().getReferenceFromUrl(FirebaseConfig.STORAGE_PREFIX);
+        StorageReference storageRef = FirebaseStorage.getInstance().getReferenceFromUrl(Injection.STORAGE_PREFIX);
         return storageRef.child(avatar);
     }
 

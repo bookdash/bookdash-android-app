@@ -70,6 +70,10 @@ android {
 
     productFlavors {
         mock {
+
+        }
+        qa {
+            applicationIdSuffix ".qa"
         }
         prod {
 
@@ -168,31 +172,31 @@ dependencies {
     compile('com.crashlytics.sdk.android:crashlytics:2.5.3@aar') {
         transitive = true;
     }
-    compile ('za.co.riggaroo:materialhelptutorial:1.2.0'){
+    compile('za.co.riggaroo:materialhelptutorial:1.2.0') {
         exclude module: 'support-v4'
     }
 
-    compile ("com.google.firebase:firebase-invites:${rootProject.ext.googlePlayServicesVersion}"){
+    compile("com.google.firebase:firebase-invites:${rootProject.ext.googlePlayServicesVersion}") {
         exclude module: 'support-v4'
     }
-    compile ("com.google.firebase:firebase-core:${rootProject.ext.googlePlayServicesVersion}"){
+    compile("com.google.firebase:firebase-core:${rootProject.ext.googlePlayServicesVersion}") {
         exclude module: 'support-v4'
     }
     compile "com.google.firebase:firebase-database:${rootProject.ext.googlePlayServicesVersion}"
     compile "com.google.firebase:firebase-messaging:${rootProject.ext.googlePlayServicesVersion}"
-    compile ("com.google.firebase:firebase-config:${rootProject.ext.googlePlayServicesVersion}"){
+    compile("com.google.firebase:firebase-config:${rootProject.ext.googlePlayServicesVersion}") {
         exclude module: 'support-v4'
     }
-    compile ("com.google.firebase:firebase-storage:${rootProject.ext.googlePlayServicesVersion}"){
+    compile("com.google.firebase:firebase-storage:${rootProject.ext.googlePlayServicesVersion}") {
         exclude module: 'support-v4'
     }
     // FirebaseUI Storage only
-    compile ('com.firebaseui:firebase-ui-storage:0.6.1'){
+    compile('com.firebaseui:firebase-ui-storage:0.6.1') {
         exclude module: 'support-v4'
     }
 
 
-    compile ('uk.co.chrisjenx:calligraphy:2.2.0'){
+    compile('uk.co.chrisjenx:calligraphy:2.2.0') {
         exclude module: 'support-v4'
     }
     compile 'io.reactivex:rxandroid:1.2.1'
