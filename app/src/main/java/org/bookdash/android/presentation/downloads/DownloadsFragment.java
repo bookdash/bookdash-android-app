@@ -52,87 +52,6 @@ public class DownloadsFragment extends Fragment implements DownloadsContract.Vie
         return new DownloadsFragment();
     }
 
-    @Nullable
-    @Override
-    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.fragment_downloads, container, false);
-    }
-
-    @Override
-    public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
-        super.onViewCreated(view, savedInstanceState);
-        listDownloadsRecyclerView = (RecyclerView) view.findViewById(R.id.recycler_view_list_downloads);
-        downloadsPresenter = new DownloadsPresenter(Injection.provideBookService(), Injection.provideDownloadService(), Schedulers.io(), AndroidSchedulers.mainThread(), Schedulers.computation());
-        downloadsPresenter.attachView(this);
-        downloadsAdapter = new DownloadsAdapter(null, getActivity(), new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                DownloadsViewHolder downloadsViewHolder = (DownloadsViewHolder) v.getTag();
-                showDeleteDialog(downloadsViewHolder.book);
-
-            }
-        }, new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                DownloadsViewHolder downloadsViewHolder = (DownloadsViewHolder) v.getTag();
-                showBookDetails(downloadsViewHolder.book);
-            }
-        });
-        listDownloadsRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false));
-        listDownloadsRecyclerView.setAdapter(downloadsAdapter);
-
-        linearLayoutErrorScreen = (LinearLayout) view.findViewById(R.id.linear_layout_error);
-        buttonRetry = (Button) view.findViewById(R.id.button_retry);
-        textViewErrorMessage = (TextView) view.findViewById(R.id.text_view_error_screen);
-        circularProgressBar = (CircularProgressBar) view.findViewById(R.id.fragment_loading_downloads);
-        Toolbar toolbar = (Toolbar) view.findViewById(R.id.toolbar);
-        if (navDrawerInterface != null) {
-            navDrawerInterface.setToolbar(toolbar);
-
-        }
-
-        final ActionBar actionBar = ((AppCompatActivity) getActivity()).getSupportActionBar();
-
-        if (actionBar != null) {
-            actionBar.setHomeAsUpIndicator(R.drawable.ic_menu_black_24dp);
-            actionBar.setDisplayHomeAsUpEnabled(true);
-            actionBar.setTitle(getString(R.string.fragment_title_downloads));
-        }
-        downloadsPresenter.loadListDownloads();
-
-        setHasOptionsMenu(false);
-    }
-
-    @Override
-    public void onDestroyView() {
-        super.onDestroyView();
-        downloadsPresenter.detachView();
-
-    }
-
-
-    private void showBookDetails(FireBookDetails bookDetail) {
-        Intent intent = new Intent(getActivity(), BookInfoActivity.class);
-        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-        intent.putExtra(BookInfoActivity.BOOK_PARCEL, bookDetail);
-        startActivity(intent);
-    }
-
-    private void showDeleteDialog(final FireBookDetails bookToDelete) {
-        AlertDialog.Builder builder =
-                new AlertDialog.Builder(getActivity(), R.style.AppCompatAlertDialogStyle);
-        builder.setTitle(getString(R.string.delete_book_confirmation));
-        builder.setMessage(getString(R.string.downloads_are_you_sure, bookToDelete.getBookTitle()));
-        builder.setPositiveButton(getString(R.string.delete_ok), new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                downloadsPresenter.deleteDownload(bookToDelete);
-            }
-        });
-        builder.setNegativeButton(getString(R.string.delete_cancel), null);
-        builder.show();
-    }
-
     @Override
     public void showDownloadedBooks(List<FireBookDetails> books) {
         downloadsAdapter.setBooks(books);
@@ -140,6 +59,11 @@ public class DownloadsFragment extends Fragment implements DownloadsContract.Vie
         listDownloadsRecyclerView.setVisibility(View.VISIBLE);
     }
 
+    @Override
+    public void showLoading(final boolean visible) {
+        circularProgressBar.setVisibility(visible ? View.VISIBLE : View.GONE);
+        listDownloadsRecyclerView.setVisibility(visible ? View.GONE : View.VISIBLE);
+    }
 
     @Override
     public void showErrorScreen(boolean show, String errorMessage, boolean showRetryButton) {
@@ -151,18 +75,6 @@ public class DownloadsFragment extends Fragment implements DownloadsContract.Vie
         buttonRetry.setVisibility(showRetryButton ? View.VISIBLE : View.GONE);
         textViewErrorMessage.setText(errorMessage);
 
-    }
-
-    @Override
-    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
-        super.onCreateOptionsMenu(menu, inflater);
-
-    }
-
-    @Override
-    public void showLoading(final boolean visible) {
-        circularProgressBar.setVisibility(visible ? View.VISIBLE : View.GONE);
-        listDownloadsRecyclerView.setVisibility(visible ? View.GONE : View.VISIBLE);
     }
 
     @Override
@@ -194,10 +106,78 @@ public class DownloadsFragment extends Fragment implements DownloadsContract.Vie
         }
     }
 
+    @Nullable
+    @Override
+    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container,
+                             @Nullable Bundle savedInstanceState) {
+        return inflater.inflate(R.layout.fragment_downloads, container, false);
+    }
+
+    @Override
+    public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+        listDownloadsRecyclerView = (RecyclerView) view.findViewById(R.id.recycler_view_list_downloads);
+        downloadsPresenter = new DownloadsPresenter(Injection.provideBookService(), Injection.provideDownloadService(),
+                Injection.provideAnalytics(), Schedulers.io(), AndroidSchedulers.mainThread(),
+                Schedulers.computation());
+        downloadsPresenter.attachView(this);
+        downloadsAdapter = new DownloadsAdapter(null, getActivity(), new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                DownloadsViewHolder downloadsViewHolder = (DownloadsViewHolder) v.getTag();
+                showDeleteDialog(downloadsViewHolder.book);
+
+            }
+        }, new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                DownloadsViewHolder downloadsViewHolder = (DownloadsViewHolder) v.getTag();
+                showBookDetails(downloadsViewHolder.book);
+            }
+        });
+        listDownloadsRecyclerView
+                .setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false));
+        listDownloadsRecyclerView.setAdapter(downloadsAdapter);
+
+        linearLayoutErrorScreen = (LinearLayout) view.findViewById(R.id.linear_layout_error);
+        buttonRetry = (Button) view.findViewById(R.id.button_retry);
+        textViewErrorMessage = (TextView) view.findViewById(R.id.text_view_error_screen);
+        circularProgressBar = (CircularProgressBar) view.findViewById(R.id.fragment_loading_downloads);
+        Toolbar toolbar = (Toolbar) view.findViewById(R.id.toolbar);
+        if (navDrawerInterface != null) {
+            navDrawerInterface.setToolbar(toolbar);
+
+        }
+
+        final ActionBar actionBar = ((AppCompatActivity) getActivity()).getSupportActionBar();
+
+        if (actionBar != null) {
+            actionBar.setHomeAsUpIndicator(R.drawable.ic_menu_black_24dp);
+            actionBar.setDisplayHomeAsUpEnabled(true);
+            actionBar.setTitle(getString(R.string.fragment_title_downloads));
+        }
+        downloadsPresenter.loadListDownloads();
+
+        setHasOptionsMenu(false);
+    }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        downloadsPresenter.detachView();
+
+    }
+
     @Override
     public void onDetach() {
         super.onDetach();
         navDrawerInterface = null;
+    }
+
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        super.onCreateOptionsMenu(menu, inflater);
+
     }
 
     @Override
@@ -212,6 +192,27 @@ public class DownloadsFragment extends Fragment implements DownloadsContract.Vie
 
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    private void showDeleteDialog(final FireBookDetails bookToDelete) {
+        AlertDialog.Builder builder = new AlertDialog.Builder(getActivity(), R.style.AppCompatAlertDialogStyle);
+        builder.setTitle(getString(R.string.delete_book_confirmation));
+        builder.setMessage(getString(R.string.downloads_are_you_sure, bookToDelete.getBookTitle()));
+        builder.setPositiveButton(getString(R.string.delete_ok), new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                downloadsPresenter.deleteDownload(bookToDelete);
+            }
+        });
+        builder.setNegativeButton(getString(R.string.delete_cancel), null);
+        builder.show();
+    }
+
+    private void showBookDetails(FireBookDetails bookDetail) {
+        Intent intent = new Intent(getActivity(), BookInfoActivity.class);
+        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        intent.putExtra(BookInfoActivity.BOOK_PARCEL, bookDetail);
+        startActivity(intent);
     }
 
 

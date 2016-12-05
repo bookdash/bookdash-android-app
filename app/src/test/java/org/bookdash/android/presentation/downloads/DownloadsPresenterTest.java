@@ -2,6 +2,7 @@ package org.bookdash.android.presentation.downloads;
 
 import org.bookdash.android.data.book.BookService;
 import org.bookdash.android.data.book.DownloadService;
+import org.bookdash.android.data.tracking.Analytics;
 import org.bookdash.android.domain.model.firebase.FireBookDetails;
 import org.bookdash.android.domain.model.firebase.FireLanguage;
 import org.junit.After;
@@ -28,6 +29,8 @@ public class DownloadsPresenterTest {
     private BookService bookService;
     @Mock
     private DownloadService downloadService;
+    @Mock
+    private Analytics analytics;
 
     private DownloadsPresenter downloadsPresenter;
 
@@ -39,7 +42,7 @@ public class DownloadsPresenterTest {
     @Before
     public void setUp() throws Exception {
         MockitoAnnotations.initMocks(this);
-        downloadsPresenter = new DownloadsPresenter(bookService, downloadService, Schedulers.immediate(),
+        downloadsPresenter = new DownloadsPresenter(bookService, downloadService, analytics, Schedulers.immediate(),
                 Schedulers.immediate(), Schedulers.immediate());
         language = new FireLanguage("English", "EN", true, "123");
     }
@@ -84,8 +87,8 @@ public class DownloadsPresenterTest {
     public void loadListDownloads_DownloadException_ShowsErrorMessage() {
         downloadsPresenter.attachView(downloadsView);
 
-         when(bookService.getDownloadedBooks()).thenReturn(
-                Observable.<List<FireBookDetails>>error(new Exception("Book Exception")));
+        when(bookService.getDownloadedBooks())
+                .thenReturn(Observable.<List<FireBookDetails>>error(new Exception("Book Exception")));
 
         downloadsPresenter.loadListDownloads();
 
@@ -114,6 +117,7 @@ public class DownloadsPresenterTest {
         verify(downloadsView).showLoading(false);
         verify(downloadsView).showDownloadedBooks(BOOKS);
         verify(downloadService).deleteDownload(sampleBook);
+        verify(analytics).trackDeleteBook(sampleBook);
     }
 
     @Test
@@ -121,8 +125,9 @@ public class DownloadsPresenterTest {
         downloadsPresenter.attachView(downloadsView);
         FireBookDetails sampleBook = new FireBookDetails("Test Book", "test_url", "cover_url_test", true, "description",
                 language, System.currentTimeMillis());
+        String errorMessage = "Failed to delete";
         when(downloadService.deleteDownload(sampleBook))
-                .thenReturn(Observable.<Boolean>error(new Exception("Failed to delete")));
+                .thenReturn(Observable.<Boolean>error(new Exception(errorMessage)));
 
         downloadsPresenter.deleteDownload(sampleBook);
 
@@ -130,6 +135,7 @@ public class DownloadsPresenterTest {
         verify(downloadsView).showLoading(false);
         verify(downloadsView, never()).showDownloadedBooks(BOOKS);
         verify(downloadService).deleteDownload(sampleBook);
-        verify(downloadsView).showSnackBarError("Failed to delete");
+        verify(downloadsView).showSnackBarError(errorMessage);
+        verify(analytics).trackDeleteBookFailed(sampleBook, errorMessage);
     }
 }

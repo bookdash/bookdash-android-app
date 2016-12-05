@@ -13,6 +13,8 @@ public interface MainContract {
         void showAllBooksPage();
 
         void showDownloadedBooksPage();
+
+        void inviteFriends();
     }
 
     interface MainUserActions {
@@ -20,6 +22,12 @@ public interface MainContract {
         void clickViewDownloadBooks();
 
         void clickViewAllBooks();
+
+        void clickRateApp();
+
+        void clickShowContributors();
+
+        void clickInvitePage();
     }
 }
 

@@ -2,6 +2,7 @@ package org.bookdash.android.presentation.listbooks;
 
 import org.bookdash.android.data.book.BookService;
 import org.bookdash.android.data.settings.SettingsRepository;
+import org.bookdash.android.data.tracking.Analytics;
 import org.bookdash.android.domain.model.firebase.FireBookDetails;
 import org.bookdash.android.domain.model.firebase.FireLanguage;
 import org.junit.Before;
@@ -27,12 +28,15 @@ import static org.mockito.Mockito.when;
  */
 public class ListBooksPresenterTest {
 
+
     @Mock
     private BookService bookRepository;
     @Mock
     private ListBooksContract.View listBookView;
     @Mock
     private SettingsRepository settingsRepository;
+    @Mock
+    private Analytics analytics;
     /**
      * Item under test
      */
@@ -44,8 +48,8 @@ public class ListBooksPresenterTest {
     @Before
     public void setup() {
         MockitoAnnotations.initMocks(this);
-        listBooksPresenter = new ListBooksPresenter(settingsRepository, bookRepository, Schedulers.immediate(),
-                Schedulers.immediate());
+        listBooksPresenter = new ListBooksPresenter(settingsRepository, bookRepository, analytics,
+                Schedulers.immediate(), Schedulers.immediate());
         listBooksPresenter.attachView(listBookView);
     }
 
@@ -92,6 +96,5 @@ public class ListBooksPresenterTest {
         verify(listBookView, never()).showBooks(anyList());
         verify(listBookView).showErrorScreen(true, "eek!", true);
     }
-
 
 }

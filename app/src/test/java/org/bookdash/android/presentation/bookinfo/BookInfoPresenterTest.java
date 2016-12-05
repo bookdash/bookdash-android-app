@@ -3,6 +3,7 @@ package org.bookdash.android.presentation.bookinfo;
 import org.bookdash.android.R;
 import org.bookdash.android.data.book.BookService;
 import org.bookdash.android.data.book.DownloadService;
+import org.bookdash.android.data.tracking.Analytics;
 import org.bookdash.android.domain.model.DownloadProgressItem;
 import org.bookdash.android.domain.model.firebase.FireBookDetails;
 import org.bookdash.android.domain.model.firebase.FireContributor;
@@ -38,6 +39,8 @@ public class BookInfoPresenterTest {
     private BookInfoContract.View bookInfoView;
     @Mock
     private DownloadService downloadService;
+    @Mock
+    private Analytics analytics;
 
     private BookInfoPresenter bookInfoPresenter;
     @Mock
@@ -46,7 +49,7 @@ public class BookInfoPresenterTest {
     @Before
     public void setupListBooksPresenter() {
         MockitoAnnotations.initMocks(this);
-        bookInfoPresenter = new BookInfoPresenter(bookService, downloadService, Schedulers.immediate(),
+        bookInfoPresenter = new BookInfoPresenter(bookService, downloadService, analytics, Schedulers.immediate(),
                 Schedulers.immediate());
         bookInfoPresenter.attachView(bookInfoView);
         BOOK_DETAIL = new FireBookDetails();
@@ -81,6 +84,7 @@ public class BookInfoPresenterTest {
         bookInfoPresenter.downloadBook(null);
 
         verify(bookInfoView).showSnackBarMessage(R.string.book_not_available);
+
     }
 
     @Test
@@ -88,6 +92,7 @@ public class BookInfoPresenterTest {
         bookInfoPresenter.downloadBook(BOOK_DETAIL);
 
         verify(bookInfoView).showSnackBarMessage(R.string.book_not_available);
+        verify(analytics).trackDownloadBookFailed(any(FireBookDetails.class), anyString());
     }
 
     @Test
@@ -127,20 +132,7 @@ public class BookInfoPresenterTest {
         verify(bookInfoView).showDownloadProgress(100);
         verify(bookInfoView).showDownloadFinished();
         verify(bookInfoView).openBook(any(FireBookDetails.class), any(BookPages.class), anyString());
-    }
-    @Test
-    public void downloadBook_CompletedBookPagesNull_ShowsErrorMsg() {
-        BOOK_DETAIL.setBookUrl("http://dummy.com/book.zip");
-        BOOK_DETAIL.setIsDownloading(false);
-
-        //noinspection unchecked
-        when(downloadService.downloadFile(BOOK_DETAIL)).thenReturn(Observable.just(new DownloadProgressItem(100,100)));
-        bookInfoPresenter.downloadBook(BOOK_DETAIL);
-
-        verify(bookInfoView).showDownloadProgress(100);
-        verify(bookInfoView).showSnackBarMessage(R.string.failed_to_open_book);
-        verify(bookInfoView, never()).showDownloadFinished();
-        verify(bookInfoView, never()).openBook(any(FireBookDetails.class), any(BookPages.class), anyString());
+        verify(analytics).trackViewBook(BOOK_DETAIL);
     }
 
     Observable<DownloadProgressItem> completeDownload() {
@@ -154,19 +146,37 @@ public class BookInfoPresenterTest {
     }
 
     @Test
+    public void downloadBook_CompletedBookPagesNull_ShowsErrorMsg() {
+        BOOK_DETAIL.setBookUrl("http://dummy.com/book.zip");
+        BOOK_DETAIL.setIsDownloading(false);
+
+        //noinspection unchecked
+        when(downloadService.downloadFile(BOOK_DETAIL)).thenReturn(Observable.just(new DownloadProgressItem(100, 100)));
+        bookInfoPresenter.downloadBook(BOOK_DETAIL);
+
+        verify(bookInfoView).showDownloadProgress(100);
+        verify(bookInfoView).showSnackBarMessage(R.string.failed_to_open_book);
+        verify(bookInfoView, never()).showDownloadFinished();
+        verify(bookInfoView, never()).openBook(any(FireBookDetails.class), any(BookPages.class), anyString());
+        verify(analytics).trackDownloadBookFailed(any(FireBookDetails.class), anyString());
+    }
+
+    @Test
     public void downloadBook_OnError_ShowsErrorMessage() {
+        String errorMsg = "Failed to download";
         BOOK_DETAIL.setBookUrl("http://dummy.com/book.zip");
         BOOK_DETAIL.setIsDownloading(false);
 
         //noinspection unchecked
         when(downloadService.downloadFile(BOOK_DETAIL))
-                .thenReturn(Observable.<DownloadProgressItem>error(new Exception("Failed to download")));
+                .thenReturn(Observable.<DownloadProgressItem>error(new Exception(errorMsg)));
         bookInfoPresenter.downloadBook(BOOK_DETAIL);
 
         verify(bookInfoView, never()).showDownloadProgress(100);
         verify(bookInfoView, never()).showDownloadFinished();
         verify(bookInfoView, never()).openBook(any(FireBookDetails.class), any(BookPages.class), anyString());
-        verify(bookInfoView).showSnackBarMessage(R.string.failed_to_download_book, "Failed to download");
+        verify(bookInfoView).showSnackBarMessage(R.string.failed_to_download_book, errorMsg);
+        verify(analytics).trackDownloadBookFailed(BOOK_DETAIL, errorMsg);
     }
 
     @Test
@@ -175,10 +185,11 @@ public class BookInfoPresenterTest {
         bookInfoPresenter.shareBookClicked(BOOK_DETAIL);
 
         verify(bookInfoView).sendShareEvent("Book Title");
+        verify(analytics).trackShareBook(BOOK_DETAIL);
     }
 
     @Test
-    public void shareBook_BookNull_ShowsErrorMessage(){
+    public void shareBook_BookNull_ShowsErrorMessage() {
         bookInfoPresenter.shareBookClicked(null);
 
 

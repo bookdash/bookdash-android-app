@@ -29,6 +29,7 @@ import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.common.api.ResultCallback;
 
 import org.bookdash.android.BuildConfig;
+import org.bookdash.android.Injection;
 import org.bookdash.android.R;
 import org.bookdash.android.presentation.about.AboutFragment;
 import org.bookdash.android.presentation.activity.BaseAppCompatActivity;
@@ -40,10 +41,12 @@ public class MainActivity extends BaseAppCompatActivity implements MainContract.
 
     private static final int INVITE_REQUEST_CODE = 1;
     private static final String TAG = "MainActivity";
+    private static final String GOOGLE_PLAY_STORE_URL = "http://play.google.com/store/apps/details?id=";
+    private static final String GOOGLE_PLAY_MARKET_URL = "market://details?id=";
     private GoogleApiClient googleApiClient;
     private DrawerLayout drawerLayout;
     private NavigationView navigationView;
-    private MainContract.MainUserActions actionsListener;
+    private MainContract.MainUserActions mainPresenter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,7 +56,7 @@ public class MainActivity extends BaseAppCompatActivity implements MainContract.
 
         navigationView = (NavigationView) findViewById(R.id.navigation_view);
 
-        actionsListener = new MainPresenter(this);
+        mainPresenter = new MainPresenter(this, Injection.provideAnalytics());
         final ActionBar actionBar = getSupportActionBar();
 
         if (actionBar != null) {
@@ -76,11 +79,11 @@ public class MainActivity extends BaseAppCompatActivity implements MainContract.
                 switch (menuItem.getItemId()) {
 
                     case R.id.action_all_books: {
-                        showAllBooks();
+                        mainPresenter.clickViewAllBooks();
                         break;
                     }
                     case R.id.action_downloads:
-                        showDownloadedBooks();
+                        mainPresenter.clickViewDownloadBooks();
                         break;
                     case R.id.action_about:
                         showAboutPage();
@@ -94,11 +97,11 @@ public class MainActivity extends BaseAppCompatActivity implements MainContract.
                         break;
                     }
                     case R.id.action_invite_friends: {
-                        openInvitePage();
+                        mainPresenter.clickInvitePage();
                         break;
                     }
                     case R.id.action_rate_app: {
-                        showRatingPlayStore();
+                        mainPresenter.clickRateApp();
                         break;
                     }
                     default:
@@ -135,11 +138,7 @@ public class MainActivity extends BaseAppCompatActivity implements MainContract.
     }
 
     private void showAllBooks() {
-        actionsListener.clickViewAllBooks();
-    }
-
-    private void showDownloadedBooks() {
-        actionsListener.clickViewDownloadBooks();
+        mainPresenter.clickViewAllBooks();
     }
 
     private void showSettingsScreen() {
@@ -158,20 +157,6 @@ public class MainActivity extends BaseAppCompatActivity implements MainContract.
 
     }
 
-    private void openInvitePage() {
-        try {
-            Intent intent = new AppInviteInvitation.IntentBuilder(getString(R.string.invitation_title))
-                    .setMessage(getString(R.string.invitation_message))
-                    .setCallToActionText(getString(R.string.invitation_cta))
-                    // .setDeepLink(Uri.parse("http://bookdash.org/books/dK5BJWxPIf"))
-                    .build();
-            startActivityForResult(intent, INVITE_REQUEST_CODE);
-        } catch (ActivityNotFoundException ac) {
-            Snackbar.make(navigationView, R.string.common_google_play_services_unsupported_text, Snackbar.LENGTH_LONG)
-                    .show();
-        }
-    }
-
     @Override
     public void showAboutPage() {
         FragmentManager fragmentManager = getSupportFragmentManager();
@@ -183,14 +168,14 @@ public class MainActivity extends BaseAppCompatActivity implements MainContract.
 
     @Override
     public void showRatingPlayStore() {
-        Uri uri = Uri.parse("market://details?id=" + BuildConfig.APPLICATION_ID);
+        Uri uri = Uri.parse(GOOGLE_PLAY_MARKET_URL + BuildConfig.APPLICATION_ID);
         Intent goToMarket = new Intent(Intent.ACTION_VIEW, uri);
         goToMarket.addFlags(Intent.FLAG_ACTIVITY_NO_HISTORY | Intent.FLAG_ACTIVITY_MULTIPLE_TASK);
         try {
             startActivity(goToMarket);
         } catch (ActivityNotFoundException e) {
-            startActivity(new Intent(Intent.ACTION_VIEW,
-                    Uri.parse("http://play.google.com/store/apps/details?id=" + BuildConfig.APPLICATION_ID)));
+            startActivity(
+                    new Intent(Intent.ACTION_VIEW, Uri.parse(GOOGLE_PLAY_STORE_URL + BuildConfig.APPLICATION_ID)));
         }
     }
 
@@ -210,6 +195,21 @@ public class MainActivity extends BaseAppCompatActivity implements MainContract.
         Fragment f = DownloadsFragment.newInstance();
         ft.replace(R.id.fragment_content, f, "DOWNLOADED_BOOKS");
         ft.commit();
+    }
+
+    @Override
+    public void inviteFriends() {
+        try {
+            Intent intent = new AppInviteInvitation.IntentBuilder(getString(R.string.invitation_title))
+                    .setMessage(getString(R.string.invitation_message))
+                    .setCallToActionText(getString(R.string.invitation_cta))
+                    // .setDeepLink(Uri.parse("http://bookdash.org/books/dK5BJWxPIf"))
+                    .build();
+            startActivityForResult(intent, INVITE_REQUEST_CODE);
+        } catch (ActivityNotFoundException ac) {
+            Snackbar.make(navigationView, R.string.common_google_play_services_unsupported_text, Snackbar.LENGTH_LONG)
+                    .show();
+        }
     }
 
     @Override
@@ -238,24 +238,24 @@ public class MainActivity extends BaseAppCompatActivity implements MainContract.
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
 
-        int id = item.getItemId();
+      /*  int id = item.getItemId();
 
         if (id == R.id.action_about) {
             showAboutPage();
             return true;
         }
         if (id == R.id.action_rate_app) {
-            showRatingPlayStore();
+            mainPresenter.clickRateApp();
             return true;
         }
         if (id == R.id.action_thanks) {
-            showThanksPopover();
+            mainPresenter.clickShowContributors();
             return true;
         }
         if (id == R.id.action_invite_friends) {
-            openInvitePage();
+            mainPresenter.clickInvitePage();
             return true;
-        }
+        }*/
         return super.onOptionsItemSelected(item);
     }
 

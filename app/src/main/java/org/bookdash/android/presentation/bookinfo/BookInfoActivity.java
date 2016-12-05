@@ -173,7 +173,7 @@ public class BookInfoActivity extends BaseAppCompatActivity implements BookInfoC
 
 
         bookInfoPresenter = new BookInfoPresenter(Injection.provideBookService(), Injection.provideDownloadService(),
-                Schedulers.io(), AndroidSchedulers.mainThread());
+                Injection.provideAnalytics(), Schedulers.io(), AndroidSchedulers.mainThread());
         bookInfoPresenter.attachView(this);
         calculateLayoutHeight();
         imageViewBook.getViewTreeObserver().addOnPreDrawListener(new ViewTreeObserver.OnPreDrawListener() {

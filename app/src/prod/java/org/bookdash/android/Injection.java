@@ -4,6 +4,7 @@ import android.content.Context;
 
 import com.google.firebase.FirebaseApp;
 import com.google.firebase.FirebaseOptions;
+import com.google.firebase.analytics.FirebaseAnalytics;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.storage.FirebaseStorage;
 
@@ -17,6 +18,8 @@ import org.bookdash.android.data.database.firebase.FirebaseBookDatabase;
 import org.bookdash.android.data.settings.SettingsApiImpl;
 import org.bookdash.android.data.settings.SettingsRepositories;
 import org.bookdash.android.data.settings.SettingsRepository;
+import org.bookdash.android.data.tracking.Analytics;
+import org.bookdash.android.data.tracking.BookDashFirebaseAnalytics;
 import org.bookdash.android.data.utils.firebase.FirebaseObservableListeners;
 
 /**
@@ -29,6 +32,7 @@ public class Injection {
     private static BookService bookService = null;
     private static RemoteConfigSettingsApi config;
     private static DownloadService downloadService = null;
+    private static Analytics firebaseAnalytics = null;
 
     private Injection() {
 
@@ -36,7 +40,8 @@ public class Injection {
 
     public static void init(Context context) {
         if (!isInitialized()) {
-            FirebaseApp firebaseApp = FirebaseApp.initializeApp(context, FirebaseOptions.fromResource(context), "Book Dash");
+            FirebaseApp firebaseApp = FirebaseApp
+                    .initializeApp(context, FirebaseOptions.fromResource(context), "Book Dash");
             FirebaseDatabase firebaseDatabase = FirebaseDatabase.getInstance(firebaseApp);
             firebaseDatabase.setPersistenceEnabled(true);
             FirebaseObservableListeners firebaseObservableListeners = new FirebaseObservableListeners();
@@ -44,7 +49,10 @@ public class Injection {
             bookService = new BookServiceImpl(bookDatabase);
 
             config = FirebaseConfig.newInstance().init();
+
             downloadService = new DownloadServiceImpl(FirebaseStorage.getInstance(firebaseApp));
+            firebaseAnalytics = new BookDashFirebaseAnalytics(FirebaseAnalytics.getInstance(context));
+
         }
     }
 
@@ -67,5 +75,9 @@ public class Injection {
 
     public static DownloadService provideDownloadService() {
         return downloadService;
+    }
+
+    public static Analytics provideAnalytics() {
+        return firebaseAnalytics;
     }
 }
