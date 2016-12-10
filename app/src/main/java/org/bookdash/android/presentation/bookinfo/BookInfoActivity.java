@@ -382,8 +382,7 @@ public class BookInfoActivity extends BaseAppCompatActivity implements BookInfoC
     @Override
     public void showDownloadFinished() {
         Log.d(TAG, "Download finished");
-        floatingActionButton.resetIcon();
-        floatingActionButton.setProgress(100);
+        floatingActionButton.setProgress(100.0f);
     }
 
     @Override
