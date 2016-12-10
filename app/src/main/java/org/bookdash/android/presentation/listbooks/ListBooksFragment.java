@@ -147,12 +147,6 @@ public class ListBooksFragment extends Fragment implements ListBooksContract.Vie
         listBooksPresenter.loadLanguages();
         listBooksPresenter.loadBooksForLanguagePreference();
         setHasOptionsMenu(true);
-    }    private void runUiThread(Runnable runnable) {
-        Activity activity = getActivity();
-        if (activity == null) {
-            return;
-        }
-        activity.runOnUiThread(runnable);
     }
 
     @Override
@@ -171,7 +165,27 @@ public class ListBooksFragment extends Fragment implements ListBooksContract.Vie
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
         super.onCreateOptionsMenu(menu, inflater);
         inflater.inflate(R.menu.menu_main, menu);
-    }    @Override
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        if (item.getItemId() == R.id.action_language_choice) {
+            listBooksPresenter.clickOpenLanguagePopover();
+            return true;
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
+    private void runUiThread(Runnable runnable) {
+        Activity activity = getActivity();
+        if (activity == null) {
+            return;
+        }
+        activity.runOnUiThread(runnable);
+    }
+
+
+    @Override
     public void showErrorScreen(final boolean show, final String errorMessage, final boolean showRetryButton) {
         runUiThread(new Runnable() {
             @Override
@@ -191,14 +205,6 @@ public class ListBooksFragment extends Fragment implements ListBooksContract.Vie
 
     }
 
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        if (item.getItemId() == R.id.action_language_choice) {
-            listBooksPresenter.clickOpenLanguagePopover();
-            return true;
-        }
-        return super.onOptionsItemSelected(item);
-    }
 
     @Override
     public void showLoading(final boolean visible) {
@@ -223,7 +229,6 @@ public class ListBooksFragment extends Fragment implements ListBooksContract.Vie
     }
 
 
-
     @Override
     public void showBooks(final List<FireBookDetails> bookDetailList) {
         runUiThread(new Runnable() {
@@ -239,7 +244,6 @@ public class ListBooksFragment extends Fragment implements ListBooksContract.Vie
 
 
     }
-
 
 
     @Override

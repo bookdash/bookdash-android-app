@@ -75,7 +75,6 @@ public class MainActivity extends BaseAppCompatActivity implements MainContract.
         navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(MenuItem menuItem) {
-                menuItem.setChecked(true);
                 switch (menuItem.getItemId()) {
 
                     case R.id.action_all_books: {
@@ -108,7 +107,13 @@ public class MainActivity extends BaseAppCompatActivity implements MainContract.
 
                 }
                 drawerLayout.closeDrawers();
-                return true;
+                if (menuItem.getItemId() == R.id.action_thanks || menuItem
+                        .getItemId() == R.id.action_invite_friends || menuItem.getItemId() == R.id.action_rate_app) {
+                    return false;
+                } else {
+                    return true;
+                }
+
             }
 
 
