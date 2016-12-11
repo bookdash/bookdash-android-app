@@ -22,6 +22,8 @@ import java.util.List;
 public class FireBookDetails implements Parcelable {
     public static final String TABLE_NAME = "bd_books";
     public static final String CONTRIBUTORS_ITEM_NAME = "contributors";
+
+    public static final String BOOK_LANGUAGE_FIELD = "bookLanguage";
     public static final String BOOK_FORMAT_JSON_FILE = "bookdetails.json";
     public static final String BOOK_COLUMN_CREATED_DATE = "createdDate";
     public static final Parcelable.Creator<FireBookDetails> CREATOR = new Parcelable.Creator<FireBookDetails>() {

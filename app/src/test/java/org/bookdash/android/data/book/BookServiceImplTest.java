@@ -61,12 +61,12 @@ public class BookServiceImplTest {
                 "test description", fireLanguage, System.currentTimeMillis());
         ArrayList<FireBookDetails> bookDetails = new ArrayList<>();
         bookDetails.add(fireBookDetails);
-        doReturn(Observable.<List<FireBookDetails>>just(bookDetails)).when(bookDatabase).getBooks();
+        doReturn(Observable.<List<FireBookDetails>>just(bookDetails)).when(bookDatabase).getBooksByLanguage(fireLanguage);
 
         TestSubscriber<List<FireBookDetails>> testSubscriber = new TestSubscriber<>();
         bookService.getBooksForLanguage(fireLanguage).subscribe(testSubscriber);
 
-        verify(bookDatabase).getBooks();
+        verify(bookDatabase).getBooksByLanguage(fireLanguage);
         testSubscriber.awaitTerminalEvent();
         testSubscriber.assertNoErrors();
 
