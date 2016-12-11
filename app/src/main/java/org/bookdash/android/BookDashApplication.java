@@ -8,7 +8,10 @@ import com.crashlytics.android.core.CrashlyticsCore;
 import com.google.firebase.analytics.FirebaseAnalytics;
 import com.jakewharton.threetenabp.AndroidThreeTen;
 
+import org.bookdash.android.config.CrashlyticsTree;
+
 import io.fabric.sdk.android.Fabric;
+import timber.log.Timber;
 import uk.co.chrisjenx.calligraphy.CalligraphyConfig;
 
 /**
@@ -32,6 +35,12 @@ public class BookDashApplication extends Application {
         Crashlytics crashlyticsKit = new Crashlytics.Builder()
                 .core(new CrashlyticsCore.Builder().disabled(BuildConfig.DEBUG).build()).build();
         Fabric.with(this, crashlyticsKit);
+
+        if (BuildConfig.DEBUG) {
+            Timber.plant(new Timber.DebugTree());
+        } else {
+            Timber.plant(new CrashlyticsTree());
+        }
 
         Injection.init(this);
 

@@ -30,6 +30,7 @@ import org.bookdash.android.R;
 import org.bookdash.android.domain.model.firebase.FireBookDetails;
 import org.bookdash.android.presentation.bookinfo.BookInfoActivity;
 import org.bookdash.android.presentation.main.NavDrawerInterface;
+import org.bookdash.android.presentation.search.SearchActivity;
 
 import java.util.List;
 
@@ -53,7 +54,9 @@ public class ListBooksFragment extends Fragment implements ListBooksContract.Vie
     private View.OnClickListener bookClickListener = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
-            openBookDetails(v);
+            BookViewHolder viewHolder = (BookViewHolder) v.getTag();
+            FireBookDetails bookDetailResult = viewHolder.bookDetail;
+            BookInfoActivity.startBookInfo(ListBooksFragment.this.getActivity(), bookDetailResult);
         }
     };
     private DialogInterface.OnClickListener languageClickListener = new DialogInterface.OnClickListener() {
@@ -70,16 +73,6 @@ public class ListBooksFragment extends Fragment implements ListBooksContract.Vie
 
     public static Fragment newInstance() {
         return new ListBooksFragment();
-    }
-
-    private void openBookDetails(View v) {
-        Intent intent = new Intent(getActivity(), BookInfoActivity.class);
-        // intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-        BookViewHolder viewHolder = (BookViewHolder) v.getTag();
-        FireBookDetails bookDetailResult = viewHolder.bookDetail;
-        intent.putExtra(BookInfoActivity.BOOK_PARCEL, bookDetailResult);
-        startActivityForResult(intent, BOOK_DETAIL_REQUEST_CODE);
-
     }
 
     @Override
@@ -171,6 +164,10 @@ public class ListBooksFragment extends Fragment implements ListBooksContract.Vie
     public boolean onOptionsItemSelected(MenuItem item) {
         if (item.getItemId() == R.id.action_language_choice) {
             listBooksPresenter.clickOpenLanguagePopover();
+            return true;
+        }
+        if (item.getItemId() == R.id.action_search_books) {
+            listBooksPresenter.openSearchScreen();
             return true;
         }
         return super.onOptionsItemSelected(item);
@@ -269,6 +266,11 @@ public class ListBooksFragment extends Fragment implements ListBooksContract.Vie
             }
         });
 
+    }
+
+    @Override
+    public void startSearchActivity() {
+        SearchActivity.start(getActivity());
     }
 
 

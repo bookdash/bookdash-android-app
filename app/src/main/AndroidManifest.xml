@@ -53,17 +53,7 @@
 
                 <category android:name="android.intent.category.DEFAULT"/>
                 <category android:name="android.intent.category.BROWSABLE"/>
-                <!-- Accepts URIs that begin with "http://recipe-app.com/recipes" -->
-                <data
-                    android:host="books"
-                    android:scheme="bookdash"/>
-            </intent-filter>
-            <intent-filter android:label="@string/filter_view_book">
-                <action android:name="android.intent.action.VIEW"/>
 
-                <category android:name="android.intent.category.DEFAULT"/>
-                <category android:name="android.intent.category.BROWSABLE"/>
-                <!-- Accepts URIs that begin with "http://recipe-app.com/recipes" -->
                 <data
                     android:host="bookdash.org"
                     android:pathPrefix="/books"
@@ -79,6 +69,12 @@
 
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
+        </activity>
+        <activity
+            android:name=".presentation.search.SearchActivity"
+            android:label="@string/screen_title_search"
+            android:theme="@style/AppTheme.NoActionBar">
+
         </activity>
         <activity
             android:name="za.co.riggaroo.materialhelptutorial.tutorial.MaterialTutorialActivity"

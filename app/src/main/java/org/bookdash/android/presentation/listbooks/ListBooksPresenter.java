@@ -146,6 +146,11 @@ class ListBooksPresenter extends BasePresenter<ListBooksContract.View> implement
 
     }
 
+    @Override
+    public void openSearchScreen() {
+        getView().startSearchActivity();
+    }
+
     private void loadBooksForLanguage(FireLanguage language) {
         addSubscription(bookService.getBooksForLanguage(language).observeOn(ioScheduler).subscribeOn(mainScheduler)
                 .subscribe(new Subscriber<List<FireBookDetails>>() {

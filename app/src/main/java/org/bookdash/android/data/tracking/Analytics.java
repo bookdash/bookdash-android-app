@@ -31,4 +31,11 @@ public interface Analytics {
 
     void setUserLanguage(String language);
 
+    void trackSearchBooks(String searchTerm);
+
+    void trackSearchError(String searchTerm, String message);
+
+    void trackSearchBooksSuccess(String searchTerm, int numberSearchResults);
+
+    void trackSearchBooksNoResults(String searchTerm);
 }

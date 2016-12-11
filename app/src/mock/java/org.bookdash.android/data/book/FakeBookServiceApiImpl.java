@@ -70,4 +70,9 @@ public class FakeBookServiceApiImpl implements BookService {
             }
         }).toList();
     }
+
+    @Override
+    public Observable<List<FireBookDetails>> searchBooks(final String searchTerm) {
+        return Observable.from(fireBookDetailses).toList();
+    }
 }

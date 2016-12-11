@@ -241,30 +241,6 @@ public class MainActivity extends BaseAppCompatActivity implements MainContract.
     }
 
     @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-
-      /*  int id = item.getItemId();
-
-        if (id == R.id.action_about) {
-            showAboutPage();
-            return true;
-        }
-        if (id == R.id.action_rate_app) {
-            mainPresenter.clickRateApp();
-            return true;
-        }
-        if (id == R.id.action_thanks) {
-            mainPresenter.clickShowContributors();
-            return true;
-        }
-        if (id == R.id.action_invite_friends) {
-            mainPresenter.clickInvitePage();
-            return true;
-        }*/
-        return super.onOptionsItemSelected(item);
-    }
-
-    @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         Log.d(TAG, "onActivityResult: requestCode=" + requestCode + ", resultCode=" + resultCode);

@@ -1,5 +1,6 @@
 package org.bookdash.android.presentation.bookinfo;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.databinding.DataBindingUtil;
@@ -91,6 +92,12 @@ public class BookInfoActivity extends BaseAppCompatActivity implements BookInfoC
     private FireBookDetails bookInfo;
     private Button errorRetryButton;
     private int progress = 0;
+
+    public static void startBookInfo(Activity activity, FireBookDetails bookDetails) {
+        Intent intent = new Intent(activity, BookInfoActivity.class);
+        intent.putExtra(BookInfoActivity.BOOK_PARCEL, bookDetails);
+        activity.startActivity(intent);
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

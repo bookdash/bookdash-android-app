@@ -22,6 +22,8 @@ public interface ListBooksContract {
         void showSnackBarError(int message);
 
         void showLanguagePopover(String[] languages, int selected);
+
+        void startSearchActivity();
     }
 
     interface Presenter extends MvpPresenter<View>{
@@ -33,6 +35,7 @@ public interface ListBooksContract {
 
         void clickOpenLanguagePopover();
 
+        void openSearchScreen();
     }
 
 }

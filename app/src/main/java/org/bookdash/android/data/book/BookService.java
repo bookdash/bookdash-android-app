@@ -18,4 +18,6 @@ public interface BookService {
     Observable<List<FireContributor>> getContributorsForBook(final FireBookDetails bookDetails);
 
     Observable<List<FireBookDetails>> getDownloadedBooks();
+
+    Observable<List<FireBookDetails>> searchBooks(String searchTerm);
 }

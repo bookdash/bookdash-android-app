@@ -57,6 +57,21 @@ public class BookServiceImpl implements BookService {
         return bookDatabase.getBooks().flatMap(filterDownloadedBooks());
     }
 
+    @Override
+    public Observable<List<FireBookDetails>> searchBooks(final String searchTerm) {
+        return bookDatabase.getBooks().flatMap(new Func1<List<FireBookDetails>, Observable<List<FireBookDetails>>>() {
+            @Override
+            public Observable<List<FireBookDetails>> call(final List<FireBookDetails> fireBookDetailses) {
+                return Observable.from(fireBookDetailses).filter(new Func1<FireBookDetails, Boolean>() {
+                    @Override
+                    public Boolean call(final FireBookDetails fireBookDetails) {
+                        return fireBookDetails.getBookTitle().toLowerCase().contains(searchTerm.toLowerCase());
+                    }
+                }).toList();
+            }
+        });
+    }
+
     @NonNull
     private Func1<List<FireBookDetails>, Observable<List<FireBookDetails>>> filterDownloadedBooks() {
         return new Func1<List<FireBookDetails>, Observable<List<FireBookDetails>>>() {

@@ -21,4 +21,5 @@ public interface BookDatabase {
     Observable<FireRole> getRoleById(String roleId);
 
     Observable<List<FireBookDetails>> getBooksByLanguage(FireLanguage fireLanguage);
+
 }

@@ -192,7 +192,6 @@ dependencies {
     compile("com.google.firebase:firebase-storage:${rootProject.ext.googlePlayServicesVersion}") {
         exclude module: 'support-v4'
     }
-    // FirebaseUI Storage only
     compile('com.firebaseui:firebase-ui-storage:0.6.1') {
         exclude module: 'support-v4'
     }
@@ -204,6 +203,8 @@ dependencies {
     compile 'io.reactivex:rxandroid:1.2.1'
     compile 'io.reactivex:rxjava:1.1.6'
     compile 'com.jakewharton.threetenabp:threetenabp:1.0.3'
+    compile 'com.jakewharton.timber:timber:4.4.0'
+    compile 'com.android.support.constraint:constraint-layout:1.0.0-beta4'
 }
 
 // Grant animation permissions to avoid test failure because of ui sync.
