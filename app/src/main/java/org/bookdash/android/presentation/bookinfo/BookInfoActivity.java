@@ -60,7 +60,6 @@ import java.util.List;
 import mbanje.kurt.fabbutton.FabButton;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
-import uk.co.chrisjenx.calligraphy.TypefaceUtils;
 
 
 public class BookInfoActivity extends BaseAppCompatActivity implements BookInfoContract.View {
@@ -153,11 +152,7 @@ public class BookInfoActivity extends BaseAppCompatActivity implements BookInfoC
         }
         scrollView = findViewById(R.id.scrollViewBookInfo);
         collapsingToolbarLayout = (CollapsingToolbarLayout) findViewById(R.id.collapsing_toolbar);
-        if (collapsingToolbarLayout != null) {
-            Typeface tp = TypefaceUtils.load(getAssets(), BookDashApplication.DEFAULT_FONT_LOCATION);
-            collapsingToolbarLayout.setExpandedTitleTypeface(tp);
-            collapsingToolbarLayout.setCollapsedTitleTypeface(tp);
-        }
+
         gradientBackground = findViewById(R.id.toolbar_background_gradient);
         floatingActionButton = (FabButton) findViewById(R.id.fab_download);
         floatingActionButton.setScaleX(0);
