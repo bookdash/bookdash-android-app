@@ -27,6 +27,7 @@ import java.util.List;
 import fr.castorflex.android.circularprogressbar.CircularProgressBar;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
+import timber.log.Timber;
 
 /**
  * @author rebeccafranks
@@ -64,15 +65,20 @@ public class SearchActivity extends BaseAppCompatActivity implements SearchContr
         setContentView(R.layout.activity_search);
 
         toolbar = (Toolbar) findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
+        toolbar.setTitle(getString(R.string.search_query_hint));
+        toolbar.setNavigationIcon(R.drawable.ic_arrow_back);
 
         ActionBar actionBar = getSupportActionBar();
+
+        setSupportActionBar(toolbar);
 
         if (actionBar != null) {
             actionBar.setDisplayHomeAsUpEnabled(true);
             actionBar.setHomeButtonEnabled(true);
             actionBar.setDisplayShowTitleEnabled(false);
             actionBar.setDisplayUseLogoEnabled(false);
+            actionBar.setDisplayShowHomeEnabled(true);
+
         }
         searchPresenter = new SearchPresenter(Injection.provideBookService(), Injection.provideAnalytics(),
                 AndroidSchedulers.mainThread(), Schedulers.io());
@@ -103,7 +109,7 @@ public class SearchActivity extends BaseAppCompatActivity implements SearchContr
     public boolean onCreateOptionsMenu(final Menu menu) {
         getMenuInflater().inflate(R.menu.menu_search, menu);
 
-        final MenuItem item = menu.findItem(R.id.menu_search);
+        final MenuItem item = menu.findItem(R.id.action_menu_search);
         final SearchView searchView = (SearchView) item.getActionView();
 
         toolbar.setOnClickListener(new View.OnClickListener() {
@@ -120,29 +126,41 @@ public class SearchActivity extends BaseAppCompatActivity implements SearchContr
                 toolbar.setTitle(searchQuery);
                 searchView.setQuery(searchQuery, false);
 
-
-                searchView.setQueryHint(getString(R.string.search_query_hint));
-                searchView.setIconified(false);
-
-
-                searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
-                    @Override
-                    public boolean onQueryTextSubmit(String query) {
-                        item.collapseActionView();
-                        searchPresenter.search(query);
-                        return true;
-                    }
-
-                    @Override
-                    public boolean onQueryTextChange(String query) {
-                        searchPresenter.search(query);
-                        return false;
-                    }
-                });
             }
-            return true;
+
+            searchView.setQueryHint(getString(R.string.search_query_hint));
+            searchView.setIconified(false);
+
+            searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+                @Override
+                public boolean onQueryTextSubmit(String query) {
+                    item.collapseActionView();
+                    searchPresenter.search(query);
+                    toolbar.setTitle(query);
+
+                    return true;
+                }
+
+                @Override
+                public boolean onQueryTextChange(String query) {
+                    Timber.d("Search query:" + query);
+                    searchPresenter.search(query);
+                    return false;
+                }
+            });
         }
         return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                onBackPressed();
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
     }
 
     @Override
@@ -195,5 +213,4 @@ public class SearchActivity extends BaseAppCompatActivity implements SearchContr
     public void hideRetryButton() {
         errorRetryButton.setVisibility(View.INVISIBLE);
     }
-
 }

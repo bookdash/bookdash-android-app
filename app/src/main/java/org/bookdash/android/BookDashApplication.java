@@ -12,7 +12,6 @@ import org.bookdash.android.config.CrashlyticsTree;
 
 import io.fabric.sdk.android.Fabric;
 import timber.log.Timber;
-import uk.co.chrisjenx.calligraphy.CalligraphyConfig;
 
 /**
  * @author Rebecca Franks
