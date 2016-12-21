@@ -8,6 +8,7 @@ import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.SearchView;
 import android.support.v7.widget.Toolbar;
+import android.text.TextUtils;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -134,6 +135,10 @@ public class SearchActivity extends BaseAppCompatActivity implements SearchContr
             searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
                 @Override
                 public boolean onQueryTextSubmit(String query) {
+                    Timber.d("Search submitted with query:" + query);
+                    if (TextUtils.isEmpty(query)) {
+                        return true;
+                    }
                     item.collapseActionView();
                     searchPresenter.search(query);
                     toolbar.setTitle(query);
@@ -143,7 +148,11 @@ public class SearchActivity extends BaseAppCompatActivity implements SearchContr
                 @Override
                 public boolean onQueryTextChange(String query) {
                     Timber.d("Search query:" + query);
+                    if (TextUtils.isEmpty(query)) {
+                        return true;
+                    }
                     searchPresenter.search(query);
+                    toolbar.setTitle(query);
                     return true;
                 }
             });
