@@ -73,4 +73,24 @@ public class MockAnalytics implements Analytics {
     public void setUserLanguage(final String language) {
 
     }
+
+    @Override
+    public void trackSearchBooks(final String searchTerm) {
+
+    }
+
+    @Override
+    public void trackSearchError(final String searchTerm, final String message) {
+
+    }
+
+    @Override
+    public void trackSearchBooksSuccess(final String searchTerm, final int numberSearchResults) {
+
+    }
+
+    @Override
+    public void trackSearchBooksNoResults(final String searchTerm) {
+
+    }
 }

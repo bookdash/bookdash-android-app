@@ -13,6 +13,7 @@ import org.bookdash.android.domain.model.firebase.FireLanguage;
 import org.bookdash.android.domain.model.firebase.FireRole;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import rx.Observable;
@@ -65,6 +66,8 @@ public class FirebaseBookDatabase implements BookDatabase {
                 booksTable.orderByChild(FireBookDetails.BOOK_LANGUAGE_FIELD).equalTo(fireLanguage.getId()), asBooks());
     }
 
+
+
     private Func1<DataSnapshot, FireRole> asRole() {
         return new Func1<DataSnapshot, FireRole>() {
             @Override
@@ -105,7 +108,6 @@ public class FirebaseBookDatabase implements BookDatabase {
                     Log.d(TAG, "Book Details:" + bookDetails.getBookTitle() + ". Book URL:" + bookDetails
                             .getBookCoverPageUrl());
                     bookDetails.setBookId(snap.getKey());
-                    //      bookDetails.setBookLanguageAbbreviation(languageAbbreviation);
                     List<String> keys = new ArrayList<>();
                     if (snap.child(FireBookDetails.CONTRIBUTORS_ITEM_NAME).hasChildren()) {
                         Iterable<DataSnapshot> children = snap.child(FireBookDetails.CONTRIBUTORS_ITEM_NAME)
@@ -118,6 +120,7 @@ public class FirebaseBookDatabase implements BookDatabase {
                     fireBookDetails.add(bookDetails);
 
                 }
+                Collections.sort(fireBookDetails, FireBookDetails.COMPARATOR);
                 return fireBookDetails;
             }
         };

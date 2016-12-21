@@ -15,6 +15,7 @@ import org.bookdash.android.R;
 import org.bookdash.android.data.settings.FakeSettingsApiImpl;
 import org.bookdash.android.presentation.bookinfo.BookInfoActivity;
 import org.bookdash.android.presentation.main.MainActivity;
+import org.bookdash.android.presentation.search.SearchActivity;
 import org.hamcrest.Description;
 import org.hamcrest.Matcher;
 import org.junit.After;
@@ -47,7 +48,8 @@ public class ListBooksActivityTest {
 
     @Before
     public void setUp() {
-        Injection.provideSettingsRepo(InstrumentationRegistry.getTargetContext()).saveLanguagePreference(FakeSettingsApiImpl.fireLanguage);
+        Injection.provideSettingsRepo(InstrumentationRegistry.getTargetContext())
+                .saveLanguagePreference(FakeSettingsApiImpl.fireLanguage);
         Intents.init();
     }
 
@@ -86,7 +88,6 @@ public class ListBooksActivityTest {
         return onView(isAssignableFrom(Toolbar.class)).check(matches(withToolbarTitle(is(title))));
     }
 
-    //Custom matchers are used so that we can reuse matching in other tests.
     private static Matcher<Object> withToolbarTitle(final Matcher<CharSequence> textMatcher) {
         return new BoundedMatcher<Object, Toolbar>(Toolbar.class) {
             @Override
@@ -120,4 +121,11 @@ public class ListBooksActivityTest {
         Assert.assertEquals("MainActivity", activityTestRule.getActivity().getScreenName());
     }
 
+    @Test
+    public void testClickSearchIcon_OpensSearchActivity() {
+        onView(withId(R.id.action_search_books)).perform(click());
+
+        intended(hasComponent(SearchActivity.class.getName()));
+
+    }
 }

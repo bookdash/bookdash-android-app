@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:fitsSystemWindows="true"
-    tools:context=".presentation.main.MainActivity">
+    >
 
     <ImageView
         android:layout_width="match_parent"
@@ -37,7 +37,7 @@
         <fr.castorflex.android.circularprogressbar.CircularProgressBar
             xmlns:android="http://schemas.android.com/apk/res/android"
             xmlns:app="http://schemas.android.com/apk/res-auto"
-            android:id="@+id/activity_loading_books"
+            android:id="@+id/progress_bar_search"
             android:layout_width="48dp"
             android:layout_height="48dp"
             android:layout_alignParentBottom="false"
@@ -56,47 +56,43 @@
     </RelativeLayout>
 
 
-    <LinearLayout
+    <RelativeLayout
         android:id="@+id/linear_layout_error"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         android:layout_centerInParent="true"
-        android:orientation="vertical"
-        android:visibility="gone">
+        android:visibility="gone"
+        tools:visibility="visible">
 
-        <ImageView
-            android:id="@+id/image_view_sad_cloud"
-            android:layout_width="150dp"
-            android:layout_height="150dp"
-            android:layout_gravity="center_horizontal"
-            android:src="@drawable/lb_ic_sad_cloud"/>
-
-        <TextView
-            android:id="@+id/text_view_error_screen"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:layout_margin="8dp"
-            android:text="@string/error_loading_books"/>
 
         <Button
             android:id="@+id/button_retry"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal"
+            android:layout_centerHorizontal="true"
+            android:layout_centerInParent="true"
+            android:layout_gravity="center"
+            android:gravity="center"
             android:text="@string/button_retry_text"/>
-    </LinearLayout>
+
+        <TextView
+            android:id="@+id/text_view_error_screen"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_above="@id/button_retry"
+            android:layout_centerHorizontal="true"
+            android:layout_gravity="center"
+            android:layout_margin="8dp"
+            android:text="@string/error_loading_books"/>
+    </RelativeLayout>
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/recycler_view_books"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:clipToPadding="false"
-        android:fitsSystemWindows="true"
-        android:gravity="center_horizontal"
         android:paddingLeft="@dimen/book_list_padding"
         android:paddingRight="@dimen/book_list_padding"
-        android:paddingTop="@dimen/book_list_padding"
         android:scrollbars="vertical"
         android:visibility="visible"
         app:layout_behavior="@string/appbar_scrolling_view_behavior"

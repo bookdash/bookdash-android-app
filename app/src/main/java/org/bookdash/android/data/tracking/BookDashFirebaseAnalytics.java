@@ -29,7 +29,12 @@ public class BookDashFirebaseAnalytics implements Analytics {
     private static final String EVENT_DOWNLOAD_BOOK_STARTED = "download_book_started";
     private static final String EVENT_SHARE_BOOK = "share_book";
     private static final String EVENT_INVITE_PEOPLE = "invite_friends";
-
+    private static final String PARAM_SEARCH_TERM = "search_term";
+    private static final String EVENT_SEARCH_BOOKS = "search_books";
+    private static final String EVENT_SEARCH_BOOKS_ERROR = "search_books_error";
+    private static final String EVENT_SEARCH_BOOKS_SUCCESS = "search_books_success";
+    private static final String PARAM_SEARCH_RESULTS_COUNT = "search_results_count";
+    private static final String EVENT_SEARCH_BOOKS_NO_RESULTS = "search_books_no_results";
 
     private FirebaseAnalytics firebaseAnalytics;
 
@@ -113,6 +118,35 @@ public class BookDashFirebaseAnalytics implements Analytics {
     public void setUserLanguage(String language) {
         firebaseAnalytics.setUserProperty(PARAM_CURRENT_LANGUAGE, language);
 
+    }
+
+    @Override
+    public void trackSearchBooks(final String searchTerm) {
+        Bundle bundle = new Bundle();
+        bundle.putString(PARAM_SEARCH_TERM, searchTerm);
+        firebaseAnalytics.logEvent(EVENT_SEARCH_BOOKS, bundle);
+    }
+
+    @Override
+    public void trackSearchError(final String searchTerm, final String message) {
+        Bundle bundle = new Bundle();
+        bundle.putString(PARAM_SEARCH_TERM, searchTerm);
+        firebaseAnalytics.logEvent(EVENT_SEARCH_BOOKS_ERROR, bundle);
+    }
+
+    @Override
+    public void trackSearchBooksSuccess(final String searchTerm, final int numberSearchResults) {
+        Bundle bundle = new Bundle();
+        bundle.putString(PARAM_SEARCH_TERM, searchTerm);
+        bundle.putInt(PARAM_SEARCH_RESULTS_COUNT, numberSearchResults);
+        firebaseAnalytics.logEvent(EVENT_SEARCH_BOOKS_SUCCESS, bundle);
+    }
+
+    @Override
+    public void trackSearchBooksNoResults(final String searchTerm) {
+        Bundle bundle = new Bundle();
+        bundle.putString(PARAM_SEARCH_TERM, searchTerm);
+        firebaseAnalytics.logEvent(EVENT_SEARCH_BOOKS_NO_RESULTS, bundle);
     }
 
     @NonNull
