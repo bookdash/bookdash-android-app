@@ -4,7 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:fitsSystemWindows="true">
+    android:fitsSystemWindows="true"
+    >
 
     <ImageView
         android:layout_width="match_parent"
@@ -90,8 +91,6 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:clipToPadding="false"
-        android:fitsSystemWindows="true"
-        android:gravity="center_horizontal"
         android:paddingLeft="@dimen/book_list_padding"
         android:paddingRight="@dimen/book_list_padding"
         android:scrollbars="vertical"

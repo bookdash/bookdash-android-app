@@ -137,7 +137,6 @@ public class SearchActivity extends BaseAppCompatActivity implements SearchContr
                     item.collapseActionView();
                     searchPresenter.search(query);
                     toolbar.setTitle(query);
-
                     return true;
                 }
 
@@ -145,7 +144,7 @@ public class SearchActivity extends BaseAppCompatActivity implements SearchContr
                 public boolean onQueryTextChange(String query) {
                     Timber.d("Search query:" + query);
                     searchPresenter.search(query);
-                    return false;
+                    return true;
                 }
             });
         }
