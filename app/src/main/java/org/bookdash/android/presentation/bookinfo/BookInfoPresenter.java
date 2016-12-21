@@ -5,6 +5,7 @@ import android.support.annotation.NonNull;
 import org.bookdash.android.R;
 import org.bookdash.android.data.book.BookService;
 import org.bookdash.android.data.book.DownloadService;
+import org.bookdash.android.data.tracking.Analytics;
 import org.bookdash.android.domain.model.DownloadProgressItem;
 import org.bookdash.android.domain.model.firebase.FireBookDetails;
 import org.bookdash.android.domain.model.firebase.FireContributor;
@@ -25,13 +26,15 @@ class BookInfoPresenter extends BasePresenter<BookInfoContract.View> implements 
     private final BookService bookService;
     private final DownloadService downloadService;
     private final Scheduler ioScheduler, mainScheduler;
+    private final Analytics analytics;
 
-    BookInfoPresenter(@NonNull BookService bookService, @NonNull DownloadService downloadService, Scheduler ioScheduler,
-                      Scheduler mainScheduler) {
+    BookInfoPresenter(@NonNull BookService bookService, @NonNull DownloadService downloadService,
+                      @NonNull Analytics analytics, Scheduler ioScheduler, Scheduler mainScheduler) {
         this.bookService = bookService;
         this.downloadService = downloadService;
         this.ioScheduler = ioScheduler;
         this.mainScheduler = mainScheduler;
+        this.analytics = analytics;
     }
 
     @Override
@@ -59,6 +62,7 @@ class BookInfoPresenter extends BasePresenter<BookInfoContract.View> implements 
     @Override
     public void downloadBook(final FireBookDetails bookInfo) {
         if (bookInfo == null || bookInfo.getBookUrl() == null) {
+            analytics.trackDownloadBookFailed(bookInfo, "book_not_available");
             getView().showSnackBarMessage(R.string.book_not_available);
             return;
         }
@@ -67,6 +71,8 @@ class BookInfoPresenter extends BasePresenter<BookInfoContract.View> implements 
             return;
         }
         bookInfo.setIsDownloading(true);
+        analytics.trackDownloadBookStarted(bookInfo);
+
         addSubscription(downloadService.downloadFile(bookInfo).subscribeOn(ioScheduler).observeOn(mainScheduler)
                 .subscribe(new Subscriber<DownloadProgressItem>() {
                     @Override
@@ -76,9 +82,12 @@ class BookInfoPresenter extends BasePresenter<BookInfoContract.View> implements 
                     @Override
                     public void onError(Throwable e) {
                         bookInfo.setIsDownloading(false);
+                        String error = null;
                         if (e != null) {
                             getView().showSnackBarMessage(R.string.failed_to_download_book, e.getMessage());
+                            error = e.getMessage();
                         }
+                        analytics.trackDownloadBookFailed(bookInfo, error);
 
                     }
 
@@ -86,8 +95,10 @@ class BookInfoPresenter extends BasePresenter<BookInfoContract.View> implements 
                     public void onNext(DownloadProgressItem downloadProgressItem) {
                         getView().showDownloadProgress(downloadProgressItem.getDownloadProgress());
                         if (downloadProgressItem.isComplete()) {
+                            analytics.trackViewBook(bookInfo);
                             if (downloadProgressItem.getBookPages() == null) {
                                 getView().showSnackBarMessage(R.string.failed_to_open_book);
+                                analytics.trackDownloadBookFailed(bookInfo, "failed_to_open_book");
                                 return;
                             }
                             getView().showDownloadFinished();
@@ -105,6 +116,7 @@ class BookInfoPresenter extends BasePresenter<BookInfoContract.View> implements 
             getView().showSnackBarMessage(R.string.book_info_still_loading);
             return;
         }
+        analytics.trackShareBook(bookInfo);
         getView().sendShareEvent(bookInfo.getBookTitle());
     }
 }

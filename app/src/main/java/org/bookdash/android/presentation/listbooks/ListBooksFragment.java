@@ -30,6 +30,7 @@ import org.bookdash.android.R;
 import org.bookdash.android.domain.model.firebase.FireBookDetails;
 import org.bookdash.android.presentation.bookinfo.BookInfoActivity;
 import org.bookdash.android.presentation.main.NavDrawerInterface;
+import org.bookdash.android.presentation.search.SearchActivity;
 
 import java.util.List;
 
@@ -50,28 +51,73 @@ public class ListBooksFragment extends Fragment implements ListBooksContract.Vie
     private TextView textViewErrorMessage;
     private NavDrawerInterface navDrawerInterface;
     private BookAdapter bookAdapter;
+    private View.OnClickListener bookClickListener = new View.OnClickListener() {
+        @Override
+        public void onClick(View v) {
+            BookViewHolder viewHolder = (BookViewHolder) v.getTag();
+            FireBookDetails bookDetailResult = viewHolder.bookDetail;
+            BookInfoActivity.startBookInfo(ListBooksFragment.this.getActivity(), bookDetailResult);
+        }
+    };
+    private DialogInterface.OnClickListener languageClickListener = new DialogInterface.OnClickListener() {
+        @Override
+        public void onClick(DialogInterface dialog, int which) {
+            if (dialog != null) {
+                dialog.dismiss();
+            }
+
+            listBooksPresenter.saveSelectedLanguage(which);
+
+        }
+    };
 
     public static Fragment newInstance() {
         return new ListBooksFragment();
     }
 
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        Log.d(TAG,
+                "onActivityResult() called with: " + "requestCode = [" + requestCode + "], resultCode = [" + resultCode + "], data = [" + data + "]");
+
+        if (requestCode == BOOK_DETAIL_REQUEST_CODE) {
+            if (bookAdapter != null) {
+                bookAdapter.notifyDataSetChanged();
+            }
+        }
+    }
+
+    @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+        if (context instanceof NavDrawerInterface) {
+            navDrawerInterface = (NavDrawerInterface) context;
+
+        }
+    }
+
     @Nullable
     @Override
-    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container,
+                             @Nullable Bundle savedInstanceState) {
         return inflater.inflate(R.layout.fragment_list_books, container, false);
     }
 
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        listBooksPresenter = new ListBooksPresenter(Injection.provideSettingsRepo(getActivity()), Injection.provideBookService(), Schedulers.io(), AndroidSchedulers.mainThread());
+        listBooksPresenter = new ListBooksPresenter(Injection.provideSettingsRepo(getActivity()),
+                Injection.provideBookService(), Injection.provideAnalytics(), Schedulers.io(),
+                AndroidSchedulers.mainThread());
         listBooksPresenter.attachView(this);
         circularProgressBar = (CircularProgressBar) view.findViewById(R.id.activity_loading_books);
         linearLayoutErrorScreen = (LinearLayout) view.findViewById(R.id.linear_layout_error);
         buttonRetry = (Button) view.findViewById(R.id.button_retry);
         textViewErrorMessage = (TextView) view.findViewById(R.id.text_view_error_screen);
         recyclerViewBooks = (RecyclerView) view.findViewById(R.id.recycler_view_books);
-        recyclerViewBooks.setLayoutManager(new GridLayoutManager(getActivity(), getContext().getResources().getInteger(R.integer.book_span)));
+        recyclerViewBooks.setLayoutManager(
+                new GridLayoutManager(getActivity(), getContext().getResources().getInteger(R.integer.book_span)));
         buttonRetry.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -102,22 +148,29 @@ public class ListBooksFragment extends Fragment implements ListBooksContract.Vie
         listBooksPresenter.detachView();
     }
 
-    private View.OnClickListener bookClickListener = new View.OnClickListener() {
-        @Override
-        public void onClick(View v) {
-            openBookDetails(v);
+    @Override
+    public void onDetach() {
+        super.onDetach();
+        navDrawerInterface = null;
+    }
+
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        super.onCreateOptionsMenu(menu, inflater);
+        inflater.inflate(R.menu.menu_main, menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        if (item.getItemId() == R.id.action_language_choice) {
+            listBooksPresenter.clickOpenLanguagePopover();
+            return true;
         }
-    };
-
-
-    private void openBookDetails(View v) {
-        Intent intent = new Intent(getActivity(), BookInfoActivity.class);
-        // intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-        BookViewHolder viewHolder = (BookViewHolder) v.getTag();
-        FireBookDetails bookDetailResult = viewHolder.bookDetail;
-        intent.putExtra(BookInfoActivity.BOOK_PARCEL, bookDetailResult);
-        startActivityForResult(intent, BOOK_DETAIL_REQUEST_CODE);
-
+        if (item.getItemId() == R.id.action_search_books) {
+            listBooksPresenter.openSearchScreen();
+            return true;
+        }
+        return super.onOptionsItemSelected(item);
     }
 
     private void runUiThread(Runnable runnable) {
@@ -128,17 +181,6 @@ public class ListBooksFragment extends Fragment implements ListBooksContract.Vie
         activity.runOnUiThread(runnable);
     }
 
-    @Override
-    public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        Log.d(TAG, "onActivityResult() called with: " + "requestCode = [" + requestCode + "], resultCode = [" + resultCode + "], data = [" + data + "]");
-
-        if (requestCode == BOOK_DETAIL_REQUEST_CODE) {
-            if (bookAdapter != null) {
-                bookAdapter.notifyDataSetChanged();
-            }
-        }
-    }
 
     @Override
     public void showErrorScreen(final boolean show, final String errorMessage, final boolean showRetryButton) {
@@ -159,6 +201,7 @@ public class ListBooksFragment extends Fragment implements ListBooksContract.Vie
 
 
     }
+
 
     @Override
     public void showLoading(final boolean visible) {
@@ -182,6 +225,7 @@ public class ListBooksFragment extends Fragment implements ListBooksContract.Vie
 
     }
 
+
     @Override
     public void showBooks(final List<FireBookDetails> bookDetailList) {
         runUiThread(new Runnable() {
@@ -198,6 +242,7 @@ public class ListBooksFragment extends Fragment implements ListBooksContract.Vie
 
     }
 
+
     @Override
     public void showSnackBarError(final int message) {
         runUiThread(new Runnable() {
@@ -208,17 +253,6 @@ public class ListBooksFragment extends Fragment implements ListBooksContract.Vie
         });
     }
 
-    private DialogInterface.OnClickListener languageClickListener = new DialogInterface.OnClickListener() {
-        @Override
-        public void onClick(DialogInterface dialog, int which) {
-            if (dialog != null) {
-                dialog.dismiss();
-            }
-
-            listBooksPresenter.saveSelectedLanguage(which);
-
-        }
-    };
 
     @Override
     public void showLanguagePopover(final String[] languages, final int selected) {
@@ -235,33 +269,9 @@ public class ListBooksFragment extends Fragment implements ListBooksContract.Vie
     }
 
     @Override
-    public void onAttach(Context context) {
-        super.onAttach(context);
-        if (context instanceof NavDrawerInterface) {
-            navDrawerInterface = (NavDrawerInterface) context;
-
-        }
-    }
-
-    @Override
-    public void onDetach() {
-        super.onDetach();
-        navDrawerInterface = null;
-    }
-
-    @Override
-    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
-        super.onCreateOptionsMenu(menu, inflater);
-        inflater.inflate(R.menu.menu_main, menu);
+    public void startSearchActivity() {
+        SearchActivity.start(getActivity());
     }
 
 
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        if (item.getItemId() == R.id.action_language_choice) {
-            listBooksPresenter.clickOpenLanguagePopover();
-            return true;
-        }
-        return super.onOptionsItemSelected(item);
-    }
 }

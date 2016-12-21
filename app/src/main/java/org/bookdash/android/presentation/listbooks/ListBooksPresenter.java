@@ -5,6 +5,7 @@ import com.crashlytics.android.Crashlytics;
 import org.bookdash.android.R;
 import org.bookdash.android.data.book.BookService;
 import org.bookdash.android.data.settings.SettingsRepository;
+import org.bookdash.android.data.tracking.Analytics;
 import org.bookdash.android.domain.model.firebase.FireBookDetails;
 import org.bookdash.android.domain.model.firebase.FireLanguage;
 import org.bookdash.android.presentation.base.BasePresenter;
@@ -22,16 +23,18 @@ import rx.Subscriber;
 class ListBooksPresenter extends BasePresenter<ListBooksContract.View> implements ListBooksContract.Presenter {
 
 
+    private final Analytics analytics;
     private SettingsRepository settingsRepository;
     private BookService bookService;
 
     private List<FireLanguage> languages;
     private Scheduler ioScheduler, mainScheduler;
 
-    ListBooksPresenter(SettingsRepository settingsRepository, BookService bookService, Scheduler ioScheduler,
-                       Scheduler mainScheduler) {
+    ListBooksPresenter(SettingsRepository settingsRepository, BookService bookService, Analytics analytics,
+                       Scheduler ioScheduler, Scheduler mainScheduler) {
         this.settingsRepository = settingsRepository;
         this.bookService = bookService;
+        this.analytics = analytics;
         this.mainScheduler = mainScheduler;
         this.ioScheduler = ioScheduler;
     }
@@ -75,6 +78,7 @@ class ListBooksPresenter extends BasePresenter<ListBooksContract.View> implement
 
                     @Override
                     public void onNext(final Boolean aBoolean) {
+                        analytics.trackLanguageChange(languages.get(indexOfLanguage).getLanguageName());
                         loadBooksForLanguage(languages.get(indexOfLanguage));
                     }
                 }));
@@ -99,6 +103,7 @@ class ListBooksPresenter extends BasePresenter<ListBooksContract.View> implement
 
                     @Override
                     public void onNext(final FireLanguage fireLanguage) {
+                        analytics.setUserLanguage(fireLanguage.getLanguageName());
                         loadBooksForLanguage(fireLanguage);
                     }
                 }));
@@ -139,6 +144,11 @@ class ListBooksPresenter extends BasePresenter<ListBooksContract.View> implement
                     }
                 }));
 
+    }
+
+    @Override
+    public void openSearchScreen() {
+        getView().startSearchActivity();
     }
 
     private void loadBooksForLanguage(FireLanguage language) {

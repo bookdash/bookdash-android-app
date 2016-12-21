@@ -1,5 +1,6 @@
 package org.bookdash.android.presentation.bookinfo;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.databinding.DataBindingUtil;
@@ -59,7 +60,6 @@ import java.util.List;
 import mbanje.kurt.fabbutton.FabButton;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
-import uk.co.chrisjenx.calligraphy.TypefaceUtils;
 
 
 public class BookInfoActivity extends BaseAppCompatActivity implements BookInfoContract.View {
@@ -91,6 +91,12 @@ public class BookInfoActivity extends BaseAppCompatActivity implements BookInfoC
     private FireBookDetails bookInfo;
     private Button errorRetryButton;
     private int progress = 0;
+
+    public static void startBookInfo(Activity activity, FireBookDetails bookDetails) {
+        Intent intent = new Intent(activity, BookInfoActivity.class);
+        intent.putExtra(BookInfoActivity.BOOK_PARCEL, bookDetails);
+        activity.startActivity(intent);
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -146,11 +152,7 @@ public class BookInfoActivity extends BaseAppCompatActivity implements BookInfoC
         }
         scrollView = findViewById(R.id.scrollViewBookInfo);
         collapsingToolbarLayout = (CollapsingToolbarLayout) findViewById(R.id.collapsing_toolbar);
-        if (collapsingToolbarLayout != null) {
-            Typeface tp = TypefaceUtils.load(getAssets(), BookDashApplication.DEFAULT_FONT_LOCATION);
-            collapsingToolbarLayout.setExpandedTitleTypeface(tp);
-            collapsingToolbarLayout.setCollapsedTitleTypeface(tp);
-        }
+
         gradientBackground = findViewById(R.id.toolbar_background_gradient);
         floatingActionButton = (FabButton) findViewById(R.id.fab_download);
         floatingActionButton.setScaleX(0);
@@ -173,7 +175,7 @@ public class BookInfoActivity extends BaseAppCompatActivity implements BookInfoC
 
 
         bookInfoPresenter = new BookInfoPresenter(Injection.provideBookService(), Injection.provideDownloadService(),
-                Schedulers.io(), AndroidSchedulers.mainThread());
+                Injection.provideAnalytics(), Schedulers.io(), AndroidSchedulers.mainThread());
         bookInfoPresenter.attachView(this);
         calculateLayoutHeight();
         imageViewBook.getViewTreeObserver().addOnPreDrawListener(new ViewTreeObserver.OnPreDrawListener() {
@@ -382,8 +384,7 @@ public class BookInfoActivity extends BaseAppCompatActivity implements BookInfoC
     @Override
     public void showDownloadFinished() {
         Log.d(TAG, "Download finished");
-        floatingActionButton.resetIcon();
-        floatingActionButton.setProgress(100);
+        floatingActionButton.setProgress(100.0f);
     }
 
     @Override

@@ -47,6 +47,10 @@ public class BookServiceImpl implements BookService {
         };
     }
 
+    @Override
+    public Observable<List<FireContributor>> getContributorsForBook(final FireBookDetails book) {
+        return Observable.just(book.getContributorsIndexList()).flatMap(getContributorsFromIds());
+    }
     @NonNull
     private Func1<List<FireBookDetails>, Observable<List<FireBookDetails>>> filterLanguage(
             final FireLanguage fireLanguage) {
@@ -62,15 +66,24 @@ public class BookServiceImpl implements BookService {
             }
         };
     }
-
-    @Override
-    public Observable<List<FireContributor>> getContributorsForBook(final FireBookDetails book) {
-        return Observable.just(book.getContributorsIndexList()).flatMap(getContributorsFromIds());
-    }
-
     @Override
     public Observable<List<FireBookDetails>> getDownloadedBooks() {
         return bookDatabase.getBooks().flatMap(filterDownloadedBooks());
+    }
+
+    @Override
+    public Observable<List<FireBookDetails>> searchBooks(final String searchTerm) {
+        return bookDatabase.getBooks().flatMap(new Func1<List<FireBookDetails>, Observable<List<FireBookDetails>>>() {
+            @Override
+            public Observable<List<FireBookDetails>> call(final List<FireBookDetails> fireBookDetailses) {
+                return Observable.from(fireBookDetailses).filter(new Func1<FireBookDetails, Boolean>() {
+                    @Override
+                    public Boolean call(final FireBookDetails fireBookDetails) {
+                        return fireBookDetails.getBookTitle().toLowerCase().contains(searchTerm.toLowerCase());
+                    }
+                }).toList();
+            }
+        });
     }
 
     @NonNull

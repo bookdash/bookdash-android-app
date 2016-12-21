@@ -8,7 +8,7 @@ import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 
 import org.bookdash.android.BookDashApplication;
-import org.bookdash.android.config.FirebaseConfig;
+import org.bookdash.android.Injection;
 import org.threeten.bp.Instant;
 import org.threeten.bp.ZoneId;
 import org.threeten.bp.ZonedDateTime;
@@ -22,6 +22,8 @@ import java.util.List;
 public class FireBookDetails implements Parcelable {
     public static final String TABLE_NAME = "bd_books";
     public static final String CONTRIBUTORS_ITEM_NAME = "contributors";
+
+    public static final String BOOK_LANGUAGE_FIELD = "bookLanguage";
     public static final String BOOK_FORMAT_JSON_FILE = "bookdetails.json";
     public static final String BOOK_COLUMN_CREATED_DATE = "createdDate";
     public static final Parcelable.Creator<FireBookDetails> CREATOR = new Parcelable.Creator<FireBookDetails>() {
@@ -103,17 +105,16 @@ public class FireBookDetails implements Parcelable {
     }
 
     public String getBookCoverPageUrl() {
-        return FirebaseConfig.STORAGE_PREFIX + bookCoverPageUrl;
+        return Injection.STORAGE_PREFIX + bookCoverPageUrl;
     }
-
-    public StorageReference getFirebaseBookCoverUrl(){
-        StorageReference storageRef = FirebaseStorage.getInstance().getReferenceFromUrl(FirebaseConfig.STORAGE_PREFIX);
-        return storageRef.child(bookCoverPageUrl);
-    }
-
 
     public void setBookCoverPageUrl(String bookCoverPageUrl) {
         this.bookCoverPageUrl = bookCoverPageUrl;
+    }
+
+    public StorageReference getFirebaseBookCoverUrl() {
+        StorageReference storageRef = FirebaseStorage.getInstance().getReferenceFromUrl(Injection.STORAGE_PREFIX);
+        return storageRef.child(bookCoverPageUrl);
     }
 
     public boolean isDownloadedAlready() {
@@ -165,12 +166,11 @@ public class FireBookDetails implements Parcelable {
     }
 
 
-
-    public StorageReference getBookUrlStorageRef(){
-        if (bookUrl == null || bookUrl.isEmpty()){
+    public StorageReference getBookUrlStorageRef() {
+        if (bookUrl == null || bookUrl.isEmpty()) {
             return null;
         }
-        StorageReference storageRef = FirebaseStorage.getInstance().getReferenceFromUrl(FirebaseConfig.STORAGE_PREFIX);
+        StorageReference storageRef = FirebaseStorage.getInstance().getReferenceFromUrl(Injection.STORAGE_PREFIX);
         return storageRef.child(bookUrl);
     }
 

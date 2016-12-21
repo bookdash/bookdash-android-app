@@ -13,6 +13,7 @@ import org.bookdash.android.domain.model.firebase.FireLanguage;
 import org.bookdash.android.domain.model.firebase.FireRole;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import rx.Observable;
@@ -22,8 +23,6 @@ import rx.functions.Func1;
 public class FirebaseBookDatabase implements BookDatabase {
 
     private static final String TAG = "FirebaseBookDatabase";
-    private static final String COLUMN_ENABLED = "enabled";
-    private static final String BOOK_COLUMN_ENABLED = "bookEnabled";
     private final DatabaseReference booksTable;
     private final DatabaseReference languagesTable;
     private final FirebaseObservableListeners firebaseObservableListeners;
@@ -60,6 +59,14 @@ public class FirebaseBookDatabase implements BookDatabase {
     public Observable<FireRole> getRoleById(final String roleId) {
         return firebaseObservableListeners.listenToSingleValueEvents(roleTable.child(roleId), asRole());
     }
+
+    @Override
+    public Observable<List<FireBookDetails>> getBooksByLanguage(final FireLanguage fireLanguage) {
+        return firebaseObservableListeners.listenToSingleValueEvents(
+                booksTable.orderByChild(FireBookDetails.BOOK_LANGUAGE_FIELD).equalTo(fireLanguage.getId()), asBooks());
+    }
+
+
 
     private Func1<DataSnapshot, FireRole> asRole() {
         return new Func1<DataSnapshot, FireRole>() {
@@ -101,7 +108,6 @@ public class FirebaseBookDatabase implements BookDatabase {
                     Log.d(TAG, "Book Details:" + bookDetails.getBookTitle() + ". Book URL:" + bookDetails
                             .getBookCoverPageUrl());
                     bookDetails.setBookId(snap.getKey());
-              //      bookDetails.setBookLanguageAbbreviation(languageAbbreviation);
                     List<String> keys = new ArrayList<>();
                     if (snap.child(FireBookDetails.CONTRIBUTORS_ITEM_NAME).hasChildren()) {
                         Iterable<DataSnapshot> children = snap.child(FireBookDetails.CONTRIBUTORS_ITEM_NAME)
@@ -114,6 +120,7 @@ public class FirebaseBookDatabase implements BookDatabase {
                     fireBookDetails.add(bookDetails);
 
                 }
+                Collections.sort(fireBookDetails, FireBookDetails.COMPARATOR);
                 return fireBookDetails;
             }
         };

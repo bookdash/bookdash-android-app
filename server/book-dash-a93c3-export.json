@@ -1035,6 +1035,20 @@
         "-KUDlkFgF84Fm0JkaA7p" : true
       },
       "createdDate" : 1457136000000
+    },
+    "-KXt78SCMUmWA61KOm2j" : {
+      "bookCoverPageUrl" : "book_covers/en/hugs_in_the_city_en_cover_page_1.jpg",
+      "bookDescription" : "This is Jilly. Today, she hugged most of the cats in town!",
+      "bookEnabled" : true,
+      "bookLanguage" : "-KT3Hmo6eLZ_eAPu-QXZ",
+      "bookTitle" : "Hugs in the City",
+      "bookUrl" : "books/en/hugs-in-the-city-en.zip",
+      "contributors" : {
+        "-KXt6F12ecYCw5ljLtNR" : true,
+        "-KXt6K_q6jKs2ZHJrMOT" : true,
+        "-KXt6OzSFHO-HTSu0pU8" : true
+      },
+      "createdDate" : 1480574309618
     }
   },
   "bd_contributors" : {
@@ -1899,6 +1913,27 @@
     "-KUDlkFgF84Fm0JkaA7p" : {
       "avatar" : "contributors/kirsten_walker_150x150.jpg",
       "name" : "Kirsten Walker",
+      "roles" : {
+        "-KT3Hmock0E684XLX23U" : true
+      }
+    },
+    "-KXt6F12ecYCw5ljLtNR" : {
+      "avatar" : " ",
+      "name" : "JP Brouard",
+      "roles" : {
+        "-KT3HmoikmOK9WR2AEJ7" : true
+      }
+    },
+    "-KXt6K_q6jKs2ZHJrMOT" : {
+      "avatar" : " ",
+      "name" : "Milly Brouard",
+      "roles" : {
+        "-KT3HmofJSKsmB0ULX3S" : true
+      }
+    },
+    "-KXt6OzSFHO-HTSu0pU8" : {
+      "avatar" : " ",
+      "name" : "Kalynne Vorster ",
       "roles" : {
         "-KT3Hmock0E684XLX23U" : true
       }

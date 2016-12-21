@@ -93,5 +93,12 @@
     <string name="error_getting_contributors">Error fetching contributors</string>
     <string name="error_saving_selected_language">There was an error saving the selected language. Please try again later.</string>
     <string name="error_opening_languagepopover">There was an unexpected error. Please try again later.</string>
+    <string name="action_search">Search</string>
+    <string name="screen_title_search">Search</string>
+    <string name="menu_search">Search</string>
+    <string name="no_internet_text">Check your connection and try again later.</string>
+    <string name="search_no_internet_text">Check your internet connection and try again.</string>
+    <string name="search_no_results_found">No results found that match your query.</string>
+    <string name="search_query_hint">Search books...</string>
 
 </resources>
