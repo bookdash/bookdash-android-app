@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v7.preference.PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+    <android.support.v7.preference.Preference
+        android:defaultValue="false"
+        android:summary="Show Tutorial Again"
+        android:title="Show Tutorial"
+        />
+</android.support.v7.preference.PreferenceScreen>

@@ -35,6 +35,7 @@ import org.bookdash.android.presentation.about.AboutFragment;
 import org.bookdash.android.presentation.activity.BaseAppCompatActivity;
 import org.bookdash.android.presentation.downloads.DownloadsFragment;
 import org.bookdash.android.presentation.listbooks.ListBooksFragment;
+import org.bookdash.android.presentation.settings.SettingsFragment;
 
 
 public class MainActivity extends BaseAppCompatActivity implements MainContract.MainView, NavDrawerInterface {
@@ -147,7 +148,11 @@ public class MainActivity extends BaseAppCompatActivity implements MainContract.
     }
 
     private void showSettingsScreen() {
-
+        FragmentManager fragmentManager = getSupportFragmentManager();
+        FragmentTransaction ft = fragmentManager.beginTransaction();
+        Fragment f = new SettingsFragment();
+        ft.replace(R.id.fragment_content,f,"SETTINGS");
+        ft.commit();
     }
 
     @Override
