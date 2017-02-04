@@ -89,7 +89,7 @@ public class MainActivity extends BaseAppCompatActivity implements MainContract.
                         showAboutPage();
                         break;
                     case R.id.action_settings: {
-                        showSettingsScreen();
+                        mainPresenter.clickShowSettings();
                         break;
                     }
                     case R.id.action_thanks: {
@@ -147,11 +147,11 @@ public class MainActivity extends BaseAppCompatActivity implements MainContract.
         mainPresenter.clickViewAllBooks();
     }
 
-    private void showSettingsScreen() {
+    public void showSettingsScreen() {
         FragmentManager fragmentManager = getSupportFragmentManager();
         FragmentTransaction ft = fragmentManager.beginTransaction();
-        Fragment f = new SettingsFragment();
-        ft.replace(R.id.fragment_content,f,"SETTINGS");
+        Fragment settingsFragment = new SettingsFragment();
+        ft.replace(R.id.fragment_content,settingsFragment,"SETTINGS");
         ft.commit();
     }
 

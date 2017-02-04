@@ -1,8 +1,26 @@
-<?xml version="1.0" encoding="utf-8"?>
-<android.support.v7.preference.PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
-    <android.support.v7.preference.Preference
-        android:defaultValue="false"
-        android:summary="Show Tutorial Again"
-        android:title="Show Tutorial"
-        />
+<android.support.v7.preference.PreferenceScreen
+    xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <android.support.v7.preference.PreferenceCategory
+        android:title="Category 1">
+
+        <android.support.v7.preference.Preference
+            android:key="key1"
+            android:title="Show Tutorial"
+            android:summary="Displays the tutorial for this app"
+            />
+
+        <android.support.v7.preference.EditTextPreference
+            android:key="key2"
+            android:title="EditText Preference"
+            android:summary="EditText Summary"
+            android:dialogMessage="Dialog Message"
+            android:defaultValue="Default value" />
+        <android.support.v7.preference.CheckBoxPreference
+            android:key="key3"
+            android:title="CheckBox Preference"
+            android:summary="CheckBox Summary"
+            android:defaultValue="true"/>
+    </android.support.v7.preference.PreferenceCategory>
+
 </android.support.v7.preference.PreferenceScreen>

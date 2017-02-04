@@ -43,5 +43,10 @@ public class MainPresenter implements MainContract.MainUserActions {
         mainView.inviteFriends();
     }
 
+    @Override
+    public void clickShowSettings() {
+     mainView.showSettingsScreen();
+    }
+
 
 }

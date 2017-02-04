@@ -15,6 +15,8 @@ public interface MainContract {
         void showDownloadedBooksPage();
 
         void inviteFriends();
+
+        void showSettingsScreen();
     }
 
     interface MainUserActions {
@@ -28,6 +30,8 @@ public interface MainContract {
         void clickShowContributors();
 
         void clickInvitePage();
+
+        void clickShowSettings();
     }
 }
 

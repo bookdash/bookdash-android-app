@@ -7,6 +7,7 @@
         <item name="android:windowBackground">@color/default_background_colour</item>
         <item name="android:colorBackground">@color/default_background_colour</item>
         <item name="android:windowActionBar">false</item>
+        <item name="preferenceTheme">@style/PreferenceThemeOverlay</item>
     </style>
 
     <style name="AppTheme.NoActionBar">
