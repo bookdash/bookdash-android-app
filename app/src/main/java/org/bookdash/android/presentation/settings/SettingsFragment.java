@@ -18,12 +18,13 @@ import za.co.riggaroo.materialhelptutorial.tutorial.MaterialTutorialActivity;
  */
 
 public class SettingsFragment extends PreferenceFragmentCompat implements SettingsContract.View {
-    SettingsPresenter presenter;
+    public static final String TUTORIAL_DISPLAY_KEY = "tutorial_display_key";
+    SettingsPresenter mPresenter;
 
     @Override
     public void onCreatePreferences(Bundle savedInstanceState, String rootKey) {
-        presenter = new SettingsPresenter(Injection.provideTutorialRepo(getContext()));
-        presenter.attachView(this);
+        mPresenter = new SettingsPresenter(Injection.provideTutorialRepo(getContext()));
+        mPresenter.attachView(this);
 
         addPreferencesFromResource(R.xml.app_preferences);
         setupTutorialDisplayPreference();
@@ -37,11 +38,11 @@ public class SettingsFragment extends PreferenceFragmentCompat implements Settin
     }
 
     private void setupTutorialDisplayPreference() {
-        Preference tutorialPreferenceItem = findPreference("tutorial_display_key");
+        Preference tutorialPreferenceItem = findPreference(TUTORIAL_DISPLAY_KEY);
         tutorialPreferenceItem.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
             @Override
             public boolean onPreferenceClick(Preference preference) {
-                presenter.openTutorialScreen();
+                mPresenter.openTutorialScreen();
                 return true;
             }
         });

@@ -13,24 +13,24 @@ import za.co.riggaroo.materialhelptutorial.TutorialItem;
  */
 
 public class TutorialsRepositoryImpl implements TutorialsRepository {
-    private final Context context;
+    private final Context mContext;
 
     public TutorialsRepositoryImpl(Context context) {
-        this.context = context;
+        this.mContext = context;
     }
 
     @Override
     public ArrayList<TutorialItem> getTutorialItems() {
-        TutorialItem tutorialItem1 = new TutorialItem(context.getString(R.string.slide_1_african_story_books), context.getString(R.string.slide_1_african_story_books_subtitle),
+        TutorialItem tutorialItem1 = new TutorialItem(mContext.getString(R.string.slide_1_african_story_books), mContext.getString(R.string.slide_1_african_story_books_subtitle),
             R.color.slide_1, R.drawable.tut_page_1_front, R.drawable.tut_page_1_background);
 
-        TutorialItem tutorialItem2 = new TutorialItem(context.getString(R.string.slide_2_volunteer_professionals), context.getString(R.string.slide_2_volunteer_professionals_subtitle),
+        TutorialItem tutorialItem2 = new TutorialItem(mContext.getString(R.string.slide_2_volunteer_professionals), mContext.getString(R.string.slide_2_volunteer_professionals_subtitle),
             R.color.slide_2, R.drawable.tut_page_2_front, R.drawable.tut_page_2_background);
 
-        TutorialItem tutorialItem3 = new TutorialItem(context.getString(R.string.slide_3_download_and_go), context.getString(R.string.slide_3_download_and_go_subtitle),
+        TutorialItem tutorialItem3 = new TutorialItem(mContext.getString(R.string.slide_3_download_and_go), mContext.getString(R.string.slide_3_download_and_go_subtitle),
             R.color.slide_3, R.drawable.tut_page_3_foreground, R.drawable.tut_page_3_background);
 
-        TutorialItem tutorialItem4 = new TutorialItem(context.getString(R.string.slide_4_different_languages), context.getString(R.string.slide_4_different_languages_subtitle),
+        TutorialItem tutorialItem4 = new TutorialItem(mContext.getString(R.string.slide_4_different_languages), mContext.getString(R.string.slide_4_different_languages_subtitle),
             R.color.slide_4, R.drawable.tut_page_4_foreground, R.drawable.tut_page_4_background);
 
         ArrayList<TutorialItem> tutorialItems = new ArrayList<>();

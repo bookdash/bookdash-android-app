@@ -14,17 +14,17 @@ import za.co.riggaroo.materialhelptutorial.TutorialItem;
 public class SettingsPresenter extends BasePresenter<SettingsContract.View> implements
     SettingsContract.Presenter {
 
-    private TutorialsRepository repository;
-    private ArrayList<TutorialItem> tutorialItems;
+    private TutorialsRepository mRepository;
+    private ArrayList<TutorialItem> mTutorialItems;
 
     public SettingsPresenter(TutorialsRepository repository) {
-        this.repository = repository;
+        this.mRepository = repository;
     }
 
     @Override
     public void openTutorialScreen() {
         checkViewAttached();
-        tutorialItems = repository.getTutorialItems();
-        getView().showTutorialScreen(tutorialItems);
+        mTutorialItems = mRepository.getTutorialItems();
+        getView().showTutorialScreen(mTutorialItems);
     }
 }
