@@ -16,6 +16,8 @@ import org.bookdash.android.data.settings.FakeSettingsApiImpl;
 import org.bookdash.android.data.settings.SettingsRepository;
 import org.bookdash.android.data.settings.SettingsRepositoryImpl;
 import org.bookdash.android.data.tracking.Analytics;
+import org.bookdash.android.data.tutorial.TutorialsRepository;
+import org.bookdash.android.data.tutorial.TutorialsRepositories;
 
 /**
  * @author rebeccafranks
@@ -35,6 +37,10 @@ public class Injection {
             firebaseDatabase.setPersistenceEnabled(true);
             downloadService = new DownloadServiceImpl(FirebaseStorage.getInstance(firebaseApp));
         }
+    }
+
+    public static TutorialsRepository provideTutorialRepo(Context context) {
+        return TutorialsRepositories.getInstance(context);
     }
 
     private static boolean isInitialized() {

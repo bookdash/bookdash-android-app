@@ -1,6 +1,11 @@
 package org.bookdash.android.presentation.settings;
 
+import org.bookdash.android.data.tutorial.TutorialsRepository;
 import org.bookdash.android.presentation.base.BasePresenter;
+
+import java.util.ArrayList;
+
+import za.co.riggaroo.materialhelptutorial.TutorialItem;
 
 /**
  * Created by michel.onwordi on 26/01/2017.
@@ -9,10 +14,17 @@ import org.bookdash.android.presentation.base.BasePresenter;
 public class SettingsPresenter extends BasePresenter<SettingsContract.View> implements
     SettingsContract.Presenter {
 
+    private TutorialsRepository repository;
+    private ArrayList<TutorialItem> tutorialItems;
+
+    public SettingsPresenter(TutorialsRepository repository) {
+        this.repository = repository;
+    }
 
     @Override
     public void openTutorialScreen() {
         checkViewAttached();
-        getView().showTutorialScreen();
+        tutorialItems = repository.getTutorialItems();
+        getView().showTutorialScreen(tutorialItems);
     }
 }
