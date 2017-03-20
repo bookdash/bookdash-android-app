@@ -20,6 +20,8 @@ import org.bookdash.android.data.settings.SettingsRepositories;
 import org.bookdash.android.data.settings.SettingsRepository;
 import org.bookdash.android.data.tracking.Analytics;
 import org.bookdash.android.data.tracking.BookDashFirebaseAnalytics;
+import org.bookdash.android.data.tutorial.TutorialsRepositories;
+import org.bookdash.android.data.tutorial.TutorialsRepository;
 import org.bookdash.android.data.utils.firebase.FirebaseObservableListeners;
 
 /**
@@ -62,6 +64,10 @@ public class Injection {
 
     public static SettingsRepository provideSettingsRepo(Context context) {
         return SettingsRepositories.getInstance(new SettingsApiImpl(context, provideRemoteConfig()));
+    }
+
+    public static TutorialsRepository provideTutorialRepo(Context context) {
+        return TutorialsRepositories.getInstance(context);
     }
 
     private static RemoteConfigSettingsApi provideRemoteConfig() {
