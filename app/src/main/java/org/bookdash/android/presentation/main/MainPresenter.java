@@ -45,8 +45,6 @@ public class MainPresenter implements MainContract.MainUserActions {
 
     @Override
     public void clickShowSettings() {
-     mainView.showSettingsScreen();
+        mainView.showSettingsScreen();
     }
-
-
 }

@@ -5,8 +5,8 @@
 
         <android.support.v7.preference.Preference
             android:key="tutorial_display_key"
-            android:summary="Display the tutorial for this app"
-            android:title="Show Tutorial"/>
+            android:summary="@string/show_tutorial_settings_summary"
+            android:title="@string/show_tutorial_settings_title"/>
     </android.support.v7.preference.PreferenceCategory>
 
 </android.support.v7.preference.PreferenceScreen>

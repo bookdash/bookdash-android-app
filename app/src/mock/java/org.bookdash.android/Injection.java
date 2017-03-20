@@ -25,7 +25,7 @@ import org.bookdash.android.data.tutorial.TutorialsRepositories;
  */
 public class Injection {
 
-    public static final String STORAGE_PREFIX = "gs://book-dash-107f4.appspot.com/bookdash_books/";
+    public static final String STORAGE_PREFIX = "gs://book-dash-qa.appspot.com/";
 
     private static DownloadServiceImpl downloadService;
 
