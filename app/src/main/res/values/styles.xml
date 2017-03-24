@@ -7,6 +7,7 @@
         <item name="android:windowBackground">@color/default_background_colour</item>
         <item name="android:colorBackground">@color/default_background_colour</item>
         <item name="android:windowActionBar">false</item>
+        <item name="preferenceTheme">@style/bookdashPreferenceTheme</item>
     </style>
 
     <style name="AppTheme.NoActionBar">
@@ -32,5 +33,12 @@
 
     <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light"/>
 
+    <style name="bookdashPreferenceTheme" parent="PreferenceThemeOverlay.v14.Material">
+        <item name="preferenceFragmentCompatStyle">@style/bookdashPreferenceFragmentCompatStyle
+        </item>
+    </style>
 
+    <style name="bookdashPreferenceFragmentCompatStyle" parent="PreferenceFragment.Material">
+        <item name="android:layout">@layout/fragment_settings</item>
+    </style>
 </resources>

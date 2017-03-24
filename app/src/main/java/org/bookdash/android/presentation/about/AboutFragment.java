@@ -52,7 +52,7 @@ public class AboutFragment extends Fragment implements AboutContract.View {
 
         if (actionBar != null) {
             actionBar.setDisplayHomeAsUpEnabled(true);
-            actionBar.setHomeAsUpIndicator(R.drawable.ic_menu_black_24dp);
+            actionBar.setHomeAsUpIndicator(R.drawable.ic_menu_24dp);
             actionBar.setTitle(R.string.about_heading);
         }
 
