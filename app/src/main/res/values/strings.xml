@@ -102,5 +102,6 @@
     <string name="search_query_hint">Search books...</string>
     <string name="show_tutorial_settings_title">Show Tutorial</string>
     <string name="show_tutorial_settings_summary">Display the tutorial for this app</string>
+    <string name="settings_title">Settings</string>
 
 </resources>
