@@ -6,6 +6,7 @@ import com.google.firebase.FirebaseApp;
 import com.google.firebase.FirebaseOptions;
 import com.google.firebase.analytics.FirebaseAnalytics;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.messaging.FirebaseMessaging;
 import com.google.firebase.storage.FirebaseStorage;
 
 import org.bookdash.android.config.FirebaseConfig;
@@ -63,15 +64,16 @@ public class Injection {
 
 
     public static SettingsRepository provideSettingsRepo(Context context) {
-        return SettingsRepositories.getInstance(new SettingsApiImpl(context, provideRemoteConfig()));
-    }
-
-    public static TutorialsRepository provideTutorialRepo(Context context) {
-        return TutorialsRepositories.getInstance(context);
+        return SettingsRepositories
+                .getInstance(new SettingsApiImpl(context, provideRemoteConfig()), FirebaseMessaging.getInstance());
     }
 
     private static RemoteConfigSettingsApi provideRemoteConfig() {
         return config;
+    }
+
+    public static TutorialsRepository provideTutorialRepo(Context context) {
+        return TutorialsRepositories.getInstance(context);
     }
 
     public static BookService provideBookService() {
