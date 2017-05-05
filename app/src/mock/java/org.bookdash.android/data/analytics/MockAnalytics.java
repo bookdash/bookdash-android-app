@@ -93,4 +93,14 @@ public class MockAnalytics implements Analytics {
     public void trackSearchBooksNoResults(final String searchTerm) {
 
     }
+
+    @Override
+    public void trackViewHelpTutorialAgain() {
+        
+    }
+
+    @Override
+    public void trackUserToggleNewBookNotifications(final boolean onOff) {
+
+    }
 }

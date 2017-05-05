@@ -11,8 +11,9 @@ import rx.Single;
  * @since 15/11/05.
  */
 public class FakeSettingsApiImpl implements SettingsApi {
+    public static FireLanguage fireLanguage = new FireLanguage("English", "EN", true, "1");
     private static boolean isFirstTime = true;
-    public static FireLanguage fireLanguage = new FireLanguage("English","EN", true, "1");
+
     @Override
     public boolean isFirstTime() {
         return isFirstTime;
@@ -34,13 +35,21 @@ public class FakeSettingsApiImpl implements SettingsApi {
         return Single.just(fireLanguage);
     }
 
+    @Override
+    public Single<Boolean> isSubscribedToNewBookNotification() {
+        return Single.just(true);
+    }
 
-    @VisibleForTesting
-    public static void setFirstTime(boolean firstTime){
-        isFirstTime = firstTime;
+    @Override
+    public Single<Boolean> saveNewBookNotificationPreference(final boolean onOff) {
+        return Single.just(true);
     }
 
 
+    @VisibleForTesting
+    public static void setFirstTime(boolean firstTime) {
+        isFirstTime = firstTime;
+    }
 
 
 }
