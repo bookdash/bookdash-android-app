@@ -5,7 +5,7 @@ buildscript {
         jcenter()
     }
     dependencies {
-        classpath 'com.android.tools.build:gradle:2.3.0'
+        classpath 'com.android.tools.build:gradle:2.3.1'
         classpath 'com.google.gms:google-services:3.0.0'
         classpath 'com.jfrog.bintray.gradle:gradle-bintray-plugin:1.1'
         classpath 'com.github.dcendents:android-maven-gradle-plugin:1.4.1'
@@ -29,8 +29,8 @@ ext {
     // Sdk and tools
 
     // App dependencies
-    supportLibraryVersion = '25.0.1'
-    googlePlayServicesVersion = '10.0.0'
+    supportLibraryVersion = '25.3.1'
+    googlePlayServicesVersion = '10.2.1'
     guavaVersion = '18.0'
     glideVersion = '3.7.0'
     junitVersion = '4.12'
