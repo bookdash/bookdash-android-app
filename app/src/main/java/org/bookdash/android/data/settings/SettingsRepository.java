@@ -16,5 +16,11 @@ public interface SettingsRepository {
 
     Single<FireLanguage> getLanguagePreference();
 
+    Single<Boolean> isSubscribedToNewBookNotification();
+
     Single<Boolean> saveLanguagePreference(FireLanguage languagePreference);
+
+    Single<Boolean> setNewBookNotificationStatus(boolean onOff);
+
+    Single<Boolean> initialSubscribeToNewBookNotifications();
 }

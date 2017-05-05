@@ -35,6 +35,9 @@ public class BookDashFirebaseAnalytics implements Analytics {
     private static final String EVENT_SEARCH_BOOKS_SUCCESS = "search_books_success";
     private static final String PARAM_SEARCH_RESULTS_COUNT = "search_results_count";
     private static final String EVENT_SEARCH_BOOKS_NO_RESULTS = "search_books_no_results";
+    private static final String EVENT_VIEW_TUTORIAL = "view_tutorial";
+    private static final String PARAM_ON_OFF = "notification_pref_value";
+    private static final String EVENT_TOGGLE_NOTIFICATIONS = "toggle_new_book_notification";
 
     private FirebaseAnalytics firebaseAnalytics;
 
@@ -147,6 +150,18 @@ public class BookDashFirebaseAnalytics implements Analytics {
         Bundle bundle = new Bundle();
         bundle.putString(PARAM_SEARCH_TERM, searchTerm);
         firebaseAnalytics.logEvent(EVENT_SEARCH_BOOKS_NO_RESULTS, bundle);
+    }
+
+    @Override
+    public void trackViewHelpTutorialAgain() {
+        firebaseAnalytics.logEvent(EVENT_VIEW_TUTORIAL, null);
+    }
+
+    @Override
+    public void trackUserToggleNewBookNotifications(final boolean onOff) {
+        Bundle bundle = new Bundle();
+        bundle.putBoolean(PARAM_ON_OFF, onOff);
+        firebaseAnalytics.logEvent(EVENT_TOGGLE_NOTIFICATIONS, bundle);
     }
 
     @NonNull

@@ -104,4 +104,6 @@
     <string name="show_tutorial_settings_summary">Display the tutorial for this app</string>
     <string name="settings_title">Settings</string>
 
+    <string name="settings_new_book_notifications_summary">Subscribe to get notified about new books</string>
+    <string name="settings_new_book_notifications">New Book Notifications</string>
 </resources>

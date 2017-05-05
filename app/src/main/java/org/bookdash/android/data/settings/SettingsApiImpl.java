@@ -19,6 +19,7 @@ import rx.Single;
  */
 public class SettingsApiImpl implements SettingsApi {
     public static final String FIRE_LANGUAGE_PREF = "fire_language_pref";
+    public static final String PREF_IS_SUBSCRIBED_NEW_BOOK_NOTIFICATIONS = "pref_new_book_notification";
     private static final String PREF_IS_FIRST_TIME = "is_first_time";
     private final Context context;
     private final RemoteConfigSettingsApi remoteConfig;
@@ -68,9 +69,32 @@ public class SettingsApiImpl implements SettingsApi {
                 SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context);
                 String json = sharedPreferences.getString(FIRE_LANGUAGE_PREF, "");
                 if (json.isEmpty()) {
-                    return Single.just(new FireLanguage(remoteConfig.getDefaultLanguageName(), remoteConfig.getDefaultLanguageAbbreviation(), true, remoteConfig.getDefaultLanguageId()));
+                    return Single.just(new FireLanguage(remoteConfig.getDefaultLanguageName(),
+                            remoteConfig.getDefaultLanguageAbbreviation(), true, remoteConfig.getDefaultLanguageId()));
                 }
                 return Single.just(gson.fromJson(json, FireLanguage.class));
+            }
+        });
+    }
+
+    @Override
+    public Single<Boolean> isSubscribedToNewBookNotification() {
+        return Single.defer(new Callable<Single<Boolean>>() {
+            @Override
+            public Single<Boolean> call() throws Exception {
+                return Single.just(PreferenceManager.getDefaultSharedPreferences(context)
+                        .getBoolean(PREF_IS_SUBSCRIBED_NEW_BOOK_NOTIFICATIONS, true));
+            }
+        });
+    }
+
+    @Override
+    public Single<Boolean> saveNewBookNotificationPreference(final boolean onOff) {
+        return Single.defer(new Callable<Single<Boolean>>() {
+            @Override
+            public Single<Boolean> call() throws Exception {
+                return Single.just(PreferenceManager.getDefaultSharedPreferences(context).edit()
+                        .putBoolean(PREF_IS_SUBSCRIBED_NEW_BOOK_NOTIFICATIONS, onOff).commit());
             }
         });
     }

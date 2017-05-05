@@ -38,4 +38,8 @@ public interface Analytics {
     void trackSearchBooksSuccess(String searchTerm, int numberSearchResults);
 
     void trackSearchBooksNoResults(String searchTerm);
+
+    void trackViewHelpTutorialAgain();
+
+    void trackUserToggleNewBookNotifications(boolean onOff);
 }
