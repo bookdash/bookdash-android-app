@@ -17,4 +17,7 @@ public interface SettingsApi {
 
     Single<FireLanguage> getSavedLanguage();
 
+    Single<Boolean> isSubscribedToNewBookNotification();
+
+    Single<Boolean> saveNewBookNotificationPreference(boolean onOff);
 }

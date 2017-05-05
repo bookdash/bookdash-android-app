@@ -5,6 +5,7 @@ import android.content.Context;
 import com.google.firebase.FirebaseApp;
 import com.google.firebase.FirebaseOptions;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.messaging.FirebaseMessaging;
 import com.google.firebase.storage.FirebaseStorage;
 
 import org.bookdash.android.data.analytics.MockAnalytics;
@@ -16,6 +17,8 @@ import org.bookdash.android.data.settings.FakeSettingsApiImpl;
 import org.bookdash.android.data.settings.SettingsRepository;
 import org.bookdash.android.data.settings.SettingsRepositoryImpl;
 import org.bookdash.android.data.tracking.Analytics;
+import org.bookdash.android.data.tutorial.TutorialsRepositories;
+import org.bookdash.android.data.tutorial.TutorialsRepository;
 
 /**
  * @author rebeccafranks
@@ -41,12 +44,16 @@ public class Injection {
         return downloadService != null;
     }
 
+    public static TutorialsRepository provideTutorialRepo(Context context) {
+        return TutorialsRepositories.getInstance(context);
+    }
+
     public static BookService provideBookService() {
         return new FakeBookServiceApiImpl();
     }
 
     public static SettingsRepository provideSettingsRepo(Context context) {
-        return new SettingsRepositoryImpl(new FakeSettingsApiImpl());
+        return new SettingsRepositoryImpl(new FakeSettingsApiImpl(), FirebaseMessaging.getInstance());
     }
 
     public static DownloadService provideDownloadService() {

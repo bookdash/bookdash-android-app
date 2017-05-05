@@ -6,6 +6,7 @@ import com.google.firebase.FirebaseApp;
 import com.google.firebase.FirebaseOptions;
 import com.google.firebase.analytics.FirebaseAnalytics;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.messaging.FirebaseMessaging;
 import com.google.firebase.storage.FirebaseStorage;
 
 import org.bookdash.android.config.FirebaseConfig;
@@ -20,6 +21,8 @@ import org.bookdash.android.data.settings.SettingsRepositories;
 import org.bookdash.android.data.settings.SettingsRepository;
 import org.bookdash.android.data.tracking.Analytics;
 import org.bookdash.android.data.tracking.BookDashFirebaseAnalytics;
+import org.bookdash.android.data.tutorial.TutorialsRepositories;
+import org.bookdash.android.data.tutorial.TutorialsRepository;
 import org.bookdash.android.data.utils.firebase.FirebaseObservableListeners;
 
 /**
@@ -60,9 +63,13 @@ public class Injection {
         return bookService != null && config != null;
     }
 
+    public static TutorialsRepository provideTutorialRepo(Context context) {
+        return TutorialsRepositories.getInstance(context);
+    }
 
     public static SettingsRepository provideSettingsRepo(Context context) {
-        return SettingsRepositories.getInstance(new SettingsApiImpl(context, provideRemoteConfig()));
+        return SettingsRepositories
+                .getInstance(new SettingsApiImpl(context, provideRemoteConfig()), FirebaseMessaging.getInstance());
     }
 
     private static RemoteConfigSettingsApi provideRemoteConfig() {

@@ -35,6 +35,7 @@ import org.bookdash.android.presentation.about.AboutFragment;
 import org.bookdash.android.presentation.activity.BaseAppCompatActivity;
 import org.bookdash.android.presentation.downloads.DownloadsFragment;
 import org.bookdash.android.presentation.listbooks.ListBooksFragment;
+import org.bookdash.android.presentation.settings.SettingsFragment;
 
 
 public class MainActivity extends BaseAppCompatActivity implements MainContract.MainView, NavDrawerInterface {
@@ -60,7 +61,7 @@ public class MainActivity extends BaseAppCompatActivity implements MainContract.
         final ActionBar actionBar = getSupportActionBar();
 
         if (actionBar != null) {
-            actionBar.setHomeAsUpIndicator(R.drawable.ic_menu_black_24dp);
+            actionBar.setHomeAsUpIndicator(R.drawable.ic_menu_24dp);
             actionBar.setDisplayHomeAsUpEnabled(true);
         }
 
@@ -88,7 +89,7 @@ public class MainActivity extends BaseAppCompatActivity implements MainContract.
                         showAboutPage();
                         break;
                     case R.id.action_settings: {
-                        showSettingsScreen();
+                        mainPresenter.clickShowSettings();
                         break;
                     }
                     case R.id.action_thanks: {
@@ -146,8 +147,12 @@ public class MainActivity extends BaseAppCompatActivity implements MainContract.
         mainPresenter.clickViewAllBooks();
     }
 
-    private void showSettingsScreen() {
-
+    public void showSettingsScreen() {
+        FragmentManager fragmentManager = getSupportFragmentManager();
+        FragmentTransaction ft = fragmentManager.beginTransaction();
+        Fragment settingsFragment = new SettingsFragment();
+        ft.replace(R.id.fragment_content,settingsFragment,"SETTINGS");
+        ft.commit();
     }
 
     @Override

@@ -6,12 +6,15 @@ import android.content.Context;
 import com.crashlytics.android.Crashlytics;
 import com.crashlytics.android.core.CrashlyticsCore;
 import com.google.firebase.analytics.FirebaseAnalytics;
+import com.google.firebase.iid.FirebaseInstanceId;
 import com.jakewharton.threetenabp.AndroidThreeTen;
 
 import org.bookdash.android.config.CrashlyticsTree;
 
 import io.fabric.sdk.android.Fabric;
+import rx.Subscriber;
 import timber.log.Timber;
+
 
 /**
  * @author Rebecca Franks
@@ -36,6 +39,7 @@ public class BookDashApplication extends Application {
 
         if (BuildConfig.DEBUG) {
             Timber.plant(new Timber.DebugTree());
+            Timber.d("Firebase Debug Info:" + FirebaseInstanceId.getInstance().getToken());
         } else {
             Timber.plant(new CrashlyticsTree());
         }
@@ -45,6 +49,23 @@ public class BookDashApplication extends Application {
         isTablet = getResources().getBoolean(R.bool.is_tablet);
         FILES_DIR = getFilesDir().getPath();
         getDefaultTracker();
+        Injection.provideSettingsRepo(getApplicationContext()).initialSubscribeToNewBookNotifications()
+                .subscribe(new Subscriber<Boolean>() {
+                    @Override
+                    public void onCompleted() {
+
+                    }
+
+                    @Override
+                    public void onError(final Throwable e) {
+
+                    }
+
+                    @Override
+                    public void onNext(final Boolean aBoolean) {
+
+                    }
+                });
 
     }
 
