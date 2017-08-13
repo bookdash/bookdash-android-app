@@ -1,1 +1,1 @@
-include ':app', ':fabbutton', ':watchface'
+include ':app', ':fabbutton'
