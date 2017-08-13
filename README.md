@@ -15,8 +15,7 @@ Book Dash is an Android App for the NPO where you can download books in differen
 <img src="art/booklisting.jpg" alt="phone image" width="200px" />
 <img src="art/bookdetail.jpg" alt="phone image" width="200px" />
 <img src="art/reading_book.jpg" alt="phone image" width="400px" />
-<img src="art/owl_round.png" alt="phone image" width="200px" />
-<img src="art/fox_square.png" alt="phone image" height="200px" />
+
 
 
 # What does this app do?
