@@ -139,11 +139,11 @@ public class DownloadsFragment extends Fragment implements DownloadsContract.Vie
                 .setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false));
         listDownloadsRecyclerView.setAdapter(downloadsAdapter);
 
-        linearLayoutErrorScreen = (LinearLayout) view.findViewById(R.id.linear_layout_error);
-        buttonRetry = (Button) view.findViewById(R.id.button_retry);
-        textViewErrorMessage = (TextView) view.findViewById(R.id.text_view_error_screen);
-        circularProgressBar = (CircularProgressBar) view.findViewById(R.id.fragment_loading_downloads);
-        Toolbar toolbar = (Toolbar) view.findViewById(R.id.toolbar);
+        linearLayoutErrorScreen =  view.findViewById(R.id.linear_layout_error);
+        buttonRetry =  view.findViewById(R.id.button_retry);
+        textViewErrorMessage =  view.findViewById(R.id.text_view_error_screen);
+        circularProgressBar =  view.findViewById(R.id.fragment_loading_downloads);
+        Toolbar toolbar =  view.findViewById(R.id.toolbar);
         if (navDrawerInterface != null) {
             navDrawerInterface.setToolbar(toolbar);
 

@@ -1,24 +1,31 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              xmlns:app="http://schemas.android.com/apk/res-auto"
-              xmlns:tools="http://schemas.android.com/tools"
-              android:layout_width="match_parent"
-              android:layout_height="match_parent"
-              android:orientation="vertical">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
 
-    <android.support.v7.widget.Toolbar
-        android:id="@+id/settings_toolbar"
+    <android.support.design.widget.AppBarLayout
         android:layout_width="match_parent"
-        android:layout_height="?actionBarSize"
-        android:background="?colorPrimary"
-        android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
-        app:title="@string/settings_title"
-        app:navigationIcon="@drawable/ic_menu_24dp"
-        app:popupTheme="@style/ThemeOverlay.AppCompat.Light"/>
+        android:layout_height="wrap_content">
+
+        <android.support.v7.widget.Toolbar
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="?actionBarSize"
+            android:background="?colorPrimary"
+            android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
+            app:navigationIcon="@drawable/ic_menu_24dp"
+            app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
+            app:title="@string/settings_title" />
+
+    </android.support.design.widget.AppBarLayout>
+
 
     <FrameLayout
         android:id="@android:id/list_container"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:targetApi="n"/>
+        tools:targetApi="n" />
 </LinearLayout>

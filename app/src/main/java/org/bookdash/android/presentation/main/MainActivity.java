@@ -151,7 +151,7 @@ public class MainActivity extends BaseAppCompatActivity implements MainContract.
         FragmentManager fragmentManager = getSupportFragmentManager();
         FragmentTransaction ft = fragmentManager.beginTransaction();
         Fragment settingsFragment = new SettingsFragment();
-        ft.replace(R.id.fragment_content,settingsFragment,"SETTINGS");
+        ft.replace(R.id.fragment_content, settingsFragment, "SETTINGS");
         ft.commit();
     }
 

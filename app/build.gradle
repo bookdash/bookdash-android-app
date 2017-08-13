@@ -4,7 +4,7 @@ buildscript {
     }
 
     dependencies {
-        classpath 'io.fabric.tools:gradle:1.21.6'
+        classpath 'io.fabric.tools:gradle:1.24.0'
     }
 }
 apply plugin: 'com.android.application'
@@ -18,7 +18,6 @@ repositories {
 
 
 android {
-    dataBinding { enabled = true }
     compileSdkVersion rootProject.ext.compileSdkVersion
     buildToolsVersion "$rootProject.ext.buildToolsVersion"
 
@@ -29,11 +28,13 @@ android {
         versionCode rootProject.ext.versionCode
         versionName "$rootProject.ext.versionName"
         testInstrumentationRunner "org.bookdash.android.presentation.CustomTestRunner"
-        vectorDrawables.useSupportLibrary = true
         resConfigs "en"
+        vectorDrawables.useSupportLibrary = true
 
     }
-
+    dataBinding {
+        enabled = true
+    }
 
 
     File signFile = rootProject.file('release-keystore.properties')
@@ -67,16 +68,18 @@ android {
         exclude 'META-INF/maven/com.google.guava/guava/pom.xml'
         exclude 'LICENSE.txt'
     }
-
+    flavorDimensions "env"
     productFlavors {
         mock {
+            dimension "env"
             applicationIdSuffix ".qa"
         }
         qa {
+            dimension "env"
             applicationIdSuffix ".qa"
         }
         prod {
-
+            dimension "env"
         }
     }
     // Remove mockRelease as it's not needed.
@@ -95,7 +98,6 @@ android {
 
     buildTypes {
         release {
-            shrinkResources false
             minifyEnabled true
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
             ext.enableCrashlytics = true
@@ -113,135 +115,99 @@ android {
     }
 }
 dependencies {
-    debugWearApp project(path: ':watchface', configuration: 'debugApk')
-    releaseWearApp project(path: ':watchface', configuration: 'releaseApk')
 
-    testCompile "junit:junit:$rootProject.ext.junitVersion"
-    testCompile "org.mockito:mockito-all:$rootProject.ext.mockitoVersion"
-    testCompile "org.hamcrest:hamcrest-all:$rootProject.ext.hamcrestVersion"
-    testCompile("org.powermock:powermock-module-junit4:$rootProject.ext.powerMockito")
-    testCompile("org.powermock:powermock-api-mockito:$rootProject.ext.powerMockito")
+    testImplementation "junit:junit:$rootProject.ext.junitVersion"
+    testImplementation "org.mockito:mockito-all:$rootProject.ext.mockitoVersion"
+    testImplementation "org.hamcrest:hamcrest-all:$rootProject.ext.hamcrestVersion"
+    testImplementation("org.powermock:powermock-module-junit4:$rootProject.ext.powerMockito")
+    testImplementation("org.powermock:powermock-api-mockito:$rootProject.ext.powerMockito")
 
     // Android Testing Support Library's runner and rules
-    androidTestCompile('com.android.support.test.espresso:espresso-web:2.2.1') {
+    androidTestImplementation('com.android.support.test.espresso:espresso-web:2.2.1') {
         exclude module: 'support-annotations'
         exclude module: 'support-v4'
     }
-    androidTestCompile("com.android.support.test:runner:$rootProject.ext.runnerVersion") {
+    androidTestImplementation("com.android.support.test:runner:$rootProject.ext.runnerVersion") {
         exclude module: 'support-annotations'
         exclude module: 'support-v4'
     }
-    androidTestCompile("com.android.support.test:rules:$rootProject.ext.runnerVersion") {
+    androidTestImplementation("com.android.support.test:rules:$rootProject.ext.runnerVersion") {
         exclude module: 'support-annotations'
         exclude module: 'support-v4'
     }
 
     // Espresso UI Testing
-    androidTestCompile("com.android.support.test.espresso:espresso-core:$rootProject.ext.espressoVersion") {
+    androidTestImplementation("com.android.support.test.espresso:espresso-core:$rootProject.ext.espressoVersion") {
         exclude module: 'recyclerview-v7'
         exclude module: 'support-annotations'
         exclude module: 'support-v4'
         exclude group: "javax.inject"
 
     }
-    androidTestCompile("com.android.support.test.espresso:espresso-contrib:$rootProject.ext.espressoVersion") {
+    androidTestImplementation("com.android.support.test.espresso:espresso-contrib:$rootProject.ext.espressoVersion") {
         exclude module: 'support-annotations'
         exclude group: 'com.android.support', module: 'appcompat'
         exclude group: 'com.android.support', module: 'support-v4'
         exclude module: 'recyclerview-v7'
     }
-    androidTestCompile("com.android.support.test.espresso:espresso-intents:$rootProject.ext.espressoVersion") {
+    androidTestImplementation("com.android.support.test.espresso:espresso-intents:$rootProject.ext.espressoVersion") {
         exclude module: 'recyclerview-v7'
         exclude module: 'support-annotations'
         exclude module: 'support-v4'
     }
-    androidTestCompile "com.android.support:appcompat-v7:$rootProject.ext.supportLibraryVersion"
-    androidTestCompile "com.android.support:design:$rootProject.ext.supportLibraryVersion"
+    androidTestImplementation "com.android.support:appcompat-v7:$rootProject.ext.supportLibraryVersion"
+    androidTestImplementation "com.android.support:design:$rootProject.ext.supportLibraryVersion"
 
-    compile fileTree(dir: 'libs', include: ['*.jar'])
-    compile project(':fabbutton')
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
+    implementation project(':fabbutton')
 
-    compile "com.android.support:appcompat-v7:$rootProject.ext.supportLibraryVersion"
-    compile "com.android.support:cardview-v7:$rootProject.ext.supportLibraryVersion"
-    compile "com.android.support:palette-v7:$rootProject.ext.supportLibraryVersion"
-    compile "com.android.support:design:$rootProject.ext.supportLibraryVersion"
-    compile "com.android.support:recyclerview-v7:$rootProject.ext.supportLibraryVersion"
-    compile "com.android.support:percent:$rootProject.ext.supportLibraryVersion"
-    compile "com.android.support:preference-v7:$rootProject.ext.supportLibraryVersion"
-    compile "com.android.support:preference-v14:$rootProject.ext.supportLibraryVersion"
-    compile 'com.github.bumptech.glide:glide:3.7.0'
-    compile 'com.google.code.gson:gson:2.7'
-    compile 'com.github.castorflex.smoothprogressbar:library-circular:1.2.0'
+    implementation "com.android.support:appcompat-v7:$rootProject.ext.supportLibraryVersion"
+    implementation "com.android.support:cardview-v7:$rootProject.ext.supportLibraryVersion"
+    implementation "com.android.support:palette-v7:$rootProject.ext.supportLibraryVersion"
+    implementation "com.android.support:design:$rootProject.ext.supportLibraryVersion"
+    implementation "com.android.support:recyclerview-v7:$rootProject.ext.supportLibraryVersion"
+    implementation "com.android.support:percent:$rootProject.ext.supportLibraryVersion"
+    implementation "com.android.support:preference-v7:$rootProject.ext.supportLibraryVersion"
+    implementation "com.android.support:preference-v14:$rootProject.ext.supportLibraryVersion"
+    implementation 'com.github.bumptech.glide:glide:3.8.0'
+    implementation 'com.google.code.gson:gson:2.8.1'
+    implementation 'com.github.castorflex.smoothprogressbar:library-circular:1.2.0'
 
-    compile('com.crashlytics.sdk.android:crashlytics:2.5.3@aar') {
+    implementation('com.crashlytics.sdk.android:crashlytics:2.5.3@aar') {
         transitive = true;
     }
-    compile('za.co.riggaroo:materialhelptutorial:1.2.0') {
+    implementation('za.co.riggaroo:materialhelptutorial:1.2.0') {
         exclude module: 'support-v4'
     }
 
-    compile("com.google.firebase:firebase-invites:${rootProject.ext.googlePlayServicesVersion}") {
+    implementation("com.google.firebase:firebase-invites:${rootProject.ext.googlePlayServicesVersion}") {
         exclude module: 'support-v4'
     }
-    compile("com.google.firebase:firebase-core:${rootProject.ext.googlePlayServicesVersion}") {
+    implementation("com.google.firebase:firebase-core:${rootProject.ext.googlePlayServicesVersion}") {
         exclude module: 'support-v4'
     }
-    compile "com.google.firebase:firebase-database:${rootProject.ext.googlePlayServicesVersion}"
-    compile "com.google.firebase:firebase-messaging:${rootProject.ext.googlePlayServicesVersion}"
-    compile("com.google.firebase:firebase-config:${rootProject.ext.googlePlayServicesVersion}") {
+    implementation "com.google.firebase:firebase-database:${rootProject.ext.googlePlayServicesVersion}"
+    implementation "com.google.firebase:firebase-messaging:${rootProject.ext.googlePlayServicesVersion}"
+    implementation("com.google.firebase:firebase-config:${rootProject.ext.googlePlayServicesVersion}") {
         exclude module: 'support-v4'
     }
-    compile("com.google.firebase:firebase-storage:${rootProject.ext.googlePlayServicesVersion}") {
+    implementation("com.google.firebase:firebase-storage:${rootProject.ext.googlePlayServicesVersion}") {
         exclude module: 'support-v4'
     }
-    compile('com.firebaseui:firebase-ui-storage:0.6.1') {
+    implementation('com.firebaseui:firebase-ui-storage:0.6.1') {
         exclude module: 'support-v4'
     }
 
 
-    compile 'io.reactivex:rxandroid:1.2.1'
-    compile 'io.reactivex:rxjava:1.1.6'
-    compile 'com.jakewharton.threetenabp:threetenabp:1.0.3'
-    compile 'com.jakewharton.timber:timber:4.4.0'
-    compile 'com.android.support.constraint:constraint-layout:1.0.0-beta4'
+    implementation 'io.reactivex:rxandroid:1.2.1'
+    implementation 'io.reactivex:rxjava:1.2.5'
+    implementation 'com.jakewharton.threetenabp:threetenabp:1.0.5'
+    implementation 'com.jakewharton.timber:timber:4.5.1'
+    implementation 'com.android.support.constraint:constraint-layout:1.1.0-beta1'
 }
 
-// Grant animation permissions to avoid test failure because of ui sync.
-task grantAnimationPermissions(type: Exec, dependsOn: 'installMock') {
-    group = 'test'
-    description = 'Grant permissions for testing.'
 
-    def absolutePath = file('..') // Get project absolute path
-    commandLine "$absolutePath/set_animation_permissions.sh org.bookdash.android".split(" ")
-}
 
-// Source: http://stackoverflow.com/q/29908110/112705
-afterEvaluate {
-    // When launching individual tests from Android Studio, it seems that only the assemble tasks
-    // get called directly, not the install* versions
-    tasks.each { task ->
-        if (task.name.startsWith('assembleMockAndroidTest')) {
-            task.dependsOn grantAnimationPermissions
-        }
-    }
-}
-/*
- * Workaround for https://code.google.com/p/android/issues/detail?id=182715
- *
- * The Android Gradle plugin is creating DataBindingExportBuildInfoTasks for the instrumentation
- * APK that generates from the app APKs layouts. This creates duplicate classes in the app and
- * instrumentation APK which leads to
- *      java.lang.IllegalAccessError: Class ref in pre-verified class resolved to unexpected implementation
- * on older devices.
- *
- * The workaround is to get the DataBindingExportBuildInfoTasks tasks for the instrumentation APK
- * and delete the files right after it creates them.
- */
-tasks.withType(com.android.build.gradle.internal.tasks.databinding.DataBindingExportBuildInfoTask) { task ->
-    if (task.name.endsWith("AndroidTest")) {
-        task.finalizedBy(tasks.create("${task.name}Workaround") << {
-            task.output.deleteDir()
-        })
-    }
-}
+
+
 apply plugin: 'com.google.gms.google-services'
