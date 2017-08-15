@@ -21,8 +21,8 @@ allprojects {
 
 ext {
     //App versions
-    versionCode = 29
-    versionName = "2.5.0"
+    versionCode = 30
+    versionName = "2.5.1"
     compileSdkVersion = 26
     buildToolsVersion = "26.0.1"
     // Sdk and tools
