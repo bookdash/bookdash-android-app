@@ -1,12 +1,9 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              xmlns:app="http://schemas.android.com/apk/res-auto"
-              xmlns:tools="http://schemas.android.com/tools"
-              android:layout_width="wrap_content"
-              android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content">
 
-    >
-
-    <!-- A CardView that contains a TextView -->
     <android.support.v7.widget.CardView
         android:id="@+id/card_view"
         android:layout_width="wrap_content"
@@ -15,7 +12,8 @@
         android:foreground="@drawable/book_selector"
         app:cardCornerRadius="2dp">
 
-        <RelativeLayout
+        <android.support.constraint.ConstraintLayout
+            android:id="@+id/relativeLayout"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content">
 
@@ -23,16 +21,16 @@
                 android:id="@+id/imageViewBookCover"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_alignParentTop="true"
-                android:src="@drawable/bookdash_placeholder"/>
+                android:src="@drawable/bookdash_placeholder"
+                app:layout_constraintDimensionRatio="w,1:1"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
 
             <TextView
                 android:id="@+id/textViewBookName"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_alignParentLeft="true"
-                android:layout_alignParentStart="true"
-                android:layout_below="@+id/imageViewBookCover"
                 android:layout_gravity="center_horizontal"
                 android:layout_marginBottom="8dp"
                 android:layout_marginTop="8dp"
@@ -43,23 +41,25 @@
                 android:paddingRight="8dp"
                 android:textColor="#212121"
                 android:textSize="16sp"
-                tools:text="Giraff really long named giraffee"/>
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/imageViewBookCover"
+                tools:text="Giraff really long named giraffee" />
 
 
             <ImageView
                 android:id="@+id/imageViewBookDownloaded"
                 android:layout_width="16dp"
                 android:layout_height="16dp"
-                android:layout_alignParentBottom="true"
-                android:layout_alignParentEnd="true"
-                android:layout_alignParentRight="true"
                 android:layout_margin="4dp"
-                app:srcCompat="@drawable/ic_cloud_download_black_24dp"
+                android:foregroundGravity="bottom|right"
                 android:tint="@color/colorAccent"
-                android:foregroundGravity="bottom|right"/>
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:srcCompat="@drawable/ic_cloud_download_black_24dp" />
 
-
-        </RelativeLayout>
+        </android.support.constraint.ConstraintLayout>
 
     </android.support.v7.widget.CardView>
 </LinearLayout>

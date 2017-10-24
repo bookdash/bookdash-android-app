@@ -15,7 +15,6 @@ public class BookDetailActivity extends BaseAppCompatActivity {
     public static final String LOCATION_BOOK = "book_location";
     public static final String BOOK_ARG = "book_obj";
     private ViewPager viewPager;
-    private String book;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -23,7 +22,7 @@ public class BookDetailActivity extends BaseAppCompatActivity {
         setContentView(R.layout.activity_book_details);
         getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
 
-        viewPager = (ViewPager) findViewById(R.id.view_pager);
+        viewPager = findViewById(R.id.view_pager);
         viewPager.getViewTreeObserver().addOnPreDrawListener(new ViewTreeObserver.OnPreDrawListener() {
             @Override
             public boolean onPreDraw() {
@@ -33,7 +32,7 @@ public class BookDetailActivity extends BaseAppCompatActivity {
                 return true;
             }
         });
-        book = getIntent().getStringExtra(BOOK_ARG);
+        String book = getIntent().getStringExtra(BOOK_ARG);
         BookPages bookPages = getIntent().getParcelableExtra(BOOK_PAGES);
         bookPages.getPages().add(0, null);
         String bookLocation = getIntent().getStringExtra(LOCATION_BOOK);
