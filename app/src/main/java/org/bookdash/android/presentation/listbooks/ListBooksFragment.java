@@ -111,13 +111,14 @@ public class ListBooksFragment extends Fragment implements ListBooksContract.Vie
                 Injection.provideBookService(), Injection.provideAnalytics(), Schedulers.io(),
                 AndroidSchedulers.mainThread());
         listBooksPresenter.attachView(this);
-        circularProgressBar = (CircularProgressBar) view.findViewById(R.id.activity_loading_books);
-        linearLayoutErrorScreen = (LinearLayout) view.findViewById(R.id.linear_layout_error);
-        buttonRetry = (Button) view.findViewById(R.id.button_retry);
-        textViewErrorMessage = (TextView) view.findViewById(R.id.text_view_error_screen);
-        recyclerViewBooks = (RecyclerView) view.findViewById(R.id.recycler_view_books);
+        circularProgressBar = view.findViewById(R.id.activity_loading_books);
+        linearLayoutErrorScreen = view.findViewById(R.id.linear_layout_error);
+        buttonRetry = view.findViewById(R.id.button_retry);
+        textViewErrorMessage = view.findViewById(R.id.text_view_error_screen);
+        recyclerViewBooks = view.findViewById(R.id.recycler_view_books);
         recyclerViewBooks.setLayoutManager(
                 new GridLayoutManager(getActivity(), getContext().getResources().getInteger(R.integer.book_span)));
+        recyclerViewBooks.setHasFixedSize(true);
         buttonRetry.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -125,7 +126,7 @@ public class ListBooksFragment extends Fragment implements ListBooksContract.Vie
                 listBooksPresenter.loadBooksForLanguagePreference();
             }
         });
-        Toolbar toolbar = (Toolbar) view.findViewById(R.id.toolbar);
+        Toolbar toolbar = view.findViewById(R.id.toolbar);
         if (navDrawerInterface != null) {
             navDrawerInterface.setToolbar(toolbar);
         }
