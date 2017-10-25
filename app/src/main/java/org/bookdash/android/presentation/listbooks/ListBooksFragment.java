@@ -118,7 +118,6 @@ public class ListBooksFragment extends Fragment implements ListBooksContract.Vie
         recyclerViewBooks = view.findViewById(R.id.recycler_view_books);
         recyclerViewBooks.setLayoutManager(
                 new GridLayoutManager(getActivity(), getContext().getResources().getInteger(R.integer.book_span)));
-        recyclerViewBooks.setHasFixedSize(true);
         buttonRetry.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
