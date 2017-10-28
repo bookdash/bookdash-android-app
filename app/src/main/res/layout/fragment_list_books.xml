@@ -98,6 +98,7 @@
         android:paddingRight="@dimen/book_list_padding"
         android:paddingTop="@dimen/book_list_padding"
         android:scrollbars="vertical"
+
         android:visibility="visible"
         app:layout_behavior="@string/appbar_scrolling_view_behavior"
         tools:listitem="@layout/list_item_book"/>

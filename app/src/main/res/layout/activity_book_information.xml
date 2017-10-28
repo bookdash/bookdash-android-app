@@ -256,7 +256,6 @@
                 android:layout_width="@dimen/fab_button_size"
                 android:layout_height="@dimen/fab_button_size"
                 android:layout_marginRight="@dimen/fab_margin_right"
-                android:clickable="true"
                 android:color="?attr/colorPrimaryDark"
                 android:indeterminate="false"
                 android:max="100"

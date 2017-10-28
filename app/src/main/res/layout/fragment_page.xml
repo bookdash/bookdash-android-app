@@ -16,6 +16,12 @@
         <variable
             name="page2"
             type="org.bookdash.android.domain.model.gson.Page" />
+        <variable
+            name="nextClickListener"
+            type="android.view.View.OnClickListener"/>
+        <variable
+            name="backClickListener"
+            type="android.view.View.OnClickListener"/>
     </data>
 
     <android.support.percent.PercentRelativeLayout
@@ -32,6 +38,9 @@
             android:elevation="8dp"
             android:layout_centerVertical="true"
             android:background="#ffffff"
+            android:clickable="true"
+            android:focusable="true"
+            android:onClick="@{backClickListener}"
             android:visibility="@{page == null ? View.INVISIBLE : View.VISIBLE}"
             app:layout_widthPercent="50%">
 
@@ -68,11 +77,15 @@
         <LinearLayout
             android:layout_toRightOf="@id/lin_layout_page1"
             android:layout_toEndOf="@id/lin_layout_page1"
+            android:id="@+id/lin_layout_page2"
             android:orientation="vertical"
             app:layout_aspectRatio="100%"
             android:layout_centerVertical="true"
             android:background="#ffffff"
             android:elevation="8dp"
+            android:clickable="true"
+            android:focusable="true"
+            android:onClick="@{nextClickListener}"
             android:visibility="@{page2 == null ? View.INVISIBLE : View.VISIBLE}"
             app:layout_widthPercent="50%">
 

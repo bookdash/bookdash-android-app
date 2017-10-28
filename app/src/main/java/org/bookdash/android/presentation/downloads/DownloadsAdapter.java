@@ -41,12 +41,11 @@ public class DownloadsAdapter extends RecyclerView.Adapter<DownloadsViewHolder> 
         FireBookDetails book = bookList.get(position);
         holder.downloadTitleTextView.setText(book.getBookTitle());
         Glide.with(context).using(new FirebaseImageLoader()).load(book.getFirebaseBookCoverUrl()).into(holder.downloadImageTextView);
-        //todo holder.downloadProgressTextView.setText(book.getLanguage().getLanguageName());
         holder.downloadActionButtonView.setOnClickListener(deleteClickListener);
         holder.book = book;
         holder.downloadActionButtonView.setTag(holder);
-        holder.downloadRelativeLayout.setOnClickListener(bookClickListener);
-        holder.downloadRelativeLayout.setTag(holder);
+        holder.itemView.setOnClickListener(bookClickListener);
+        holder.itemView.setTag(holder);
     }
 
     @Override

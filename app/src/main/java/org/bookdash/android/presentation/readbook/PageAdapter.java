@@ -29,7 +29,7 @@ public class PageAdapter extends FixedFragmentStatePagerAdapter {
         if (realPos + 1 < pages.size()) {
             page2 = pages.get(realPos + 1);
         }
-        return PageFragment.newInstance(page, page2, rootFileLocation);
+        return PageFragment.Companion.newInstance(page, page2, rootFileLocation);
     }
 
 
