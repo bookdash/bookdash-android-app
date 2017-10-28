@@ -416,9 +416,9 @@ public class BookInfoActivity extends BaseAppCompatActivity implements BookInfoC
         }
         Intent intent = new Intent(BookInfoActivity.this, BookDetailActivity.class);
         intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-        intent.putExtra(BookDetailActivity.BOOK_PAGES, bookPages);
-        intent.putExtra(BookDetailActivity.BOOK_ARG, bookDetail.getBookTitle());
-        intent.putExtra(BookDetailActivity.LOCATION_BOOK, location);
+        intent.putExtra(BookDetailActivity.Companion.getBOOK_PAGES(), bookPages);
+        intent.putExtra(BookDetailActivity.Companion.getBOOK_ARG(), bookDetail.getBookTitle());
+        intent.putExtra(BookDetailActivity.Companion.getLOCATION_BOOK(), location);
         startActivity(intent);
     }
 
