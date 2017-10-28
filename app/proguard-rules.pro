@@ -70,3 +70,4 @@
 -keepclassmembers class org.bookdash.android.domain.model.** {
   *;
 }
+-keep class android.arch.lifecycle.** { *; }
