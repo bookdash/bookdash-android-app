@@ -11,7 +11,7 @@ apply plugin: 'com.android.application'
 apply plugin: 'kotlin-android'
 apply plugin: 'io.fabric'
 apply plugin: 'com.github.triplet.play'
-
+apply plugin: 'com.google.firebase.firebase-perf'
 apply plugin: 'kotlin-kapt'
 
 repositories {
@@ -201,6 +201,7 @@ dependencies {
     implementation('com.firebaseui:firebase-ui-storage:0.6.1') {
         exclude module: 'support-v4'
     }
+    implementation "com.google.firebase:firebase-perf:${rootProject.ext.googlePlayServicesVersion}"
 
     implementation 'io.reactivex:rxandroid:1.2.1'
     implementation 'io.reactivex:rxjava:1.2.5'
