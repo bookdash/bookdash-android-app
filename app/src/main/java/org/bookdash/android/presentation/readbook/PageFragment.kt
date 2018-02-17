@@ -27,7 +27,7 @@ class PageFragment : Fragment() {
         binding.page = page
         binding.page2 = page2
 
-        val readBookViewModel = ViewModelProviders.of(activity).get<ReadBookViewModel>(ReadBookViewModel::class.java)
+        val readBookViewModel = ViewModelProviders.of(activity!!).get<ReadBookViewModel>(ReadBookViewModel::class.java)
 
         binding.nextClickListener = View.OnClickListener {
             Log.d(TAG, "Next Clicked")
@@ -44,9 +44,9 @@ class PageFragment : Fragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        page = arguments.getParcelable(PAGE_ARG)
-        page2 = arguments.getParcelable(PAGE_2_ARG)
-        bookLocation = arguments.getString(ARG_BOOK_LOCATION)
+        page = arguments?.getParcelable(PAGE_ARG)
+        page2 = arguments?.getParcelable(PAGE_2_ARG)
+        bookLocation = arguments?.getString(ARG_BOOK_LOCATION)
     }
 
     companion object {
