@@ -1,14 +1,14 @@
 // Top-level build file where you can add configuration options common to all sub-projects/modules.
 
 buildscript {
-    ext.kotlin_version = '1.2.21'
+    ext.kotlin_version = '1.2.30'
     repositories {
         jcenter()
         google()
     }
     dependencies {
-        classpath 'com.android.tools.build:gradle:3.2.0-alpha03'
-        classpath 'com.google.gms:google-services:3.1.1'
+        classpath 'com.android.tools.build:gradle:3.1.2'
+        classpath 'com.google.gms:google-services:3.2.1'
         classpath 'com.github.triplet.gradle:play-publisher:1.2.0'
         classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
         classpath 'com.google.firebase:firebase-plugins:1.1.5'
@@ -27,8 +27,8 @@ ext {
     versionName = "2.7.0"
     compileSdkVersion = 27
     buildToolsVersion = "27.0.3"
-    supportLibraryVersion = '27.0.2'
-    googlePlayServicesVersion = '11.8.0'
+    supportLibraryVersion = '27.1.1'
+    googlePlayServicesVersion = '15.0.2'
     guavaVersion = '18.0'
     glideVersion = '3.7.0'
     junitVersion = '4.12'
@@ -38,4 +38,5 @@ ext {
     runnerVersion = '0.5'
     rulesVersion = '0.5'
     espressoVersion = '2.2.2'
+
 }
