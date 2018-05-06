@@ -26,9 +26,6 @@
         android:label="@string/app_name"
         android:largeHeap="true"
         android:theme="@style/AppTheme">
-        <meta-data
-            android:name="org.bookdash.android.presentation.utils.GlideLoadingModule"
-            android:value="GlideModule"/>
 
         <activity
             android:name=".presentation.main.MainActivity"

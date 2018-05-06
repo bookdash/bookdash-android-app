@@ -174,7 +174,8 @@ dependencies {
     implementation "com.android.support:percent:$rootProject.ext.supportLibraryVersion"
     implementation "com.android.support:preference-v7:$rootProject.ext.supportLibraryVersion"
     implementation "com.android.support:preference-v14:$rootProject.ext.supportLibraryVersion"
-    implementation 'com.github.bumptech.glide:glide:3.8.0'
+    implementation 'com.github.bumptech.glide:glide:4.7.1'
+    kapt 'com.github.bumptech.glide:compiler:4.7.1'
     implementation 'com.google.code.gson:gson:2.8.2'
     implementation 'com.github.castorflex.smoothprogressbar:library-circular:1.2.0'
 
@@ -191,6 +192,7 @@ dependencies {
     implementation("com.google.firebase:firebase-core:15.0.2") {
         exclude module: 'support-v4'
     }
+    implementation "com.google.firebase:firebase-auth:15.1.0"
     implementation "com.google.firebase:firebase-database:15.0.1"
     implementation "com.google.firebase:firebase-messaging:15.0.2"
     implementation("com.google.firebase:firebase-config:15.0.2") {
@@ -199,9 +201,7 @@ dependencies {
     implementation("com.google.firebase:firebase-storage:${rootProject.ext.googlePlayServicesVersion}") {
         exclude module: 'support-v4'
     }
-    implementation('com.firebaseui:firebase-ui-storage:0.6.1') {
-        exclude module: 'support-v4'
-    }
+    implementation 'com.firebaseui:firebase-ui-storage:3.3.1'
     implementation "com.google.firebase:firebase-perf:15.1.0"
 
     implementation 'io.reactivex:rxandroid:1.2.1'
@@ -216,5 +216,5 @@ dependencies {
 
 
 
-
+apply plugin: 'kotlin-kapt'
 apply plugin: 'com.google.gms.google-services'
