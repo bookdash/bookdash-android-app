@@ -34,6 +34,7 @@ android {
         testInstrumentationRunner "org.bookdash.android.presentation.CustomTestRunner"
         resConfigs "en"
         vectorDrawables.useSupportLibrary = true
+        multiDexEnabled true
 
     }
     dataBinding {
@@ -119,7 +120,7 @@ android {
     }
 }
 dependencies {
-
+    implementation 'com.android.support:multidex:1.0.2'
     testImplementation "junit:junit:$rootProject.ext.junitVersion"
     testImplementation "org.mockito:mockito-all:$rootProject.ext.mockitoVersion"
     testImplementation "org.hamcrest:hamcrest-all:$rootProject.ext.hamcrestVersion"
@@ -201,14 +202,14 @@ dependencies {
     implementation('com.firebaseui:firebase-ui-storage:0.6.1') {
         exclude module: 'support-v4'
     }
-    implementation "com.google.firebase:firebase-perf:${rootProject.ext.googlePlayServicesVersion}"
+    implementation "com.google.firebase:firebase-perf:15.1.0"
 
     implementation 'io.reactivex:rxandroid:1.2.1'
     implementation 'io.reactivex:rxjava:1.2.5'
     implementation 'com.jakewharton.threetenabp:threetenabp:1.0.5'
     implementation 'com.jakewharton.timber:timber:4.7.0'
     implementation 'com.android.support.constraint:constraint-layout:1.1.0'
-    implementation "android.arch.lifecycle:extensions:1.1.0"
+    implementation "android.arch.lifecycle:extensions:1.1.1"
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
 }
 
