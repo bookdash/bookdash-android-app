@@ -1,15 +1,15 @@
-<android.support.v7.preference.PreferenceScreen
+<androidx.preference.PreferenceScreen
     xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <android.support.v7.preference.Preference
+    <androidx.preference.Preference
         android:key="tutorial_display_key"
         android:summary="@string/show_tutorial_settings_summary"
         android:title="@string/show_tutorial_settings_title" />
 
-    <android.support.v7.preference.SwitchPreferenceCompat
+    <androidx.preference.SwitchPreferenceCompat
         android:defaultValue="true"
         android:key="pref_new_book_notification"
         android:summary="@string/settings_new_book_notifications_summary"
         android:title="@string/settings_new_book_notifications"
         />
-</android.support.v7.preference.PreferenceScreen>
+</androidx.preference.PreferenceScreen>

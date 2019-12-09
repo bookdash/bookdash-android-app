@@ -1,10 +1,12 @@
 package org.bookdash.android.presentation.bookinfo;
 
 import android.content.Context;
-import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+
+import androidx.recyclerview.widget.RecyclerView;
+
 import org.bookdash.android.R;
 import org.bookdash.android.config.GlideApp;
 import org.bookdash.android.domain.model.firebase.FireContributor;

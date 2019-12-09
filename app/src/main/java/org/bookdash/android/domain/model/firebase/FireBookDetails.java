@@ -53,7 +53,7 @@ public class FireBookDetails implements Parcelable {
     private String bookLanguageAbbreviation = "en";
     private String bookId;
     private String bookDescription;
-    private List<String> contributors;
+    private List<String> contributorsIndexedKeys;
     private boolean isDownloading;
     private String bookUrl;
     private long createdDate;
@@ -82,7 +82,7 @@ public class FireBookDetails implements Parcelable {
         this.bookLanguage = in.readString();
         this.bookId = in.readString();
         this.bookDescription = in.readString();
-        this.contributors = in.createStringArrayList();
+        this.contributorsIndexedKeys = in.createStringArrayList();
         this.isDownloading = in.readByte() != 0;
         this.createdDate = in.readLong();
         this.bookLanguageAbbreviation = in.readString();
@@ -191,7 +191,7 @@ public class FireBookDetails implements Parcelable {
     }
 
     public List<String> getContributorsIndexList() {
-        return contributors;
+        return contributorsIndexedKeys;
     }
 
     @Override
@@ -208,7 +208,7 @@ public class FireBookDetails implements Parcelable {
         dest.writeString(this.bookLanguage);
         dest.writeString(this.bookId);
         dest.writeString(this.bookDescription);
-        dest.writeStringList(this.contributors);
+        dest.writeStringList(this.contributorsIndexedKeys);
         dest.writeByte(this.isDownloading ? (byte) 1 : (byte) 0);
         dest.writeLong(this.createdDate);
         dest.writeString(this.bookLanguageAbbreviation);
@@ -223,7 +223,7 @@ public class FireBookDetails implements Parcelable {
     }
 
     public void setContributorsIndexedKeys(List<String> contributorsIndexedKeys) {
-        this.contributors = contributorsIndexedKeys;
+        this.contributorsIndexedKeys = contributorsIndexedKeys;
     }
 
     public String getCreatedDateFormatted() {

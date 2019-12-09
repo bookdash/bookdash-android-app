@@ -1,6 +1,6 @@
 package org.bookdash.android.data.settings;
 
-import android.support.annotation.VisibleForTesting;
+import androidx.annotation.VisibleForTesting;
 
 import org.bookdash.android.domain.model.firebase.FireLanguage;
 

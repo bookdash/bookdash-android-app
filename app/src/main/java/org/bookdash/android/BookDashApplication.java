@@ -1,15 +1,19 @@
 package org.bookdash.android;
 
 import android.content.Context;
-import android.support.multidex.MultiDex;
-import android.support.multidex.MultiDexApplication;
+
+import androidx.multidex.MultiDex;
+import androidx.multidex.MultiDexApplication;
+
 import com.crashlytics.android.Crashlytics;
 import com.crashlytics.android.core.CrashlyticsCore;
 import com.google.firebase.analytics.FirebaseAnalytics;
 import com.google.firebase.iid.FirebaseInstanceId;
 import com.jakewharton.threetenabp.AndroidThreeTen;
-import io.fabric.sdk.android.Fabric;
+
 import org.bookdash.android.config.CrashlyticsTree;
+
+import io.fabric.sdk.android.Fabric;
 import rx.Subscriber;
 import timber.log.Timber;
 

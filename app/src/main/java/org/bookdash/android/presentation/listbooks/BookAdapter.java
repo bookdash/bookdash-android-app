@@ -1,12 +1,15 @@
 package org.bookdash.android.presentation.listbooks;
 
 import android.content.Context;
-import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+
+import androidx.recyclerview.widget.RecyclerView;
+
 import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions;
+
 import org.bookdash.android.R;
 import org.bookdash.android.config.GlideApp;
 import org.bookdash.android.domain.model.firebase.FireBookDetails;

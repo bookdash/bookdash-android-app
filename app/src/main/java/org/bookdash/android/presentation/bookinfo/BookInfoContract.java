@@ -1,6 +1,6 @@
 package org.bookdash.android.presentation.bookinfo;
 
-import android.support.annotation.StringRes;
+import androidx.annotation.StringRes;
 
 import org.bookdash.android.domain.model.firebase.FireBookDetails;
 import org.bookdash.android.domain.model.firebase.FireContributor;

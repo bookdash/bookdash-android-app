@@ -5,7 +5,7 @@
               android:background="@color/background_floating_material_dark"
               android:orientation="vertical">
 
-    <android.support.v4.view.ViewPager
+    <androidx.viewpager.widget.ViewPager
         android:id="@+id/view_pager"
         android:padding="@dimen/padding_book"
         android:elevation="16dp"
