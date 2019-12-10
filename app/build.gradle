@@ -26,7 +26,7 @@ android {
 
     defaultConfig {
         applicationId "org.bookdash.android"
-        minSdkVersion 16
+        minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.compileSdkVersion
         versionCode rootProject.ext.versionCode
         versionName "$rootProject.ext.versionName"
@@ -126,7 +126,7 @@ dependencies {
     testImplementation("org.powermock:powermock-module-junit4:$rootProject.ext.powerMockito")
     testImplementation("org.powermock:powermock-api-mockito:$rootProject.ext.powerMockito")
 
-    // Android Testing Support Library's runner and rules
+    // Android Testing Library's runner and rules
     androidTestImplementation 'androidx.test.espresso:espresso-web:3.2.0'
     androidTestImplementation 'androidx.test.ext:junit:1.1.1'
     androidTestImplementation 'androidx.test:rules:1.2.0'
@@ -138,28 +138,26 @@ dependencies {
     androidTestImplementation 'androidx.test.espresso:espresso-contrib:3.2.0'
     androidTestImplementation 'androidx.test.espresso:espresso-intents:3.2.0'
     androidTestImplementation 'androidx.appcompat:appcompat:1.1.0'
-    androidTestImplementation 'com.google.android.material:material:1.0.0'
+    androidTestImplementation "com.google.android.material:material:$rootProject.ext.materialVersion"
 
     implementation fileTree(dir: 'libs', include: ['*.jar'])
-    implementation project(':fabbutton')
 
     implementation 'androidx.appcompat:appcompat:1.1.0'
     implementation 'androidx.cardview:cardview:1.0.0'
     implementation 'androidx.palette:palette:1.0.0'
-    implementation 'com.google.android.material:material:1.0.0'
+    implementation "com.google.android.material:material:$rootProject.ext.materialVersion"
     implementation 'androidx.recyclerview:recyclerview:1.1.0'
     implementation 'androidx.percentlayout:percentlayout:1.0.0'
     implementation 'androidx.preference:preference:1.1.0'
     implementation 'androidx.legacy:legacy-preference-v14:1.0.0'
-    implementation 'com.github.bumptech.glide:glide:4.8.0'
-    kapt 'com.github.bumptech.glide:compiler:4.8.0'
+    implementation "com.github.bumptech.glide:glide:$rootProject.ext.glideVersion"
+    kapt "com.github.bumptech.glide:compiler:$rootProject.ext.glideVersion"
     implementation 'com.google.code.gson:gson:2.8.5'
     implementation 'com.github.castorflex.smoothprogressbar:library-circular:1.2.0'
 
     implementation('com.crashlytics.sdk.android:crashlytics:2.10.1@aar') {
         transitive = true
     }
-    implementation 'za.co.riggaroo:materialhelptutorial:1.6.0'
 
     implementation 'com.google.firebase:firebase-invites:17.0.0'
     implementation 'com.google.firebase:firebase-auth:19.2.0'
@@ -178,6 +176,9 @@ dependencies {
     implementation 'androidx.lifecycle:lifecycle-extensions:2.1.0'
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
     implementation 'androidx.multidex:multidex:2.0.1'
+
+    implementation project(path: ':materialhelptutorial')
+    implementation project(':fabbutton')
 }
 
 
