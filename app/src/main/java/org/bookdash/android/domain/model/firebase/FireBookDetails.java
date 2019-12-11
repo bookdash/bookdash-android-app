@@ -14,6 +14,7 @@ import org.threeten.bp.ZoneId;
 import org.threeten.bp.ZonedDateTime;
 import org.threeten.bp.format.DateTimeFormatter;
 import org.threeten.bp.format.FormatStyle;
+import org.threeten.bp.zone.ZoneRulesException;
 
 import java.io.File;
 import java.util.Comparator;
@@ -229,7 +230,14 @@ public class FireBookDetails implements Parcelable {
     public String getCreatedDateFormatted() {
         Log.d("bookdateials", "getCreatedDateFormatted() called:" + createdDate);
         Instant i = Instant.ofEpochMilli(createdDate);
-        ZonedDateTime z = ZonedDateTime.ofInstant(i, ZoneId.systemDefault());
+        ZoneId zoneId;
+        try {
+            zoneId = ZoneId.systemDefault();
+        } catch (ZoneRulesException zre) {
+            // Fallback. Just show the date to the user as if they're in South Africa.
+            zoneId = ZoneId.of("UTC+02:00");
+        }
+        ZonedDateTime z = ZonedDateTime.ofInstant(i, zoneId);
         return z.format(DateTimeFormatter.ofLocalizedDate(FormatStyle.LONG));
     }
 
