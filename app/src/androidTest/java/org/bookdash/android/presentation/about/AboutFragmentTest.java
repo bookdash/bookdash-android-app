@@ -56,8 +56,8 @@ public class AboutFragmentTest {
 
     @Test
     public void loadAboutBookDash_SeeInformation() throws Throwable {
-        CharSequence about = Html.fromHtml(InstrumentationRegistry.getTargetContext().getString(R.string.why_bookdash));
-        String headingAbout = InstrumentationRegistry.getTargetContext().getString(R.string.heading_about);
+        CharSequence about = Html.fromHtml(InstrumentationRegistry.getInstrumentation().getTargetContext().getString(R.string.why_bookdash));
+        String headingAbout = InstrumentationRegistry.getInstrumentation().getTargetContext().getString(R.string.heading_about);
 
         onView(withText(headingAbout)).check(matches(isDisplayed()));
 
