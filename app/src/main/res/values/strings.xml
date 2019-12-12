@@ -103,6 +103,7 @@
     <string name="show_tutorial_settings_title">Show Tutorial</string>
     <string name="show_tutorial_settings_summary">Display the tutorial for this app</string>
     <string name="settings_title">Settings</string>
+    <string name="error_opening_app_rating">Unable to open app rating link. Please make sure you have an internet browser installed on your device.</string>
 
     <string name="settings_new_book_notifications_summary">Subscribe to get notified about new books</string>
     <string name="settings_new_book_notifications">New Book Notifications</string>

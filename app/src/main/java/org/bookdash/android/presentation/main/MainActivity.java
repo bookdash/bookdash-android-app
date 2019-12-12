@@ -185,8 +185,12 @@ public class MainActivity extends BaseAppCompatActivity implements MainContract.
         try {
             startActivity(goToMarket);
         } catch (ActivityNotFoundException e) {
-            startActivity(
-                    new Intent(Intent.ACTION_VIEW, Uri.parse(GOOGLE_PLAY_STORE_URL + BuildConfig.APPLICATION_ID)));
+            try {
+                startActivity(
+                        new Intent(Intent.ACTION_VIEW, Uri.parse(GOOGLE_PLAY_STORE_URL + BuildConfig.APPLICATION_ID)));
+            } catch (ActivityNotFoundException anfe) {
+                Snackbar.make(navigationView, R.string.error_opening_app_rating, Snackbar.LENGTH_LONG);
+            }
         }
     }
 
