@@ -6,7 +6,6 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.text.Html;
 import android.text.method.LinkMovementMethod;
-import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
@@ -20,12 +19,6 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
-import com.google.android.gms.appinvite.AppInvite;
-import com.google.android.gms.appinvite.AppInviteInvitation;
-import com.google.android.gms.appinvite.AppInviteInvitationResult;
-import com.google.android.gms.common.ConnectionResult;
-import com.google.android.gms.common.api.GoogleApiClient;
-import com.google.android.gms.common.api.ResultCallback;
 import com.google.android.material.navigation.NavigationView;
 import com.google.android.material.snackbar.Snackbar;
 
@@ -45,7 +38,6 @@ public class MainActivity extends BaseAppCompatActivity implements MainContract.
     private static final String TAG = "MainActivity";
     private static final String GOOGLE_PLAY_STORE_URL = "http://play.google.com/store/apps/details?id=";
     private static final String GOOGLE_PLAY_MARKET_URL = "market://details?id=";
-    private GoogleApiClient googleApiClient;
     private DrawerLayout drawerLayout;
     private NavigationView navigationView;
     private MainContract.MainUserActions mainPresenter;
@@ -67,7 +59,6 @@ public class MainActivity extends BaseAppCompatActivity implements MainContract.
         }
 
         setUpNavDrawer();
-        checkIfComingFromInvite();
         showAllBooks();
     }
 
@@ -120,28 +111,6 @@ public class MainActivity extends BaseAppCompatActivity implements MainContract.
 
 
         });
-    }
-
-    private void checkIfComingFromInvite() {
-        googleApiClient = new GoogleApiClient.Builder(this).addApi(AppInvite.API)
-                .addOnConnectionFailedListener(new GoogleApiClient.OnConnectionFailedListener() {
-                    @Override
-                    public void onConnectionFailed(ConnectionResult connectionResult) {
-                        Log.d(TAG, "onConnectionFailed: onResult:" + connectionResult.toString());
-
-                    }
-                }).build();
-        if (googleApiClient != null) {
-            googleApiClient.connect();
-
-            AppInvite.AppInviteApi.getInvitation(googleApiClient, this, true)
-                    .setResultCallback(new ResultCallback<AppInviteInvitationResult>() {
-                        @Override
-                        public void onResult(AppInviteInvitationResult result) {
-                            Log.d(TAG, "getInvitation:onResult:" + result.getStatus());
-                        }
-                    });
-        }
     }
 
     private void showAllBooks() {
@@ -215,14 +184,15 @@ public class MainActivity extends BaseAppCompatActivity implements MainContract.
     @Override
     public void inviteFriends() {
         try {
-            Intent intent = new AppInviteInvitation.IntentBuilder(getString(R.string.invitation_title))
-                    .setMessage(getString(R.string.invitation_message))
-                    .setCallToActionText(getString(R.string.invitation_cta))
-                    // .setDeepLink(Uri.parse("http://bookdash.org/books/dK5BJWxPIf"))
-                    .build();
-            startActivityForResult(intent, INVITE_REQUEST_CODE);
+            Intent sendIntent = new Intent();
+            sendIntent.setAction(Intent.ACTION_SEND);
+            sendIntent.putExtra(Intent.EXTRA_TEXT, getString(R.string.invitation_message));
+            sendIntent.putExtra(Intent.EXTRA_SUBJECT, getString(R.string.invitation_subject));
+            sendIntent.setType("text/plain");
+            startActivity(Intent.createChooser(sendIntent,
+                    getResources().getText(R.string.invite_using)));
         } catch (ActivityNotFoundException ac) {
-            Snackbar.make(navigationView, R.string.common_google_play_services_unsupported_text, Snackbar.LENGTH_LONG)
+            Snackbar.make(navigationView, R.string.invite_error_no_apps_found, Snackbar.LENGTH_LONG)
                     .show();
         }
     }
@@ -230,44 +200,6 @@ public class MainActivity extends BaseAppCompatActivity implements MainContract.
     @Override
     public String getScreenName() {
         return "MainActivity";
-    }
-
-    @Override
-    protected void onStart() {
-        super.onStart();
-        if (googleApiClient != null) {
-            googleApiClient.connect();
-        }
-    }
-
-    @Override
-    protected void onStop() {
-        super.onStop();
-        if (googleApiClient != null) {
-
-            googleApiClient.disconnect();
-
-        }
-    }
-
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        Log.d(TAG, "onActivityResult: requestCode=" + requestCode + ", resultCode=" + resultCode);
-
-        if (requestCode == INVITE_REQUEST_CODE) {
-            if (resultCode == RESULT_OK) {
-                // Check how many invitations were sent and log a message
-                // The ids array contains the unique invitation ids for each invitation sent
-                // (one for each contact select by the user). You can use these for analytics
-                // as the ID will be consistent on the sending and receiving devices.
-                String[] ids = AppInviteInvitation.getInvitationIds(resultCode, data);
-                Log.d(TAG, getString(R.string.sent_invitations_fmt, ids.length));
-            } else {
-                // Sending failed or it was canceled, show failure message to the user
-                Log.d(TAG, "invite send failed:" + requestCode + ",resultCode:" + resultCode);
-            }
-        }
     }
 
     @Override
