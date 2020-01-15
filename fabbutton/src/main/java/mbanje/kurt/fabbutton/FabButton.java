@@ -30,17 +30,17 @@ import android.graphics.Color;
 import android.graphics.Rect;
 import android.graphics.drawable.Drawable;
 import android.os.Build;
-import android.support.design.widget.AppBarLayout;
-import android.support.design.widget.CoordinatorLayout;
-import android.support.design.widget.CoordinatorLayout.DefaultBehavior;
-import android.support.design.widget.Snackbar;
-import android.support.v4.view.ViewCompat;
-import android.support.v4.view.ViewPropertyAnimatorListener;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.view.View;
-import android.view.animation.Animation;
 import android.widget.FrameLayout;
+
+import androidx.coordinatorlayout.widget.CoordinatorLayout;
+import androidx.core.view.ViewCompat;
+import androidx.core.view.ViewPropertyAnimatorListener;
+
+import com.google.android.material.appbar.AppBarLayout;
+import com.google.android.material.snackbar.Snackbar;
 
 import java.util.List;
 
@@ -48,7 +48,7 @@ import java.util.List;
 /**
  * Created by kurt on 21 02 2015 .
  */
-@DefaultBehavior(FabButton.Behavior.class)
+@CoordinatorLayout.DefaultBehavior(FabButton.Behavior.class)
 public class FabButton extends FrameLayout implements CircleImageView.OnFabViewListener {
 
     private static final String TAG = "FabButton";

@@ -1,6 +1,6 @@
 package org.bookdash.android.presentation.bookinfo;
 
-import android.support.annotation.NonNull;
+import androidx.annotation.NonNull;
 
 import org.bookdash.android.R;
 import org.bookdash.android.data.book.BookService;
@@ -9,6 +9,7 @@ import org.bookdash.android.data.tracking.Analytics;
 import org.bookdash.android.domain.model.DownloadProgressItem;
 import org.bookdash.android.domain.model.firebase.FireBookDetails;
 import org.bookdash.android.domain.model.firebase.FireContributor;
+import org.bookdash.android.domain.model.gson.BookPages;
 import org.bookdash.android.presentation.base.BasePresenter;
 
 import java.util.List;
@@ -96,14 +97,15 @@ class BookInfoPresenter extends BasePresenter<BookInfoContract.View> implements 
                         getView().showDownloadProgress(downloadProgressItem.getDownloadProgress());
                         if (downloadProgressItem.isComplete()) {
                             analytics.trackViewBook(bookInfo);
-                            if (downloadProgressItem.getBookPages() == null) {
+                            BookPages bookPages = downloadProgressItem.getBookPages();
+                            if (bookPages == null) {
                                 getView().showSnackBarMessage(R.string.failed_to_open_book);
                                 analytics.trackDownloadBookFailed(bookInfo, "failed_to_open_book");
                                 return;
                             }
                             getView().showDownloadFinished();
                             bookInfo.setIsDownloading(false);
-                            getView().openBook(bookInfo, downloadProgressItem.getBookPages(),
+                            getView().openBook(bookInfo, bookPages,
                                     bookInfo.getFolderLocation());
                         }
                     }

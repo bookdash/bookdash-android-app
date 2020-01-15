@@ -2,8 +2,9 @@ package org.bookdash.android.data.book;
 
 
 import android.net.Uri;
-import android.support.annotation.WorkerThread;
 import android.util.Log;
+
+import androidx.annotation.WorkerThread;
 
 import com.google.firebase.storage.FileDownloadTask;
 import com.google.firebase.storage.FirebaseStorage;

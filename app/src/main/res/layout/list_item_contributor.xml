@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
 
-    <android.support.constraint.ConstraintLayout
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="72dp"
         android:orientation="vertical">
@@ -48,5 +48,5 @@
             app:layout_constraintStart_toEndOf="@+id/imageViewContributorAvatar"
             app:layout_constraintTop_toBottomOf="@+id/textViewContributorName"
             tools:text="Editor" />
-    </android.support.constraint.ConstraintLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

@@ -1,15 +1,15 @@
 package org.bookdash.android.presentation.readbook;
 
-import android.support.v4.app.FixedFragmentStatePagerAdapter;
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentStatePagerAdapter;
 
 import org.bookdash.android.domain.model.gson.Page;
 
 import java.util.List;
 
 
-public class PageAdapter extends FixedFragmentStatePagerAdapter {
+public class PageAdapter extends FragmentStatePagerAdapter {
 
     private final String rootFileLocation;
     private List<Page> pages;

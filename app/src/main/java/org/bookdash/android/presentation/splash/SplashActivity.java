@@ -3,7 +3,7 @@ package org.bookdash.android.presentation.splash;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
-import android.support.v7.app.AppCompatActivity;
+import androidx.appcompat.app.AppCompatActivity;
 
 import org.bookdash.android.Injection;
 import org.bookdash.android.R;

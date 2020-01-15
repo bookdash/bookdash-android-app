@@ -1,7 +1,6 @@
 package org.bookdash.android.presentation.readbook
 
-import android.arch.lifecycle.AndroidViewModel
-import android.arch.lifecycle.ViewModel
+import androidx.lifecycle.ViewModel
 
 import org.bookdash.android.presentation.utils.SingleLiveEvent
 

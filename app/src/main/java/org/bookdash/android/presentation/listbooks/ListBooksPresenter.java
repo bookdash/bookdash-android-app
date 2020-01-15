@@ -161,8 +161,14 @@ class ListBooksPresenter extends BasePresenter<ListBooksContract.View> implement
 
                     @Override
                     public void onError(final Throwable e) {
-                        getView().showLoading(false);
-                        getView().showErrorScreen(true, e.getMessage(), true);
+
+                        ListBooksContract.View view = getView();
+                        if (view == null) {
+                            return;
+                        }
+
+                        view.showLoading(false);
+                        view.showErrorScreen(true, e.getMessage(), true);
                     }
 
                     @Override

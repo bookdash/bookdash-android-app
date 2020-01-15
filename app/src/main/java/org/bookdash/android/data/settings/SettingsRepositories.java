@@ -1,6 +1,6 @@
 package org.bookdash.android.data.settings;
 
-import android.support.annotation.NonNull;
+import androidx.annotation.NonNull;
 
 import com.google.firebase.messaging.FirebaseMessaging;
 

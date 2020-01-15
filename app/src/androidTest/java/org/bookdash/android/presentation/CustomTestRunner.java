@@ -7,8 +7,9 @@ import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.os.IBinder;
 import android.os.PowerManager;
-import android.support.test.runner.AndroidJUnitRunner;
 import android.util.Log;
+
+import androidx.test.runner.AndroidJUnitRunner;
 
 import java.lang.reflect.Method;
 

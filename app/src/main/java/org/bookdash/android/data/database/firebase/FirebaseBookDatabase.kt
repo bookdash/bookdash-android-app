@@ -1,22 +1,17 @@
 package org.bookdash.android.data.database.firebase
 
 import android.util.Log
-
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.FirebaseDatabase
-
 import org.bookdash.android.data.utils.firebase.FirebaseObservableListeners
 import org.bookdash.android.domain.model.firebase.FireBookDetails
 import org.bookdash.android.domain.model.firebase.FireContributor
 import org.bookdash.android.domain.model.firebase.FireLanguage
 import org.bookdash.android.domain.model.firebase.FireRole
-
-import java.util.ArrayList
-import java.util.Collections
-
 import rx.Observable
 import rx.functions.Func1
+import java.util.*
 
 
 class FirebaseBookDatabase(firebaseDatabase: FirebaseDatabase,
@@ -59,7 +54,7 @@ class FirebaseBookDatabase(firebaseDatabase: FirebaseDatabase,
             val contributor = dataSnapshot.getValue(FireContributor::class.java)
             contributor?.setId(dataSnapshot.key)
             Log.d(TAG, "Contributor:" + contributor?.name + ", " + contributor?.avatar)
-            val keys = ArrayList<String>()
+            val keys = ArrayList<String?>()
             if (dataSnapshot.child(FireContributor.ROLES_SECTION).hasChildren()) {
                 val children = dataSnapshot.child(FireContributor.ROLES_SECTION).children
                 children.mapTo(keys) { it.key }
@@ -77,7 +72,7 @@ class FirebaseBookDatabase(firebaseDatabase: FirebaseDatabase,
                 Log.d(TAG, "Book Details:" + bookDetails?.bookTitle + ". Book URL:" + bookDetails
                         ?.bookCoverPageUrl)
                 bookDetails?.bookId = snap.key
-                val keys = ArrayList<String>()
+                val keys = ArrayList<String?>()
                 if (snap.child(FireBookDetails.CONTRIBUTORS_ITEM_NAME).hasChildren()) {
                     val children = snap.child(FireBookDetails.CONTRIBUTORS_ITEM_NAME)
                             .children
