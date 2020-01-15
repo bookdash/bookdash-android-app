@@ -1,16 +1,17 @@
 package org.bookdash.android.presentation.listbooks;
 
 import android.content.Context;
-import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.bumptech.glide.Glide;
-import com.firebase.ui.storage.images.FirebaseImageLoader;
+import androidx.recyclerview.widget.RecyclerView;
+
+import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions;
 
 import org.bookdash.android.R;
+import org.bookdash.android.config.GlideApp;
 import org.bookdash.android.domain.model.firebase.FireBookDetails;
 
 import java.util.List;
@@ -42,7 +43,8 @@ public class BookAdapter extends RecyclerView.Adapter<BookViewHolder> {
         FireBookDetails bookDetail = bookDetails.get(position);
         holder.bookTitle.setText(bookDetail.getBookTitle());
         Log.d("BookAdapter", "Book url:" + bookDetail.getBookCoverPageUrl());
-        Glide.with(context).using(new FirebaseImageLoader()).load(bookDetail.getFirebaseBookCoverUrl())
+        GlideApp.with(context).load(bookDetail.getFirebaseBookCoverUrl())
+                .transition(DrawableTransitionOptions.withCrossFade())
                 .placeholder(R.drawable.bookdash_placeholder).error(R.drawable.bookdash_placeholder)
                 .into(holder.bookCover);
         holder.bookDetail = bookDetail;

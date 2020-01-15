@@ -1,6 +1,6 @@
 package org.bookdash.android.presentation.splash.util;
 
-import android.support.test.espresso.IdlingResource;
+import androidx.test.espresso.IdlingResource;
 
 /**
  * @author rebeccafranks

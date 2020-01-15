@@ -1,6 +1,6 @@
 package org.bookdash.android.presentation.main;
 
-import android.support.v7.widget.Toolbar;
+import androidx.appcompat.widget.Toolbar;
 
 
 public interface NavDrawerInterface {

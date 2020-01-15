@@ -1,15 +1,14 @@
 package org.bookdash.android.presentation.downloads;
 
 import android.content.Context;
-import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.bumptech.glide.Glide;
-import com.firebase.ui.storage.images.FirebaseImageLoader;
+import androidx.recyclerview.widget.RecyclerView;
 
 import org.bookdash.android.R;
+import org.bookdash.android.config.GlideApp;
 import org.bookdash.android.domain.model.firebase.FireBookDetails;
 
 import java.util.List;
@@ -40,7 +39,7 @@ public class DownloadsAdapter extends RecyclerView.Adapter<DownloadsViewHolder> 
     public void onBindViewHolder(DownloadsViewHolder holder, int position) {
         FireBookDetails book = bookList.get(position);
         holder.downloadTitleTextView.setText(book.getBookTitle());
-        Glide.with(context).using(new FirebaseImageLoader()).load(book.getFirebaseBookCoverUrl()).into(holder.downloadImageTextView);
+        GlideApp.with(context).load(book.getFirebaseBookCoverUrl()).into(holder.downloadImageTextView);
         holder.downloadActionButtonView.setOnClickListener(deleteClickListener);
         holder.book = book;
         holder.downloadActionButtonView.setTag(holder);

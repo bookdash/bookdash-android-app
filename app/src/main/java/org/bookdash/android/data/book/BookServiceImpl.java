@@ -1,6 +1,6 @@
 package org.bookdash.android.data.book;
 
-import android.support.annotation.NonNull;
+import androidx.annotation.NonNull;
 
 import org.bookdash.android.data.database.firebase.BookDatabase;
 import org.bookdash.android.domain.model.firebase.FireBookDetails;

@@ -1,12 +1,11 @@
 package org.bookdash.android.presentation.readbook
 
-import android.arch.lifecycle.Observer
-import android.arch.lifecycle.ViewModelProviders
 import android.os.Bundle
-import android.support.v4.view.ViewPager
 import android.view.ViewTreeObserver
 import android.view.WindowManager
-
+import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProviders
+import androidx.viewpager.widget.ViewPager
 import org.bookdash.android.R
 import org.bookdash.android.domain.model.gson.BookPages
 import org.bookdash.android.presentation.activity.BaseAppCompatActivity

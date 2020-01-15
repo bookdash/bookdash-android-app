@@ -1,7 +1,9 @@
 package org.bookdash.android;
 
-import android.app.Application;
 import android.content.Context;
+
+import androidx.multidex.MultiDex;
+import androidx.multidex.MultiDexApplication;
 
 import com.crashlytics.android.Crashlytics;
 import com.crashlytics.android.core.CrashlyticsCore;
@@ -20,7 +22,7 @@ import timber.log.Timber;
  * @author Rebecca Franks
  * @since 2015/07/16 8:54 AM
  */
-public class BookDashApplication extends Application {
+public class BookDashApplication extends MultiDexApplication {
     public static boolean isTablet = false;
     public static String FILES_DIR;
     private FirebaseAnalytics firebaseAnalytics;
@@ -30,8 +32,15 @@ public class BookDashApplication extends Application {
     }
 
     @Override
+    protected void attachBaseContext(Context base) {
+        super.attachBaseContext(base);
+        MultiDex.install(this);
+    }
+
+    @Override
     public void onCreate() {
         super.onCreate();
+
         AndroidThreeTen.init(this);
         Crashlytics crashlyticsKit = new Crashlytics.Builder()
                 .core(new CrashlyticsCore.Builder().disabled(BuildConfig.DEBUG).build()).build();

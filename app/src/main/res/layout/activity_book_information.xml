@@ -74,7 +74,7 @@
             </LinearLayout>
         </RelativeLayout>
 
-        <android.support.design.widget.CoordinatorLayout
+        <androidx.coordinatorlayout.widget.CoordinatorLayout
             android:id="@+id/coordinator_layout_content"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
@@ -88,14 +88,14 @@
                 android:src="@drawable/appbackground"/>
 
 
-            <android.support.design.widget.AppBarLayout
+            <com.google.android.material.appbar.AppBarLayout
                 android:id="@+id/app_bar_layout"
                 android:layout_width="match_parent"
                 android:layout_height="200dp"
                 android:fitsSystemWindows="true"
                 android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar">
 
-                <android.support.design.widget.CollapsingToolbarLayout
+                <com.google.android.material.appbar.CollapsingToolbarLayout
                     android:id="@+id/collapsing_toolbar"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
@@ -119,7 +119,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"/>
 
-                    <android.support.v7.widget.Toolbar
+                    <androidx.appcompat.widget.Toolbar
                         android:id="@+id/toolbar"
                         android:layout_width="match_parent"
                         android:layout_height="?attr/actionBarSize"
@@ -127,11 +127,11 @@
                         app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
                         app:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"/>
 
-                </android.support.design.widget.CollapsingToolbarLayout>
+                </com.google.android.material.appbar.CollapsingToolbarLayout>
 
-            </android.support.design.widget.AppBarLayout>
+            </com.google.android.material.appbar.AppBarLayout>
 
-            <android.support.v4.widget.NestedScrollView
+            <androidx.core.widget.NestedScrollView
                 android:id="@+id/scrollViewBookInfo"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
@@ -145,110 +145,114 @@
                     android:orientation="vertical"
                     android:paddingTop="24dp">
 
-                    <android.support.v7.widget.CardView
-                        android:id="@+id/card_view_main_book_info"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginBottom="4dp"
-                        android:layout_marginLeft="@dimen/activity_horizontal_margin"
-                        android:layout_marginRight="@dimen/activity_horizontal_margin"
+                    <androidx.cardview.widget.CardView
+                            android:id="@+id/card_view_main_book_info"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginBottom="4dp"
+                            android:layout_marginLeft="@dimen/activity_horizontal_margin"
+                            android:layout_marginRight="@dimen/activity_horizontal_margin"
 
-                        android:layout_marginTop="8dp"
-                        android:visibility="@{TextUtils.isEmpty(bookInfo.bookDescription) ? View.GONE : View.VISIBLE}">
+                            android:layout_marginTop="8dp"
+                            android:visibility="@{TextUtils.isEmpty(bookInfo.bookDescription) ? View.GONE : View.VISIBLE}"
+                            app:cardCornerRadius="8dp"
+                            >
 
                         <RelativeLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:orientation="vertical">
-
-                            <TextView
-                                android:id="@+id/textview_about_heading"
-                                android:layout_width="wrap_content"
-                                android:layout_height="48dp"
-                                android:layout_marginLeft="16dp"
-                                android:layout_marginRight="16dp"
-                                android:fontFamily="sans-serif"
-                                android:gravity="center_vertical"
-                                android:text="@string/about_book_info"
-                                android:textColor="@color/text_secondary_dark"
-                                android:textSize="14sp"/>
-
-                            <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="48dp"
-                                android:layout_alignParentEnd="false"
-                                android:layout_alignParentRight="true"
-                                android:layout_marginBottom="16dp"
-                                android:layout_marginLeft="16dp"
-                                android:layout_marginRight="16dp"
-                                android:layout_toRightOf="@id/textview_about_heading"
-                                android:fontFamily="sans-serif"
-                                android:gravity="center_vertical|right"
-                                android:text="@{bookInfo.getCreatedDateFormatted()}"
-                                android:textColor="@color/text_secondary_dark"
-                                android:textSize="14sp"
-                                />
-
-
-                            <TextView
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:layout_below="@id/textview_about_heading"
-                                android:layout_marginBottom="16dp"
-                                android:layout_marginLeft="16dp"
-                                android:layout_marginRight="16dp"
-                                android:layout_marginTop="2dp"
-                                android:fontFamily="sans-serif"
-                                android:text="@{bookInfo.bookDescription}"
-                                android:textColor="@color/text_color_primary_dark"
-                                android:textSize="16sp"/>
-
-                        </RelativeLayout>
-
-                    </android.support.v7.widget.CardView>
-
-                    <android.support.v7.widget.CardView
-                        android:id="@+id/contributor_card"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginBottom="4dp"
-                        android:layout_marginLeft="@dimen/activity_horizontal_margin"
-                        android:layout_marginRight="@dimen/activity_horizontal_margin"
-                        android:layout_marginTop="8dp"
-                        android:paddingTop="4dp"
-                        android:visibility="visible">
-
-                        <LinearLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:orientation="vertical">
-
-                            <TextView
-                                android:layout_width="match_parent"
-                                android:layout_height="48dp"
-                                android:layout_marginLeft="16dp"
-                                android:layout_marginRight="16dp"
-                                android:fontFamily="sans-serif"
-                                android:gravity="center_vertical"
-                                android:text="@string/contributors"
-                                android:textColor="@color/text_secondary_dark"
-                                android:textSize="14sp"/>
-
-                            <android.support.v7.widget.RecyclerView
-                                android:id="@+id/recyclerview_contributors"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:orientation="vertical">
 
-                            </android.support.v7.widget.RecyclerView>
+                            <TextView
+                                    android:id="@+id/textview_about_heading"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="48dp"
+                                    android:layout_marginLeft="16dp"
+                                    android:layout_marginRight="16dp"
+                                    android:fontFamily="sans-serif"
+                                    android:gravity="center_vertical"
+                                    android:text="@string/about_book_info"
+                                    android:textColor="@color/text_secondary_dark"
+                                    android:textSize="14sp"/>
+
+                            <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="48dp"
+                                    android:layout_alignParentEnd="false"
+                                    android:layout_alignParentRight="true"
+                                    android:layout_marginBottom="16dp"
+                                    android:layout_marginLeft="16dp"
+                                    android:layout_marginRight="16dp"
+                                    android:layout_toRightOf="@id/textview_about_heading"
+                                    android:fontFamily="sans-serif"
+                                    android:gravity="center_vertical|right"
+                                    android:text="@{bookInfo.getCreatedDateFormatted()}"
+                                    android:textColor="@color/text_secondary_dark"
+                                    android:textSize="14sp"
+                                    />
+
+
+                            <TextView
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_below="@id/textview_about_heading"
+                                    android:layout_marginBottom="16dp"
+                                    android:layout_marginLeft="16dp"
+                                    android:layout_marginRight="16dp"
+                                    android:layout_marginTop="2dp"
+                                    android:fontFamily="sans-serif"
+                                    android:text="@{bookInfo.bookDescription}"
+                                    android:textColor="@color/text_color_primary_dark"
+                                    android:textSize="16sp"/>
+
+                        </RelativeLayout>
+
+                    </androidx.cardview.widget.CardView>
+
+                    <androidx.cardview.widget.CardView
+                            android:id="@+id/contributor_card"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginBottom="4dp"
+                            android:layout_marginLeft="@dimen/activity_horizontal_margin"
+                            android:layout_marginRight="@dimen/activity_horizontal_margin"
+                            android:layout_marginTop="8dp"
+                            android:paddingTop="4dp"
+                            android:visibility="visible"
+                            app:cardCornerRadius="8dp"
+                            >
+
+                        <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:orientation="vertical">
+
+                            <TextView
+                                    android:layout_width="match_parent"
+                                    android:layout_height="48dp"
+                                    android:layout_marginLeft="16dp"
+                                    android:layout_marginRight="16dp"
+                                    android:fontFamily="sans-serif"
+                                    android:gravity="center_vertical"
+                                    android:text="@string/contributors"
+                                    android:textColor="@color/text_secondary_dark"
+                                    android:textSize="14sp"/>
+
+                            <androidx.recyclerview.widget.RecyclerView
+                                    android:id="@+id/recyclerview_contributors"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:orientation="vertical">
+
+                            </androidx.recyclerview.widget.RecyclerView>
 
 
                         </LinearLayout>
 
-                    </android.support.v7.widget.CardView>
+                    </androidx.cardview.widget.CardView>
                 </LinearLayout>
 
-            </android.support.v4.widget.NestedScrollView>
+            </androidx.core.widget.NestedScrollView>
 
             <view
                 android:id="@+id/fab_download"
@@ -272,7 +276,7 @@
                 app:layout_anchor="@id/app_bar_layout"
                 app:layout_anchorGravity="bottom|right|end"/>
 
-        </android.support.design.widget.CoordinatorLayout>
+        </androidx.coordinatorlayout.widget.CoordinatorLayout>
 
     </FrameLayout>
 
