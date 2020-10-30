@@ -1,25 +1,13 @@
-buildscript {
-    repositories {
-        maven { url 'https://maven.fabric.io/public' }
-    }
-
-    dependencies {
-        classpath 'io.fabric.tools:gradle:1.31.2'
-    }
-}
 apply plugin: 'com.android.application'
 apply plugin: 'kotlin-android'
-apply plugin: 'io.fabric'
 apply plugin: 'com.github.triplet.play'
 apply plugin: 'com.google.firebase.firebase-perf'
+apply plugin: 'com.google.firebase.crashlytics'
 apply plugin: 'kotlin-kapt'
 
 repositories {
-    maven { url 'https://maven.fabric.io/public' }
     mavenCentral()
 }
-
-
 
 android {
     compileSdkVersion rootProject.ext.compileSdkVersion
@@ -104,10 +92,8 @@ android {
         release {
             minifyEnabled true
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
-            ext.enableCrashlytics = true
         }
         debug {
-            ext.enableCrashlytics = false
             // Run code coverage reports by default on debug builds.
             testCoverageEnabled = true
         }
@@ -155,11 +141,10 @@ dependencies {
     implementation 'com.google.code.gson:gson:2.8.5'
     implementation 'com.github.castorflex.smoothprogressbar:library-circular:1.2.0'
 
-    implementation('com.crashlytics.sdk.android:crashlytics:2.10.1@aar') {
-        transitive = true
-    }
+    // Firebase Crashlytics
+    implementation 'com.google.firebase:firebase-analytics:17.6.0'
+    implementation 'com.google.firebase:firebase-crashlytics:17.2.2'
 
-    implementation 'com.google.firebase:firebase-analytics:17.2.1'
     implementation 'com.google.firebase:firebase-auth:19.2.0'
     implementation 'com.google.firebase:firebase-database:19.2.0'
     implementation 'com.google.firebase:firebase-messaging:20.0.1'
@@ -180,9 +165,6 @@ dependencies {
     implementation project(path: ':materialhelptutorial')
     implementation project(':fabbutton')
 }
-
-
-
 
 apply plugin: 'kotlin-kapt'
 apply plugin: 'com.google.gms.google-services'

@@ -30,9 +30,8 @@ http://bookdash.org/
 
 1. MaterialHelpTutorial - https://github.com/spongebobrf/MaterialIntroTutorial
 2. FabButton - https://github.com/ckurtm/FabButton
-3. Firebase - https://firebase.google.com/ 
-4. Fabric - https://fabric.io/dashboard
-5. Glide Image Loading - https://github.com/bumptech/glide
+3. Firebase - https://firebase.google.com/
+4. Glide Image Loading - https://github.com/bumptech/glide
 
 # Setup
 
@@ -53,8 +52,7 @@ google-services.json file. This must then be placed into the app folder of this 
 
 # [OPTIONAL setup] 
 1. If you wish to build a release version you will need to create your own keystore file and edit the password values in the following file - (create a version of the file without the .sample extension): release-keystore.properties.sample
-2. Setup a Fabric Account. https://fabric.io/dashboard
-3. Get your Fabric API Key and Client key, change it in the file: /app/fabric-sample.properties and rename the file to fabric.properties
+2. If you want to add Firebase Crashlytics to your app: Setup a Firebase Account. https://firebase.google.com/docs/crashlytics
 
 # Contributions
 Contributions are welcome. Please read the [contributions guide](CONTRIBUTING.md) for more information. 

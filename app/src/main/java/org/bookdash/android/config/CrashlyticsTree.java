@@ -1,9 +1,7 @@
 package org.bookdash.android.config;
 
 import android.util.Log;
-
-import com.crashlytics.android.Crashlytics;
-
+import com.google.firebase.crashlytics.FirebaseCrashlytics;
 import timber.log.Timber;
 
 /**
@@ -17,10 +15,10 @@ public class CrashlyticsTree extends Timber.Tree {
             return;
         }
 
-        Crashlytics.log(priority, tag, message);
+        FirebaseCrashlytics.getInstance().log("Priority: " + priority + ", TAG: " + tag + ", Message: " + message);
 
         if (t != null) {
-            Crashlytics.logException(t);
+            FirebaseCrashlytics.getInstance().recordException(t);
         }
     }
 }

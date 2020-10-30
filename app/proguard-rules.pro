@@ -29,8 +29,6 @@
     public *;
 }
 
--keep class com.crashlytics.** { *; }
--keep class com.crashlytics.android.**
 -keepattributes SourceFile,LineNumberTable
 
 -keepattributes Signature

@@ -5,15 +5,13 @@ import android.content.Context;
 import androidx.multidex.MultiDex;
 import androidx.multidex.MultiDexApplication;
 
-import com.crashlytics.android.Crashlytics;
-import com.crashlytics.android.core.CrashlyticsCore;
 import com.google.firebase.analytics.FirebaseAnalytics;
-import com.google.firebase.iid.FirebaseInstanceId;
+import com.google.firebase.crashlytics.FirebaseCrashlytics;
+import com.google.firebase.installations.FirebaseInstallations;
 import com.jakewharton.threetenabp.AndroidThreeTen;
 
 import org.bookdash.android.config.CrashlyticsTree;
 
-import io.fabric.sdk.android.Fabric;
 import rx.Subscriber;
 import timber.log.Timber;
 
@@ -42,13 +40,12 @@ public class BookDashApplication extends MultiDexApplication {
         super.onCreate();
 
         AndroidThreeTen.init(this);
-        Crashlytics crashlyticsKit = new Crashlytics.Builder()
-                .core(new CrashlyticsCore.Builder().disabled(BuildConfig.DEBUG).build()).build();
-        Fabric.with(this, crashlyticsKit);
+
+        FirebaseCrashlytics.getInstance().setCrashlyticsCollectionEnabled(!BuildConfig.DEBUG);
 
         if (BuildConfig.DEBUG) {
             Timber.plant(new Timber.DebugTree());
-            Timber.d("Firebase Debug Info:" + FirebaseInstanceId.getInstance().getToken());
+            Timber.d("Firebase Debug Info:%s", FirebaseInstallations.getInstance().getId());
         } else {
             Timber.plant(new CrashlyticsTree());
         }

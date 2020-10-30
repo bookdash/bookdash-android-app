@@ -1,6 +1,6 @@
 package org.bookdash.android.presentation.listbooks;
 
-import com.crashlytics.android.Crashlytics;
+import com.google.firebase.crashlytics.FirebaseCrashlytics;
 
 import org.bookdash.android.R;
 import org.bookdash.android.data.book.BookService;
@@ -51,7 +51,7 @@ class ListBooksPresenter extends BasePresenter<ListBooksContract.View> implement
                     @Override
                     public void onError(final Throwable e) {
                         getView().showSnackBarError(R.string.error_loading_languages);
-                        Crashlytics.logException(e);
+                        FirebaseCrashlytics.getInstance().recordException(e);
                     }
 
                     @Override
@@ -73,7 +73,7 @@ class ListBooksPresenter extends BasePresenter<ListBooksContract.View> implement
                     @Override
                     public void onError(final Throwable e) {
                         getView().showSnackBarError(R.string.error_saving_selected_language);
-                        Crashlytics.logException(e);
+                        FirebaseCrashlytics.getInstance().recordException(e);
                     }
 
                     @Override
@@ -127,7 +127,7 @@ class ListBooksPresenter extends BasePresenter<ListBooksContract.View> implement
                     @Override
                     public void onError(final Throwable e) {
                         getView().showSnackBarError(R.string.error_opening_languagepopover);
-                        Crashlytics.logException(e);
+                        FirebaseCrashlytics.getInstance().recordException(e);
                     }
 
                     @Override
