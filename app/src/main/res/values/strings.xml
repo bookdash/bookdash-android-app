@@ -7,6 +7,7 @@
     <string name="language_selection_heading">Select a language</string>
     <string name="failed_to_download_book">Failed to download book.[%s]</string>
     <string name="error_loading_languages">Error loading available languages</string>
+    <string name="error_loading_languages_try_again">Failed to load available languages. Please try again later.</string>
     <string name="book_not_available">Book not available</string>
     <string name="title_activity_about">About Book Dash</string>
     <string name="action_about">About</string>

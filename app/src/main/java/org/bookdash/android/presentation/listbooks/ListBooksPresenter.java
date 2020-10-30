@@ -78,11 +78,12 @@ class ListBooksPresenter extends BasePresenter<ListBooksContract.View> implement
 
                     @Override
                     public void onNext(final Boolean aBoolean) {
-                        analytics.trackLanguageChange(languages.get(indexOfLanguage).getLanguageName());
-                        loadBooksForLanguage(languages.get(indexOfLanguage));
+                        FireLanguage selectedLanguage = languages.get(indexOfLanguage);
+                        analytics.trackLanguageChange(selectedLanguage.getLanguageName());
+                        getView().onSelectedLanguageChanged(selectedLanguage.getLanguageName());
+                        loadBooksForLanguage(selectedLanguage);
                     }
                 }));
-
     }
 
     @Override
@@ -104,6 +105,7 @@ class ListBooksPresenter extends BasePresenter<ListBooksContract.View> implement
                     @Override
                     public void onNext(final FireLanguage fireLanguage) {
                         analytics.setUserLanguage(fireLanguage.getLanguageName());
+                        getView().onSelectedLanguageChanged(fireLanguage.getLanguageName());
                         loadBooksForLanguage(fireLanguage);
                     }
                 }));
@@ -113,6 +115,7 @@ class ListBooksPresenter extends BasePresenter<ListBooksContract.View> implement
     @Override
     public void clickOpenLanguagePopover() {
         if (languages == null) {
+            getView().showSnackBarError(R.string.error_loading_languages_try_again);
             return;
         }
         addSubscription(settingsRepository.getLanguagePreference().observeOn(ioScheduler).subscribeOn(mainScheduler)

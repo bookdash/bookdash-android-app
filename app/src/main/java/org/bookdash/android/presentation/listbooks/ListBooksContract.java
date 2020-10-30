@@ -24,6 +24,8 @@ public interface ListBooksContract {
         void showLanguagePopover(String[] languages, int selected);
 
         void startSearchActivity();
+
+        void onSelectedLanguageChanged(String selectedLanguage);
     }
 
     interface Presenter extends MvpPresenter<View>{
