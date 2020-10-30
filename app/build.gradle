@@ -141,17 +141,19 @@ dependencies {
     implementation 'com.google.code.gson:gson:2.8.5'
     implementation 'com.github.castorflex.smoothprogressbar:library-circular:1.2.0'
 
-    // Firebase Crashlytics
-    implementation 'com.google.firebase:firebase-analytics:17.6.0'
-    implementation 'com.google.firebase:firebase-crashlytics:17.2.2'
+    // Import the Firebase Bill of Materials (BoM)
+    implementation platform('com.google.firebase:firebase-bom:26.0.0')
 
-    implementation 'com.google.firebase:firebase-auth:19.2.0'
-    implementation 'com.google.firebase:firebase-database:19.2.0'
-    implementation 'com.google.firebase:firebase-messaging:20.0.1'
-    implementation 'com.google.firebase:firebase-config:19.0.3'
-    implementation 'com.google.firebase:firebase-storage:19.1.0'
+    // Firebase Dependencies
+    implementation 'com.google.firebase:firebase-analytics'
+    implementation 'com.google.firebase:firebase-auth'
+    implementation 'com.google.firebase:firebase-config'
+    implementation 'com.google.firebase:firebase-crashlytics'   
+    implementation 'com.google.firebase:firebase-database'
+    implementation 'com.google.firebase:firebase-messaging'
+    implementation 'com.google.firebase:firebase-perf'
+    implementation 'com.google.firebase:firebase-storage'
     implementation 'com.firebaseui:firebase-ui-storage:6.1.0'
-    implementation 'com.google.firebase:firebase-perf:19.0.2'
 
     implementation 'io.reactivex:rxandroid:1.2.1'
     implementation 'io.reactivex:rxjava:1.2.5'

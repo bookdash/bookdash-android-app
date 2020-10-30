@@ -6,15 +6,15 @@ import androidx.annotation.NonNull;
 
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.BuildConfig;
 import com.google.firebase.remoteconfig.FirebaseRemoteConfig;
 import com.google.firebase.remoteconfig.FirebaseRemoteConfigSettings;
 
-import org.bookdash.android.BuildConfig;
 import org.bookdash.android.R;
 
 public class FirebaseConfig implements RemoteConfigSettingsApi {
 
-    private static final int CACHE_EXPIRATION_IN_SECONDS = 3600;
+    private static final long CACHE_EXPIRATION_IN_SECONDS = 3600;
     private static final String DEFAULT_LANGUAGE_ID = "default_language_id";
     private static final String DEFAULT_LANGUAGE_NAME = "default_language_name";
     private static final String DEFAULT_LANGUAGE_ABBREVIATION = "default_language_abbreviation";
@@ -29,10 +29,10 @@ public class FirebaseConfig implements RemoteConfigSettingsApi {
 
     public static FirebaseConfig newInstance() {
         final FirebaseRemoteConfig firebaseRemoteConfig = FirebaseRemoteConfig.getInstance();
-        FirebaseRemoteConfigSettings configSettings = new FirebaseRemoteConfigSettings.Builder()
-                .setDeveloperModeEnabled(BuildConfig.DEBUG).build();
-        firebaseRemoteConfig.setConfigSettings(configSettings);
-        firebaseRemoteConfig.setDefaults(R.xml.firebase_remote_config_defaults);
+        FirebaseRemoteConfigSettings configSettings = new FirebaseRemoteConfigSettings.Builder().
+                setMinimumFetchIntervalInSeconds(BuildConfig.DEBUG ? 0 : CACHE_EXPIRATION_IN_SECONDS).build();
+        firebaseRemoteConfig.setConfigSettingsAsync(configSettings);
+        firebaseRemoteConfig.setDefaultsAsync(R.xml.firebase_remote_config_defaults);
         return new FirebaseConfig(firebaseRemoteConfig);
     }
 
@@ -40,7 +40,7 @@ public class FirebaseConfig implements RemoteConfigSettingsApi {
         firebaseRemoteConfig.fetch(CACHE_EXPIRATION_IN_SECONDS).addOnSuccessListener(new OnSuccessListener<Void>() {
             @Override
             public void onSuccess(Void aVoid) {
-                firebaseRemoteConfig.activateFetched();
+                firebaseRemoteConfig.activate();
             }
         }).addOnFailureListener(new OnFailureListener() {
             @Override
