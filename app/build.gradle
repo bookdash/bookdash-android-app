@@ -88,6 +88,11 @@ android {
         }
     }
 
+    // Avoid crash on platform method calls that's not mocked. E.g. FirebaseCrashlytics.
+    testOptions {
+        unitTests.returnDefaultValues = true
+    }
+
     buildTypes {
         release {
             minifyEnabled true
