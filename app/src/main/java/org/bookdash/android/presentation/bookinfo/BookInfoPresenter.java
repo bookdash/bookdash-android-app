@@ -2,6 +2,8 @@ package org.bookdash.android.presentation.bookinfo;
 
 import androidx.annotation.NonNull;
 
+import com.google.firebase.crashlytics.FirebaseCrashlytics;
+
 import org.bookdash.android.R;
 import org.bookdash.android.data.book.BookService;
 import org.bookdash.android.data.book.DownloadService;
@@ -96,15 +98,16 @@ class BookInfoPresenter extends BasePresenter<BookInfoContract.View> implements 
                     public void onNext(DownloadProgressItem downloadProgressItem) {
                         getView().showDownloadProgress(downloadProgressItem.getDownloadProgress());
                         if (downloadProgressItem.isComplete()) {
+                            bookInfo.setIsDownloading(false);
                             analytics.trackViewBook(bookInfo);
                             BookPages bookPages = downloadProgressItem.getBookPages();
                             if (bookPages == null) {
                                 getView().showSnackBarMessage(R.string.failed_to_open_book);
+                                FirebaseCrashlytics.getInstance().recordException(new Exception("Book pages null after completed download."));
                                 analytics.trackDownloadBookFailed(bookInfo, "failed_to_open_book");
                                 return;
                             }
                             getView().showDownloadFinished();
-                            bookInfo.setIsDownloading(false);
                             getView().openBook(bookInfo, bookPages,
                                     bookInfo.getFolderLocation());
                         }

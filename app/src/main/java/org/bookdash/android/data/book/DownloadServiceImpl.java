@@ -6,6 +6,7 @@ import android.util.Log;
 
 import androidx.annotation.WorkerThread;
 
+import com.google.firebase.crashlytics.FirebaseCrashlytics;
 import com.google.firebase.storage.FileDownloadTask;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.gson.Gson;
@@ -99,8 +100,12 @@ public class DownloadServiceImpl implements DownloadService {
                 Log.e(TAG, "EX: ", e);
             }
 
+            FirebaseCrashlytics.getInstance().log("File path: " + fileName);
+            FirebaseCrashlytics.getInstance().recordException(e);
             Log.e(TAG, "Ex:" + e.getMessage(), e);
         } catch (Exception e) {
+            FirebaseCrashlytics.getInstance().log("File path: " + fileName);
+            FirebaseCrashlytics.getInstance().recordException(e);
             Log.e(TAG, "error parsing book: " + fileName, e);
         }
         return bookPages;
