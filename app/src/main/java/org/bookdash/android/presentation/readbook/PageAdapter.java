@@ -16,7 +16,7 @@ public class PageAdapter extends FragmentStatePagerAdapter {
 
 
     public PageAdapter(FragmentManager fm, List<Page> pages, String rootFileLocation) {
-        super(fm);
+        super(fm, BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT);
         this.pages = pages;
         this.rootFileLocation = rootFileLocation;
     }
