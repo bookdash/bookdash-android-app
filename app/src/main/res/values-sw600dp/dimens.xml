@@ -5,6 +5,7 @@
     <dimen name="text_size_page">28sp</dimen>
     <dimen name="fab_button_size">62dp</dimen>
     <bool name="is_tablet">true</bool>
+    <dimen name="book_list_language_bar_right_padding">17dp</dimen>
 
     <dimen name="book_size_landscape">384dp</dimen>
 </resources>

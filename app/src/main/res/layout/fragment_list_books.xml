@@ -32,8 +32,11 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@drawable/language_selector"
-            android:gravity="center"
-            android:padding="4dp"
+            android:gravity="right"
+            android:paddingLeft="4dp"
+            android:paddingTop="4dp"
+            android:paddingRight="@dimen/book_list_language_bar_right_padding"
+            android:paddingBottom="4dp"
             app:layout_scrollFlags="scroll|enterAlways">
 
             <androidx.appcompat.widget.AppCompatTextView
