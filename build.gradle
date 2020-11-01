@@ -27,7 +27,7 @@ ext {
     versionCode = 34
     versionName = "2.8.0"
     minSdkVersion = 16
-    compileSdkVersion = 28
+    compileSdkVersion = 29
     junitVersion = '4.13.1'
     mockitoVersion = '1.10.19'
     powerMockito = '1.7.4'
