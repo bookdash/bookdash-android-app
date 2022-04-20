@@ -73,8 +73,8 @@ public class FabButton extends FrameLayout implements CircleImageView.OnFabViewL
         ring = (ProgressRingView) v.findViewById(R.id.fabbutton_ring);
         circle.setFabViewListener(this);
         ring.setFabViewListener(this);
-        int color = Color.BLACK;
-        int progressColor = Color.BLACK;
+        int color = Color.GREEN;
+        int progressColor = Color.GREEN;
         int animDuration = 4000;
         int icon = -1;
         float maxProgress = 0;
