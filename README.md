@@ -1,3 +1,11 @@
+# What does this app do?
+It is an open source Android application that allows people to download children's story books. The books are available
+in different languages such as English, Sepedi, Zulu, Afrikaans etc. The books are free to distribute and translate.
+
+Read more about Book Dash here:
+http://bookdash.org/
+
+
 # Bookdash Android
 
 [![BuddyBuild](https://dashboard.buddybuild.com/api/statusImage?appID=57bde66fa530dc0100e902b3&branch=master&build=latest)](https://dashboard.buddybuild.com/apps/57bde66fa530dc0100e902b3/build/latest)
@@ -12,18 +20,12 @@ Book Dash is an Android App for the NPO where you can download books in differen
 
 
 # Screenshots
-<img src="art/booklisting.jpg" alt="phone image" width="200px" />
-<img src="art/bookdetail.jpg" alt="phone image" width="200px" />
-<img src="art/reading_book.jpg" alt="phone image" width="400px" />
+<img src="art/booklisting.jpg" alt="phone image" width="250px" />
+<img src="art/bookdetail.jpg" alt="phone image" width="250px" />
+<img src="art/reading_book.jpg" alt="phone image" width="450px" />
 
 
 
-# What does this app do?
-It is an open source Android application that allows people to download children's story books. The books are available
-in different languages such as English, Sepedi, Zulu, Afrikaans etc. The books are free to distribute and translate.
-
-Read more about Book Dash here:
-http://bookdash.org/
 
 
 # Libraries this app uses:
