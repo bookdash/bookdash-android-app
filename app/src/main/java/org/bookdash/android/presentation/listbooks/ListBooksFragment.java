@@ -51,6 +51,8 @@ public class ListBooksFragment extends Fragment implements ListBooksContract.Vie
     private CircularProgressBar circularProgressBar;
     private LinearLayout linearLayoutErrorScreen;
     private TextView textViewErrorMessage;
+    private LinearLayout linearLayoutContainerLanguage;
+    private TextView textViewCurrentLanguage;
     private NavDrawerInterface navDrawerInterface;
     private BookAdapter bookAdapter;
     private View.OnClickListener bookClickListener = new View.OnClickListener() {
@@ -117,6 +119,8 @@ public class ListBooksFragment extends Fragment implements ListBooksContract.Vie
         linearLayoutErrorScreen = view.findViewById(R.id.linear_layout_error);
         buttonRetry = view.findViewById(R.id.button_retry);
         textViewErrorMessage = view.findViewById(R.id.text_view_error_screen);
+        linearLayoutContainerLanguage = view.findViewById(R.id.container_language);
+        textViewCurrentLanguage = view.findViewById(R.id.text_current_language);
         recyclerViewBooks = view.findViewById(R.id.recycler_view_books);
         recyclerViewBooks.setLayoutManager(
                 new GridLayoutManager(getActivity(), getContext().getResources().getInteger(R.integer.book_span)));
@@ -125,6 +129,12 @@ public class ListBooksFragment extends Fragment implements ListBooksContract.Vie
             public void onClick(View v) {
                 Log.d(TAG, "Retry button clicked");
                 listBooksPresenter.loadBooksForLanguagePreference();
+            }
+        });
+        linearLayoutContainerLanguage.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                listBooksPresenter.clickOpenLanguagePopover();
             }
         });
         Toolbar toolbar = view.findViewById(R.id.toolbar);
@@ -164,10 +174,6 @@ public class ListBooksFragment extends Fragment implements ListBooksContract.Vie
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        if (item.getItemId() == R.id.action_language_choice) {
-            listBooksPresenter.clickOpenLanguagePopover();
-            return true;
-        }
         if (item.getItemId() == R.id.action_search_books) {
             listBooksPresenter.openSearchScreen();
             return true;
@@ -275,5 +281,13 @@ public class ListBooksFragment extends Fragment implements ListBooksContract.Vie
         SearchActivity.start(getActivity());
     }
 
-
+    @Override
+    public void onSelectedLanguageChanged(final String selectedLanguage) {
+        runUiThread(new Runnable() {
+            @Override
+            public void run() {
+                textViewCurrentLanguage.setText(selectedLanguage);
+            }
+        });
+    }
 }

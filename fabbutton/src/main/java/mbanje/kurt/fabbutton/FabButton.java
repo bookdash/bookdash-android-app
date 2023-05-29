@@ -35,6 +35,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.FrameLayout;
 
+import androidx.annotation.NonNull;
 import androidx.coordinatorlayout.widget.CoordinatorLayout;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.ViewPropertyAnimatorListener;
@@ -48,8 +49,7 @@ import java.util.List;
 /**
  * Created by kurt on 21 02 2015 .
  */
-@CoordinatorLayout.DefaultBehavior(FabButton.Behavior.class)
-public class FabButton extends FrameLayout implements CircleImageView.OnFabViewListener {
+public class FabButton extends FrameLayout implements CircleImageView.OnFabViewListener, CoordinatorLayout.AttachedBehavior {
 
     private static final String TAG = "FabButton";
     private CircleImageView circle;
@@ -206,6 +206,12 @@ public class FabButton extends FrameLayout implements CircleImageView.OnFabViewL
         }
     }
 
+    @NonNull
+    @Override
+    public CoordinatorLayout.Behavior<FabButton> getBehavior() {
+        return new Behavior();
+    }
+
 
     public static class Behavior extends CoordinatorLayout.Behavior<FabButton> {
         // We only support the FAB <> Snackbar shift movement on Honeycomb and above. This is
@@ -266,7 +272,7 @@ public class FabButton extends FrameLayout implements CircleImageView.OnFabViewL
                             .setInterpolator(AnimationUtils.FAST_OUT_SLOW_IN_INTERPOLATOR).setListener(null);
                 } else {
                     // Else we'll set use setTranslationY
-                    ViewCompat.setTranslationY(fab, translationY);
+                    fab.setTranslationY(translationY);
                 }
                 mTranslationY = translationY;
             }
@@ -323,7 +329,7 @@ public class FabButton extends FrameLayout implements CircleImageView.OnFabViewL
             for (int i = 0, z = dependencies.size(); i < z; i++) {
                 final View view = dependencies.get(i);
                 if (view instanceof Snackbar.SnackbarLayout && parent.doViewsOverlap(fab, view)) {
-                    minOffset = Math.min(minOffset, ViewCompat.getTranslationY(view) - view.getHeight());
+                    minOffset = Math.min(minOffset, view.getTranslationY() - view.getHeight());
                 }
             }
 

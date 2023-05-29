@@ -43,7 +43,7 @@ public class OverflowMenuOptionsTest {
 
     @Test
     public void languageItemClick_ShowLanguageChooser() {
-        onView(withId(R.id.action_language_choice)).perform(click());
+        onView(withId(R.id.container_language)).perform(click());
         //Then
         onView(withText(R.string.language_selection_heading)).inRoot(isDialog()).check(matches(isDisplayed()));
     }

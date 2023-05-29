@@ -35,7 +35,7 @@ public class MaterialTutorialAdapter extends FragmentPagerAdapter {
     private List<MaterialTutorialFragment> fragments;
 
     public MaterialTutorialAdapter(FragmentManager fm, List<MaterialTutorialFragment> fragments) {
-        super(fm);
+        super(fm, BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT);
         this.fragments = fragments;
 
     }

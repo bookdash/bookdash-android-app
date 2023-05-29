@@ -6,6 +6,7 @@
     <dimen name="book_column_width">144dp</dimen>
     <dimen name="book_column_width_padding">160dp</dimen>
     <dimen name="book_list_padding">4dp</dimen>
+    <dimen name="book_list_language_bar_right_padding">9dp</dimen>
     <dimen name="text_size_page">14sp</dimen>
     <dimen name="size_text">24sp</dimen>
     <dimen name="padding_book">16dp</dimen>

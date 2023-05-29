@@ -39,7 +39,7 @@
                     android:maxLines="2"
                     android:paddingLeft="8dp"
                     android:paddingRight="8dp"
-                    android:textColor="#212121"
+                    android:textColor="@color/text_color_primary_dark"
                     android:textSize="16sp"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintLeft_toLeftOf="parent"

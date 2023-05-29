@@ -1,20 +1,14 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
-      xmlns:app="http://schemas.android.com/apk/res-auto"
-      xmlns:tools="http://schemas.android.com/tools"
-      tools:context=".MainActivity">
-    <item
-        android:id="@+id/action_language_choice"
-        android:contentDescription="@string/action_language_choice"
-        android:icon="@drawable/ic_public_black_24dp"
-        android:orderInCategory="2"
-        android:title="@string/action_language_choice"
-        app:showAsAction="ifRoom"/>
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context=".MainActivity">
+
     <item
         android:id="@+id/action_search_books"
         android:contentDescription="@string/action_search"
         android:icon="@drawable/ic_search"
         android:orderInCategory="1"
         android:title="@string/action_search"
-        app:showAsAction="ifRoom"/>
+        app:showAsAction="ifRoom" />
 
 </menu>

@@ -1,6 +1,7 @@
 package org.bookdash.android.presentation.bookinfo;
 
 import android.app.Activity;
+import android.content.ActivityNotFoundException;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.graphics.Bitmap;
@@ -42,7 +43,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions;
-import com.bumptech.glide.request.target.SimpleTarget;
+import com.bumptech.glide.request.target.CustomTarget;
 import com.google.android.material.appbar.AppBarLayout;
 import com.google.android.material.appbar.CollapsingToolbarLayout;
 import com.google.android.material.snackbar.Snackbar;
@@ -269,13 +270,19 @@ public class BookInfoActivity extends BaseAppCompatActivity implements BookInfoC
     private void loadImage(StorageReference url) {
         GlideApp.with(this).load(url)
                 .transition(DrawableTransitionOptions.withCrossFade())
-                .into(new SimpleTarget<Drawable>() {
+                .into(new CustomTarget<Drawable>() {
                     @Override
                     public void onResourceReady(@NonNull Drawable resource, @Nullable com.bumptech.glide.request.transition.Transition<? super Drawable> transition) {
 
                         Bitmap bitmap = drawableToBitmap(resource);
                         onImageLoaded(bitmap);
                         extractPaletteColors(bitmap);
+                    }
+
+                    @Override
+                    public void onLoadCleared(@Nullable Drawable placeholder) {
+                        // Clear the view.
+                        onImageLoaded(null);
                     }
                 });
     }
@@ -300,7 +307,7 @@ public class BookInfoActivity extends BaseAppCompatActivity implements BookInfoC
         drawable.draw(canvas);
         return bitmap;
     }
-    private void onImageLoaded(Bitmap bitmap) {
+    private void onImageLoaded(@Nullable Bitmap bitmap) {
         imageViewBook.setImageBitmap(bitmap);
 
     }
@@ -464,11 +471,15 @@ public class BookInfoActivity extends BaseAppCompatActivity implements BookInfoC
 
     @Override
     public void sendShareEvent(String bookTitle) {
-        Intent sendIntent = new Intent();
-        sendIntent.setAction(Intent.ACTION_SEND);
-        sendIntent.putExtra(Intent.EXTRA_TEXT, getString(R.string.sharing_book_title, bookTitle));
-        sendIntent.setType("text/plain");
-        startActivity(sendIntent);
+        try {
+            Intent sendIntent = new Intent();
+            sendIntent.setAction(Intent.ACTION_SEND);
+            sendIntent.putExtra(Intent.EXTRA_TEXT, getString(R.string.sharing_book_title, bookTitle));
+            sendIntent.setType("text/plain");
+            startActivity(sendIntent);
+        } catch (ActivityNotFoundException anfe) {
+            showSnackBarMessage(R.string.share_book_error_no_apps_found);
+        }
     }
 
     @Override
