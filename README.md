@@ -60,7 +60,7 @@ google-services.json file. This must then be placed into the app folder of this 
 Contributions are welcome. Please read the [contributions guide](CONTRIBUTING.md) for more information. 
 
 # License
-Copyright 2016 Book Dash.
+Copyright 2023 Book Dash.
 
 Licensed to the Apache Software Foundation (ASF) under one or more contributor
 license agreements. See the NOTICE file distributed with this work for
