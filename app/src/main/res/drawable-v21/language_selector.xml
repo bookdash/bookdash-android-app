@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ripple xmlns:android="http://schemas.android.com/apk/res/android"
+    android:color="@color/colorAccent">
+    <item>
+        <color android:color="@color/white" />
+    </item>
+    <!-- The Mask can be a shape drawable if you want -->
+    <!-- Also removing the mask makes the ripple "borderless" -->
+    <!-- here we're using just any color to have a rectangular limit for the ripple -->
+    <item android:id="@android:id/mask"
+        android:drawable="@color/colorAccent" />
+</ripple>

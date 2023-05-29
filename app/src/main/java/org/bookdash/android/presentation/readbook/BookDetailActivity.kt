@@ -3,9 +3,11 @@ package org.bookdash.android.presentation.readbook
 import android.os.Bundle
 import android.view.ViewTreeObserver
 import android.view.WindowManager
+import android.widget.Toast
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.viewpager.widget.ViewPager
+import com.google.firebase.crashlytics.FirebaseCrashlytics
 import org.bookdash.android.R
 import org.bookdash.android.domain.model.gson.BookPages
 import org.bookdash.android.presentation.activity.BaseAppCompatActivity
@@ -32,6 +34,10 @@ class BookDetailActivity : BaseAppCompatActivity() {
         })
         //val book = intent.getStringExtra(BOOK_ARG)
         val bookPages = intent.getParcelableExtra<BookPages>(BOOK_PAGES)
+        if (bookPages == null) {
+            onBookPagesNull()
+            return
+        }
         bookPages.pages.add(0, null)
         val bookLocation = intent.getStringExtra(LOCATION_BOOK)
         pageAdapter = PageAdapter(supportFragmentManager, bookPages.pages,
@@ -51,10 +57,20 @@ class BookDetailActivity : BaseAppCompatActivity() {
             }
         })
         readBookViewModel.pageForwardEventTrigger.observe(this, Observer {
-            if (viewPager.currentItem != viewPager.childCount -1) {
+            if (viewPager.currentItem != viewPager.childCount - 1) {
                 viewPager.setCurrentItem(viewPager.currentItem + 1, true)
             }
         })
+    }
+
+    /**
+     * Called when this Activity was launched with no book pages.
+     * TODO Remove this method once bookPages == null bug is fixed.
+     */
+    private fun onBookPagesNull() {
+        FirebaseCrashlytics.getInstance().recordException(Exception("Book pages null when opening book detail."))
+        Toast.makeText(applicationContext, R.string.failed_to_open_book, Toast.LENGTH_LONG).show()
+        finish()
     }
 
     override fun getScreenName(): String {

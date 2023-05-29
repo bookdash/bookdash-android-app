@@ -1,5 +1,4 @@
-<androidx.coordinatorlayout.widget.CoordinatorLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -11,11 +10,12 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:scaleType="centerCrop"
-        android:src="@drawable/appbackground"/>
+        android:src="@drawable/appbackground" />
 
     <com.google.android.material.appbar.AppBarLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:orientation="vertical"
         android:theme="@style/AppTheme.AppBarOverlay">
 
         <androidx.appcompat.widget.Toolbar
@@ -25,9 +25,33 @@
             android:background="?attr/colorPrimary"
             android:title="@string/book_dash"
             app:layout_scrollFlags="scroll|enterAlways"
-            app:popupTheme="@style/ThemeOverlay.AppCompat.Light"/>
+            app:popupTheme="@style/ThemeOverlay.AppCompat.Light" />
 
+        <LinearLayout
+            android:id="@+id/container_language"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/language_selector"
+            android:gravity="right"
+            android:paddingLeft="4dp"
+            android:paddingTop="4dp"
+            android:paddingRight="@dimen/book_list_language_bar_right_padding"
+            android:paddingBottom="4dp"
+            app:layout_scrollFlags="scroll|enterAlways">
 
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/text_current_language"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:drawablePadding="4dp"
+                android:ellipsize="end"
+                android:fontFamily="sans-serif"
+                android:maxLines="1"
+                android:text="@string/language_selection_heading"
+                android:textColor="@color/text_color_primary_dark"
+                android:textSize="16sp"
+                app:drawableRightCompat="@drawable/ic_arrow_down_24" />
+        </LinearLayout>
     </com.google.android.material.appbar.AppBarLayout>
 
     <RelativeLayout
@@ -35,16 +59,14 @@
         android:layout_height="match_parent">
 
         <fr.castorflex.android.circularprogressbar.CircularProgressBar
-            xmlns:android="http://schemas.android.com/apk/res/android"
-            xmlns:app="http://schemas.android.com/apk/res-auto"
             android:id="@+id/activity_loading_books"
             android:layout_width="48dp"
             android:layout_height="48dp"
             android:layout_alignParentBottom="false"
             android:layout_centerInParent="true"
             android:layout_gravity="center"
-            android:layout_marginBottom="8dp"
             android:layout_marginTop="16dp"
+            android:layout_marginBottom="8dp"
             android:foregroundGravity="center|center_vertical|center_horizontal"
             android:indeterminate="true"
             app:cpb_color="@color/colorAccent"
@@ -52,7 +74,7 @@
             app:cpb_min_sweep_angle="10"
             app:cpb_rotation_speed="1.0"
             app:cpb_stroke_width="4dp"
-            app:cpb_sweep_speed="1.0"/>
+            app:cpb_sweep_speed="1.0" />
     </RelativeLayout>
 
 
@@ -69,7 +91,7 @@
             android:layout_width="150dp"
             android:layout_height="150dp"
             android:layout_gravity="center_horizontal"
-            android:src="@drawable/lb_ic_sad_cloud"/>
+            android:src="@drawable/lb_ic_sad_cloud" />
 
         <TextView
             android:id="@+id/text_view_error_screen"
@@ -77,14 +99,14 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:layout_margin="8dp"
-            android:text="@string/error_loading_books"/>
+            android:text="@string/error_loading_books" />
 
         <Button
             android:id="@+id/button_retry"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
-            android:text="@string/button_retry_text"/>
+            android:text="@string/button_retry_text" />
     </LinearLayout>
 
     <androidx.recyclerview.widget.RecyclerView
@@ -95,13 +117,11 @@
         android:fitsSystemWindows="true"
         android:gravity="center_horizontal"
         android:paddingLeft="@dimen/book_list_padding"
-        android:paddingRight="@dimen/book_list_padding"
         android:paddingTop="@dimen/book_list_padding"
+        android:paddingRight="@dimen/book_list_padding"
         android:scrollbars="vertical"
-
         android:visibility="visible"
         app:layout_behavior="@string/appbar_scrolling_view_behavior"
-        tools:listitem="@layout/list_item_book"/>
+        tools:listitem="@layout/list_item_book" />
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>
-
