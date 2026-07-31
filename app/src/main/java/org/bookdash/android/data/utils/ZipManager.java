@@ -29,12 +29,12 @@ public class ZipManager {
         try {
             File archive = new File(_zipFile);
 
-            ZipFile zipfile = new ZipFile(archive);
-            for (Enumeration e = zipfile.entries(); e.hasMoreElements(); ) {
-                ZipEntry entry = (ZipEntry) e.nextElement();
-                unzipEntry(zipfile, entry, _targetLocation);
+            try (ZipFile zipfile = new ZipFile(archive)) {
+                for (Enumeration<? extends ZipEntry> e = zipfile.entries(); e.hasMoreElements(); ) {
+                    ZipEntry entry = e.nextElement();
+                    unzipEntry(zipfile, entry, _targetLocation);
+                }
             }
-            zipfile.close();
         } catch (Exception e) {
             Log.e(TAG, "Exception:", e);
         }
@@ -53,25 +53,24 @@ public class ZipManager {
     private void unzipEntry(ZipFile zipfile, ZipEntry entry,
                             String outputDir) throws IOException {
 
+        File targetDirectory = new File(outputDir).getCanonicalFile();
+        File outputFile = new File(targetDirectory, entry.getName()).getCanonicalFile();
+        String targetPath = targetDirectory.getPath() + File.separator;
+        if (!outputFile.getPath().startsWith(targetPath)) {
+            throw new IOException("Zip entry escapes target directory: " + entry.getName());
+        }
         if (entry.isDirectory()) {
-            createDir(new File(outputDir, entry.getName()));
+            createDir(outputFile);
             return;
         }
-
-        File outputFile = new File(outputDir, entry.getName());
         if (!outputFile.getParentFile().exists()) {
             createDir(outputFile.getParentFile());
         }
 
         Log.v(TAG, "Extracting: " + entry);
-        BufferedInputStream inputStream = new BufferedInputStream(zipfile.getInputStream(entry));
-        BufferedOutputStream outputStream = new BufferedOutputStream(new FileOutputStream(outputFile));
-
-        try {
+        try (BufferedInputStream inputStream = new BufferedInputStream(zipfile.getInputStream(entry));
+             BufferedOutputStream outputStream = new BufferedOutputStream(new FileOutputStream(outputFile))) {
             copy(inputStream, outputStream);
-        } finally {
-            outputStream.close();
-            inputStream.close();
         }
     }
 
